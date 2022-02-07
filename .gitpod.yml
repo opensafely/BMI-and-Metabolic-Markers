@@ -18,7 +18,6 @@ tasks:
         export PATH=/workspace/venv/bin:$PATH
         opensafely upgrade
         opensafely pull --project project.yaml
-
 github:
   prebuilds:
     # enable for the default branch (defaults to true)
