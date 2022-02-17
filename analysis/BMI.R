@@ -284,11 +284,26 @@ BMI_2016_mean <- BMI_2016_mean %>%
 
 ## FINAL DATA SET for 2016:  BMI_2016_mean
 
+############################################################################  NEW CODE FOR TESTING
 
 
 
+## APPEND THE DATA SETS FOR A COMPLETE DATA SET
 
-write.csv (BMI_2016_mean, here::here ("output/data","BMI_complete_categories.csv"))
+BMI_complete_mean <- bind_rows(BMI_2015_mean, 
+                               BMI_2016_mean)
+
+
+### FINAL DATA SET:  BMI_complete_mean
+
+##names(BMI_complete_mean)
+
+## Ungroup to assign BMI categories
+BMI_complete_mean
+
+###########################################################################################################
+
+write.csv (BMI_complete_mean, here::here ("output/data","BMI_complete_categories.csv"))
 
 
  
