@@ -53,7 +53,7 @@ BMI_2015 <- as_tibble (input_all_2015_03_01)
 
  
 
-write.csv (BMI_2015, here::here("output","data","check.csv")
+# write.csv (BMI_2015, here::here("output","data","check.csv")
 
 ##############################################################################################################CHECK 1
  
