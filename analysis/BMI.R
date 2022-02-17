@@ -125,7 +125,9 @@ mean_bmi_2015 <- dplyr::summarise(bmi_2015_bypatid,
  #check_bmi_mean <- bmi_2015_bypatid %>%
    #select(patient_id, monthly_bmi) %>%
    #filter(patient_id<80)
-   
+ 
+
+##############################################################################################################CHECK 1
  
  ## add mean BMI onto main data set using a merge
 long_bmi_2015_mean <- left_join(long_bmi_2015, mean_bmi_2015)
