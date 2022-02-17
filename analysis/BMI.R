@@ -50,11 +50,11 @@ input_all_2021_03_01<- read.csv (here::here ("output/data", "input_all_2021-03-0
 ###################
 
 BMI_2015 <- as_tibble (input_all_2015_03_01)
-Hmisc:: describe(BMI_2015)
+# Hmisc:: describe(BMI_2015)
 
 
 ## check column names
-names(BMI_2015) 
+# names(BMI_2015) 
 
 
 ##  reshape data as long to allow grouping and calculation of average yearly BMI
@@ -67,7 +67,7 @@ pivot_longer(
   values_to = "monthly_bmi"
   )
 
-names(long_bmi_2015)
+# names(long_bmi_2015)
 
 ##  Keep relevant variable for analysis
 
@@ -170,11 +170,11 @@ BMI_2015_mean <- BMI_2015_mean %>%
 ##################################################
 
 BMI_2016 <- as_tibble (input_all_2016_03_01)
-Hmisc:: describe(BMI_2016)
+# Hmisc:: describe(BMI_2016)
 
 
 ## check column names
-names(BMI_2016) 
+# names(BMI_2016) 
 
 
 ##  reshape data as long to allow grouping and calculation of average yearly BMI
@@ -187,7 +187,7 @@ long_bmi_2016 <- BMI_2016 %>%
     values_to = "monthly_bmi"
   )
 
-names(long_bmi_2016)
+# names(long_bmi_2016)
 
 ##  Keep relevant variable for analysis
 
@@ -288,11 +288,11 @@ BMI_2016_mean <- BMI_2016_mean %>%
 ################################################
 
 BMI_2017 <- as_tibble (input_all_2017_03_01)
-Hmisc:: describe(BMI_2017)
+# Hmisc:: describe(BMI_2017)
 
 
 ## check column names
-names(BMI_2017) 
+# names(BMI_2017) 
 
 
 ##  reshape data as long to allow grouping and calculation of average yearly BMI
@@ -406,11 +406,11 @@ BMI_2017_mean <- BMI_2017_mean %>%
 ###############################################
 #################################################
 BMI_2018 <- as_tibble (input_all_2018_03_01)
-Hmisc:: describe(BMI_2018)
+# Hmisc:: describe(BMI_2018)
 
 
 ## check column names
-names(BMI_2018) 
+# names(BMI_2018) 
 
 
 ##  reshape data as long to allow grouping and calculation of average yearly BMI
@@ -423,7 +423,7 @@ long_bmi_2018 <- BMI_2018 %>%
     values_to = "monthly_bmi"
   )
 
-names(long_bmi_2018)
+# names(long_bmi_2018)
 
 ##  Keep relevant variable for analysis
 
@@ -525,11 +525,11 @@ BMI_2018_mean <- BMI_2018_mean %>%
 ####################################################
 
 BMI_2019 <- as_tibble (input_all_2019_03_01)
-Hmisc:: describe(BMI_2019)
+# Hmisc:: describe(BMI_2019)
 
 
 ## check column names
-names(BMI_2019) 
+# names(BMI_2019) 
 
 
 ##  reshape data as long to allow grouping and calculation of average yearly BMI
@@ -542,7 +542,7 @@ long_bmi_2019 <- BMI_2019 %>%
     values_to = "monthly_bmi"
   )
 
-names(long_bmi_2019)
+# names(long_bmi_2019)
 
 ##  Keep relevant variable for analysis
 
@@ -644,11 +644,11 @@ BMI_2019_mean <- BMI_2019_mean %>%
 ###################################################
 
 BMI_2020 <- as_tibble (input_all_2020_03_01)
-Hmisc:: describe(BMI_2020)
+# Hmisc:: describe(BMI_2020)
 
 
 ## check column names
-names(BMI_2020) 
+# names(BMI_2020) 
 
 
 ##  reshape data as long to allow grouping and calculation of average yearly BMI
@@ -661,7 +661,7 @@ long_bmi_2020 <- BMI_2020 %>%
     values_to = "monthly_bmi"
   )
 
-names(long_bmi_2020)
+# names(long_bmi_2020)
 
 ##  Keep relevant variable for analysis
 
@@ -764,11 +764,11 @@ BMI_2020_mean <- BMI_2020_mean %>%
 ################################################
 
 BMI_2021 <- as_tibble (input_all_2021_03_01)
-Hmisc:: describe(BMI_2021)
+# Hmisc:: describe(BMI_2021)
 
 
 ## check column names
-names(BMI_2021) 
+# names(BMI_2021) 
 
 
 ##  reshape data as long to allow grouping and calculation of average yearly BMI
@@ -781,7 +781,7 @@ long_bmi_2021 <- BMI_2021 %>%
     values_to = "monthly_bmi"
   )
 
-names(long_bmi_2021)
+# names(long_bmi_2021)
 
 ##  Keep relevant variable for analysis
 
