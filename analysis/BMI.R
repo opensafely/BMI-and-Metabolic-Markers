@@ -49,11 +49,69 @@ input_all_2021_03_01<- read.csv (here::here ("output/data", "input_all_2021-03-0
 BMI_2015 <- as_tibble (input_all_2015_03_01)
 # Hmisc:: describe(BMI_2015)
 
+## check column names
+# names(BMI_2015) 
 
+
+##  reshape data as long to allow grouping and calculation of average yearly BMI
+
+
+long_bmi_2015 <- BMI_2015 %>%
+pivot_longer(
+  cols = c('bmi_march', 'bmi_apr', 'bmi_may', 'bmi_june', 'bmi_july', 'bmi_aug', 'bmi_sep', 'bmi_oct', 'bmi_nov', 'bmi_dec', 'bmi_jan', 'bmi_feb', 'bmi_jan'),
+  names_to = "date", 
+  values_to = "monthly_bmi"
+  )
+
+# names(long_bmi_2015)
+
+##  Keep relevant variable for analysis
+
+long_bmi_2015 <- long_bmi_2015 %>%
+  select("patient_id", 
+         "type1_diabetes", 
+         "type2_diabetes", 
+         "unknown_diabetes",  
+         "sex", 
+         "age_group", 
+         "region", 
+         "imd", 
+         "learning_disability", 
+         "dementia", 
+        "depression",                   
+        "psychosis_schiz_bipolar", 
+        "diabetes_type",               
+        "diabetes_t1",                  
+        "diabetes_t2",
+        "bmi",
+        "had_bmi",
+        "asthma",                      
+        "COPD",                        
+        "stroke_and_TIA" ,
+        "chronic_cardiac",              
+        "hypertension",                 
+        "all_cancer",                
+        "eth", 
+        "ethnicity_sus", 
+        "ethnicity", 
+        "date", 
+        "monthly_bmi")              
+
+
+
+#  Hmisc::describe(long_bmi_2015)
+#  Missing BMIs have been recorded as '0' - will affect stats. Need to replace
+ 
+
+## replace very high and very low BMIs with NA
+long_bmi_2015$monthly_bmi[long_bmi_2015$monthly_bmi<12|long_bmi_2015$monthly_bmi>65] <- NA
+
+# Hmisc::describe(long_bmi_2015$monthly_bmi)
+# recoding successful
 
  
 
-write.csv (BMI_2015, here::here ("output/data","BMI_complete_categories.csv"))
+write.csv (long_bmi_2015, here::here ("output/data","BMI_complete_categories.csv"))
 
 ##############################################################################################################CHECK 1
  
