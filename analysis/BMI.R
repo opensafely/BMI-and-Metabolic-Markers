@@ -22,9 +22,6 @@ library(here)
 ####################################
 ###################################
 
-# output processed data to rds ----
-
-fs::dir_create(here("output", "data"))
 
 
 
@@ -50,11 +47,10 @@ input_all_2021_03_01<- read.csv (here::here ("output/data", "input_all_2021-03-0
 ###################
 
 BMI_2015 <- as_tibble (input_all_2015_03_01)
-Hmisc:: describe(BMI_2015)
-
+# Hmisc:: describe(BMI_2015)
 
 ## check column names
-names(BMI_2015) 
+# names(BMI_2015) 
 
 
 ##  reshape data as long to allow grouping and calculation of average yearly BMI
@@ -67,7 +63,7 @@ pivot_longer(
   values_to = "monthly_bmi"
   )
 
-names(long_bmi_2015)
+# names(long_bmi_2015)
 
 ##  Keep relevant variable for analysis
 
@@ -113,11 +109,11 @@ long_bmi_2015$monthly_bmi[long_bmi_2015$monthly_bmi<12|long_bmi_2015$monthly_bmi
 # Hmisc::describe(long_bmi_2015$monthly_bmi)
 # recoding successful
 
-
+ 
 ### Calculate the mean BMI for each patient based on measurements in that year
  
 bmi_2015_bypatid <- group_by(long_bmi_2015,patient_id)
-mean_bmi_2015 <- summarise(bmi_2015_bypatid,
+mean_bmi_2015 <- dplyr::summarise(bmi_2015_bypatid,
                             mean_bmi = mean(monthly_bmi, na.rm=TRUE)
                             )
  
@@ -125,9 +121,10 @@ mean_bmi_2015 <- summarise(bmi_2015_bypatid,
  #check_bmi_mean <- bmi_2015_bypatid %>%
    #select(patient_id, monthly_bmi) %>%
    #filter(patient_id<80)
-   
- 
- ## add mean BMI onto main data set using a merge
+####################################################  NEW
+
+
+## add mean BMI onto main data set using a merge
 long_bmi_2015_mean <- left_join(long_bmi_2015, mean_bmi_2015)
 
 
@@ -166,15 +163,18 @@ BMI_2015_mean <- BMI_2015_mean %>%
 
 ## FINAL DATA SET for 2015:  BMI_2015_mean
 
+#############################################################################NEW
+
+
 ################################################
 ##################################################
 
 BMI_2016 <- as_tibble (input_all_2016_03_01)
-Hmisc:: describe(BMI_2016)
+# Hmisc:: describe(BMI_2016)
 
 
 ## check column names
-names(BMI_2016) 
+# names(BMI_2016) 
 
 
 ##  reshape data as long to allow grouping and calculation of average yearly BMI
@@ -187,7 +187,7 @@ long_bmi_2016 <- BMI_2016 %>%
     values_to = "monthly_bmi"
   )
 
-names(long_bmi_2016)
+# names(long_bmi_2016)
 
 ##  Keep relevant variable for analysis
 
@@ -237,7 +237,7 @@ long_bmi_2016$monthly_bmi[long_bmi_2016$monthly_bmi<12|long_bmi_2016$monthly_bmi
 ### Calculate the mean BMI for each patient based on measurements in that year
 
 bmi_2016_bypatid <- group_by(long_bmi_2016,patient_id)
-mean_bmi_2016 <- summarise(bmi_2016_bypatid,
+mean_bmi_2016 <- dplyr::summarise(bmi_2016_bypatid,
                            mean_bmi = mean(monthly_bmi, na.rm=TRUE)
 )
 
@@ -284,15 +284,14 @@ BMI_2016_mean <- BMI_2016_mean %>%
 
 ## FINAL DATA SET for 2016:  BMI_2016_mean
 
-###############################################
-################################################
+##########################################################################  NEW
 
 BMI_2017 <- as_tibble (input_all_2017_03_01)
-Hmisc:: describe(BMI_2017)
+# Hmisc:: describe(BMI_2017)
 
 
 ## check column names
-names(BMI_2017) 
+# names(BMI_2017) 
 
 
 ##  reshape data as long to allow grouping and calculation of average yearly BMI
@@ -305,7 +304,7 @@ long_bmi_2017 <- BMI_2017 %>%
     values_to = "monthly_bmi"
   )
 
-names(long_bmi_2017)
+# names(long_bmi_2017)
 
 ##  Keep relevant variable for analysis
 
@@ -406,11 +405,11 @@ BMI_2017_mean <- BMI_2017_mean %>%
 ###############################################
 #################################################
 BMI_2018 <- as_tibble (input_all_2018_03_01)
-Hmisc:: describe(BMI_2018)
+# Hmisc:: describe(BMI_2018)
 
 
 ## check column names
-names(BMI_2018) 
+# names(BMI_2018) 
 
 
 ##  reshape data as long to allow grouping and calculation of average yearly BMI
@@ -423,7 +422,7 @@ long_bmi_2018 <- BMI_2018 %>%
     values_to = "monthly_bmi"
   )
 
-names(long_bmi_2018)
+# names(long_bmi_2018)
 
 ##  Keep relevant variable for analysis
 
@@ -525,11 +524,11 @@ BMI_2018_mean <- BMI_2018_mean %>%
 ####################################################
 
 BMI_2019 <- as_tibble (input_all_2019_03_01)
-Hmisc:: describe(BMI_2019)
+# Hmisc:: describe(BMI_2019)
 
 
 ## check column names
-names(BMI_2019) 
+# names(BMI_2019) 
 
 
 ##  reshape data as long to allow grouping and calculation of average yearly BMI
@@ -542,7 +541,7 @@ long_bmi_2019 <- BMI_2019 %>%
     values_to = "monthly_bmi"
   )
 
-names(long_bmi_2019)
+# names(long_bmi_2019)
 
 ##  Keep relevant variable for analysis
 
@@ -644,11 +643,11 @@ BMI_2019_mean <- BMI_2019_mean %>%
 ###################################################
 
 BMI_2020 <- as_tibble (input_all_2020_03_01)
-Hmisc:: describe(BMI_2020)
+# Hmisc:: describe(BMI_2020)
 
 
 ## check column names
-names(BMI_2020) 
+# names(BMI_2020) 
 
 
 ##  reshape data as long to allow grouping and calculation of average yearly BMI
@@ -661,7 +660,7 @@ long_bmi_2020 <- BMI_2020 %>%
     values_to = "monthly_bmi"
   )
 
-names(long_bmi_2020)
+# names(long_bmi_2020)
 
 ##  Keep relevant variable for analysis
 
@@ -764,11 +763,11 @@ BMI_2020_mean <- BMI_2020_mean %>%
 ################################################
 
 BMI_2021 <- as_tibble (input_all_2021_03_01)
-Hmisc:: describe(BMI_2021)
+# Hmisc:: describe(BMI_2021)
 
 
 ## check column names
-names(BMI_2021) 
+# names(BMI_2021) 
 
 
 ##  reshape data as long to allow grouping and calculation of average yearly BMI
@@ -781,7 +780,7 @@ long_bmi_2021 <- BMI_2021 %>%
     values_to = "monthly_bmi"
   )
 
-names(long_bmi_2021)
+# names(long_bmi_2021)
 
 ##  Keep relevant variable for analysis
 
@@ -881,8 +880,12 @@ BMI_2021_mean <- BMI_2021_mean %>%
 ## FINAL DATA SET for 2021:  BMI_2021_meanr
 
 
-#####################################################
 
+
+
+
+
+############################################################################  NEW CODE FOR TESTING
 
 ## APPEND THE DATA SETS FOR A COMPLETE DATA SET
 
@@ -917,11 +920,17 @@ BMI_complete_categories$BMI_over27.5 <- cut(BMI_complete_categories$mean_bmi,
                                             labels=c("<27.5", "27.5+"))
   
 
-##  generate a variable to state if eligible for the DWMP 
+##########  JOBS:::
+#########  still need to generate a variable to state if eligible for the DWMP 
 
-write.csv (BMI_complete_categories, file=here::here("output","data","BMI_complete_categories.csv")
 
 
-############################################################
-############################################################
 
+
+
+###########################################################################################################
+
+write.csv (BMI_complete_categories, here::here ("output/data","BMI_complete_categories.csv"))
+
+
+ 
