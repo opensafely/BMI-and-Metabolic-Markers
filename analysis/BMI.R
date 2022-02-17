@@ -117,7 +117,7 @@ long_bmi_2015$monthly_bmi[long_bmi_2015$monthly_bmi<12|long_bmi_2015$monthly_bmi
 ### Calculate the mean BMI for each patient based on measurements in that year
  
 bmi_2015_bypatid <- group_by(long_bmi_2015,patient_id)
-mean_bmi_2015 <- summarise(bmi_2015_bypatid,
+mean_bmi_2015 <- dplyr::summarise(bmi_2015_bypatid,
                             mean_bmi = mean(monthly_bmi, na.rm=TRUE)
                             )
  
@@ -237,7 +237,7 @@ long_bmi_2016$monthly_bmi[long_bmi_2016$monthly_bmi<12|long_bmi_2016$monthly_bmi
 ### Calculate the mean BMI for each patient based on measurements in that year
 
 bmi_2016_bypatid <- group_by(long_bmi_2016,patient_id)
-mean_bmi_2016 <- summarise(bmi_2016_bypatid,
+mean_bmi_2016 <- dplyr::summarise(bmi_2016_bypatid,
                            mean_bmi = mean(monthly_bmi, na.rm=TRUE)
 )
 
