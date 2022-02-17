@@ -1,4 +1,6 @@
 
+opensafely/ethnicity/2020-04-27
+
 opensafely/atrial-fibrillation-clinical-finding/2020-07-09
 
 opensafely/chronic-cardiac-disease/2020-04-08
@@ -18,6 +20,17 @@ opensafely/transient-ischaemic-attack/3526e2ac
 
 ## check which diabetes codes to use
 opensafely/diabetes/2020-04-15
+
+# For HbA1c level use codelist *opensafely/glycated-haemoglobin-hba1c-tests-numerical-value/5134e926  - this has included just IFCC measures. 
+opensafely/glycated-haemoglobin-hba1c-tests-numerical-value/5134e926
+
+## Diabetes diagnosis:  https://github.com/opensafely/ethnicity-covid-research/issues/11  to identify Type 1 or Type 2 based on codes  where there is overlap
+opensafely/type-1-diabetes/2020-06-29   
+opensafely/type-2-diabetes/2020-06-29   
+opensafely/antidiabetic-drugs/2020-07-16  
+opensafely/insulin-medication/2020-04-26  
+
+opensafely/diabetes-unknown-type/2020-06-29
 
 opensafely/asthma-diagnosis/2020-04-15
 
@@ -51,3 +64,5 @@ opensafely/rheumatoid-arthritis/2020-05-12
 opensafely/smoking-clear/2020-04-29
 
 
+
+opensafely/systolic-blood-pressure-qof/3572b5fb
