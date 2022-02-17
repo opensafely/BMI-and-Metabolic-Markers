@@ -1,0 +1,226 @@
+code,term
+5593.,Femoral arteriogram abnormal
+55A2.,Lower limb arteriogram abnorm.
+7A100,Emerg aortic bypass by anastomosis axillary to femoral art
+7A101,Bypass aorta by anastomosis axillary to femoral artery NEC
+7A103,Axillo-unifemoral PTFE bypass graft
+7A11.,Repair of aortic aneurysm using bifurcation graft
+7A110,Emerg repl aneurysm bifurc aorta by anast aorta to fem art
+7A111,Replace aneurysm bifurc aorta by anast aorta to femoral art
+7A112,Emergency Y graft abdominal Aortic aneurysm (& aortoiliac)
+7A113,Y graft abdominal Aortic aneurysm (& aortoiliac)
+7A11y,Replacement of aneurysmal bifurcation of aorta OS
+7A11z,Replacement of aneurysmal bifurcation of aorta NOS
+7A12.,Other bypass of bifurcation of aorta
+7A120,Emerg bypass bifurc aorta by anast aorta to femoral artery
+7A121,Aortobifemoral bypass (& [NEC] or [dacron Y])
+7A122,Emerg bypass bifurc aorta by anastom aorta to iliac artery
+7A123,Aorto bi-iliac graft (& Dacron)
+7A12y,Other specified other bypass of bifurcation of aorta
+7A12z,Other bypass of bifurcation of aorta NOS
+7A41.,Other bypass iliac artery (& by anastomosis)
+7A410,Emerg bypass iliac art by iliac/femoral art anastomosis NEC
+7A411,Bypass iliac artery by iliac/femoral artery anastomosis NEC
+7A414,Emerg bypass comm iliac art by aorta/com iliac art anast NEC
+7A415,Emerg bypass iliac artery by aorta/ext iliac art anast NEC
+7A416,Emerg bypass leg artery by aorta/com fem art anastomosis NEC
+7A418,Emerg bypass iliac artery by iliac/iliac art anastomosis NEC
+7A419,Bypass common iliac artery by aorta/com iliac art anast NEC
+7A41A,Bypass iliac artery by aorta/ext iliac art anastomosis NEC
+7A41B,Bypass leg artery by aorta/com femoral art anastomosis NEC
+7A41C,Bypass leg artery by aorta/deep femoral art anastomosis NEC
+7A41D,Bypass iliac artery by iliac/iliac artery anastomosis NEC
+7A41E,Emergency bypass of iliac artery by unspecified anastomosis
+7A41F,Iliofemoral prosthetic crossover graft
+7A41y,Other specified other bypass of iliac artery
+7A41z,Other bypass of iliac artery NOS
+7A42.,Reconstruction of iliac artery (& common)
+7A420,Iliac endarterectomy and patch repair (& common iliac)
+7A42y,Other specified reconstruction of iliac artery
+7A42z,Reconstruction of iliac artery NOS
+7A43.,Other open operations on iliac artery (& common)
+7A430,Repair of iliac artery NEC (& common)
+7A432,Operation on aneurysm of iliac artery NEC
+7A43y,Other specified other open operation on iliac artery
+7A43z,Other open operation on iliac artery NOS
+7A440,Percutaneous transluminal angioplasty of iliac artery
+7A443,Insertion of iliac artery stent
+7A44y,Other specified transluminal operation on iliac artery
+7A44z,Transluminal operation on iliac artery NOS
+7A47.,Oth em bypass art: [fem (& brs)]/[pop]/[fem/pop anastomosis]
+7A470,Emerg bypass femoral art by fem/pop art anast c prosth NEC
+7A471,Emerg bypass popliteal art by pop/pop art anast c prosth NEC
+7A472,Emerg bypass femoral art by fem/pop a anast c vein graft NEC
+7A473,Emerg bypass pop art by pop/pop art anast c vein graft NEC
+7A474,Emerg bypass femoral art by fem/tib art anast c prosth NEC
+7A476,Emerg bypass femoral art by fem/tib a anast c vein graft NEC
+7A477,Emerg bypass pop art by pop/tib art anast c vein graft NEC
+7A47B,Emerg bypass pop art by pop/peron art anast c vein graft NEC
+7A47C,Emerg bypass femoral artery by fem/fem art anastomosis NEC
+7A47D,Emerg bypass popliteal artery by pop/fem art anastomosis NEC
+7A47y,Other emergency bypass of femoral or popliteal artery OS
+7A47z,Other emergency bypass of femoral or popliteal artery NOS
+7A48.,Oth bypass art: [fem (& brs)]/[pop]/[fem/pop by anastomosis]
+7A480,Bypass femoral artery by fem/pop art anast c prosthesis NEC
+7A481,Bypass popliteal artery by pop/pop a anast c prosthesis NEC
+7A482,Bypass femoral artery by fem/pop art anast c vein graft NEC
+7A483,Bypass popliteal artery by pop/pop a anast c vein graft NEC
+7A484,Bypass femoral artery by fem/tib art anast c prosthesis NEC
+7A485,Bypass popliteal artery by pop/tib a anast c prosthesis NEC
+7A486,Bypass femoral artery by fem/tib art anast c vein graft NEC
+7A487,Bypass popliteal artery by pop/tib a anast c vein graft NEC
+7A488,Bypass femoral artery by fem/peron a anast c prosthesis NEC
+7A48A,Bypass femoral artery by fem/peron a anast c vein graft NEC
+7A48B,Bypass popliteal art by pop/peron art anast c vein graft NEC
+7A48C,Bypass femoral artery by femoral/femoral art anastomosis NEC
+7A48D,Bypass popliteal artery by pop/fem artery anastomosis NEC
+7A48E,Femorofemoral prosthetic crossover graft
+7A48y,Other bypass of femoral artery or popliteal artery OS
+7A48z,Other bypass of femoral artery or popliteal artery NOS
+7A49.,Reconstruction artery: [femoral (& branches)] or [popliteal]
+7A490,Endarterectomy and patch repair of femoral artery
+7A491,Endarterectomy and patch repair of popliteal artery
+7A492,Endarterectomy of femoral artery NEC
+7A493,Endarterectomy of popliteal artery NEC
+7A494,Profundoplasty femoral artery & patch repair deep fem artery
+7A495,Profundoplasty and patch repair of popliteal artery
+7A496,Profundoplasty of femoral artery NEC
+7A497,Profundoplasty of popliteal artery NEC
+7A498,Reconstruction of femoral artery with vein graft
+7A499,Reconstruction of popliteal artery with vein graft
+7A49y,Reconstruction of femoral or popliteal artery OS
+7A49z,Reconstruction of femoral or popliteal artery NOS
+7A4A.,Oth open art operatn: [femoral (& branches)] or [popliteal]
+7A4A0,Repair of femoral artery NEC
+7A4A1,Repair of popliteal artery NEC
+7A4A5,Operation on aneurysm of femoral artery NEC
+7A4A6,Operation on popliteal artery NEC
+7A4A7,Repair of femoral artery with temporary silastic shunt
+7A4A8,Repair of popliteal artery with temporary silastic shunt
+7A4Ay,Other open operation on femoral or popliteal artery OS
+7A4Az,Other open operation on femoral or popliteal artery NOS
+7A4B0,Percutaneous transluminal angioplasty of femoral artery
+7A4B1,Percutaneous angioplasty of popliteal artery
+7A4B4,Percutaneous transluminal embolisation of femoral artery
+7A4B5,Percutaneous transluminal embolisation of popliteal artery
+7A501,Revision of reconstruction involving iliac artery
+7A502,Revision of reconstruction involving femoral artery
+7A503,Revision of reconstruction of popliteal artery
+A3A0F,Gas gangrene-foot
+C1070,"Diabetes mellitus, juvenile +peripheral circulatory disorder"
+C1071,"Diabetes mellitus, adult, + peripheral circulatory disorder"
+C1072,"Diabetes mellitus, adult with gangrene"
+C1073,IDDM with peripheral circulatory disorder
+C1074,NIDDM with peripheral circulatory disorder
+C107y,Other specified diabetes mellitus with periph circ comps
+C107z,Diabetes mellitus NOS with peripheral circulatory disorder
+G700.,(Aortic atherosclerosis) or (aorto-iliac disease)
+G702.,Extremity artery atheroma
+G702z,Extremity artery atheroma NOS
+G73..,(Peri vasc dis (& [isch][oth])) or (isch leg) or (peri isch)
+G7310,Thromboangiitis obliterans
+G731z,Thromboangiitis obliterans NOS
+G732.,Peripheral gangrene
+G7320,Gangrene of toe
+G7321,Gangrene of foot
+G73y.,Other specified peripheral vascular disease
+G73y0,Diabetic peripheral angiopathy
+G73y1,Peripheral angiopathic disease EC NOS
+G73yz,Other specified peripheral vascular disease NOS
+G73z.,Peripheral vascular disease NOS
+G73zz,Peripheral vascular disease NOS
+G742z,Peripheral arterial embolism and thrombosis NOS
+G76A.,Arterial insufficiency
+Gyu74,[X]Other specified peripheral vascular diseases
+Gyu7A,[X]Peripheral angiopathy in diseases classified elsewhere
+M2710,Ischaemic ulcer diabetic foot
+M2712,Mixed diabetic ulcer - foot
+R0542,[D]Gangrene of toe in diabetic
+R0543,[D]Widespread diabetic foot gangrene
+R0550,[D]Failure of peripheral circulation
+X015H,Reconstruction of common iliac artery
+X015R,Other bypass of superficial femoral artery
+X015S,Other bypass of popliteal artery
+X015T,Other bypass of femoral artery
+X015U,Other bypass of deep femoral artery
+X015V,Other bypass of common femoral artery
+X015W,Other bypass of femoral or popliteal artery by anastomosis
+X015X,Other emergency bypass of femoral artery
+X015Y,Other emergency bypass of superficial femoral artery
+X015Z,Other emergency bypass of popliteal artery
+X015a,Other emergency bypass of deep femoral artery
+X015b,Other emergency bypass of common femoral artery
+X015c,Other emerg bypass femoral or popliteal art by anastomosis
+X015h,Other bypass of iliac artery by anastomosis
+X0160,Axillofemoral bypass graft
+X016n,Insertion common iliac artery stent
+X016o,Insertion of external iliac artery stent
+X203L,Aortoiliac atherosclerosis
+X203Q,Peripheral ischaemia
+X203T,Lower limb ischaemia
+X203U,Critical lower limb ischaemia
+X50Be,Mixed arteriovenous leg ulcer
+X50Bf,Ischaemic leg ulcer
+X50Bg,Ischaemic foot ulcer
+X50Bk,Neuroischaemic foot ulcer
+X77Ut,Claudication distance
+XE0Ey,Emerg repl aneurysm bifurc aorta by anast aorta to iliac a
+XE0Ez,Replace aneurysm bifurc aorta by anast aorta to iliac artery
+XE0F0,Bypass bifurc aorta by anastom aorta to femoral artery NEC
+XE0F1,Bypass bifurcation aorta by anastom aorta to iliac artery
+XE0FK,Other bypass of iliac artery
+XE0FL,Emerg bypass iliac artery by femoral/femoral art anast NEC
+XE0FM,Bypass iliac artery by femoral/femoral art anastomosis NEC
+XE0FN,Reconstruction of iliac artery
+XE0FO,Endarterectomy and patch repair of iliac artery
+XE0FP,Endarterectomy of iliac artery NEC
+XE0FQ,Other open operations on iliac artery
+XE0FR,Repair of iliac artery NEC
+XE0FX,Other emergency bypass of femoral artery or popliteal artery
+XE0FY,Other bypass of femoral artery or popliteal artery
+XE0FZ,Reconstruction of femoral artery or popliteal artery
+XE0Fa,Other open operations on femoral artery or popliteal artery
+XE0VP,Other peripheral vascular disease
+XE0VR,Intermittent claudication
+XE0XC,Peripheral vascular disease (& [NOS])
+XE10I,Diabetes mellitus with peripheral circulatory disorder
+XE12K,Diabetes: [peripheral circulatory disease] or [gangrene]
+XM1Ib,Y graft abdominal Aortic aneurysm
+XM1Ic,Dacron aortofemoral Y graft
+XM1Id,Dacron aortoiliac Y graft
+XM1Ie,Emergency femorofemoral prosthetic crossover graft
+XM1If,Endarterectomy and patch repair of common iliac artery
+XM1Ig,Endarterectomy of common iliac artery NEC
+XM1Ih,Other open operations on common iliac artery
+XM1Ii,Repair of common iliac artery NEC
+XM1Ip,Reconstruction of popliteal artery
+XM1Iq,Reconstruction of deep femoral artery
+XM1Ir,Reconstruction of common femoral artery
+XM1Is,Reconstruction of femoral artery
+XM1It,Other open operations on superficial femoral artery
+XM1Iu,Other open operations on popliteal artery
+XM1Iv,Other open operations on deep femoral artery
+XM1Iw,Other open operations on common femoral artery
+XM1KK,Reconstruction of superficial femoral artery
+XM1Qu,Claudication
+XM1Qx,Diabetes mellitus with gangrene
+Xa0lV,Peripheral vascular disease
+Xa7lT,Ischaemia of feet
+Xa84U,Ischaemic foot
+XaBFI,Leriche's syndrome
+XaBL7,H/O: Peripheral vascular disease procedure
+XaBrm,Perc trans thrombolysis of femoral graft streptokinase
+XaDmh,Open insertion of iliac artery stent
+XaDmi,Percutaneous transluminal insertion of iliac artery stent
+XaE3G,Critical ischaemia of foot
+XaFmK,Type I diabetes mellitus with peripheral angiopathy
+XaFn7,Type II diabetes mellitus with peripheral angiopathy
+XaLhK,Endovascular stenting of aorto-uniiliac aneurysm
+XaLhe,Percutaneous transluminal placement peripheral stent artery
+XaMNe,Percutaneous transluminal insertion of stent femoral artery
+XaMmK,Endovas insertion of stent graft for aorto-uniiliac aneurysm
+XaZT1,Occlusion of radial artery
+XaZT3,Occlusion of ulnar artery
+XabhR,Ischaemic foot pain at rest
+XabhS,Ischaemic foot pain when walking
+Y2572,H/O: Intermittent claudication
