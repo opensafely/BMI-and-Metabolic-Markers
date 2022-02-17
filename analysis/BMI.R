@@ -53,84 +53,10 @@ BMI_2015 <- as_tibble (input_all_2015_03_01)
 # Hmisc:: describe(BMI_2015)
 
 
-## check column names
-# names(BMI_2015) 
-
-
-##  reshape data as long to allow grouping and calculation of average yearly BMI
-
-
-long_bmi_2015 <- BMI_2015 %>%
-pivot_longer(
-  cols = c('bmi_march', 'bmi_apr', 'bmi_may', 'bmi_june', 'bmi_july', 'bmi_aug', 'bmi_sep', 'bmi_oct', 'bmi_nov', 'bmi_dec', 'bmi_jan', 'bmi_feb', 'bmi_jan'),
-  names_to = "date", 
-  values_to = "monthly_bmi"
-  )
-
-# names(long_bmi_2015)
-
-##  Keep relevant variable for analysis
-
-long_bmi_2015 <- long_bmi_2015 %>%
-  select("patient_id", 
-         "type1_diabetes", 
-         "type2_diabetes", 
-         "unknown_diabetes",  
-         "sex", 
-         "age_group", 
-         "region", 
-         "imd", 
-         "learning_disability", 
-         "dementia", 
-        "depression",                   
-        "psychosis_schiz_bipolar", 
-        "diabetes_type",               
-        "diabetes_t1",                  
-        "diabetes_t2",
-        "bmi",
-        "had_bmi",
-        "asthma",                      
-        "COPD",                        
-        "stroke_and_TIA" ,
-        "chronic_cardiac",              
-        "hypertension",                 
-        "all_cancer",                
-        "eth", 
-        "ethnicity_sus", 
-        "ethnicity", 
-        "date", 
-        "monthly_bmi")              
-
-
-
-#  Hmisc::describe(long_bmi_2015)
-#  Missing BMIs have been recorded as '0' - will affect stats. Need to replace
- 
-
-## replace very high and very low BMIs with NA
-long_bmi_2015$monthly_bmi[long_bmi_2015$monthly_bmi<12|long_bmi_2015$monthly_bmi>65] <- NA
-
-# Hmisc::describe(long_bmi_2015$monthly_bmi)
-# recoding successful
-
 
  
-######################################  NEXT TWO LINES REMOVED AS TEST
 
-# bmi_2015_bypatid <- group_by(long_bmi_2015,patient_id)
-# mean_bmi_2015 <- dplyr::summarise(bmi_2015_bypatid,
-                           # mean_bmi = mean(monthly_bmi, na.rm=TRUE)
-                           # )
- 
-
-####################################### ABOVE REMOVED AS TEST
- ## check a few rows to see if mean calculation works - it does
- #check_bmi_mean <- bmi_2015_bypatid %>%
-   #select(patient_id, monthly_bmi) %>%
-   #filter(patient_id<80)
- 
-
-write.csv (mean_bmi_2015, file=here::here("output","data","check.csv")
+write.csv (BMI_2015, file=here::here("output","data","check.csv")
 
 ##############################################################################################################CHECK 1
  
