@@ -163,9 +163,132 @@ BMI_2015_mean <- BMI_2015_mean %>%
 
 ## FINAL DATA SET for 2015:  BMI_2015_mean
 
+#############################################################################NEW
 
 
-write.csv (BMI_2015_mean, here::here ("output/data","BMI_complete_categories.csv"))
+################################################
+##################################################
+
+BMI_2016 <- as_tibble (input_all_2016_03_01)
+# Hmisc:: describe(BMI_2016)
+
+
+## check column names
+# names(BMI_2016) 
+
+
+##  reshape data as long to allow grouping and calculation of average yearly BMI
+
+
+long_bmi_2016 <- BMI_2016 %>%
+  pivot_longer(
+    cols = c('bmi_march', 'bmi_apr', 'bmi_may', 'bmi_june', 'bmi_july', 'bmi_aug', 'bmi_sep', 'bmi_oct', 'bmi_nov', 'bmi_dec', 'bmi_jan', 'bmi_feb', 'bmi_jan'),
+    names_to = "date", 
+    values_to = "monthly_bmi"
+  )
+
+# names(long_bmi_2016)
+
+##  Keep relevant variable for analysis
+
+long_bmi_2016 <- long_bmi_2016 %>%
+  select("patient_id", 
+         "type1_diabetes", 
+         "type2_diabetes", 
+         "unknown_diabetes",  
+         "sex", 
+         "age_group", 
+         "region", 
+         "imd", 
+         "learning_disability", 
+         "dementia", 
+         "depression",                   
+         "psychosis_schiz_bipolar", 
+         "diabetes_type",               
+         "diabetes_t1",                  
+         "diabetes_t2",
+         "bmi",
+         "had_bmi",
+         "asthma",                      
+         "COPD",                        
+         "stroke_and_TIA" ,
+         "chronic_cardiac",              
+         "hypertension",                 
+         "all_cancer",                
+         "eth", 
+         "ethnicity_sus", 
+         "ethnicity", 
+         "date", 
+         "monthly_bmi")              
+
+
+
+#  Hmisc::describe(long_bmi_2016)
+#  Missing BMIs have been recorded as '0' - will affect stats. Need to replace
+
+
+## replace very high and very low BMIs with NA
+long_bmi_2016$monthly_bmi[long_bmi_2016$monthly_bmi<12|long_bmi_2016$monthly_bmi>65] <- NA
+
+# Hmisc::describe(long_bmi_2016$monthly_bmi)
+# recoding successfulc
+
+
+### Calculate the mean BMI for each patient based on measurements in that year
+
+bmi_2016_bypatid <- group_by(long_bmi_2016,patient_id)
+mean_bmi_2016 <- dplyr::summarise(bmi_2016_bypatid,
+                           mean_bmi = mean(monthly_bmi, na.rm=TRUE)
+)
+
+## check a few rows to see if mean calculation works - it does
+#check_bmi_mean <- bmi_2016_bypatid %>%
+#select(patient_id, monthly_bmi) %>%
+#filter(patient_id<80)
+
+
+## add mean BMI onto main data set using a merge
+long_bmi_2016_mean <- left_join(long_bmi_2016, mean_bmi_2016)
+
+
+## group and then slice head
+BMI_2016_mean <- long_bmi_2016_mean %>%
+  group_by(patient_id) %>%
+  slice_head() %>%
+  select("patient_id", 
+         "mean_bmi",
+         "sex", 
+         "age_group", 
+         "region", 
+         "imd", 
+         "learning_disability", 
+         "dementia", 
+         "depression",                   
+         "psychosis_schiz_bipolar", 
+         "diabetes_type",               
+         "diabetes_t1",                  
+         "diabetes_t2",
+         "bmi",
+         "had_bmi",
+         "asthma",                      
+         "COPD",                        
+         "stroke_and_TIA" ,
+         "chronic_cardiac",              
+         "hypertension",                 
+         "all_cancer",                
+         "eth", 
+         "ethnicity_sus", 
+         "ethnicity")              
+BMI_2016_mean <- BMI_2016_mean %>%
+  mutate("year"= 2016)
+
+## FINAL DATA SET for 2016:  BMI_2016_mean
+
+
+
+
+
+write.csv (BMI_2016_mean, here::here ("output/data","BMI_complete_categories.csv"))
 
 
  
