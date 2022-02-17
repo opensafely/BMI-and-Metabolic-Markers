@@ -22,9 +22,6 @@ library(here)
 ####################################
 ###################################
 
-# output processed data to rds ----
-
-fs::dir_create(here("output", "data"))
 
 
 
