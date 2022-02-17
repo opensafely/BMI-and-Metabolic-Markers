@@ -121,8 +121,51 @@ mean_bmi_2015 <- dplyr::summarise(bmi_2015_bypatid,
  #check_bmi_mean <- bmi_2015_bypatid %>%
    #select(patient_id, monthly_bmi) %>%
    #filter(patient_id<80)
+####################################################  NEW
 
-write.csv (mean_bmi_2015, here::here ("output/data","BMI_complete_categories.csv"))
 
-##############################################################################################################CHECK 1
+## add mean BMI onto main data set using a merge
+long_bmi_2015_mean <- left_join(long_bmi_2015, mean_bmi_2015)
+
+
+## group and then slice head
+BMI_2015_mean <- long_bmi_2015_mean %>%
+  group_by(patient_id) %>%
+  slice_head() %>%
+  select("patient_id", 
+         "mean_bmi",
+         "sex", 
+         "age_group", 
+         "region", 
+         "imd", 
+         "learning_disability", 
+         "dementia", 
+         "depression",                   
+         "psychosis_schiz_bipolar", 
+         "diabetes_type",               
+         "diabetes_t1",                  
+         "diabetes_t2",
+         "bmi",
+         "had_bmi",
+         "asthma",                      
+         "COPD",                        
+         "stroke_and_TIA" ,
+         "chronic_cardiac",              
+         "hypertension",                 
+         "all_cancer",                
+         "eth", 
+         "ethnicity_sus", 
+         "ethnicity")              
+
+BMI_2015_mean <- BMI_2015_mean %>%
+  mutate("year"= 2015)
+
+
+## FINAL DATA SET for 2015:  BMI_2015_mean
+
+
+
+write.csv (BMI_2015_mean, here::here ("output/data","BMI_complete_categories.csv"))
+
+
  
