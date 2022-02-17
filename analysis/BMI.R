@@ -110,8 +110,19 @@ long_bmi_2015$monthly_bmi[long_bmi_2015$monthly_bmi<12|long_bmi_2015$monthly_bmi
 # recoding successful
 
  
+### Calculate the mean BMI for each patient based on measurements in that year
+ 
+bmi_2015_bypatid <- group_by(long_bmi_2015,patient_id)
+mean_bmi_2015 <- dplyr::summarise(bmi_2015_bypatid,
+                            mean_bmi = mean(monthly_bmi, na.rm=TRUE)
+                            )
+ 
+ ## check a few rows to see if mean calculation works - it does
+ #check_bmi_mean <- bmi_2015_bypatid %>%
+   #select(patient_id, monthly_bmi) %>%
+   #filter(patient_id<80)
 
-write.csv (long_bmi_2015, here::here ("output/data","BMI_complete_categories.csv"))
+write.csv (mean_bmi_2015, here::here ("output/data","BMI_complete_categories.csv"))
 
 ##############################################################################################################CHECK 1
  
