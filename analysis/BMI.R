@@ -887,12 +887,15 @@ BMI_2021_mean <- BMI_2021_mean %>%
 
 ############################################################################  NEW CODE FOR TESTING
 
-
-
 ## APPEND THE DATA SETS FOR A COMPLETE DATA SET
 
 BMI_complete_mean <- bind_rows(BMI_2015_mean, 
-                               BMI_2016_mean)
+                               BMI_2016_mean, 
+                               BMI_2017_mean, 
+                               BMI_2018_mean, 
+                               BMI_2019_mean, 
+                               BMI_2020_mean,
+                               BMI_2021_mean)
 
 
 ### FINAL DATA SET:  BMI_complete_mean
@@ -900,11 +903,34 @@ BMI_complete_mean <- bind_rows(BMI_2015_mean,
 ##names(BMI_complete_mean)
 
 ## Ungroup to assign BMI categories
-BMI_complete_mean
+BMI_complete_mean <- ungroup(BMI_complete_mean)
+
+
+### classify as underweight, healthyweight, overweight, obese
+BMI_complete_categories <- BMI_complete_mean
+BMI_complete_categories$BMI_categories <- cut(BMI_complete_categories$mean_bmi, 
+                                            breaks=c(0, 20,25,30,1000),
+                                            labels= c("underweight", "healthy", "overweight", "obese"))
+                                      
+  
+## classify as above 27.5
+
+BMI_complete_categories$BMI_over27.5 <- cut(BMI_complete_categories$mean_bmi,
+                                            breaks=c(0,27.5,1000),
+                                            labels=c("<27.5", "27.5+"))
+  
+
+##########  JOBS:::
+#########  still need to generate a variable to state if eligible for the DWMP 
+
+
+
+
+
 
 ###########################################################################################################
 
-write.csv (BMI_complete_mean, here::here ("output/data","BMI_complete_categories.csv"))
+write.csv (BMI_complete_categories, here::here ("output/data","BMI_complete_categories.csv"))
 
 
  
