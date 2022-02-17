@@ -71,7 +71,7 @@ actions:
         cohort: output/data/input*.csv
 
 
-  generate_BMI_R:
+  generate_BMI_complete_categories:
     run: r:latest analysis/BMI.R --output-dir=output/data
     needs: [join_ethnicity]
     outputs:
