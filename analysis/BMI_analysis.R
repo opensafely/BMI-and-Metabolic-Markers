@@ -11,8 +11,7 @@
 # 2) re-order variable
 # 3) create a loop for repeating operationg based on column position
 
-
-
+BMI_complete_categories <- read.csv (here::here ("output/data", "BMI_complete_categories.csv"))
 ### WHO HAD A BMI
 
 
