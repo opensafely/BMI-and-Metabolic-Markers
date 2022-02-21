@@ -20,9 +20,8 @@ BMI_complete_categories %>%                   # choose data set
   tabyl(had_bmi, year) %>%                    # proportion BMI by year
   adorn_totals() %>%                          # add total per per year
   adorn_percentages(denominator = "col") %>%   # show as a proportion in columns 
-  adorn_pct_formatting(digits = 1)  %>%           #express as percent
-  flextable::flextable() %>%    # convert to pretty image
-  flextable::autofit()          # format to one line per row 
+  adorn_pct_formatting(digits = 1)             #express as percent
+
   #flextable::save_as_docx(path = "tabyl.docx")   ## SAVE THE TABLE
 
 
