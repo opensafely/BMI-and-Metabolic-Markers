@@ -934,8 +934,8 @@ BMI_complete_categories_DWMP <- BMI_complete_categories %>%
 BMI_complete_categories_DWMP <- BMI_complete_categories_DWMP %>%
   dplyr::mutate(
     DWMP = if_else(
-      condition = (((ethnic_no_miss==1| ethnic_no_miss==0) & mean_bmi >=30) | ((ethnic_no_miss==2| ethnic_no_miss==3| ethnic_no_miss==4| ethnic_no_miss==5) & mean_bmi >=27.5)
-                  & (hypertension==1| diabetes_t1==1| diabetes_t2==1)),
+      condition = ((((ethnic_no_miss==1| ethnic_no_miss==0) & mean_bmi >=30) | ((ethnic_no_miss==2| ethnic_no_miss==3| ethnic_no_miss==4| ethnic_no_miss==5) & mean_bmi >=27.5))
+                  & ((hypertension==1| diabetes_t1==1| diabetes_t2==1))),
       true = "eligible", 
       false = "not_eligible"
       )
