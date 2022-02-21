@@ -946,7 +946,7 @@ BMI_complete_categories_DWMP <- BMI_complete_categories_DWMP %>%
 
 ###########################################################################################################
 
-write.csv (BMI_complete_categories_DWMP, here::here ("output/data","BMI_complete_categories_DWMP.csv"))
+write.csv (BMI_complete_categories_DWMP, here::here ("output/data","BMI_complete_categories.csv"))
 
 
  
