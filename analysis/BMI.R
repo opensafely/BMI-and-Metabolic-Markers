@@ -110,30 +110,30 @@ long_bmi_2015$monthly_bmi[long_bmi_2015$monthly_bmi<12|long_bmi_2015$monthly_bmi
 # recoding successful
 
  
-### Calculate the mean BMI for each patient based on measurements in that year
+### Calculate the median BMI for each patient based on measurements in that year
  
 bmi_2015_bypatid <- group_by(long_bmi_2015,patient_id)
-mean_bmi_2015 <- dplyr::summarise(bmi_2015_bypatid,
-                            mean_bmi = mean(monthly_bmi, na.rm=TRUE)
+median_bmi_2015 <- dplyr::summarise(bmi_2015_bypatid,
+                            median_bmi = median(monthly_bmi, na.rm=TRUE)
                             )
  
- ## check a few rows to see if mean calculation works - it does
- #check_bmi_mean <- bmi_2015_bypatid %>%
+ ## check a few rows to see if median calculation works - it does
+ #check_bmi_median <- bmi_2015_bypatid %>%
    #select(patient_id, monthly_bmi) %>%
    #filter(patient_id<80)
 ####################################################  NEW
 
 
-## add mean BMI onto main data set using a merge
-long_bmi_2015_mean <- left_join(long_bmi_2015, mean_bmi_2015)
+## add median BMI onto main data set using a merge
+long_bmi_2015_median <- left_join(long_bmi_2015, median_bmi_2015)
 
 
 ## group and then slice head
-BMI_2015_mean <- long_bmi_2015_mean %>%
+BMI_2015_median <- long_bmi_2015_median %>%
   group_by(patient_id) %>%
   slice_head() %>%
   select("patient_id", 
-         "mean_bmi",
+         "median_bmi",
          "sex", 
          "age_group", 
          "region", 
@@ -157,11 +157,11 @@ BMI_2015_mean <- long_bmi_2015_mean %>%
          "ethnicity_sus", 
          "ethnicity")              
 
-BMI_2015_mean <- BMI_2015_mean %>%
+BMI_2015_median <- BMI_2015_median %>%
   mutate("year"= 2015)
 
 
-## FINAL DATA SET for 2015:  BMI_2015_mean
+## FINAL DATA SET for 2015:  BMI_2015_median
 
 #############################################################################NEW
 
@@ -234,29 +234,29 @@ long_bmi_2016$monthly_bmi[long_bmi_2016$monthly_bmi<12|long_bmi_2016$monthly_bmi
 # recoding successfulc
 
 
-### Calculate the mean BMI for each patient based on measurements in that year
+### Calculate the median BMI for each patient based on measurements in that year
 
 bmi_2016_bypatid <- group_by(long_bmi_2016,patient_id)
-mean_bmi_2016 <- dplyr::summarise(bmi_2016_bypatid,
-                           mean_bmi = mean(monthly_bmi, na.rm=TRUE)
+median_bmi_2016 <- dplyr::summarise(bmi_2016_bypatid,
+                           median_bmi = median(monthly_bmi, na.rm=TRUE)
 )
 
-## check a few rows to see if mean calculation works - it does
-#check_bmi_mean <- bmi_2016_bypatid %>%
+## check a few rows to see if median calculation works - it does
+#check_bmi_median <- bmi_2016_bypatid %>%
 #select(patient_id, monthly_bmi) %>%
 #filter(patient_id<80)
 
 
-## add mean BMI onto main data set using a merge
-long_bmi_2016_mean <- left_join(long_bmi_2016, mean_bmi_2016)
+## add median BMI onto main data set using a merge
+long_bmi_2016_median <- left_join(long_bmi_2016, median_bmi_2016)
 
 
 ## group and then slice head
-BMI_2016_mean <- long_bmi_2016_mean %>%
+BMI_2016_median <- long_bmi_2016_median %>%
   group_by(patient_id) %>%
   slice_head() %>%
   select("patient_id", 
-         "mean_bmi",
+         "median_bmi",
          "sex", 
          "age_group", 
          "region", 
@@ -279,10 +279,10 @@ BMI_2016_mean <- long_bmi_2016_mean %>%
          "eth", 
          "ethnicity_sus", 
          "ethnicity")              
-BMI_2016_mean <- BMI_2016_mean %>%
+BMI_2016_median <- BMI_2016_median %>%
   mutate("year"= 2016)
 
-## FINAL DATA SET for 2016:  BMI_2016_mean
+## FINAL DATA SET for 2016:  BMI_2016_median
 
 ##########################################################################  NEW
 
@@ -351,29 +351,29 @@ long_bmi_2017$monthly_bmi[long_bmi_2017$monthly_bmi<12|long_bmi_2017$monthly_bmi
 # recoding successfulc
 
 
-### Calculate the mean BMI for each patient based on measurements in that year
+### Calculate the median BMI for each patient based on measurements in that year
 
 bmi_2017_bypatid <- group_by(long_bmi_2017,patient_id)
-mean_bmi_2017 <- summarise(bmi_2017_bypatid,
-                           mean_bmi = mean(monthly_bmi, na.rm=TRUE)
+median_bmi_2017 <- summarise(bmi_2017_bypatid,
+                           median_bmi = median(monthly_bmi, na.rm=TRUE)
 )
 
-## check a few rows to see if mean calculation works - it does
-#check_bmi_mean <- bmi_2017_bypatid %>%
+## check a few rows to see if median calculation works - it does
+#check_bmi_median <- bmi_2017_bypatid %>%
 #select(patient_id, monthly_bmi) %>%
 #filter(patient_id<80)
 
 
-## add mean BMI onto main data set using a merge
-long_bmi_2017_mean <- left_join(long_bmi_2017, mean_bmi_2017)
+## add median BMI onto main data set using a merge
+long_bmi_2017_median <- left_join(long_bmi_2017, median_bmi_2017)
 
 
 ## group and then slice head
-BMI_2017_mean <- long_bmi_2017_mean %>%
+BMI_2017_median <- long_bmi_2017_median %>%
   group_by(patient_id) %>%
   slice_head() %>%
   select("patient_id", 
-         "mean_bmi",
+         "median_bmi",
          "sex", 
          "age_group", 
          "region", 
@@ -397,10 +397,10 @@ BMI_2017_mean <- long_bmi_2017_mean %>%
          "ethnicity_sus", 
          "ethnicity")              
 
-BMI_2017_mean <- BMI_2017_mean %>%
+BMI_2017_median <- BMI_2017_median %>%
   mutate("year"= 2017)
 
-## FINAL DATA SET for 2017:  BMI_2017_meanr
+## FINAL DATA SET for 2017:  BMI_2017_medianr
 
 ###############################################
 #################################################
@@ -469,29 +469,29 @@ long_bmi_2018$monthly_bmi[long_bmi_2018$monthly_bmi<12|long_bmi_2018$monthly_bmi
 # recoding successfulc
 
 
-### Calculate the mean BMI for each patient based on measurements in that year
+### Calculate the median BMI for each patient based on measurements in that year
 
 bmi_2018_bypatid <- group_by(long_bmi_2018,patient_id)
-mean_bmi_2018 <- summarise(bmi_2018_bypatid,
-                           mean_bmi = mean(monthly_bmi, na.rm=TRUE)
+median_bmi_2018 <- summarise(bmi_2018_bypatid,
+                           median_bmi = median(monthly_bmi, na.rm=TRUE)
 )
 
-## check a few rows to see if mean calculation works - it does
-#check_bmi_mean <- bmi_2018_bypatid %>%
+## check a few rows to see if median calculation works - it does
+#check_bmi_median <- bmi_2018_bypatid %>%
 #select(patient_id, monthly_bmi) %>%
 #filter(patient_id<80)
 
 
-## add mean BMI onto main data set using a merge
-long_bmi_2018_mean <- left_join(long_bmi_2018, mean_bmi_2018)
+## add median BMI onto main data set using a merge
+long_bmi_2018_median <- left_join(long_bmi_2018, median_bmi_2018)
 
 
 ## group and then slice head
-BMI_2018_mean <- long_bmi_2018_mean %>%
+BMI_2018_median <- long_bmi_2018_median %>%
   group_by(patient_id) %>%
   slice_head() %>%
   select("patient_id", 
-         "mean_bmi",
+         "median_bmi",
          "sex", 
          "age_group", 
          "region", 
@@ -515,10 +515,10 @@ BMI_2018_mean <- long_bmi_2018_mean %>%
          "ethnicity_sus", 
          "ethnicity")              
 
-BMI_2018_mean <- BMI_2018_mean %>%
+BMI_2018_median <- BMI_2018_median %>%
   mutate("year"= 2018)
 
-## FINAL DATA SET for 2018:  BMI_2018_meanr
+## FINAL DATA SET for 2018:  BMI_2018_medianr
 
 ####################################################
 ####################################################
@@ -588,29 +588,29 @@ long_bmi_2019$monthly_bmi[long_bmi_2019$monthly_bmi<12|long_bmi_2019$monthly_bmi
 # recoding successfulc
 
 
-### Calculate the mean BMI for each patient based on measurements in that year
+### Calculate the median BMI for each patient based on measurements in that year
 
 bmi_2019_bypatid <- group_by(long_bmi_2019,patient_id)
-mean_bmi_2019 <- summarise(bmi_2019_bypatid,
-                           mean_bmi = mean(monthly_bmi, na.rm=TRUE)
+median_bmi_2019 <- summarise(bmi_2019_bypatid,
+                           median_bmi = median(monthly_bmi, na.rm=TRUE)
 )
 
-## check a few rows to see if mean calculation works - it does
-#check_bmi_mean <- bmi_2019_bypatid %>%
+## check a few rows to see if median calculation works - it does
+#check_bmi_median <- bmi_2019_bypatid %>%
 #select(patient_id, monthly_bmi) %>%
 #filter(patient_id<80)
 
 
-## add mean BMI onto main data set using a merge
-long_bmi_2019_mean <- left_join(long_bmi_2019, mean_bmi_2019)
+## add median BMI onto main data set using a merge
+long_bmi_2019_median <- left_join(long_bmi_2019, median_bmi_2019)
 
 
 ## group and then slice head
-BMI_2019_mean <- long_bmi_2019_mean %>%
+BMI_2019_median <- long_bmi_2019_median %>%
   group_by(patient_id) %>%
   slice_head() %>%
   select("patient_id", 
-         "mean_bmi",
+         "median_bmi",
          "sex", 
          "age_group", 
          "region", 
@@ -634,10 +634,10 @@ BMI_2019_mean <- long_bmi_2019_mean %>%
          "ethnicity_sus", 
          "ethnicity")              
 
-BMI_2019_mean <- BMI_2019_mean %>%
+BMI_2019_median <- BMI_2019_median %>%
   mutate("year"= 2019)
 
-## FINAL DATA SET for 2019:  BMI_2019_meanr
+## FINAL DATA SET for 2019:  BMI_2019_medianr
 
 ##################################################
 ###################################################
@@ -707,29 +707,29 @@ long_bmi_2020$monthly_bmi[long_bmi_2020$monthly_bmi<12|long_bmi_2020$monthly_bmi
 # recoding successfulc
 
 
-### Calculate the mean BMI for each patient based on measurements in that year
+### Calculate the median BMI for each patient based on measurements in that year
 
 bmi_2020_bypatid <- group_by(long_bmi_2020,patient_id)
-mean_bmi_2020 <- summarise(bmi_2020_bypatid,
-                           mean_bmi = mean(monthly_bmi, na.rm=TRUE)
+median_bmi_2020 <- summarise(bmi_2020_bypatid,
+                           median_bmi = median(monthly_bmi, na.rm=TRUE)
 )
 
-## check a few rows to see if mean calculation works - it does
-#check_bmi_mean <- bmi_2020_bypatid %>%
+## check a few rows to see if median calculation works - it does
+#check_bmi_median <- bmi_2020_bypatid %>%
 #select(patient_id, monthly_bmi) %>%
 #filter(patient_id<80)
 
 
-## add mean BMI onto main data set using a merge
-long_bmi_2020_mean <- left_join(long_bmi_2020, mean_bmi_2020)
+## add median BMI onto main data set using a merge
+long_bmi_2020_median <- left_join(long_bmi_2020, median_bmi_2020)
 
 
 ## group and then slice head
-BMI_2020_mean <- long_bmi_2020_mean %>%
+BMI_2020_median <- long_bmi_2020_median %>%
   group_by(patient_id) %>%
   slice_head() %>%
   select("patient_id", 
-         "mean_bmi",
+         "median_bmi",
          "sex", 
          "age_group", 
          "region", 
@@ -754,10 +754,10 @@ BMI_2020_mean <- long_bmi_2020_mean %>%
          "ethnicity")              
 
 
-BMI_2020_mean <- BMI_2020_mean %>%
+BMI_2020_median <- BMI_2020_median %>%
   mutate("year"= 2020)
 
-## FINAL DATA SET for 2020:  BMI_2020_meanr
+## FINAL DATA SET for 2020:  BMI_2020_medianr
 
 ###############################################
 ################################################
@@ -827,29 +827,29 @@ long_bmi_2021$monthly_bmi[long_bmi_2021$monthly_bmi<12|long_bmi_2021$monthly_bmi
 # recoding successfulc
 
 
-### Calculate the mean BMI for each patient based on measurements in that year
+### Calculate the median BMI for each patient based on measurements in that year
 
 bmi_2021_bypatid <- group_by(long_bmi_2021,patient_id)
-mean_bmi_2021 <- summarise(bmi_2021_bypatid,
-                           mean_bmi = mean(monthly_bmi, na.rm=TRUE)
+median_bmi_2021 <- summarise(bmi_2021_bypatid,
+                           median_bmi = median(monthly_bmi, na.rm=TRUE)
 )
 
-## check a few rows to see if mean calculation works - it does
-#check_bmi_mean <- bmi_2021_bypatid %>%
+## check a few rows to see if median calculation works - it does
+#check_bmi_median <- bmi_2021_bypatid %>%
 #select(patient_id, monthly_bmi) %>%
 #filter(patient_id<80)
 
 
-## add mean BMI onto main data set using a merge
-long_bmi_2021_mean <- left_join(long_bmi_2021, mean_bmi_2021)
+## add median BMI onto main data set using a merge
+long_bmi_2021_median <- left_join(long_bmi_2021, median_bmi_2021)
 
 
 ## group and then slice head
-BMI_2021_mean <- long_bmi_2021_mean %>%
+BMI_2021_median <- long_bmi_2021_median %>%
   group_by(patient_id) %>%
   slice_head() %>%
   select("patient_id", 
-         "mean_bmi",
+         "median_bmi",
          "sex", 
          "age_group", 
          "region", 
@@ -873,11 +873,11 @@ BMI_2021_mean <- long_bmi_2021_mean %>%
          "ethnicity_sus", 
          "ethnicity")              
 
-BMI_2021_mean <- BMI_2021_mean %>%
+BMI_2021_median <- BMI_2021_median %>%
   mutate("year"= 2021)
 
 
-## FINAL DATA SET for 2021:  BMI_2021_meanr
+## FINAL DATA SET for 2021:  BMI_2021_medianr
 
 
 
@@ -889,33 +889,33 @@ BMI_2021_mean <- BMI_2021_mean %>%
 
 ## APPEND THE DATA SETS FOR A COMPLETE DATA SET
 
-BMI_complete_mean <- bind_rows(BMI_2015_mean, 
-                               BMI_2016_mean, 
-                               BMI_2017_mean, 
-                               BMI_2018_mean, 
-                               BMI_2019_mean, 
-                               BMI_2020_mean,
-                               BMI_2021_mean)
+BMI_complete_median <- bind_rows(BMI_2015_median, 
+                               BMI_2016_median, 
+                               BMI_2017_median, 
+                               BMI_2018_median, 
+                               BMI_2019_median, 
+                               BMI_2020_median,
+                               BMI_2021_median)
 
 
-### FINAL DATA SET:  BMI_complete_mean
+### FINAL DATA SET:  BMI_complete_median
 
-##names(BMI_complete_mean)
+##names(BMI_complete_median)
 
 ## Ungroup to assign BMI categories
-BMI_complete_mean <- ungroup(BMI_complete_mean)
+BMI_complete_median <- ungroup(BMI_complete_median)
 
 
 ### classify as underweight, healthyweight, overweight, obese
-BMI_complete_categories <- BMI_complete_mean
-BMI_complete_categories$BMI_categories <- cut(BMI_complete_categories$mean_bmi, 
+BMI_complete_categories <- BMI_complete_median
+BMI_complete_categories$BMI_categories <- cut(BMI_complete_categories$median_bmi, 
                                             breaks=c(0, 20,25,30,1000),
                                             labels= c("underweight", "healthy", "overweight", "obese"))
                                       
   
 ## classify as above 27.5
 
-BMI_complete_categories$BMI_over27.5 <- cut(BMI_complete_categories$mean_bmi,
+BMI_complete_categories$BMI_over27.5 <- cut(BMI_complete_categories$median_bmi,
                                             breaks=c(0,27.5,1000),
                                             labels=c("<27.5", "27.5+"))
   
@@ -934,7 +934,7 @@ BMI_complete_categories_DWMP <- BMI_complete_categories %>%
 BMI_complete_categories_DWMP <- BMI_complete_categories_DWMP %>%
   dplyr::mutate(
     DWMP = if_else(
-      condition = ((((ethnic_no_miss==1| ethnic_no_miss==0) & mean_bmi >=30) | ((ethnic_no_miss==2| ethnic_no_miss==3| ethnic_no_miss==4| ethnic_no_miss==5) & mean_bmi >=27.5))
+      condition = ((((ethnic_no_miss==1| ethnic_no_miss==0) & median_bmi >=30) | ((ethnic_no_miss==2| ethnic_no_miss==3| ethnic_no_miss==4| ethnic_no_miss==5) & median_bmi >=27.5))
                   & ((hypertension==1| diabetes_t1==1| diabetes_t2==1))),
       true = "eligible", 
       false = "not_eligible"
@@ -949,4 +949,4 @@ BMI_complete_categories_DWMP <- BMI_complete_categories_DWMP %>%
 write.csv (BMI_complete_categories_DWMP, here::here ("output/data","BMI_complete_categories.csv"))
 
 
- 
+
