@@ -77,3 +77,10 @@ actions:
     outputs:
       highly_sensitive:
         cohort: output/data/BMI_complete_categories.csv
+        
+  BMI_recorded_analysis:
+    run: r:latest analysis/BMI_recorded_summary.R --output-dir=output/data
+    needs: [generate_BMI_complete_categories]
+    outputs:
+      highly_sensitive:
+        cohort: output/data/BMI_recorded_summary_covariates.csv
