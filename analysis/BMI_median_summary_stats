@@ -1,5 +1,5 @@
 
-BMI_complete_categories_2 <- BMI_complete_categories_02_22
+BMI_complete_categories_2 <- BMI_complete_categories
 
 names(BMI_complete_categories_2)
 
