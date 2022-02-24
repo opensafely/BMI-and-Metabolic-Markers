@@ -24,8 +24,8 @@ BMI_complete_categories_2 <- BMI_complete_categories %>%
     age_group = as.character(age_group),
     ethnic_no_miss = as.character(ethnic_no_miss),
     imd = as.character(imd), 
-    region = as.character(region)
-  ) %>%
+    region = as.character(region),
+    precovid_obese_flag = as.character(precovid_obese_flag) %>%
   dplyr::mutate(across(starts_with("comorbid_"), as.character))
 
 BMI_complete_categories_2
@@ -126,7 +126,8 @@ bmi_recorded_comorbid_all_cancer <- bmi_flag_function(BMI_complete_categories_2,
   dplyr::mutate(covariate="comorbid_all_cancer")
 
 
-
+bmi_recorded_precovid_obese_flag <- bmi_flag_function(BMI_complete_categories_2, precovid_obese_flag) %>%
+  dplyr::mutate(covariate="precovid_obese_flag")
 ###############
 
 ## append the data sets to create a single summary table
@@ -135,6 +136,7 @@ bmi_recorded_comorbid_all_cancer <- bmi_flag_function(BMI_complete_categories_2,
 # Summary of covariates
 bmi_recorded_summary_covariates <- bmi_recorded_all %>%
   dplyr::bind_rows(
+    bmi_recorded_precovid_obese_flag,    
     bmi_recorded_age_group, 
     bmi_recorded_sex, 
     bmi_recorded_ethnic_no_miss, 
