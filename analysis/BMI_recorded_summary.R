@@ -20,7 +20,7 @@ BMI_complete_categories <- read.csv (here::here ("output/data", "BMI_complete_ca
 
 BMI_complete_categories_2 <- BMI_complete_categories
 
-BMI_complete_categories_2 %>%
+BMI_complete_categories_2 <- BMI_complete_categories_2 %>%
   dplyr::mutate(
     sex = as.character(sex), 
     age_group = as.character(age_group),
