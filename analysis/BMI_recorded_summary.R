@@ -1,5 +1,18 @@
 
-BMI_complete_categories_2 <- BMI_complete_categories
+## M Samuel 21st October 2022
+## This file looks at the proportion of patients who had a BMI recorded in their GP notes
+
+
+## Specify libraries
+library(pacman)
+library(tidyverse)
+library(Hmisc)
+library(here)
+
+## Read in files
+
+
+BMI_complete_categories_2 <- read.csv (here::here ("output/data", "BMI_complete_categories.csv"))
 
 #names(BMI_complete_categories_2)
 
