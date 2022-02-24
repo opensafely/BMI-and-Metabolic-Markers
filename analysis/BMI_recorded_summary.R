@@ -27,7 +27,7 @@ BMI_complete_categories_2 %>%
     ethnic_no_miss = as.character(ethnic_no_miss),
     imd = as.character(imd), 
     region = as.character(region),
-    precovid_obese_flag = as.character(precovid_obese_flag) %>%
+    precovid_obese_flag = as.character(precovid_obese_flag)) %>%
   dplyr::mutate(across(starts_with("comorbid_"), as.character))
 
 
