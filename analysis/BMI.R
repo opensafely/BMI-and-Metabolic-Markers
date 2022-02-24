@@ -967,9 +967,27 @@ BMI_complete_categories_DWMP <- BMI_complete_categories_DWMP %>%
     .after = "median_bmi"
   )                       
 
+## Label variables ethnicity and IMD to make clearer
+
+BMI_complete_categories <- BMI_complete_categories_DWMP 
+
+BMI_complete_categories$ethnic_no_miss[BMI_complete_categories$ethnic_no_miss=="1"]<-"White"
+BMI_complete_categories$ethnic_no_miss[BMI_complete_categories$ethnic_no_miss=="2"]<-"Mixed"
+BMI_complete_categories$ethnic_no_miss[BMI_complete_categories$ethnic_no_miss=="3"]<-"Asian or Asian British"
+BMI_complete_categories$ethnic_no_miss[BMI_complete_categories$ethnic_no_miss=="4"]<-"Black or Black British"
+BMI_complete_categories$ethnic_no_miss[BMI_complete_categories$ethnic_no_miss=="5"]<-"Other ethnic groups"
+BMI_complete_categories$ethnic_no_miss[BMI_complete_categories$ethnic_no_miss=="0"]<-"No ethnicity recorded"
+
+BMI_complete_categories$imd[BMI_complete_categories$imd=="0"]<-"NA"
+BMI_complete_categories$imd[BMI_complete_categories$imd=="1"]<-"1 most deprived"
+BMI_complete_categories$imd[BMI_complete_categories$imd=="2"]<-"2"
+BMI_complete_categories$imd[BMI_complete_categories$imd=="3"]<-"3"
+BMI_complete_categories$imd[BMI_complete_categories$imd=="4"]<-"4"
+BMI_complete_categories$imd[BMI_complete_categories$imd=="5"]<-"5 least deprived"
+
 ###########################################################################################################
 
-write.csv (BMI_complete_categories_DWMP, here::here ("output/data","BMI_complete_categories.csv"))
+write.csv (BMI_complete_categories, here::here ("output/data","BMI_complete_categories.csv"))
 
 
 
