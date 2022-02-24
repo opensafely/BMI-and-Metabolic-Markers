@@ -29,7 +29,7 @@ actions:
   generate_study_population_4:
     run: cohortextractor:latest generate_cohort --study-definition study_definition_all --output-dir=output/data --index-date-range "2018-03-01"
     outputs:
-      highly_sensitive:
+      moderately_sensitive:
         cohort: output/data/input_all_2018-03-01.csv  
         
         
