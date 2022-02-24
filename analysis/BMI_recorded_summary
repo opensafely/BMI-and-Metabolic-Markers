@@ -1,39 +1,6 @@
 
 BMI_complete_categories_2 <- BMI_complete_categories
 
-### create code to identify proportion in each group who had a bmi
-
-had_bmi_summary <- BMI_complete_categories_2 %>%
-  dplyr::mutate(as.character(had_bmi)) %>%
-  dplyr::group_by( year, region) %>%
-  dplyr::summarise(
-    n_patient = n(),  #number of patients per group
-    n_had_bmi = sum(had_bmi == '1')) %>%  # number with a flag to say they had BMI in the year
-  dplyr::mutate(percent_had_bmi = n_had_bmi/n_patient*100)
-
-
-### change to a function
-
-bmi_flag_function <- function (data, var) {
-  tab1 <- data %>%
-    dplyr::group_by(year, {{var}}) %>%
-    dplyr::summarise(
-      n_patient = n(),  #number of patients per group
-      n_had_bmi = sum(had_bmi == '1')) %>%  # number with a flag to say they had BMI in the year
-    dplyr::mutate(percent_had_bmi = n_had_bmi/n_patient*100) %>%
-    dplyr::select({{var}}, year, percent_had_bmi)%>%
-    pivot_wider(names_from = year, values_from = percent_had_bmi)
-  
-  tab1 %>%
-    dplyr::rename( "category" = {{var}}) 
-}
-tab1 <- bmi_flag_function(BMI_complete_categories_2, region)
-
-BMI_complete_categories <- BMI_complete_categories_2
-
-
-BMI_complete_categories_2 <- BMI_complete_categories
-
 #names(BMI_complete_categories_2)
 
 ##### Change all exposure variables to characters to allow appending of summary tables
@@ -49,8 +16,6 @@ BMI_complete_categories_2 <- BMI_complete_categories %>%
   dplyr::mutate(across(starts_with("comorbid_"), as.character))
 
 BMI_complete_categories_2
-
-## Have changed to characters- need to bind the reframed data sets
 
 
 
@@ -89,7 +54,7 @@ bmi_flag_function <- function (data, var) {
 }
 
 
-tab1 <- bmi_flag_function(BMI_complete_categories_2, region)
+
 
 bmi_recorded_age_group <- bmi_flag_function(BMI_complete_categories_2, age_group) %>%
   dplyr::mutate(covariate="age_group")
