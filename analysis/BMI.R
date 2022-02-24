@@ -949,10 +949,25 @@ BMI_complete_categories_DWMP <-BMI_complete_categories_DWMP %>%
   )
   )
 
+BMI_complete_categories_DWMP <- BMI_complete_categories_DWMP %>%
+  dplyr::mutate(patient_id = as.numeric(patient_id)) %>%
+  arrange(patient_id) %>%
+  dplyr::group_by(patient_id) %>%
+  dplyr::mutate(
+    precovid_obese = (((median_bmi >=30) & ((year=="2015")| (year=="2016")| (year=="2017")| (year=="2018") | (year=="2019")))) , 
+    .after = "patient_id") %>%
+  dplyr::mutate(
+    precovid_obese_flag = (any(precovid_obese == "TRUE")),
+    .after = "precovid_obese"
+  )
+
+
+
+
 
 BMI_complete_categories_DWMP <- BMI_complete_categories_DWMP %>%
  dplyr::select(
- patient_id, median_bmi, had_bmi, BMI_categories, BMI_over27.5, DWMP, sex, age_group, region, imd, eth, ethnicity_sus, ethnicity, ethnic_no_miss,  year, starts_with("comorbid_"), 
+ patient_id, year, precovid_obese_flag, median_bmi, had_bmi, BMI_categories, BMI_over27.5, DWMP, sex, age_group, region, imd, eth, ethnicity_sus, ethnicity, ethnic_no_miss, starts_with("comorbid_"), 
  )
 
 
