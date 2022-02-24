@@ -941,8 +941,31 @@ BMI_complete_categories_DWMP <- BMI_complete_categories_DWMP %>%
       )
   )
 
+BMI_complete_categories_DWMP <-BMI_complete_categories_DWMP %>%
+  dplyr::mutate(
+    across(
+    .cols = c(learning_disability,depression, dementia,psychosis_schiz_bipolar, diabetes_type, diabetes_t1, diabetes_t2, asthma, COPD, stroke_and_TIA, chronic_cardiac, hypertension, all_cancer), 
+    .names = "comorbid_{col}"
+  )
+  )
 
 
+BMI_complete_categories_DWMP <- BMI_complete_categories_DWMP %>%
+ dplyr::select(
+ patient_id, median_bmi, had_bmi, BMI_categories, BMI_over27.5, DWMP, sex, age_group, region, imd, eth, ethnicity_sus, ethnicity, ethnic_no_miss,  year, starts_with("comorbid_"), 
+ )
+
+
+###  add binary obese variable
+BMI_complete_categories_DWMP <- BMI_complete_categories_DWMP %>%
+  dplyr::mutate(
+    obese = if_else(
+      condition = (median_bmi >= 30), 
+      true = 1,
+      false = 0
+    ), 
+    .after = "median_bmi"
+  )                       
 
 ###########################################################################################################
 
