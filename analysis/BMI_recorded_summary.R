@@ -12,7 +12,7 @@ library(here)
 ## Read in files
 
 
-BMI_complete_categories_2 <- read.csv (here::here ("output/data", "BMI_complete_categories.csv"))
+BMI_complete_categories <- read.csv (here::here ("output/data", "BMI_complete_categories.csv"))
 
 #names(BMI_complete_categories_2)
 
