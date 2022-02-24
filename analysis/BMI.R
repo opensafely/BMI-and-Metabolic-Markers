@@ -962,8 +962,7 @@ BMI_complete_categories_DWMP <- BMI_complete_categories_DWMP %>%
   )
 
 
-
-
+BMI_complete_categories_DWMP <- ungroup (BMI_complete_categories_DWMP)
 
 BMI_complete_categories_DWMP <- BMI_complete_categories_DWMP %>%
  dplyr::select(
