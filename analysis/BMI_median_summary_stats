@@ -11,6 +11,7 @@ BMI_complete_categories_2 <- BMI_complete_categories_2 %>%
     age_group = as.character(age_group),
     ethnic_no_miss = as.character(ethnic_no_miss),
     imd = as.character(imd), 
+    region = as.character (region),
   ) %>%
   dplyr::mutate(across(starts_with("comorbid_"), as.character))
   
@@ -119,7 +120,7 @@ median_bmi_summary_demographic <- median_bmi_all %>%
                    median_bmi_sex, 
                    median_bmi_ethnic_no_miss, 
                    median_bmi_imd, 
-                   median_bmi_ethnic_no_miss) %>%
+                   median_bmi_ethnic_region) %>%
   dplyr::select(covariate, category, "2015","2016","2017","2018","2019","2020", "2021")
 
 View(median_bmi_summary_demographic)
