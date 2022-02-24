@@ -18,7 +18,9 @@ BMI_complete_categories <- read.csv (here::here ("output/data", "BMI_complete_ca
 
 ##### Change all exposure variables to characters to allow appending of summary tables
 
-BMI_complete_categories_2 <- BMI_complete_categories %>%
+BMI_complete_categories_2 <- BMI_complete_categories
+
+BMI_complete_categories_2 %>%
   dplyr::mutate(
     sex = as.character(sex), 
     age_group = as.character(age_group),
@@ -28,7 +30,7 @@ BMI_complete_categories_2 <- BMI_complete_categories %>%
     precovid_obese_flag = as.character(precovid_obese_flag) %>%
   dplyr::mutate(across(starts_with("comorbid_"), as.character))
 
-BMI_complete_categories_2
+
 
 
 
