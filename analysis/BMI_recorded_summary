@@ -181,6 +181,6 @@ bmi_recorded_summary_covariates <- bmi_recorded_all %>%
   )%>%
   dplyr::select(covariate,category, "2015","2016","2017","2018","2019","2020", "2021")
 
+write.csv (bmi_recorded_summary_covariates here::here ("output/data","BMI_recorded_summary_covariates.csv"))
 
-
-
+write.csv (bmi_recorded_summary_demographic here::here ("output/data","BMI_recorded_summary_demographic.csv"))
