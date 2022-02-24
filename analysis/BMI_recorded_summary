@@ -1,4 +1,6 @@
 
+BMI_complete_categories_2 <- BMI_complete_categories
+
 ### create code to identify proportion in each group who had a bmi
 
 had_bmi_summary <- BMI_complete_categories_2 %>%
