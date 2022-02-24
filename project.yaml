@@ -84,3 +84,5 @@ actions:
     outputs:
       highly_sensitive:
         cohort: output/data/BMI_recorded_summary_covariates.csv
+        cohort: output/data/BMI_recorded_summary_demographic.csv       
+        
