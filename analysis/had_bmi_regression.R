@@ -7,6 +7,8 @@
 ##  packages
 library(broom)
 library(purrr)
+library(dplyr)
+library(janitor)
 
 #read in file
 BMI_complete_categories <- read.csv (here::here ("output/data", "BMI_complete_categories.csv"))
@@ -56,13 +58,13 @@ explanatory_vars <- c("sex",
 
 ## convert had_bmi to a logical output
 BMI_complete_categories_2020 %>%
-  mutate(had_bmi = as.logical(had_bmi))
+  dplyr::mutate(had_bmi = as.logical(had_bmi))
 
 
 ## Try to change base level  >>  NOTE:  co-efficient for base group = log.odds of event in base group
 BMI_complete_categories_2020 <- BMI_complete_categories_2020 %>%
-  mutate(age_group = as.factor(age_group)) %>%
-  mutate(age_group = fct_relevel(age_group, "18-39", after = 0))
+  dplyr::mutate(age_group = as.factor(age_group)) %>%
+  dplyr::mutate(age_group = fct_relevel(age_group, "18-39", after = 0))
 
 
 ## instructions from R for epi
