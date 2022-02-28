@@ -65,7 +65,9 @@ BMI_complete_categories_2020 %>%
 ## Try to change base level  >>  NOTE:  co-efficient for base group = log.odds of event in base group
 BMI_complete_categories_2020 <- BMI_complete_categories_2020 %>%
   dplyr::mutate(age_group = as.factor(age_group)) %>%
-  dplyr::mutate(age_group = fct_relevel(age_group, "18-39", after = 0))
+  dplyr::mutate(age_group = fct_relevel(age_group, "18-39", after = 0)) %>%
+  dplyr::mutate(age_group = as.factor(ethnic_no_miss)) %>%#
+  dplyr::mutate(age_group = fct_relevel(ethnic_no_miss, "White", after = 0))
 
 
 ## instructions from R for epi
