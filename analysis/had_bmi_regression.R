@@ -9,6 +9,7 @@ library(broom)
 library(purrr)
 library(dplyr)
 library(janitor)
+library(tidyverse)
 
 #read in file
 BMI_complete_categories <- read.csv (here::here ("output/data", "BMI_complete_categories.csv"))
