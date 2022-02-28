@@ -374,6 +374,49 @@ univariate_had_bmi_2021 <- univ_tab_base %>%
   mutate(across(where(is.numeric), round, digits = 2))
 
 
+##########################################################################################
+# 4. Multivariate 2021
+
+# >> Example model
+# Multivariate model with age +gender
+had_bmi_age_sex_m <- glm(had_bmi ~ age_group + sex, data=BMI_complete_categories_2021, family=binomial) %>%
+  broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
+  dplyr::mutate(across(where(is.numeric), round, digits = 2))  # round all numeric columns
+
+
+
+#>> Use PURR to loop over the different exposures in a univariate analysis and create a combined table
+
+#>>  use stringer to create a vector listing each item to run the logistic regression over
+models_age_sex_ethnic_2021 <- explanatory_vars_multivariate %>%       # begin with variables of interest
+  str_c("had_bmi ~ age_group + sex + ethnic_no_miss + ", .)  %>%      ## creates a vector of character with terms for age, gender and ethnicity regression
+  
+# iterate through each univariate formula ... using map function from purr
+  map(                               #  Map each element of the preceding vector the following formula
+    .f = ~glm(                       # pass the formulas one-by-one to glm()
+      formula = as.formula(.x),      # within glm(), the string formula is .x
+      family = "binomial",           # specify type of glm (logistic)
+      data = BMI_complete_categories_2021))  %>%        # dataset
+  
+  # tidy up each of the glm regression outputs from above
+  map(
+    .f = ~tidy(
+      .x, 
+      exponentiate = TRUE,           # exponentiate 
+
+
+      conf.int = TRUE)) %>%          # return confidence intervals
+  
+  # collapse the list of regression outputs in to one data frame
+  bind_rows() %>% 
+  
+  # round all numeric columns
+  mutate(across(where(is.numeric), round, digits = 2))
+
+
+
+
+
 ############################################################################################
 ## OUTPUTS
 ############################################################################################
@@ -383,7 +426,7 @@ write.csv (univariate_had_bmi_2021, here::here ("output/data","regression_had_bm
 write.csv (univariate_had_bmi_2020, here::here ("output/data","regression_had_bmi_2020.csv"))
 
 write.csv (models_age_sex_ethnic_2020, here::here ("output/data","multivariate_regression_had_bmi_2020.csv"))
-
+write.csv (models_age_sex_ethnic_2020, here::here ("output/data","multivariate_regression_had_bmi_2021.csv"))
 
 ################################################################################################
 
