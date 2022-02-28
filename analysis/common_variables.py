@@ -16,28 +16,22 @@ common_variables = dict(
     # Age
     age_group = patients.categorised_as(
         {
-            "0-15": "age >= 0 AND age < 16",
-            "16-24": "age >= 16 AND age < 25",
-            "25-34": "age >= 25 AND age < 35",
-            "35-44": "age >= 35 AND age < 45",
-            "45-54": "age >= 45 AND age < 55",
-            "55-64": "age >= 55 AND age < 65",
-            "65-74": "age >= 65 AND age < 75",
-            "75+": "age >= 75",
+            "0-17": "age >= 0 AND age < 18",
+            "18-39": "age >= 18 AND age < 40",
+            "40-65": "age >= 40 AND age < 65",
+            "65-80": "age >= 65 AND age < 80",
+            "80+": "age >= 80",
             "missing": "DEFAULT",
         },
         return_expectations = {
             "rate": "universal",
             "category": {
                 "ratios": {
-                    "0-15": 0.2,
-                    "16-24": 0.1,
-                    "25-34": 0.1,
-                    "35-44": 0.15,
-                    "45-54": 0.1,
-                    "55-64": 0.1,
-                    "65-74": 0.1,
-                    "75+": 0.13,
+                    "0-17": 0.1,
+                    "18-39": 0.3,
+                    "40-65": 0.3,
+                    "65-80": 0.2,
+                    "80+": 0.3,
                     "missing": 0.02,
                 }
             },
