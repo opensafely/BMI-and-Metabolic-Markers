@@ -8,8 +8,8 @@
 library(broom)
 library(purrr)
 
-
-
+#read in file
+BMI_complete_categories <- read.csv (here::here ("output/data", "BMI_complete_categories.csv"))
 
 ## select the variables needed for analysis
 
@@ -152,7 +152,7 @@ univariate_had_bmi_2020 <- univ_tab_base %>%
 
 
 
-
+write.csv (univariate_had_bmi_2020, here::here ("output/data","regression_had_bmi_2020.csv"))
 
 ##################################################################################
 
