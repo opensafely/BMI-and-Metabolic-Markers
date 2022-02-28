@@ -85,4 +85,11 @@ actions:
       moderately_sensitive:
         cohort: output/data/BMI_recorded_summary_covariates.csv
              
-        
+  
+  had_bmi_regression:    
+    run: r:latest analysis/had_bmi_regression.R --output-dir=output/data
+    needs: [generate_BMI_complete_categories]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/regression_had_bmi_2020.csv
+
