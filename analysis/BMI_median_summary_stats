@@ -1,7 +1,29 @@
+##########################################################
+# Author:  Miriam Samuel
+# Input:  BMI_complete_categories
+# Output:
+# Last modified:  1st March 2022
+###########################################################
+
+
+# >> Read in packages
+
+##  packages
+library(broom)
+library(purrr)
+library(dplyr)
+library(janitor)
+library(tidyverse)
+
+#  >>  Read in file
+BMI_complete_categories <- read.csv (here::here ("output/data", "BMI_complete_categories.csv"))
+
+
+# >> Start analysis
 
 BMI_complete_categories_2 <- BMI_complete_categories
 
-names(BMI_complete_categories_2)
+# names(BMI_complete_categories_2)
 
 ##### Change all exposure variables to characters to allow appending of summary tables
 
