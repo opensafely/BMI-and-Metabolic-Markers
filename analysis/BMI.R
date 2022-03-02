@@ -103,8 +103,8 @@ long_bmi_2015 <- long_bmi_2015 %>%
 #  Missing BMIs have been recorded as '0' - will affect stats. Need to replace
  
 
-## replace very high and very low BMIs with NA
-long_bmi_2015$monthly_bmi[long_bmi_2015$monthly_bmi<12|long_bmi_2015$monthly_bmi>65] <- NA
+## replace very high and very low BMIs with NA:  This will exclude erroneus values and exclude patients who are severely underweight/severely obese whose change in BMI may not reflect general population trends
+long_bmi_2015$monthly_bmi[long_bmi_2015$monthly_bmi<15|long_bmi_2015$monthly_bmi>65] <- NA
 
 # Hmisc::describe(long_bmi_2015$monthly_bmi)
 # recoding successful
