@@ -65,6 +65,7 @@ pivot_longer(
 
 
 ######  TEST DE-DUPLICATION OF VALUES
+# Check for dupllicate entries by groups by 
 long_bmi_2015 %>%
 group_by(patient_id, date) %>%
 slice_head
