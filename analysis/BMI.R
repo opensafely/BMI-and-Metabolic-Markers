@@ -63,6 +63,16 @@ pivot_longer(
   values_to = "monthly_bmi"
   )
 
+
+######  TEST DE-DUPLICATION OF VALUES
+long_bmi_2015 %>%
+group_by(patient_id, date) %>%
+slice_head
+
+###################  END OF TEST
+
+
+
 # names(long_bmi_2015)
 
 ##  Keep relevant variable for analysis
