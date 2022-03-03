@@ -5,7 +5,7 @@ from cohortextractor import (
     codelist_from_csv,
 )
 
-from codelists import ethnicity_codes
+from codelists import ethnicity_codes, ethnicity_codes_16
 
 study = StudyDefinition(
     default_expectations={
