@@ -1154,6 +1154,16 @@ BMI_2015_median <- BMI_2015_median %>%
 	#############################################################################NEW
 	
 
+## Append long data sets for longitutdinal analysis of change in BMI
+
+BMI_complete_long <- bind_rows(
+	long_bmi_2015,
+	long_bmi_2016,
+	long_bmi_2017,
+	long_bmi_2018,
+	long_bmi_2019,
+	long_bmi_2020,
+	long_bmi_2021)
 
 
 
