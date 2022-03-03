@@ -81,6 +81,8 @@ bmi_2015_long <- BMI_2015 %>%   ## 1. pivot_longer date measured columns
                   "age_group", 
                   "region", 
                   "imd", 
+                  "ethnicity",
+                  "ethnicity_16",
                   "learning_disability", 
                   "dementia", 
                   "depression",                   
@@ -95,10 +97,7 @@ bmi_2015_long <- BMI_2015 %>%   ## 1. pivot_longer date measured columns
                   "stroke_and_TIA" ,
                   "chronic_cardiac",              
                   "hypertension",                 
-                  "all_cancer",                
-                  "eth", 
-                  "ethnicity_sus", 
-                  "ethnicity")   %>%
+                  "all_cancer")   %>%
   mutate(measured_month = str_sub(name, 1, -15)) %>%  #3a.  create a column to identify matching events
   dplyr::filter(measured_month == date) %>%
   select(-'name', -'measured_month')
@@ -167,9 +166,8 @@ BMI_2015_median <- long_bmi_2015_median %>%
          "chronic_cardiac",              
          "hypertension",                 
          "all_cancer",                
-         "eth", 
-         "ethnicity_sus", 
-         "ethnicity")              
+         "ethnicity",
+         "ethnicity_16")              
 
 BMI_2015_median <- BMI_2015_median %>%
   mutate("year"= 2015)
