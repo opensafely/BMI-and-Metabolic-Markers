@@ -1154,8 +1154,60 @@ BMI_2015_median <- BMI_2015_median %>%
 	#############################################################################NEW
 	
 
+## Append long data sets for longitutdinal analysis of change in BMI
+
+BMI_complete_long <- bind_rows(
+	long_bmi_2015,
+	long_bmi_2016,
+	long_bmi_2017,
+	long_bmi_2018,
+	long_bmi_2019,
+	long_bmi_2020,
+	long_bmi_2021)
+
+## recode ethnicity so NA is 0
+BMI_complete_long <- BMI_complete_long %>%
+  mutate(ethnic_no_miss = ifelse(is.na(ethnicity), 0, ethnicity ))
+
+BMI_complete_long <- BMI_complete_long %>%
+mutate(ethnicity_16_no_miss = ifelse(is.na(ethnicity_16), 0, ethnicity_16 )) 
 
 
+### label
+BMI_complete_long$ethnic_no_miss[BMI_complete_long$ethnic_no_miss=="1"]<-"White"
+BMI_complete_long$ethnic_no_miss[BMI_complete_long$ethnic_no_miss=="2"]<-"Mixed"
+BMI_complete_long$ethnic_no_miss[BMI_complete_long$ethnic_no_miss=="3"]<-"Asian or Asian British"
+BMI_complete_long$ethnic_no_miss[BMI_complete_long$ethnic_no_miss=="4"]<-"Black or Black British"
+BMI_complete_long$ethnic_no_miss[BMI_complete_long$ethnic_no_miss=="5"]<-"Other ethnic groups"
+BMI_complete_long$ethnic_no_miss[BMI_complete_long$ethnic_no_miss=="0"]<-"No ethnicity recorded"
+
+BMI_complete_long$imd[BMI_complete_long$imd=="0"]<-"NA"
+BMI_complete_long$imd[BMI_complete_long$imd=="1"]<-"1 most deprived"
+BMI_complete_long$imd[BMI_complete_long$imd=="2"]<-"2"
+BMI_complete_long$imd[BMI_complete_long$imd=="3"]<-"3"
+BMI_complete_long$imd[BMI_complete_long$imd=="4"]<-"4"
+BMI_complete_long$imd[BMI_complete_long$imd=="5"]<-"5 least deprived"
+
+
+BMI_complete_long <- BMI_complete_long %>%
+  mutate (eth_group_16=case_when(
+    ethnicity_16_no_miss == "1" ~ "British",
+    ethnicity_16_no_miss == "2" ~ "Irish",
+    ethnicity_16_no_miss == "3" ~ "Other White",
+    ethnicity_16_no_miss == "4" ~ "White and Black Caribbean",
+    ethnicity_16_no_miss == "5" ~ "White and Black African",
+    ethnicity_16_no_miss == "6" ~ "White and Asian",
+    ethnicity_16_no_miss == "7" ~ "Other Mixed",
+    ethnicity_16_no_miss == "8" ~ "Indian",
+    ethnicity_16_no_miss == "9" ~ "Pakistani",
+    ethnicity_16_no_miss == "10" ~ "Bangladeshi",
+    ethnicity_16_no_miss == "11" ~ "Other Asian",
+    ethnicity_16_no_miss == "12" ~ "Caribbean",
+    ethnicity_16_no_miss == "13" ~ "African",
+    ethnicity_16_no_miss == "14" ~ "Other Black",
+    ethnicity_16_no_miss == "15" ~ "Chinese",
+    ethnicity_16_no_miss == "16" ~ "Any other ethnic group",
+    ethnicity_16_no_miss ==  "0" ~  "Missing"))  
 
 
 
@@ -1308,5 +1360,5 @@ BMI_complete_categories$imd[BMI_complete_categories$imd=="5"]<-"5 least deprived
 
 write.csv (BMI_complete_categories, here::here ("output/data","BMI_complete_categories.csv"))
 
-
+write.csv (BMI_complete_long, here::here ("output/data","BMI_complete_long.csv"))
 
