@@ -76,14 +76,15 @@ actions:
     needs: [join_ethnicity]
     outputs:
       highly_sensitive:
-        cohort: output/data/BMI_complete_categories.csv
+        cohort1: output/data/BMI_complete_categories.csv
+        cohort2: output/data/BMI_complete_long.csv
         
   BMI_recorded_analysis:
     run: r:latest analysis/BMI_recorded_summary.R --output-dir=output/data
     needs: [generate_BMI_complete_categories]
     outputs:
       moderately_sensitive:
-        cohort: output/data/BMI_recorded_summary_covariates.csv
+        table: output/data/BMI_recorded_summary_covariates.csv
              
   
   had_bmi_regression:    
