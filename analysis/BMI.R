@@ -1203,6 +1203,9 @@ BMI_complete_categories$BMI_over27.5 <- cut(BMI_complete_categories$median_bmi,
 BMI_complete_categories_DWMP <- BMI_complete_categories %>%
   mutate(ethnic_no_miss = ifelse(is.na(ethnicity), 0, ethnicity ))
 
+BMI_complete_categories_DWMP <- BMI_complete_categories_DWMP %>%
+mutate(ethnicity_16_no_miss = ifelse(is.na(ethnicity_16), 0, ethnicity_16 ))
+
 
 ## confirm ethnicity categories
 # dict_eth = {1: ‘White’, 2: ‘Mixed’, 3: ‘Asian’, 4: ‘Black’, 5: ‘Other’, np.nan: ‘Unknown’, 0: ‘Unknown’}
