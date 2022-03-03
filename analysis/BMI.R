@@ -53,51 +53,63 @@ BMI_2015 <- as_tibble (input_all_2015_03_01)
 # names(BMI_2015) 
 
 
-##  reshape data as long to allow grouping and calculation of average yearly BMI
+#########################################  NEW  3rd march 2022
+######################################### CODE to: 1) link BMI values and actual measured data; 2) de-duplicate any duplicate values due to monthly_bmi formula
+#########################################  Will need to also create a cohort with all values for median_bmi analysis
+
+bmi_2015_long <- BMI_2015 %>%   ## 1. pivot_longer date measured columns
+    pivot_longer(
+      cols = c('bmi_march_date_measured', 'bmi_apr_date_measured', 'bmi_may_date_measured', 'bmi_june_date_measured', 'bmi_july_date_measured', 'bmi_aug_date_measured', 'bmi_sep_date_measured', 'bmi_oct_date_measured', 'bmi_nov_date_measured', 'bmi_dec_date_measured', 'bmi_jan_date_measured', 'bmi_feb_date_measured', 'bmi_jan_date_measured'),
+      values_to = "bmi_measured_date" ) %>% 
+    dplyr::arrange(patient_id, bmi_measured_date) %>%
+    tidyr::drop_na(bmi_measured_date) %>%
+    group_by(patient_id, bmi_measured_date) %>%
+    slice_head %>%                  #  step 2.  Pivot longer the values.  
+    pivot_longer(
+    cols = c('bmi_march', 'bmi_apr', 'bmi_may', 'bmi_june', 'bmi_july', 'bmi_aug', 'bmi_sep', 'bmi_oct', 'bmi_nov', 'bmi_dec', 'bmi_jan', 'bmi_feb', 'bmi_jan'),
+    names_to = "date", 
+    values_to = "monthly_bmi")  %>%    # step 3.  filter out duplicate row
+    dplyr::select("patient_id", 
+                  "name", 
+                  "bmi_measured_date",
+                  "date",
+                  "monthly_bmi",
+                  "type1_diabetes", 
+                  "type2_diabetes", 
+                  "unknown_diabetes",  
+                  "sex", 
+                  "age_group", 
+                  "region", 
+                  "imd", 
+                  "learning_disability", 
+                  "dementia", 
+                  "depression",                   
+                  "psychosis_schiz_bipolar", 
+                  "diabetes_type",               
+                  "diabetes_t1",                  
+                  "diabetes_t2",
+                  "bmi",
+                  "had_bmi",
+                  "asthma",                      
+                  "COPD",                        
+                  "stroke_and_TIA" ,
+                  "chronic_cardiac",              
+                  "hypertension",                 
+                  "all_cancer",                
+                  "eth", 
+                  "ethnicity_sus", 
+                  "ethnicity")   %>%
+  mutate(measured_month = str_sub(name, 1, -15)) %>%  #3a.  create a column to identify matching events
+  dplyr::filter(measured_month == date) %>%
+  select(-'name', -'measured_month')
 
 
-long_bmi_2015 <- BMI_2015 %>%
-pivot_longer(
-  cols = c('bmi_march', 'bmi_apr', 'bmi_may', 'bmi_june', 'bmi_july', 'bmi_aug', 'bmi_sep', 'bmi_oct', 'bmi_nov', 'bmi_dec', 'bmi_jan', 'bmi_feb', 'bmi_jan'),
-  names_to = "date", 
-  values_to = "monthly_bmi"
-  )
+
+long_bmi_2015 <- bmi_2015_long
 
 
 
-# names(long_bmi_2015)
 
-##  Keep relevant variable for analysis
-
-long_bmi_2015 <- long_bmi_2015 %>%
-  select("patient_id", 
-         "type1_diabetes", 
-         "type2_diabetes", 
-         "unknown_diabetes",  
-         "sex", 
-         "age_group", 
-         "region", 
-         "imd", 
-         "learning_disability", 
-         "dementia", 
-        "depression",                   
-        "psychosis_schiz_bipolar", 
-        "diabetes_type",               
-        "diabetes_t1",                  
-        "diabetes_t2",
-        "bmi",
-        "had_bmi",
-        "asthma",                      
-        "COPD",                        
-        "stroke_and_TIA" ,
-        "chronic_cardiac",              
-        "hypertension",                 
-        "all_cancer",                
-        "eth", 
-        "ethnicity_sus", 
-        "ethnicity", 
-        "date", 
-        "monthly_bmi")              
 
 
 
