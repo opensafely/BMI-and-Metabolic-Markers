@@ -1360,5 +1360,5 @@ BMI_complete_categories$imd[BMI_complete_categories$imd=="5"]<-"5 least deprived
 
 write.csv (BMI_complete_categories, here::here ("output/data","BMI_complete_categories.csv"))
 
-
+write.csv (BMI_complete_long, here::here ("output/data","BMI_complete_long.csv"))
 
