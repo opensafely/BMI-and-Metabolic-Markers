@@ -1256,8 +1256,7 @@ BMI_complete_categories_DWMP <- BMI_complete_categories %>%
   mutate(ethnic_no_miss = ifelse(is.na(ethnicity), 0, ethnicity ))
 
 BMI_complete_categories_DWMP <- BMI_complete_categories_DWMP %>%
-mutate(ethnicity_16_no_miss = ifelse(is.na(ethnicity_16), 0, ethnicity_16 )) %>%
-mutate(ethnicity_16 = ethnicity_16_no_miss)
+mutate(ethnicity_16_no_miss = ifelse(is.na(ethnicity_16), 0, ethnicity_16 ))
 
 
 ## confirm ethnicity categories
@@ -1298,7 +1297,7 @@ BMI_complete_categories_DWMP <- ungroup (BMI_complete_categories_DWMP)
 
 BMI_complete_categories_DWMP <- BMI_complete_categories_DWMP %>%
  dplyr::select(
- patient_id, year, precovid_obese_flag, median_bmi, had_bmi, BMI_categories, BMI_over27.5, DWMP, sex, age_group, region, imd, ethnicity, ethnicity_16, ethnic_no_miss, starts_with("comorbid_"), 
+ patient_id, year, precovid_obese_flag, median_bmi, had_bmi, BMI_categories, BMI_over27.5, DWMP, sex, age_group, region, imd, ethnicity, ethnicity_16, ethnic_no_miss, ethnicity_16_no_miss, starts_with("comorbid_"), 
  )
 
 
@@ -1319,23 +1318,24 @@ BMI_complete_categories_DWMP <- BMI_complete_categories_DWMP %>%
 
 BMI_complete_categories <- BMI_complete_categories_DWMP %>%
   mutate (eth_group_16=case_when(
-    ethnicity_16 == "1" ~ "British",
-    ethnicity_16 == "2" ~ "Irish",
-    ethnicity_16 == "3" ~ "Other White",
-    ethnicity_16 == "4" ~ "White and Black Caribbean",
-    ethnicity_16 == "5" ~ "White and Black African",
-    ethnicity_16 == "6" ~ "White and Asian",
-    ethnicity_16 == "7" ~ "Other Mixed",
-    ethnicity_16 == "8" ~ "Indian",
-    ethnicity_16 == "9" ~ "Pakistani",
-    ethnicity_16 == "10" ~ "Bangladeshi",
-    ethnicity_16 == "11" ~ "Other Asian",
-    ethnicity_16 == "12" ~ "Caribbean",
-    ethnicity_16 == "13" ~ "African",
-    ethnicity_16 == "14" ~ "Other Black",
-    ethnicity_16 == "15" ~ "Chinese",
-    ethnicity_16 == "16" ~ "Any other ethnic group",
-    ethnicity_16 ==  "0" ~  "Missing"))  
+    ethnicity_16_no_miss == "1" ~ "British",
+    ethnicity_16_no_miss == "2" ~ "Irish",
+    ethnicity_16_no_miss == "3" ~ "Other White",
+    ethnicity_16_no_miss == "4" ~ "White and Black Caribbean",
+    ethnicity_16_no_miss == "5" ~ "White and Black African",
+    ethnicity_16_no_miss == "6" ~ "White and Asian",
+    ethnicity_16_no_miss == "7" ~ "Other Mixed",
+    ethnicity_16_no_miss == "8" ~ "Indian",
+    ethnicity_16_no_miss == "9" ~ "Pakistani",
+    ethnicity_16_no_miss == "10" ~ "Bangladeshi",
+    ethnicity_16_no_miss == "11" ~ "Other Asian",
+    ethnicity_16_no_miss == "12" ~ "Caribbean",
+    ethnicity_16_no_miss == "13" ~ "African",
+    ethnicity_16_no_miss == "14" ~ "Other Black",
+    ethnicity_16_no_miss == "15" ~ "Chinese",
+    ethnicity_16_no_miss == "16" ~ "Any other ethnic group",
+    ethnicity_16_no_miss ==  "0" ~  "Missing"))  
+
 
 
 
