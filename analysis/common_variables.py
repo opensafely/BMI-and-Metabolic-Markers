@@ -213,208 +213,6 @@ common_variables = dict(
         """         
     ),
 
-#####################################
-### Monthly HbA1c
-######################################
-    
-    
-    hba1c_march=patients.with_these_clinical_events(
-        hba1c_new_codes, 
-        find_last_match_in_period=True,
-        between=["index_date", "index_date + 1 month"],
-        minimum_age_at_measurement=18,
-        include_measurement_date=True,
-        date_format="YYYY-MM-DD",
-        return_expectations={
-        "date": {"earliest": "2015-03-01", "latest": "2015-04-01"},
-        “float”: {“distribution”: “normal”, “mean”: 40.0, “stddev”: 20},
-        "incidence": 0.5,
-    }
-    
-    ),
-    
-    
- hba1c_apr=patients.with_these_clinical_events(
-     hba1c_new_codes, 
-     find_last_match_in_period=True,
-     between=["index_date + 1 month", "index_date + 2 months"],
-     minimum_age_at_measurement=18,
-     include_measurement_date=True,
-     date_format="YYYY-MM-DD",
-     return_expectations={
-        "date": {"earliest": "2015-04-01", "latest": "2015-05-01"},
-        “float”: {“distribution”: “normal”, “mean”: 40.0, “stddev”: 20},
-        "incidence": 0.5,
-    }
-    
-    ),   
-    
-  hba1c_may=patients.with_these_clinical_events(
-      hba1c_new_codes, 
-      find_last_match_in_period=True,
-      between=["index_date + 2 months", "index_date + 3 months"],
-      minimum_age_at_measurement=18,
-      include_measurement_date=True,
-      date_format="YYYY-MM-DD",
-      return_expectations={
-        "date": {"earliest": "2015-05-01", "latest": "2015-06-01"},
-        “float”: {“distribution”: “normal”, “mean”: 40.0, “stddev”: 20},
-        "incidence": 0.5,
-    }
-    
-    ),   
-       
-  
-   hba1c_june=patients.with_these_clinical_events(
-       hba1c_new_codes, 
-       find_last_match_in_period=True,
-       between=["index_date + 3 months", "index_date + 4 months"],
-       minimum_age_at_measurement=18,
-       include_measurement_date=True,
-       date_format="YYYY-MM-DD",
-       return_expectations={
-        "date": {"earliest": "2015-06-01", "latest": "2015-07-01"},
-        “float”: {“distribution”: “normal”, “mean”: 40.0, “stddev”: 20},
-        "incidence": 0.5,
-    }
-    
-    ),   
-    
-    
-   hba1c_july=patients.with_these_clinical_events(
-       hba1c_new_codes, 
-       find_last_match_in_period=True,
-       between=["index_date + 4 months", "index_date + 5 months"],
-       minimum_age_at_measurement=18,
-       include_measurement_date=True,
-       date_format="YYYY-MM-DD",
-       return_expectations={
-        "date": {"earliest": "2015-07-01", "latest": "2015-08-01"},
-        “float”: {“distribution”: “normal”, “mean”: 40.0, “stddev”: 20},
-        "incidence": 0.5,
-    }
-    
-    ),   
-    
-    
-   hba1c_aug=patients.with_these_clinical_events(
-       hba1c_new_codes, 
-       find_last_match_in_period=True,
-       between=["index_date + 5 months", "index_date + 6 months"],
-       minimum_age_at_measurement=18,
-       include_measurement_date=True,
-       date_format="YYYY-MM-DD",
-       return_expectations={
-        "date": {"earliest": "2015-08-01", "latest": "2015-09-01"},
-        “float”: {“distribution”: “normal”, “mean”: 40.0, “stddev”: 20},
-        "incidence": 0.5,
-    }
-    
-    ),   
-    
-    
-   
-   hba1c_sep=patients.with_these_clinical_events(
-       hba1c_new_codes, 
-       find_last_match_in_period=True,
-       between=["index_date + 6 months", "index_date + 7 months"],
-       minimum_age_at_measurement=18,
-       include_measurement_date=True,
-       date_format="YYYY-MM-DD",
-       return_expectations={
-        "date": {"earliest": "2015-09-01", "latest": "2015-10-01"},
-        “float”: {“distribution”: “normal”, “mean”: 40.0, “stddev”: 20},
-        "incidence": 0.5,
-    }
-    
-    ),   
-    
-    
-   hba1c_oct=patients.with_these_clinical_events(
-       hba1c_new_codes, 
-       find_last_match_in_period=True,
-       between=["index_date + 7 months", "index_date + 8 months"],
-       minimum_age_at_measurement=18,
-       include_measurement_date=True,
-       date_format="YYYY-MM-DD",
-       return_expectations={
-        "date": {"earliest": "2015-10-01", "latest": "2015-11-01"},
-        “float”: {“distribution”: “normal”, “mean”: 40.0, “stddev”: 20},
-        "incidence": 0.5,
-    }
-    
-    ),   
-    
-    
-   hba1c_nov=patients.with_these_clinical_events(
-       hba1c_new_codes, 
-       find_last_match_in_period=True,
-       between=["index_date + 8 months", "index_date + 9 months"],
-       minimum_age_at_measurement=18,
-       include_measurement_date=True,
-       date_format="YYYY-MM-DD",
-       return_expectations={
-        "date": {"earliest": "2015-11-01", "latest": "2015-12-01"},
-        “float”: {“distribution”: “normal”, “mean”: 40.0, “stddev”: 20},
-        "incidence": 0.5,
-    }
-    
-    ),   
-    
-    
-  
-   hba1c_dec=patients.with_these_clinical_events(
-       hba1c_new_codes, 
-       find_last_match_in_period=True,
-       between=["index_date + 9 months", "index_date + 10 months"],
-       minimum_age_at_measurement=18,
-       include_measurement_date=True,
-       date_format="YYYY-MM-DD",
-       return_expectations={
-        "date": {"earliest": "2015-12-01", "latest": "2016-01-01"},
-        “float”: {“distribution”: “normal”, “mean”: 40.0, “stddev”: 20},
-        "incidence": 0.5,
-    }
-    
-    ),   
-    
-   
-   hba1c_jan=patients.with_these_clinical_events(
-       hba1c_new_codes, 
-       find_last_match_in_period=True,
-       between=["index_date + 10 months", "index_date + 11 months"],
-       minimum_age_at_measurement=18,
-       include_measurement_date=True,
-       date_format="YYYY-MM-DD",
-       return_expectations={
-        "date": {"earliest": "2016-01-01", "latest": "2016-02-01"},
-        “float”: {“distribution”: “normal”, “mean”: 40.0, “stddev”: 20},
-        "incidence": 0.5,
-    }
-    
-    ),   
-    
-    
-   hba1c_feb=patients.with_these_clinical_events(
-       hba1c_new_codes, 
-       find_last_match_in_period=True,
-       between=["index_date + 11 months", "index_date + 12 months"],
-       minimum_age_at_measurement=18,
-       include_measurement_date=True,
-       date_format="YYYY-MM-DD",
-       return_expectations={
-        "date": {"earliest": "2016-02-01", "latest": "2016-03-01"},
-        “float”: {“distribution”: “normal”, “mean”: 40.0, “stddev”: 20},
-        "incidence": 0.5,
-    }
-    
-    ),   
-    
-
-    
-    
-    
-    
 
 
 #######################################
@@ -694,10 +492,45 @@ bmi_march=patients.most_recent_bmi(
             "rate": "uniform",
         },
     ),
+    
+    
+    
+#####################################
+### Monthly HbA1c
+######################################
+    
+    
+    hba1c_march=patients.with_these_clinical_events(
+        hba1c_new_codes, 
+        find_last_match_in_period=True,
+        between=["index_date", "index_date + 1 month"],
+        minimum_age_at_measurement=18,
+        returning="numeric_value",
+        include_measurement_date=True,
+        date_format="YYYY-MM-DD",
+        return_expectations={
+        "date": {"earliest": "2015-03-01", "latest": "2015-04-01"},
+        “float”: {“distribution”: “normal”, “mean”: 40.0, “stddev”: 20},
+        "incidence": 0.5,
+    }
+    
+    ),
+    
+
+    
+ 
+    
+    
+    
+    
+    
+    
 ##################################
 ###  ADD  OTHER QOF CONDITION VARIABLES
 #####################################
 
+
+    
  ##### Asthma
 ###############################
 
