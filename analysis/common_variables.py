@@ -518,7 +518,7 @@ bmi_march=patients.most_recent_bmi(
     hba1c_april=patients.with_these_clinical_events(
         hba1c_new_codes, 
         find_last_match_in_period=True,
-        between=["index_date+ 1 month", "index_date + 2 month"],
+        between=["index_date + 1 month", "index_date + 2 month"],
         returning="numeric_value",
         include_date_of_match=True,
         date_format="YYYY-MM-DD",
@@ -530,11 +530,158 @@ bmi_march=patients.most_recent_bmi(
     
     ),
     
+    hba1c_may=patients.with_these_clinical_events(
+        hba1c_new_codes, 
+        find_last_match_in_period=True,
+        between=["index_date +  2 month", "index_date + 3 month"],
+        returning="numeric_value",
+        include_date_of_match=True,
+        date_format="YYYY-MM-DD",
+        return_expectations={
+            "date": {"earliest": "2015-05-01", "latest": "2015-06-01"},
+            "float": {"distribution": "normal", "mean": 40, "stddev": 10},
+            "incidence": 0.5,
+        },
+    
+    ),
  
+     hba1c_june=patients.with_these_clinical_events(
+        hba1c_new_codes, 
+        find_last_match_in_period=True,
+        between=["index_date + 3 month", "index_date + 4 month"],
+        returning="numeric_value",
+        include_date_of_match=True,
+        date_format="YYYY-MM-DD",
+        return_expectations={
+            "date": {"earliest": "2015-06-01", "latest": "2015-07-01"},
+            "float": {"distribution": "normal", "mean": 40, "stddev": 10},
+            "incidence": 0.5,
+        },
+    
+    ),
+    
+     hba1c_july=patients.with_these_clinical_events(
+        hba1c_new_codes, 
+        find_last_match_in_period=True,
+        between=["index_date +  4 month", "index_date + 5 month"],
+        returning="numeric_value",
+        include_date_of_match=True,
+        date_format="YYYY-MM-DD",
+        return_expectations={
+            "date": {"earliest": "2015-07-01", "latest": "2015-08-01"},
+            "float": {"distribution": "normal", "mean": 40, "stddev": 10},
+            "incidence": 0.5,
+        },
+    
+    ),
+    
+     hba1c_aug=patients.with_these_clinical_events(
+        hba1c_new_codes, 
+        find_last_match_in_period=True,
+        between=["index_date +  5 month", "index_date + 6 month"],
+        returning="numeric_value",
+        include_date_of_match=True,
+        date_format="YYYY-MM-DD",
+        return_expectations={
+            "date": {"earliest": "2015-08-01", "latest": "2015-09-01"},
+            "float": {"distribution": "normal", "mean": 40, "stddev": 10},
+            "incidence": 0.5,
+        },
+    
+    ),
+    
+      hba1c_sep=patients.with_these_clinical_events(
+        hba1c_new_codes, 
+        find_last_match_in_period=True,
+        between=["index_date +  6 month", "index_date + 7 month"],
+        returning="numeric_value",
+        include_date_of_match=True,
+        date_format="YYYY-MM-DD",
+        return_expectations={
+            "date": {"earliest": "2015-09-01", "latest": "2015-10-01"},
+            "float": {"distribution": "normal", "mean": 40, "stddev": 10},
+            "incidence": 0.5,
+        },
+    
+    ),
     
     
+     hba1c_oct=patients.with_these_clinical_events(
+        hba1c_new_codes, 
+        find_last_match_in_period=True,
+        between=["index_date +  7 month", "index_date + 8 month"],
+        returning="numeric_value",
+        include_date_of_match=True,
+        date_format="YYYY-MM-DD",
+        return_expectations={
+            "date": {"earliest": "2015-10-01", "latest": "2015-11-01"},
+            "float": {"distribution": "normal", "mean": 40, "stddev": 10},
+            "incidence": 0.5,
+        },
+    
+    ),
     
     
+     hba1c_nov=patients.with_these_clinical_events(
+        hba1c_new_codes, 
+        find_last_match_in_period=True,
+        between=["index_date +  8 month", "index_date + 9 month"],
+        returning="numeric_value",
+        include_date_of_match=True,
+        date_format="YYYY-MM-DD",
+        return_expectations={
+            "date": {"earliest": "2015-11-01", "latest": "2015-12-01"},
+            "float": {"distribution": "normal", "mean": 40, "stddev": 10},
+            "incidence": 0.5,
+        },
+    
+    ),
+    
+    
+     hba1c_dec=patients.with_these_clinical_events(
+        hba1c_new_codes, 
+        find_last_match_in_period=True,
+        between=["index_date +  9 month", "index_date + 10 month"],
+        returning="numeric_value",
+        include_date_of_match=True,
+        date_format="YYYY-MM-DD",
+        return_expectations={
+            "date": {"earliest": "2015-12-01", "latest": "2016-01-01"},
+            "float": {"distribution": "normal", "mean": 40, "stddev": 10},
+            "incidence": 0.5,
+        },
+    
+    ),
+    
+     hba1c_jan=patients.with_these_clinical_events(
+        hba1c_new_codes, 
+        find_last_match_in_period=True,
+        between=["index_date +  10 month", "index_date + 11 month"],
+        returning="numeric_value",
+        include_date_of_match=True,
+        date_format="YYYY-MM-DD",
+        return_expectations={
+            "date": {"earliest": "2016-01-01", "latest": "2016-02-01"},
+            "float": {"distribution": "normal", "mean": 40, "stddev": 10},
+            "incidence": 0.5,
+        },
+    
+    ),
+    
+     hba1c_feb=patients.with_these_clinical_events(
+        hba1c_new_codes, 
+        find_last_match_in_period=True,
+        between=["index_date +  11 month", "index_date + 12 month"],
+        returning="numeric_value",
+        include_date_of_match=True,
+        date_format="YYYY-MM-DD",
+        return_expectations={
+            "date": {"earliest": "2016-02-01", "latest": "2016-03-01"},
+            "float": {"distribution": "normal", "mean": 40, "stddev": 10},
+            "incidence": 0.5,
+        },
+    
+    ),
     
     
 ##################################
