@@ -505,7 +505,7 @@ bmi_march=patients.most_recent_bmi(
         find_last_match_in_period=True,
         between=["index_date", "index_date + 1 month"],
         returning="numeric_value",
-        include_measurement_date=True,
+        include_date_of_match=True,
         date_format="YYYY-MM-DD",
         return_expectations={
             "date": {"earliest": "2015-03-01", "latest": "2015-04-01"},
