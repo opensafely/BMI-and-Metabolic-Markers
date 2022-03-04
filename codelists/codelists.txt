@@ -1,1 +1,67 @@
+opensafely/ethnicity/2020-04-27
 
+opensafely/atrial-fibrillation-clinical-finding/2020-07-09
+
+opensafely/chronic-cardiac-disease/2020-04-08
+
+opensafely/other-heart-disease/2020-05-11
+# heart disease excluding heart failure
+
+opensafely/heart-failure/2020-05-05
+
+opensafely/hypertension/2020-04-28
+
+opensafely/peripheral-arterial-disease/50e915d7
+
+## Stroke and TIA combine 2 codelists
+opensafely/stroke-updated/2020-06-02
+opensafely/transient-ischaemic-attack/3526e2ac
+
+## check which diabetes codes to use
+opensafely/diabetes/2020-04-15
+
+# For HbA1c level use codelist *opensafely/glycated-haemoglobin-hba1c-tests-numerical-value/5134e926  - this has included just IFCC measures. 
+opensafely/glycated-haemoglobin-hba1c-tests-numerical-value/5134e926
+
+## Diabetes diagnosis:  https://github.com/opensafely/ethnicity-covid-research/issues/11  to identify Type 1 or Type 2 based on codes  where there is overlap
+opensafely/type-1-diabetes/2020-06-29   
+opensafely/type-2-diabetes/2020-06-29   
+opensafely/antidiabetic-drugs/2020-07-16  
+opensafely/insulin-medication/2020-04-26  
+
+opensafely/diabetes-unknown-type/2020-06-29
+
+opensafely/asthma-diagnosis/2020-04-15
+
+opensafely/current-copd/2020-05-06
+
+opensafely/dementia-complete/48c76cf8
+
+opensafely/depression/2020-07-09
+
+opensafely/psychosis-schizophrenia-bipolar-affective-disease/2020-07-09
+
+
+## Cancer - combine the following 3 lists
+opensafely/cancer-excluding-lung-and-haematological/2020-04-15
+
+opensafely/haematological-cancer/2020-04-15
+
+opensafely/lung-cancer/2020-04-15
+
+## CKD - need to upload CTV3 codes
+## Epilepsy - need to upload CTV3 codes
+## Osteoperosis
+## palliative care
+## non diabetic hyperglycaemia
+## live birth or still birth
+
+opensafely/learning-disabilities/2020-07-06
+
+opensafely/rheumatoid-arthritis/2020-05-12
+
+opensafely/smoking-clear/2020-04-29
+
+
+
+opensafely/systolic-blood-pressure-qof/3572b5fb
