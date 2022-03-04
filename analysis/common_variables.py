@@ -504,7 +504,6 @@ bmi_march=patients.most_recent_bmi(
         hba1c_new_codes, 
         find_last_match_in_period=True,
         between=["index_date", "index_date + 1 month"],
-        minimum_age_at_measurement=18,
         returning="numeric_value",
         include_measurement_date=True,
         date_format="YYYY-MM-DD",
