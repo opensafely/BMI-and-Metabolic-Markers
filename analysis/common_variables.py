@@ -590,6 +590,52 @@ bmi_march=patients.most_recent_bmi(
     
     ),
     
+      hba1c_sep=patients.with_these_clinical_events(
+        hba1c_new_codes, 
+        find_last_match_in_period=True,
+        between=["index_date +  7 month", "index_date + 8 month"],
+        returning="numeric_value",
+        include_date_of_match=True,
+        date_format="YYYY-MM-DD",
+        return_expectations={
+            "date": {"earliest": "2015-09-01", "latest": "2015-10-01"},
+            "float": {"distribution": "normal", "mean": 40, "stddev": 10},
+            "incidence": 0.5,
+        },
+    
+    ),
+    
+    
+     hba1c_oct=patients.with_these_clinical_events(
+        hba1c_new_codes, 
+        find_last_match_in_period=True,
+        between=["index_date +  8 month", "index_date + 9 month"],
+        returning="numeric_value",
+        include_date_of_match=True,
+        date_format="YYYY-MM-DD",
+        return_expectations={
+            "date": {"earliest": "2015-10-01", "latest": "2015-11-01"},
+            "float": {"distribution": "normal", "mean": 40, "stddev": 10},
+            "incidence": 0.5,
+        },
+    
+    ),
+    
+    
+     hba1c_nov=patients.with_these_clinical_events(
+        hba1c_new_codes, 
+        find_last_match_in_period=True,
+        between=["index_date +  09 month", "index_date + 10 month"],
+        returning="numeric_value",
+        include_date_of_match=True,
+        date_format="YYYY-MM-DD",
+        return_expectations={
+            "date": {"earliest": "2015-11-01", "latest": "2015-12-01"},
+            "float": {"distribution": "normal", "mean": 40, "stddev": 10},
+            "incidence": 0.5,
+        },
+    
+    ),
     
 ##################################
 ###  ADD  OTHER QOF CONDITION VARIABLES
