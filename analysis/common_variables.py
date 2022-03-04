@@ -510,7 +510,7 @@ bmi_march=patients.most_recent_bmi(
         date_format="YYYY-MM-DD",
         return_expectations={
             "date": {"earliest": "2015-03-01", "latest": "2015-04-01"},
-            “float”: {“distribution”: “normal”, “mean”: 40.0, “stddev”: 20},
+            "float": {"distribution": "normal", "mean": 40, "stddev": 10},
             "incidence": 0.5,
         },
     
