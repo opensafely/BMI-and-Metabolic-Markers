@@ -349,6 +349,6 @@ BMI_complete_categories$imd[BMI_complete_categories$imd=="5"]<-"5 least deprived
 
 ###########################################################################################################
 
-write.csv (BMI_complete_categories, here::here ("output/data","BMI_complete_median_2015.csv"))
+write_feather (BMI_complete_categories, here::here ("output/data","BMI_complete_median_2015.feather"))
 
-write.csv (BMI_complete_long, here::here ("output/data","BMI_complete_long_2015.csv"))
+write_feather (BMI_complete_long, here::here ("output/data","BMI_complete_long_2015.feather"))
