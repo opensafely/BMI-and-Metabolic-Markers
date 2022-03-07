@@ -16,6 +16,7 @@ library(pacman)
 library(tidyverse)
 library(Hmisc)
 library(here)
+library(arrow)
 
 
 
@@ -27,19 +28,19 @@ library(here)
 
 #####  read in files
 
-input_all_2015_03_01<- read.csv (here::here ("output/data", "input_all_2015-03-01.csv"))
+input_all_2015_03_01<- read_feather (here::here ("output/data", "input_all_2015-03-01.feather"))
 
-input_all_2016_03_01<- read.csv (here::here ("output/data", "input_all_2016-03-01.csv"))
+input_all_2016_03_01<- read_feather (here::here ("output/data", "input_all_2016-03-01.feather"))
 
-input_all_2017_03_01<- read.csv (here::here ("output/data", "input_all_2017-03-01.csv"))
+input_all_2017_03_01<- read_feather (here::here ("output/data", "input_all_2017-03-01.feather"))
 
-input_all_2018_03_01<- read.csv (here::here ("output/data", "input_all_2018-03-01.csv"))
+input_all_2018_03_01<- read_feather (here::here ("output/data", "input_all_2018-03-01.feather"))
 
-input_all_2019_03_01<- read.csv (here::here ("output/data", "input_all_2019-03-01.csv"))
+input_all_2019_03_01<- read_feather (here::here ("output/data", "input_all_2019-03-01.feather"))
 
-input_all_2020_03_01<- read.csv (here::here ("output/data", "input_all_2020-03-01.csv"))
+input_all_2020_03_01<- read_feather (here::here ("output/data", "input_all_2020-03-01.feather"))
 
-input_all_2021_03_01<- read.csv (here::here ("output/data", "input_all_2021-03-01.csv"))
+input_all_2021_03_01<- read_feather (here::here ("output/data", "input_all_2021-03-01.feather"))
 
 
 ###################
