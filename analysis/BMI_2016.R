@@ -272,7 +272,7 @@ BMI_complete_categories_DWMP <- ungroup (BMI_complete_categories_DWMP)
 
 BMI_complete_categories_DWMP <- BMI_complete_categories_DWMP %>%
  dplyr::select(
- patient_id, year, precovid_obese_flag, median_bmi, had_bmi, BMI_categories, BMI_over27.5, DWMP, sex, age_group, region, imd, ethnicity, ethnicity_16, ethnic_no_miss, ethnicity_16_no_miss, starts_with("comorbid_"), 
+ patient_id, year, median_bmi, had_bmi, BMI_categories, BMI_over27.5, DWMP, sex, age_group, region, imd, ethnicity, ethnicity_16, ethnic_no_miss, ethnicity_16_no_miss, starts_with("comorbid_"), 
  )
 
 
