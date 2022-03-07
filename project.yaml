@@ -108,6 +108,15 @@ actions:
         cohort2: output/data/BMI_complete_long_2019.feather
 
 
+  generate_BMI_2021_data:
+    run: r:latest analysis/BMI_2021.R --output-dir=output/data --output-format feather
+    needs: [join_ethnicity]
+    outputs:
+      highly_sensitive:
+        cohort1: output/data/BMI_complete_median_2021.feather
+        cohort2: output/data/BMI_complete_long_2021.feather
+
+
   generate_BMI_2018_data:
     run: r:latest analysis/BMI_2018.R --output-dir=output/data --output-format feather
     needs: [join_ethnicity]
@@ -117,9 +126,6 @@ actions:
         cohort2: output/data/BMI_complete_long_2018.feather
 
 
-
-
-
   generate_BMI_2020_data:
     run: r:latest analysis/BMI_2020.R --output-dir=output/data --output-format feather
     needs: [join_ethnicity]
@@ -127,3 +133,4 @@ actions:
       highly_sensitive:
         cohort1: output/data/BMI_complete_median_2020.feather
         cohort2: output/data/BMI_complete_long_2020.feather
+
