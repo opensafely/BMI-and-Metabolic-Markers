@@ -39,4 +39,17 @@ BMI_complete_median <- bind_rows(BMI_2015_median,
                                BMI_2021_median)
 
 
+BMI_complete_median <- BMI_complete_median %>%
+  dplyr::mutate(patient_id = as.numeric(patient_id)) %>%
+  arrange(patient_id) %>%
+  dplyr::group_by(patient_id) %>%
+  dplyr::mutate(
+    precovid_obese = (((median_bmi >=30) & ((year=="2015")| (year=="2016")| (year=="2017")| (year=="2018") | (year=="2019")))) , 
+    .after = "patient_id") %>%
+  dplyr::mutate(
+    precovid_obese_flag = (any(precovid_obese == "TRUE")),
+    .after = "precovid_obese"
+  )
+
+
 write_feather (BMI_complete_median, here::here ("output/data","BMI_complete_median.feather"))
