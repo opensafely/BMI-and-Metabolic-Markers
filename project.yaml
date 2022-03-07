@@ -71,12 +71,12 @@ actions:
 
 
   generate_BMI_2015_data:
-    run: r:latest analysis/BMI_2015.R --output-dir=output/data
+    run: r:latest analysis/BMI_2015.R --output-dir=output/data --output-format feather
     needs: [join_ethnicity]
     outputs:
       highly_sensitive:
-        cohort1: output/data/BMI_complete_median_2015.csv
-        cohort2: output/data/BMI_complete_long_2015.csv
+        cohort1: output/data/BMI_complete_median_2015.feather
+        cohort2: output/data/BMI_complete_long_2015.feather
 
 
 
