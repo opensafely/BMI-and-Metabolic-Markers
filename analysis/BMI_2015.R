@@ -217,7 +217,7 @@ BMI_2015_median <- BMI_2015_median %>%
 
 ## CREATE FLAGS and LABEL DEMOGRAPHIS
 
-BMI_complete_median <- BMI_2015_media
+BMI_complete_median <- BMI_2015_median
 
 
 
