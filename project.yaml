@@ -71,5 +71,12 @@ actions:
         cohort: output/data/input*.feather
 
 
+  generate_BMI_complete_categories:
+    run: r:latest analysis/BMI.R --output-dir=output/data
+    needs: [join_ethnicity]
+    outputs:
+      highly_sensitive:
+        cohort1: output/data/BMI_complete_categories.csv
+        cohort2: output/data/BMI_complete_long.csv
   
 
