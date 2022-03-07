@@ -54,7 +54,7 @@ actions:
  
 
   generate_study_population_ethnicity:
-    run: cohortextractor:latest generate_cohort --study-definition study_definition_ethnicity --output-dir=output/data #--output-format=feather 
+    run: cohortextractor:latest generate_cohort --study-definition study_definition_ethnicity --output-dir=output/data --output-format=feather 
     outputs:
       highly_sensitive:
         cohort: output/data/input_ethnicity.feather
