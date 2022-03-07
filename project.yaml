@@ -5,7 +5,7 @@ expectations:
 
 actions:
 
-
+### 1.  Extract the cohort
 
   ## use the Measure function to allow data for different time periods to be extracted in the same study population:  --index-date-range ""yyyy-mm-dd"" --output-format feather 
   generate_study_population_1:
@@ -69,6 +69,7 @@ actions:
         cohort: output/data/input*.feather
 
 
+###  Develop BMI data sets.   Feather format to reduce data quantity.
 
   generate_BMI_2015_data:
     run: r:latest analysis/BMI_2015.R --output-dir=output/data --output-format feather
