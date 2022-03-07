@@ -150,7 +150,8 @@ BMI_complete_long <- BMI_complete_long %>%
     ethnicity_16_no_miss ==  "0" ~  "Missing"))  
 
 
-
+BMI_complete_long <- BMI_complete_long %>%
+ mutate("year"= 2017)
 
 #>>>>>> FINAL LONG DATA SET::  BMI_complete_long
 
@@ -265,17 +266,7 @@ BMI_complete_categories_DWMP <-BMI_complete_categories_DWMP %>%
   )
   )
 
-BMI_complete_categories_DWMP <- BMI_complete_categories_DWMP %>%
-  dplyr::mutate(patient_id = as.numeric(patient_id)) %>%
-  arrange(patient_id) %>%
-  dplyr::group_by(patient_id) %>%
-  dplyr::mutate(
-    precovid_obese = (((median_bmi >=30) & ((year=="2017")| (year=="2017")| (year=="2017")| (year=="2018") | (year=="2019")))) , 
-    .after = "patient_id") %>%
-  dplyr::mutate(
-    precovid_obese_flag = (any(precovid_obese == "TRUE")),
-    .after = "precovid_obese"
-  )
+
 
 
 BMI_complete_categories_DWMP <- ungroup (BMI_complete_categories_DWMP)
