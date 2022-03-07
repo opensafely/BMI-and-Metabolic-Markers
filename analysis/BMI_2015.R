@@ -1,12 +1,6 @@
-## Dummy Data to Review R - code for open safely analysis
-## Miriam Samuel 
-## 10th Feb 2022
-
-
-## NOTES
-## check ethnicity codes
-## generate a variable for to state if eligible for DWMP - based on BMI and ethnicity
-
+#####  YEARLY COHORTS FOR BMI
+##### Author: M Samuel
+##### Updated:  7th March 2022
 
 
 
