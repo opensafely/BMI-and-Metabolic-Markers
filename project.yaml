@@ -89,10 +89,10 @@ actions:
 
   
   generate_BMI_2017_data:
-    run: r:latest analysis/BMI_2016.R --output-dir=output/data --output-format feather
+    run: r:latest analysis/BMI_2017.R --output-dir=output/data --output-format feather
     needs: [join_ethnicity]
     outputs:
       highly_sensitive:
-        cohort1: output/data/BMI_complete_median_2016.feather
-        cohort2: output/data/BMI_complete_long_2016.feather
+        cohort1: output/data/BMI_complete_median_2017.feather
+        cohort2: output/data/BMI_complete_long_2017.feather
 
