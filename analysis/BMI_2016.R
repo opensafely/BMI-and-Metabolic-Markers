@@ -22,14 +22,14 @@ library(arrow)
 
 #####  read in files
 
-input_all_2015_03_01<- read_feather (here::here ("output/data", "input_all_2015-03-01.feather"))
+input_all_2016_03_01<- read_feather (here::here ("output/data", "input_all_2016-03-01.feather"))
 
 
 ###################
-## 2015 analysis
+## 2016 analysis
 ###################
 
-BMI_2015 <- as_tibble (input_all_2015_03_01)
+BMI_2016 <- as_tibble (input_all_2016_03_01)
 
 
 
@@ -37,7 +37,7 @@ BMI_2015 <- as_tibble (input_all_2015_03_01)
 ######################################### CODE to: 1) link BMI values and actual measured data; 2) de-duplicate any duplicate values due to monthly_bmi formula
 #########################################  Will need to also create a cohort with all values for median_bmi analysis
 
-bmi_2015_long <- BMI_2015 %>%   ## 1. pivot_longer date measured columns
+bmi_2016_long <- BMI_2016 %>%   ## 1. pivot_longer date measured columns
     pivot_longer(
       cols = c('bmi_march_date_measured', 'bmi_apr_date_measured', 'bmi_may_date_measured', 'bmi_june_date_measured', 'bmi_july_date_measured', 'bmi_aug_date_measured', 'bmi_sep_date_measured', 'bmi_oct_date_measured', 'bmi_nov_date_measured', 'bmi_dec_date_measured', 'bmi_jan_date_measured', 'bmi_feb_date_measured', 'bmi_jan_date_measured'),
       values_to = "bmi_measured_date" ) %>% 
@@ -84,7 +84,7 @@ bmi_2015_long <- BMI_2015 %>%   ## 1. pivot_longer date measured columns
 
 
 
-long_bmi_2015 <- bmi_2015_long
+long_bmi_2016 <- bmi_2016_long
 
 
 
@@ -92,12 +92,12 @@ long_bmi_2015 <- bmi_2015_long
 
 
 
-#  Hmisc::describe(long_bmi_2015)
+#  Hmisc::describe(long_bmi_2016)
 #  Missing BMIs have been recorded as '0' - will affect stats. Need to replace
  
 
 ## replace very high and very low BMIs with NA:  This will exclude erroneus values and exclude patients who are severely underweight/severely obese whose change in BMI may not reflect general population trends
-long_bmi_2015$monthly_bmi[long_bmi_2015$monthly_bmi<15|long_bmi_2015$monthly_bmi>65] <- NA
+long_bmi_2016$monthly_bmi[long_bmi_2016$monthly_bmi<15|long_bmi_2016$monthly_bmi>65] <- NA
 
 
 
@@ -106,7 +106,7 @@ long_bmi_2015$monthly_bmi[long_bmi_2015$monthly_bmi<15|long_bmi_2015$monthly_bmi
 
 
 ## recode ethnicity so NA is 0
-BMI_complete_long <- long_bmi_2015 %>%
+BMI_complete_long <- long_bmi_2016 %>%
   mutate(ethnic_no_miss = ifelse(is.na(ethnicity), 0, ethnicity ))
 
 BMI_complete_long <- BMI_complete_long %>%
@@ -160,8 +160,8 @@ BMI_complete_long <- BMI_complete_long %>%
 
 ### Calculate the median BMI for each patient based on measurements in that year
  
-bmi_2015_bypatid <- group_by(long_bmi_2015,patient_id)
-median_bmi_2015 <- dplyr::summarise(bmi_2015_bypatid,
+bmi_2016_bypatid <- group_by(long_bmi_2016,patient_id)
+median_bmi_2016 <- dplyr::summarise(bmi_2016_bypatid,
                             median_bmi = median(monthly_bmi, na.rm=TRUE)
                             )
  
@@ -170,11 +170,11 @@ median_bmi_2015 <- dplyr::summarise(bmi_2015_bypatid,
 
 
 ## add median BMI onto main data set using a merge
-long_bmi_2015_median <- left_join(long_bmi_2015, median_bmi_2015)
+long_bmi_2016_median <- left_join(long_bmi_2016, median_bmi_2016)
 
 
 ## group and then slice head
-BMI_2015_median <- long_bmi_2015_median %>%
+BMI_2016_median <- long_bmi_2016_median %>%
   group_by(patient_id) %>%
   slice_head() %>%
   select("patient_id", 
@@ -201,17 +201,17 @@ BMI_2015_median <- long_bmi_2015_median %>%
          "ethnicity",
          "ethnicity_16")              
 
-BMI_2015_median <- BMI_2015_median %>%
-  mutate("year"= 2015)
+BMI_2016_median <- BMI_2016_median %>%
+  mutate("year"= 2016)
 
 
-## 2015 mediam BMI per patient:  BMI_2015_median
+## 2016 mediam BMI per patient:  BMI_2016_median
 
 
 
 ## CREATE FLAGS and LABEL DEMOGRAPHIS
 
-BMI_complete_median <- BMI_2015_median
+BMI_complete_median <- BMI_2016_median
 
 
 
@@ -270,7 +270,7 @@ BMI_complete_categories_DWMP <- BMI_complete_categories_DWMP %>%
   arrange(patient_id) %>%
   dplyr::group_by(patient_id) %>%
   dplyr::mutate(
-    precovid_obese = (((median_bmi >=30) & ((year=="2015")| (year=="2016")| (year=="2017")| (year=="2018") | (year=="2019")))) , 
+    precovid_obese = (((median_bmi >=30) & ((year=="2016")| (year=="2016")| (year=="2017")| (year=="2018") | (year=="2019")))) , 
     .after = "patient_id") %>%
   dplyr::mutate(
     precovid_obese_flag = (any(precovid_obese == "TRUE")),
@@ -343,6 +343,6 @@ BMI_complete_categories$imd[BMI_complete_categories$imd=="5"]<-"5 least deprived
 
 ###########################################################################################################
 
-write_feather (BMI_complete_categories, here::here ("output/data","BMI_complete_median_2015.feather"))
+write_feather (BMI_complete_categories, here::here ("output/data","BMI_complete_median_2016.feather"))
 
-write_feather (BMI_complete_long, here::here ("output/data","BMI_complete_long_2015.feather"))
+write_feather (BMI_complete_long, here::here ("output/data","BMI_complete_long_2016.feather"))

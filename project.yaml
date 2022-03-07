@@ -5,7 +5,7 @@ expectations:
 
 actions:
 
-
+### 1.  Extract the cohort
 
   ## use the Measure function to allow data for different time periods to be extracted in the same study population:  --index-date-range ""yyyy-mm-dd"" --output-format feather 
   generate_study_population_1:
@@ -69,17 +69,69 @@ actions:
         cohort: output/data/input*.feather
 
 
+###  Develop BMI data sets.   Feather format to reduce data quantity.
 
   generate_BMI_2015_data:
-    run: r:latest analysis/BMI_2015.R --output-dir=output/data
+    run: r:latest analysis/BMI_2015.R --output-dir=output/data --output-format feather
     needs: [join_ethnicity]
     outputs:
       highly_sensitive:
-        cohort1: output/data/BMI_complete_median_2015.csv
-        cohort2: output/data/BMI_complete_long_2015.csv
+        cohort1: output/data/BMI_complete_median_2015.feather
+        cohort2: output/data/BMI_complete_long_2015.feather
 
 
-
+  generate_BMI_2016_data:
+    run: r:latest analysis/BMI_2016.R --output-dir=output/data --output-format feather
+    needs: [join_ethnicity]
+    outputs:
+      highly_sensitive:
+        cohort1: output/data/BMI_complete_median_2016.feather
+        cohort2: output/data/BMI_complete_long_2016.feather
 
   
-  
+  generate_BMI_2017_data:
+    run: r:latest analysis/BMI_2017.R --output-dir=output/data --output-format feather
+    needs: [join_ethnicity]
+    outputs:
+      highly_sensitive:
+        cohort1: output/data/BMI_complete_median_2017.feather
+        cohort2: output/data/BMI_complete_long_2017.feather
+        
+   
+   
+   
+  generate_BMI_2019_data:
+    run: r:latest analysis/BMI_2019.R --output-dir=output/data --output-format feather
+    needs: [join_ethnicity]
+    outputs:
+      highly_sensitive:
+        cohort1: output/data/BMI_complete_median_2019.feather
+        cohort2: output/data/BMI_complete_long_2019.feather
+
+
+  generate_BMI_2021_data:
+    run: r:latest analysis/BMI_2021.R --output-dir=output/data --output-format feather
+    needs: [join_ethnicity]
+    outputs:
+      highly_sensitive:
+        cohort1: output/data/BMI_complete_median_2021.feather
+        cohort2: output/data/BMI_complete_long_2021.feather
+
+
+  generate_BMI_2018_data:
+    run: r:latest analysis/BMI_2018.R --output-dir=output/data --output-format feather
+    needs: [join_ethnicity]
+    outputs:
+      highly_sensitive:
+        cohort1: output/data/BMI_complete_median_2018.feather
+        cohort2: output/data/BMI_complete_long_2018.feather
+
+
+  generate_BMI_2020_data:
+    run: r:latest analysis/BMI_2020.R --output-dir=output/data --output-format feather
+    needs: [join_ethnicity]
+    outputs:
+      highly_sensitive:
+        cohort1: output/data/BMI_complete_median_2020.feather
+        cohort2: output/data/BMI_complete_long_2020.feather
+
