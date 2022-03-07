@@ -9,7 +9,7 @@ actions:
 
   ## use the Measure function to allow data for different time periods to be extracted in the same study population:  --index-date-range ""yyyy-mm-dd"" --output-format feather 
   generate_study_population_1:
-    run: cohortextractor:latest generate_cohort --study-definition study_definition_all --output-dir=output/data --index-date-range "2015-03-01"
+    run: cohortextractor:latest generate_cohort --study-definition study_definition_all --output-dir=output/data --index-date-range "2015-03-01" --output-format feather
     outputs:
       highly_sensitive:
         cohort: output/data/input_all_2015-03-01.feather  
