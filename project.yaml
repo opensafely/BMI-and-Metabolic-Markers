@@ -144,3 +144,14 @@ generate_complete_median_BMI_data:
     outputs:
       highly_sensitive:
         cohort1: output/data/BMI_complete_median.feather
+        
+ 
+ # generate summary stats of median BMI by exposures
+ 
+generate_median_summary_stats:
+    run: r:latest analysis/BMI_median_summary_stats.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/median_bmi_summary_table_demographic.csv
+        table2: output/data/median_bmi_summary_table_covariates.csv
