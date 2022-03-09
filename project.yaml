@@ -155,3 +155,14 @@ actions:
       moderately_sensitive:
         table1: output/data/median_bmi_summary_table_demographic.csv
         table2: output/data/median_bmi_summary_table_covariates.csv
+
+# generate tables of who had a BMI measured
+  generate_had_bmi_summary_stats:
+    run: r:latest analysis/had_bmi_regression.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/regression_had_bmi_2021.csv
+        table2: output/data/regression_had_bmi_2020.csv
+        table3: output/data/multivariate_regression_had_bmi_2020.csv
+        table4: output/data/multivariate_regression_had_bmi_2021.csv
