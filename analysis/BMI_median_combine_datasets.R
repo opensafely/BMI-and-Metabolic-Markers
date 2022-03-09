@@ -18,17 +18,17 @@ library(arrow)
 
 ## read in data files
 
-BMI_2015_median <- read_feather (here::here ("output/data", "BMI_complete_median_2015"))
-BMI_2016_median <- read_feather (here::here ("output/data", "BMI_complete_median_2016"))
-BMI_2017_median <- read_feather (here::here ("output/data", "BMI_complete_median_2017"))
-BMI_2018_median <- read_feather (here::here ("output/data", "BMI_complete_median_2018"))
-BMI_2019_median <- read_feather (here::here ("output/data", "BMI_complete_median_2019"))
-BMI_2020_median <- read_feather (here::here ("output/data", "BMI_complete_median_2020"))
-BMI_2021_median <- read_feather (here::here ("output/data", "BMI_complete_median_2021"))
+BMI_2015_median <- read_feather (here::here ("output/data", "BMI_complete_median_2015.feather"))
+BMI_2016_median <- read_feather (here::here ("output/data", "BMI_complete_median_2016.feather"))
+BMI_2017_median <- read_feather (here::here ("output/data", "BMI_complete_median_2017.feather"))
+BMI_2018_median <- read_feather (here::here ("output/data", "BMI_complete_median_2018.feather"))
+BMI_2019_median <- read_feather (here::here ("output/data", "BMI_complete_median_2019.feather"))
+BMI_2020_median <- read_feather (here::here ("output/data", "BMI_complete_median_2020.feather"))
+BMI_2021_median <- read_feather (here::here ("output/data", "BMI_complete_median_2021.feather"))
 
 
 
-BMI_complete_median_2020.feather
+# append all the years
 
 BMI_complete_median <- bind_rows(BMI_2015_median, 
                                BMI_2016_median, 
@@ -38,6 +38,8 @@ BMI_complete_median <- bind_rows(BMI_2015_median,
                                BMI_2020_median,
                                BMI_2021_median)
 
+
+# create a flag for it they were obese pre-covid
 
 BMI_complete_median <- BMI_complete_median %>%
   dplyr::mutate(patient_id = as.numeric(patient_id)) %>%
