@@ -10,9 +10,10 @@ library(purrr)
 library(dplyr)
 library(janitor)
 library(tidyverse)
+library(arrow)
 
 #read in file
-BMI_complete_categories <- read.csv (here::here ("output/data", "BMI_complete_categories.csv"))
+BMI_complete_categories <- read_feather (here::here ("output/data", "BMI_complete_median.feather"))
 
 
 ################################################################################################
@@ -428,7 +429,7 @@ write.csv (univariate_had_bmi_2021, here::here ("output/data","regression_had_bm
 write.csv (univariate_had_bmi_2020, here::here ("output/data","regression_had_bmi_2020.csv"))
 
 write.csv (models_age_sex_ethnic_2020, here::here ("output/data","multivariate_regression_had_bmi_2020.csv"))
-write.csv (models_age_sex_ethnic_2020, here::here ("output/data","multivariate_regression_had_bmi_2021.csv"))
+write.csv (models_age_sex_ethnic_2021, here::here ("output/data","multivariate_regression_had_bmi_2021.csv"))
 
 ################################################################################################
 
