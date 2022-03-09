@@ -69,7 +69,7 @@ actions:
         cohort: output/data/input*.feather
 
 
-###  Develop BMI data sets.   Feather format to reduce data quantity.
+###  Develop yearly BMI data sets to de-duplicate data and calculate median BMI each year.   Feather format to reduce data quantity.
 
   generate_BMI_2015_data:
     run: r:latest analysis/BMI_2015.R --output-dir=output/data --output-format feather
@@ -135,3 +135,12 @@ actions:
         cohort1: output/data/BMI_complete_median_2020.feather
         cohort2: output/data/BMI_complete_long_2020.feather
 
+
+# Append yearly data sets to produce a complete data set for analysis of change in trends
+
+generate_complete_median_BMI_data:
+    run: r:latest analysis/BMI_median_combine_datasets.R --output-dir=output/data --output-format feather
+    needs: [generate_BMI_2015_data, generate_BMI_2016_data, generate_BMI_2017_data, generate_BMI_2018_data, generate_BMI_2019_data, generate_BMI_2020_data, generate_BMI_2021_data ]
+    outputs:
+      highly_sensitive:
+        cohort1: output/data/BMI_complete_median.feather
