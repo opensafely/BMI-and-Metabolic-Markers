@@ -163,3 +163,4 @@ actions:
     outputs:
       moderately_sensitive:
         table1: output/data/regression_had_bmi_2020.csv
+        table2: output/data/regression_had_bmi_2021.csv
