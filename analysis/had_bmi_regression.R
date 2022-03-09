@@ -23,7 +23,7 @@ BMI_complete_categories <- read_feather (here::here ("output/data", "BMI_complet
 
 ## select the variables needed for analysis
 
-BMI_complete_categories_2020 <- BMI_complete_categories_all
+BMI_complete_categories_2020 <- BMI_complete_categories
 
 
 ##  Filter by year
