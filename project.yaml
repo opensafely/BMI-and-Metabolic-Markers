@@ -138,7 +138,7 @@ actions:
 
 # Append yearly data sets to produce a complete data set for analysis of change in trends
 
-generate_complete_median_BMI_data:
+  generate_complete_median_BMI_data:
     run: r:latest analysis/BMI_median_combine_datasets.R --output-dir=output/data --output-format feather
     needs: [generate_BMI_2015_data, generate_BMI_2016_data, generate_BMI_2017_data, generate_BMI_2018_data, generate_BMI_2019_data, generate_BMI_2020_data, generate_BMI_2021_data ]
     outputs:
@@ -148,7 +148,7 @@ generate_complete_median_BMI_data:
  
  # generate summary stats of median BMI by exposures
  
-generate_median_summary_stats:
+  generate_median_summary_stats:
     run: r:latest analysis/BMI_median_summary_stats.R --output-dir=output/data 
     needs: [generate_complete_median_BMI_data]
     outputs:

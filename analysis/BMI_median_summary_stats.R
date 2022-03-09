@@ -60,7 +60,7 @@ median_bmi_all <- median_bmi_all %>%
   dplyr::mutate(covariate = "all", category = "all")
     
   
-View(median_bmi_all)
+
 
 ## Function to calculate average BMI
 average_bmi_function   <- function(data, var) {
@@ -146,9 +146,9 @@ median_bmi_summary_demographic <- median_bmi_all %>%
   dplyr::bind_rows(median_bmi_age_group, 
                    median_bmi_sex, 
                    median_bmi_ethnic_no_miss, 
-                   median_bmi_eth_group_16
+                   median_bmi_eth_group_16,
                    median_bmi_imd, 
-                   median_bmi_ethnic_region) %>%
+                   median_bmi_region) %>%
   dplyr::select(covariate, category, "2015","2016","2017","2018","2019","2020", "2021")
 
 
@@ -170,7 +170,7 @@ median_bmi_summary_covariates <- median_bmi_all %>%
     median_bmi_comorbid_all_cancer 
     )%>%
   dplyr::select(covariate,category, "2015","2016","2017","2018","2019","2020", "2021")
-View(median_bmi_summary_covariates)
+
 
 
 #####################################################################################
