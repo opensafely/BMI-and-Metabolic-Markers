@@ -98,10 +98,7 @@ BMI_2015 <- BMI_2015 %>%
     ethnicity_16_no_miss ==  "0" ~  "Missing"))  
 
 
-BMI_2015 <- BMI_2015 %>%
-  mutate (imd = as.factor(imd)) %>%
-  mutate (ethnic_no_miss = as.factor(ethnic_no_miss) %>%
-  mutate (ethnicity_16_no_miss = as.factor(ethnicity_16_no_miss)
+
 
 
 
