@@ -19,7 +19,9 @@ library(janitor)
 
 ####################################
 ###################################
+#####  read in files
 
+input_all_2015_03_01<- read_feather (here::here ("output/data", "input_all_2015-03-01.feather"))
 ###################
 ## 2015 analysis
 ###################
