@@ -5,7 +5,7 @@ expectations:
 
 actions:
 
-
+### 1.  Extract the cohort
 
   ## use the Measure function to allow data for different time periods to be extracted in the same study population:  --index-date-range ""yyyy-mm-dd"" --output-format feather 
   generate_study_population_1:
@@ -69,12 +69,103 @@ actions:
         cohort: output/data/input*.feather
 
 
+###  Develop yearly BMI data sets to de-duplicate data and calculate median BMI each year.   Feather format to reduce data quantity.
 
-  
-  generate_BMI_complete_categories:
-    run: r:latest analysis/BMI.R --output-dir=output/data
+  generate_BMI_2015_data:
+    run: r:latest analysis/BMI_2015.R --output-dir=output/data --output-format feather
     needs: [join_ethnicity]
     outputs:
       highly_sensitive:
-        cohort1: output/data/BMI_complete_categories.csv
-        cohort2: output/data/BMI_complete_long.csv
+        cohort1: output/data/BMI_complete_median_2015.feather
+        cohort2: output/data/BMI_complete_long_2015.feather
+
+
+  generate_BMI_2016_data:
+    run: r:latest analysis/BMI_2016.R --output-dir=output/data --output-format feather
+    needs: [join_ethnicity]
+    outputs:
+      highly_sensitive:
+        cohort1: output/data/BMI_complete_median_2016.feather
+        cohort2: output/data/BMI_complete_long_2016.feather
+
+  
+  generate_BMI_2017_data:
+    run: r:latest analysis/BMI_2017.R --output-dir=output/data --output-format feather
+    needs: [join_ethnicity]
+    outputs:
+      highly_sensitive:
+        cohort1: output/data/BMI_complete_median_2017.feather
+        cohort2: output/data/BMI_complete_long_2017.feather
+        
+   
+   
+   
+  generate_BMI_2019_data:
+    run: r:latest analysis/BMI_2019.R --output-dir=output/data --output-format feather
+    needs: [join_ethnicity]
+    outputs:
+      highly_sensitive:
+        cohort1: output/data/BMI_complete_median_2019.feather
+        cohort2: output/data/BMI_complete_long_2019.feather
+
+
+  generate_BMI_2021_data:
+    run: r:latest analysis/BMI_2021.R --output-dir=output/data --output-format feather
+    needs: [join_ethnicity]
+    outputs:
+      highly_sensitive:
+        cohort1: output/data/BMI_complete_median_2021.feather
+        cohort2: output/data/BMI_complete_long_2021.feather
+
+
+  generate_BMI_2018_data:
+    run: r:latest analysis/BMI_2018.R --output-dir=output/data --output-format feather
+    needs: [join_ethnicity]
+    outputs:
+      highly_sensitive:
+        cohort1: output/data/BMI_complete_median_2018.feather
+        cohort2: output/data/BMI_complete_long_2018.feather
+
+
+  generate_BMI_2020_data:
+    run: r:latest analysis/BMI_2020.R --output-dir=output/data --output-format feather
+    needs: [join_ethnicity]
+    outputs:
+      highly_sensitive:
+        cohort1: output/data/BMI_complete_median_2020.feather
+        cohort2: output/data/BMI_complete_long_2020.feather
+
+
+# Append yearly data sets to produce a complete data set for analysis of change in trends
+
+  generate_complete_median_BMI_data:
+    run: r:latest analysis/BMI_median_combine_datasets.R --output-dir=output/data --output-format feather
+    needs: [generate_BMI_2015_data, generate_BMI_2016_data, generate_BMI_2017_data, generate_BMI_2018_data, generate_BMI_2019_data, generate_BMI_2020_data, generate_BMI_2021_data ]
+    outputs:
+      highly_sensitive:
+        cohort1: output/data/BMI_complete_median.feather
+        
+ 
+ # generate summary stats of median BMI by exposures
+ 
+  generate_median_summary_stats:
+    run: r:latest analysis/BMI_median_summary_stats.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/median_bmi_summary_table_demographic.csv
+        table2: output/data/median_bmi_summary_table_covariates.csv
+
+
+
+# generate tables of who had a BMI measured
+  generate_had_bmi_summary_stats:
+    run: r:latest analysis/had_bmi_regression.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/regression_had_bmi_2020.csv
+        table2: output/data/regression_had_bmi_2021.csv
+        table3: output/data/multivariate_regression_had_bmi_2020.csv
+        table4: output/data/multivariate_regression_had_bmi_2021.csv
+

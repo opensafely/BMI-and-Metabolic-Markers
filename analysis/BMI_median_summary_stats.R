@@ -1,8 +1,8 @@
 ##########################################################
 # Author:  Miriam Samuel
-# Input:  BMI_complete_categories
+# Input:  BMI_complete_median.feather
 # Output:
-# Last modified:  1st March 2022
+# Last modified:  9th March 2022
 ###########################################################
 
 
@@ -14,10 +14,11 @@ library(purrr)
 library(dplyr)
 library(janitor)
 library(tidyverse)
+library(here)
+library(arrow)
 
 #  >>  Read in file
-BMI_complete_categories <- read.csv (here::here ("output/data", "BMI_complete_categories.csv"))
-
+BMI_complete_categories <- read_feather (here::here ("output/data", "BMI_complete_median.feather"))
 
 # >> Start analysis
 
@@ -32,6 +33,7 @@ BMI_complete_categories_2 <- BMI_complete_categories_2 %>%
     sex = as.character(sex), 
     age_group = as.character(age_group),
     ethnic_no_miss = as.character(ethnic_no_miss),
+    eth_group_16 = as.character(eth_group_16),
     imd = as.character(imd), 
     region = as.character (region),
   ) %>%
@@ -58,7 +60,7 @@ median_bmi_all <- median_bmi_all %>%
   dplyr::mutate(covariate = "all", category = "all")
     
   
-View(median_bmi_all)
+
 
 ## Function to calculate average BMI
 average_bmi_function   <- function(data, var) {
@@ -89,6 +91,9 @@ median_bmi_region <- average_bmi_function(BMI_complete_categories_2, region) %>%
 
 median_bmi_ethnic_no_miss <- average_bmi_function(BMI_complete_categories_2, ethnic_no_miss) %>%
   dplyr::mutate(covariate="ethnic_no_miss")
+  
+median_bmi_eth_group_16 <- average_bmi_function(BMI_complete_categories_2, eth_group_16) %>%
+  dplyr::mutate(covariate="eth_group_16")
 
 median_bmi_comorbid_learning_disability <- average_bmi_function(BMI_complete_categories_2, comorbid_learning_disability) %>%
   dplyr::mutate(covariate="comorbid_learning_disability")
@@ -141,11 +146,12 @@ median_bmi_summary_demographic <- median_bmi_all %>%
   dplyr::bind_rows(median_bmi_age_group, 
                    median_bmi_sex, 
                    median_bmi_ethnic_no_miss, 
+                   median_bmi_eth_group_16,
                    median_bmi_imd, 
-                   median_bmi_ethnic_region) %>%
+                   median_bmi_region) %>%
   dplyr::select(covariate, category, "2015","2016","2017","2018","2019","2020", "2021")
 
-View(median_bmi_summary_demographic)
+
 
 # Summary of covariates
 median_bmi_summary_covariates <- median_bmi_all %>%
@@ -164,4 +170,11 @@ median_bmi_summary_covariates <- median_bmi_all %>%
     median_bmi_comorbid_all_cancer 
     )%>%
   dplyr::select(covariate,category, "2015","2016","2017","2018","2019","2020", "2021")
-View(median_bmi_summary_covariates)
+
+
+
+#####################################################################################
+# define outputs
+
+write.csv (median_bmi_summary_demographic, here::here ("output/data","median_bmi_summary_table_demographic.csv"))
+write.csv (median_bmi_summary_covariates, here::here ("output/data","median_bmi_summary_table_covariates.csv"))
