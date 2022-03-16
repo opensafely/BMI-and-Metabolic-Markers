@@ -34,6 +34,60 @@ BMI_2015 <- as_tibble (input_all_2015_03_01)
 
 
 
+# label exposure variables
+## recode and label some demographic components
+
+
+## recode ethnicity so NA is 0
+BMI_2015 <- BMI_2015 %>%
+  mutate(ethnic_no_miss = ifelse(is.na(ethnicity), 0, ethnicity ))
+
+BMI_2015 <- BMI_2015 %>%
+mutate(ethnicity_16_no_miss = ifelse(is.na(ethnicity_16), 0, ethnicity_16 )) 
+
+
+### label
+BMI_2015$ethnic_no_miss[BMI_2015$ethnic_no_miss=="1"]<-"White"
+BMI_2015$ethnic_no_miss[BMI_2015$ethnic_no_miss=="2"]<-"Mixed"
+BMI_2015$ethnic_no_miss[BMI_2015$ethnic_no_miss=="3"]<-"Asian or Asian British"
+BMI_2015$ethnic_no_miss[BMI_2015$ethnic_no_miss=="4"]<-"Black or Black British"
+BMI_2015$ethnic_no_miss[BMI_2015$ethnic_no_miss=="5"]<-"Other ethnic groups"
+BMI_2015$ethnic_no_miss[BMI_2015$ethnic_no_miss=="0"]<-"No ethnicity recorded"
+
+BMI_2015$imd[BMI_2015$imd=="0"]<-"NA"
+BMI_2015$imd[BMI_2015$imd=="1"]<-"1 most deprived"
+BMI_2015$imd[BMI_2015$imd=="2"]<-"2"
+BMI_2015$imd[BMI_2015$imd=="3"]<-"3"
+BMI_2015$imd[BMI_2015$imd=="4"]<-"4"
+BMI_2015$imd[BMI_2015$imd=="5"]<-"5 least deprived"
+
+
+BMI_2015 <- BMI_2015 %>%
+  mutate (eth_group_16=case_when(
+    ethnicity_16_no_miss == "1" ~ "British",
+    ethnicity_16_no_miss == "2" ~ "Irish",
+    ethnicity_16_no_miss == "3" ~ "Other White",
+    ethnicity_16_no_miss == "4" ~ "White and Black Caribbean",
+    ethnicity_16_no_miss == "5" ~ "White and Black African",
+    ethnicity_16_no_miss == "6" ~ "White and Asian",
+    ethnicity_16_no_miss == "7" ~ "Other Mixed",
+    ethnicity_16_no_miss == "8" ~ "Indian",
+    ethnicity_16_no_miss == "9" ~ "Pakistani",
+    ethnicity_16_no_miss == "10" ~ "Bangladeshi",
+    ethnicity_16_no_miss == "11" ~ "Other Asian",
+    ethnicity_16_no_miss == "12" ~ "Caribbean",
+    ethnicity_16_no_miss == "13" ~ "African",
+    ethnicity_16_no_miss == "14" ~ "Other Black",
+    ethnicity_16_no_miss == "15" ~ "Chinese",
+    ethnicity_16_no_miss == "16" ~ "Any other ethnic group",
+    ethnicity_16_no_miss ==  "0" ~  "Missing"))  
+
+
+
+
+
+
+
 ######################################### CODE to: 1) link BMI values and actual measured data; 2) de-duplicate any duplicate values due to monthly_bmi formula
 #########################################  Will need to also create a cohort with all values for median_bmi analysis
 
@@ -97,58 +151,10 @@ long_bmi_2015 <- bmi_2015_long
 long_bmi_2015$monthly_bmi[long_bmi_2015$monthly_bmi<15|long_bmi_2015$monthly_bmi>65] <- NA
 
 
-
-
-## recode and label some demographic components
-
-
-## recode ethnicity so NA is 0
+## Add a year flag
 BMI_complete_long <- long_bmi_2015 %>%
-  mutate(ethnic_no_miss = ifelse(is.na(ethnicity), 0, ethnicity ))
-
-BMI_complete_long <- BMI_complete_long %>%
-mutate(ethnicity_16_no_miss = ifelse(is.na(ethnicity_16), 0, ethnicity_16 )) 
-
-
-### label
-BMI_complete_long$ethnic_no_miss[BMI_complete_long$ethnic_no_miss=="1"]<-"White"
-BMI_complete_long$ethnic_no_miss[BMI_complete_long$ethnic_no_miss=="2"]<-"Mixed"
-BMI_complete_long$ethnic_no_miss[BMI_complete_long$ethnic_no_miss=="3"]<-"Asian or Asian British"
-BMI_complete_long$ethnic_no_miss[BMI_complete_long$ethnic_no_miss=="4"]<-"Black or Black British"
-BMI_complete_long$ethnic_no_miss[BMI_complete_long$ethnic_no_miss=="5"]<-"Other ethnic groups"
-BMI_complete_long$ethnic_no_miss[BMI_complete_long$ethnic_no_miss=="0"]<-"No ethnicity recorded"
-
-BMI_complete_long$imd[BMI_complete_long$imd=="0"]<-"NA"
-BMI_complete_long$imd[BMI_complete_long$imd=="1"]<-"1 most deprived"
-BMI_complete_long$imd[BMI_complete_long$imd=="2"]<-"2"
-BMI_complete_long$imd[BMI_complete_long$imd=="3"]<-"3"
-BMI_complete_long$imd[BMI_complete_long$imd=="4"]<-"4"
-BMI_complete_long$imd[BMI_complete_long$imd=="5"]<-"5 least deprived"
-
-
-BMI_complete_long <- BMI_complete_long %>%
-  mutate (eth_group_16=case_when(
-    ethnicity_16_no_miss == "1" ~ "British",
-    ethnicity_16_no_miss == "2" ~ "Irish",
-    ethnicity_16_no_miss == "3" ~ "Other White",
-    ethnicity_16_no_miss == "4" ~ "White and Black Caribbean",
-    ethnicity_16_no_miss == "5" ~ "White and Black African",
-    ethnicity_16_no_miss == "6" ~ "White and Asian",
-    ethnicity_16_no_miss == "7" ~ "Other Mixed",
-    ethnicity_16_no_miss == "8" ~ "Indian",
-    ethnicity_16_no_miss == "9" ~ "Pakistani",
-    ethnicity_16_no_miss == "10" ~ "Bangladeshi",
-    ethnicity_16_no_miss == "11" ~ "Other Asian",
-    ethnicity_16_no_miss == "12" ~ "Caribbean",
-    ethnicity_16_no_miss == "13" ~ "African",
-    ethnicity_16_no_miss == "14" ~ "Other Black",
-    ethnicity_16_no_miss == "15" ~ "Chinese",
-    ethnicity_16_no_miss == "16" ~ "Any other ethnic group",
-    ethnicity_16_no_miss ==  "0" ~  "Missing"))  
-
-
-BMI_complete_long <- BMI_complete_long %>%
     mutate("year"= 2015)
+
 
 
 #>>>>>> FINAL LONG DATA SET::  BMI_complete_long
@@ -285,49 +291,11 @@ BMI_complete_categories_DWMP <- BMI_complete_categories_DWMP %>%
     .after = "median_bmi"
   )                       
 
-## Label variables ethnicity and IMD to make clearer
-
-
-
-BMI_complete_categories <- BMI_complete_categories_DWMP %>%
-  mutate (eth_group_16=case_when(
-    ethnicity_16_no_miss == "1" ~ "British",
-    ethnicity_16_no_miss == "2" ~ "Irish",
-    ethnicity_16_no_miss == "3" ~ "Other White",
-    ethnicity_16_no_miss == "4" ~ "White and Black Caribbean",
-    ethnicity_16_no_miss == "5" ~ "White and Black African",
-    ethnicity_16_no_miss == "6" ~ "White and Asian",
-    ethnicity_16_no_miss == "7" ~ "Other Mixed",
-    ethnicity_16_no_miss == "8" ~ "Indian",
-    ethnicity_16_no_miss == "9" ~ "Pakistani",
-    ethnicity_16_no_miss == "10" ~ "Bangladeshi",
-    ethnicity_16_no_miss == "11" ~ "Other Asian",
-    ethnicity_16_no_miss == "12" ~ "Caribbean",
-    ethnicity_16_no_miss == "13" ~ "African",
-    ethnicity_16_no_miss == "14" ~ "Other Black",
-    ethnicity_16_no_miss == "15" ~ "Chinese",
-    ethnicity_16_no_miss == "16" ~ "Any other ethnic group",
-    ethnicity_16_no_miss ==  "0" ~  "Missing"))  
 
 
 
 
 
-
-
-BMI_complete_categories$ethnic_no_miss[BMI_complete_categories$ethnic_no_miss=="1"]<-"White"
-BMI_complete_categories$ethnic_no_miss[BMI_complete_categories$ethnic_no_miss=="2"]<-"Mixed"
-BMI_complete_categories$ethnic_no_miss[BMI_complete_categories$ethnic_no_miss=="3"]<-"Asian or Asian British"
-BMI_complete_categories$ethnic_no_miss[BMI_complete_categories$ethnic_no_miss=="4"]<-"Black or Black British"
-BMI_complete_categories$ethnic_no_miss[BMI_complete_categories$ethnic_no_miss=="5"]<-"Other ethnic groups"
-BMI_complete_categories$ethnic_no_miss[BMI_complete_categories$ethnic_no_miss=="0"]<-"No ethnicity recorded"
-
-BMI_complete_categories$imd[BMI_complete_categories$imd=="0"]<-"NA"
-BMI_complete_categories$imd[BMI_complete_categories$imd=="1"]<-"1 most deprived"
-BMI_complete_categories$imd[BMI_complete_categories$imd=="2"]<-"2"
-BMI_complete_categories$imd[BMI_complete_categories$imd=="3"]<-"3"
-BMI_complete_categories$imd[BMI_complete_categories$imd=="4"]<-"4"
-BMI_complete_categories$imd[BMI_complete_categories$imd=="5"]<-"5 least deprived"
 
 ###########################################################################################################
 
