@@ -145,8 +145,8 @@ bmi_2015_long <- BMI_2015 %>%   ## 1. pivot_longer date measured columns
                 "age_group", 
                 "region", 
                 "imd", 
-                "ethnicity",
-                "ethnicity_16",
+                "ethnic_no_miss",
+                "eth_group_16",
                 "learning_disability", 
                 "dementia", 
                 "depression",                   
@@ -221,6 +221,8 @@ BMI_2015_median <- long_bmi_2015_median %>%
          "age_group", 
          "region", 
          "imd", 
+         "ethnic_no_miss",
+         "eth_group_16",
          "learning_disability", 
          "dementia", 
          "depression",                   
@@ -235,9 +237,7 @@ BMI_2015_median <- long_bmi_2015_median %>%
          "stroke_and_TIA" ,
          "chronic_cardiac",              
          "hypertension",                 
-         "all_cancer",                
-         "ethnicity",
-         "ethnicity_16")              
+         "all_cancer")              
 
 BMI_2015_median <- BMI_2015_median %>%
   mutate("year"= 2015)
