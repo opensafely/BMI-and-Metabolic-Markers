@@ -1,7 +1,7 @@
 #####  YEARLY COHORTS FOR BMI
 ##### Author: M Samuel
-##### Updated:  7th March 2022
-
+##### Updated: 17th March 2022
+## Check that it is workable
 
 
 
@@ -53,10 +53,7 @@ bmi_2018_long <- BMI_2018 %>%   ## 1. pivot_longer date measured columns
                   "name", 
                   "bmi_measured_date",
                   "date",
-                  "monthly_bmi",
-                  "type1_diabetes", 
-                  "type2_diabetes", 
-                  "unknown_diabetes",  
+                  "monthly_bmi",  
                   "sex", 
                   "age_group", 
                   "region", 
