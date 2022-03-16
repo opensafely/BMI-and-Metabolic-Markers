@@ -53,7 +53,7 @@ bmi_2018_long <- BMI_2018 %>%   ## 1. pivot_longer date measured columns
                   "name", 
                   "bmi_measured_date",
                   "date",
-                  "unknown_diabetes",  
+                  "monthly_bmi",  
                   "sex", 
                   "age_group", 
                   "region", 
