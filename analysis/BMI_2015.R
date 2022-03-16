@@ -45,10 +45,7 @@ BMI_2015 <- BMI_2015 %>%
 BMI_2015 <- BMI_2015 %>%
   mutate(ethnicity_16_no_miss = ifelse(is.na(ethnicity_16), 0, ethnicity_16 )) 
 
-BMI_2015 <- BMI_2015 %>%
-  mutate (imd = as.factor(imd)) %>%
-  mutate (ethnic_no_miss = as.factor(ethnic_no_miss) %>%
-  mutate (ethnicity_16_no_miss = as.factor(ethnicity_16_no_miss)
+
 
 
 
@@ -60,6 +57,10 @@ BMI_2015$ethnic_no_miss[BMI_2015$ethnic_no_miss=="4"]<-"Black or Black British"
 BMI_2015$ethnic_no_miss[BMI_2015$ethnic_no_miss=="5"]<-"Other ethnic groups"
 BMI_2015$ethnic_no_miss[BMI_2015$ethnic_no_miss=="0"]<-"No ethnicity recorded"
 
+          
+       
+          
+          
 
 BMI_2015$imd[BMI_2015$imd=="0"]<-"NA"
 BMI_2015$imd[BMI_2015$imd=="1"]<-"1 most deprived"
@@ -68,6 +69,10 @@ BMI_2015$imd[BMI_2015$imd=="3"]<-"3"
 BMI_2015$imd[BMI_2015$imd=="4"]<-"4"
 BMI_2015$imd[BMI_2015$imd=="5"]<-"5 least deprived"
 
+BMI_2015 <- BMI_2015 %>%             
+     mutate (imd = as.factor(imd)) %>%
+     mutate (imd = fct_relevel(imd, "1 most deprived", "2", "3", "4", "5 least deprived", "NA"))
+          
 
 BMI_2015 <- BMI_2015 %>%
   mutate (eth_group_16=case_when(
