@@ -43,7 +43,13 @@ BMI_2015 <- BMI_2015 %>%
   mutate(ethnic_no_miss = ifelse(is.na(ethnicity), 0, ethnicity ))
 
 BMI_2015 <- BMI_2015 %>%
-mutate(ethnicity_16_no_miss = ifelse(is.na(ethnicity_16), 0, ethnicity_16 )) 
+  mutate(ethnicity_16_no_miss = ifelse(is.na(ethnicity_16), 0, ethnicity_16 )) 
+
+BMI_2015 <- BMI_2015 %>%
+  mutate (imd = as.factor(imd)) %>%
+  mutate (ethnic_no_miss = as.factor(ethnic_no_miss) %>%
+  mutate (ethnicity_16_no_miss = as.factor(ethnicity_16_no_miss)
+
 
 
 ### label
@@ -53,6 +59,7 @@ BMI_2015$ethnic_no_miss[BMI_2015$ethnic_no_miss=="3"]<-"Asian or Asian British"
 BMI_2015$ethnic_no_miss[BMI_2015$ethnic_no_miss=="4"]<-"Black or Black British"
 BMI_2015$ethnic_no_miss[BMI_2015$ethnic_no_miss=="5"]<-"Other ethnic groups"
 BMI_2015$ethnic_no_miss[BMI_2015$ethnic_no_miss=="0"]<-"No ethnicity recorded"
+
 
 BMI_2015$imd[BMI_2015$imd=="0"]<-"NA"
 BMI_2015$imd[BMI_2015$imd=="1"]<-"1 most deprived"
@@ -83,6 +90,10 @@ BMI_2015 <- BMI_2015 %>%
     ethnicity_16_no_miss ==  "0" ~  "Missing"))  
 
 
+BMI_2015 <- BMI_2015 %>%
+  mutate (imd = as.factor(imd)) %>%
+  mutate (ethnic_no_miss = as.factor(ethnic_no_miss) %>%
+  mutate (ethnicity_16_no_miss = as.factor(ethnicity_16_no_miss)
 
 
 
