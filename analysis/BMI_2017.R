@@ -22,6 +22,10 @@ library(janitor)
 #####  read in files
 
 input_all_2017_03_01<- read_feather (here::here ("output/data", "input_all_2017-03-01.feather"))
+
+###################
+## 2017 analysis
+###################
 ###################
 ## 2017 analysis
 ###################
@@ -46,8 +50,7 @@ BMI_2017 <- BMI_2017 %>%
 
 
 
-### label and relevel factors
-
+### label
 BMI_2017$ethnic_no_miss[BMI_2017$ethnic_no_miss=="1"]<-"White"
 BMI_2017$ethnic_no_miss[BMI_2017$ethnic_no_miss=="2"]<-"Mixed"
 BMI_2017$ethnic_no_miss[BMI_2017$ethnic_no_miss=="3"]<-"Asian"
@@ -73,7 +76,9 @@ BMI_2017 <- BMI_2017 %>%
   mutate (imd = fct_relevel(imd, "1 most deprived", "2", "3", "4", "5 least deprived", "NA"))
 
 
-
+# had_bmi_imd_m <- glm(had_bmi ~ imd, data=BMI_2017, family=binomial) %>%
+  # broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
+ #  dplyr::mutate(across(where(is.numeric), round, digits = 2)) 
 
 BMI_2017 <- BMI_2017 %>%
   mutate (eth_group_16=case_when(
@@ -117,7 +122,9 @@ BMI_2017 <- BMI_2017 %>%
                                              "Other",
                                              "Missing"))
 
-
+had_bmi_eth_16 <- glm(had_bmi ~ eth_group_16, data=BMI_2017, family=binomial) %>%
+ broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
+  dplyr::mutate(across(where(is.numeric), round, digits = 2)) 
 
 
 
@@ -220,7 +227,7 @@ BMI_2017_median <- long_bmi_2017_median %>%
          "sex", 
          "age_group", 
          "region", 
-         "imd", 
+         "imd",                 
          "ethnic_no_miss",
          "eth_group_16",
          "learning_disability", 
@@ -274,26 +281,24 @@ BMI_complete_categories$BMI_over27.5 <- cut(BMI_complete_categories$median_bmi,
 ##########  
 ########## .. Generate variable indicating DWMP eligibility
 
-## recode ethnicity so NA is unknown
-BMI_complete_categories_DWMP <- BMI_complete_categories %>%
-  mutate(ethnic_no_miss = ifelse(is.na(ethnicity), 0, ethnicity ))
 
-BMI_complete_categories_DWMP <- BMI_complete_categories_DWMP %>%
-  mutate(ethnicity_16_no_miss = ifelse(is.na(ethnicity_16), 0, ethnicity_16 ))
 
 
 ## confirm ethnicity categories
 # dict_eth = {1: ‘White’, 2: ‘Mixed’, 3: ‘Asian’, 4: ‘Black’, 5: ‘Other’, np.nan: ‘Unknown’, 0: ‘Unknown’}
 
-BMI_complete_categories_DWMP <- BMI_complete_categories_DWMP %>%
+BMI_complete_categories_DWMP <- BMI_complete_categories %>%
   dplyr::mutate(
     DWMP = if_else(
-      condition = ((((ethnic_no_miss==1| ethnic_no_miss==0) & median_bmi >=30) | ((ethnic_no_miss==2| ethnic_no_miss==3| ethnic_no_miss==4| ethnic_no_miss==5) & median_bmi >=27.5))
+      condition = ((((ethnic_no_miss=="White"| ethnic_no_miss=="Not_recorded") & median_bmi >=30) | ((ethnic_no_miss=="Asian"| ethnic_no_miss=="Black"| ethnic_no_miss=="Mixed"| ethnic_no_miss=="Other") & median_bmi >=27.5))
                    & ((hypertension==1| diabetes_t1==1| diabetes_t2==1))),
       true = "eligible", 
       false = "not_eligible"
     )
   )
+
+
+# "White", "Asian", "Black", "Mixed","Other", "Not_recorded"
 
 BMI_complete_categories_DWMP <-BMI_complete_categories_DWMP %>%
   dplyr::mutate(
@@ -309,7 +314,7 @@ BMI_complete_categories_DWMP <- ungroup (BMI_complete_categories_DWMP)
 
 BMI_complete_categories_DWMP <- BMI_complete_categories_DWMP %>%
   dplyr::select(
-    patient_id, year,  median_bmi, had_bmi, BMI_categories, BMI_over27.5, DWMP, sex, age_group, region, imd, ethnicity, ethnicity_16, ethnic_no_miss, ethnicity_16_no_miss, starts_with("comorbid_"), 
+    patient_id, year,  median_bmi, had_bmi, BMI_categories, BMI_over27.5, DWMP, sex, age_group, region, imd, ethnic_no_miss, eth_group_16, starts_with("comorbid_"), 
   )
 
 
@@ -326,11 +331,6 @@ BMI_complete_categories_DWMP <- BMI_complete_categories_DWMP %>%
 
 
 
-
-
-
-
-###########################################################################################################
 
 
 
