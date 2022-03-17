@@ -149,7 +149,7 @@ actions:
 
 
 
-# generate tables of who had a BMI measured
+# who had_bmi measured:  univariate analysis and tables
   generate_had_bmi_univariate_2019:
     run: r:latest analysis/had_bmi_regression_2019_univariate.R --output-dir=output/data 
     needs: [generate_complete_median_BMI_data]
@@ -157,6 +157,19 @@ actions:
       moderately_sensitive:
         table1: output/data/regression_had_bmi_2019.csv
 
+  generate_had_bmi_univariate_2020:
+    run: r:latest analysis/had_bmi_regression_2020_univariate.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/regression_had_bmi_2020.csv
+        
+  generate_had_bmi_univariate_2021:
+    run: r:latest analysis/had_bmi_regression_2021_univariate.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/regression_had_bmi_2021.csv
 
 
   generate_had_bmi_summary_stats:
@@ -164,8 +177,6 @@ actions:
     needs: [generate_complete_median_BMI_data]
     outputs:
       moderately_sensitive:
-        table1: output/data/regression_had_bmi_2020.csv
-        table2: output/data/regression_had_bmi_2021.csv
         table3: output/data/multivariate_regression_had_bmi_2020.csv
         table4: output/data/multivariate_regression_had_bmi_2021.csv
 
