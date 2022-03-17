@@ -173,7 +173,7 @@ actions:
         table1: output/data/regression_had_bmi_2021.csv
 
 
-generate_had_bmi_multivariate_2019:
+  generate_had_bmi_multivariate_2019:
     run: r:latest analysis/had_bmi_regression_2019_multivariate.R --output-dir=output/data 
     needs: [generate_complete_median_BMI_data]
     outputs:
