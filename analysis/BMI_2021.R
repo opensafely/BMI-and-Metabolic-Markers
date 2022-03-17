@@ -122,9 +122,7 @@ BMI_2021 <- BMI_2021 %>%
                                              "Other",
                                              "Missing"))
 
-had_bmi_eth_16 <- glm(had_bmi ~ eth_group_16, data=BMI_2021, family=binomial) %>%
- broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
-  dplyr::mutate(across(where(is.numeric), round, digits = 2)) 
+
 
 
 
