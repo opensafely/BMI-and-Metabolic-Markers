@@ -147,29 +147,58 @@ actions:
         
  
 
-
-
-# generate tables of who had a BMI measured
-
-
-  generate_had_bmi_summary_stats:
-    run: r:latest analysis/had_bmi_regression.R --output-dir=output/data 
-    needs: [generate_complete_median_BMI_data]
-    outputs:
-      moderately_sensitive:
-        table1: output/data/regression_had_bmi_2020.csv
-        table2: output/data/regression_had_bmi_2021.csv
-        table3: output/data/multivariate_regression_had_bmi_2020.csv
-        table4: output/data/multivariate_regression_had_bmi_2021.csv
-
- 
-  generate_pre2020_had_bmi_summary_stats:
-    run: r:latest analysis/had_bmi_regression_2019.R --output-dir=output/data 
+##################################################################
+###  HAD_BMI ANALYSIS
+######################################################################
+# who had_bmi measured:  univariate and multivariate analysis and tables
+  generate_had_bmi_univariate_2019:
+    run: r:latest analysis/had_bmi_regression_2019_univariate.R --output-dir=output/data 
     needs: [generate_complete_median_BMI_data]
     outputs:
       moderately_sensitive:
         table1: output/data/regression_had_bmi_2019.csv
-        table2: output/data/multivariate_regression_had_bmi_2019.csv
+
+  generate_had_bmi_univariate_2020:
+    run: r:latest analysis/had_bmi_regression_2020_univariate.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/regression_had_bmi_2020.csv
+        
+  generate_had_bmi_univariate_2021:
+    run: r:latest analysis/had_bmi_regression_2021_univariate.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/regression_had_bmi_2021.csv
+
+
+  generate_had_bmi_multivariate_2019:
+    run: r:latest analysis/had_bmi_regression_2019_multivariate.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/multivariate_regression_had_bmi_2019.csv
+
+  generate_had_bmi_multivariate_2020:
+    run: r:latest analysis/had_bmi_regression_2020_multivariate.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/multivariate_regression_had_bmi_2020.csv
+        
+  generate_had_bmi_multivariate_2021:
+    run: r:latest analysis/had_bmi_regression_2021_multivariate.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/multivariate_regression_had_bmi_2021.csv
+
+
+
+
+ 
+
 
  
  
