@@ -72,4 +72,4 @@ median_year_lm2 <- median_year_lm %>%
 
 
 # 5. write output - moderately sensitive.
-write.csv (median_year_lm2, here::here ("output/data","yearly_average_bmi_2019to21")
+write.csv (median_year_lm2, here::here ("output/data","yearly_average_bmi_2019to21.csv")
