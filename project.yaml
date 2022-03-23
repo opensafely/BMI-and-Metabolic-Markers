@@ -236,13 +236,7 @@ actions:
  # >> Median BMI Analysis
  
  #######################################################################################
-  # get median BMI in 2019, 2020, 2021
-  generate_median_yearly_average:
-    run: r:latest analysis/BMI_median_yearly_average.R --output-dir=output/data 
-    needs: [generate_complete_median_BMI_data]
-    outputs:
-      moderately_sensitive:
-        table1: output/data/yearly_average_bmi_2019to21.csv
+
   
   
   # generate summary stats of median BMI by exposures
