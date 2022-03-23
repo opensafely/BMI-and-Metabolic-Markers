@@ -2,7 +2,13 @@
 ## Modified: 23rd March 2022
 ## Create a data set that has data on those who did and did not have BMI measured to perform a regression.
 
-
+##  packages
+library(broom)
+library(purrr)
+library(dplyr)
+library(janitor)
+library(tidyverse)
+library(arrow)
 
 # 1) Read in files
 #  BMI_complete_median_2020.feather :: contains BMI data on those who had a BMI check
