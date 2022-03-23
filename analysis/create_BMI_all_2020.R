@@ -7,6 +7,7 @@
 # 1) Read in files
 #  BMI_complete_median_2020.feather :: contains BMI data on those who had a BMI check
 # input_all_2020:: contains demographic data on whole population
+# BMI_complete_median: contains the pre-covid obese flag
 # >> Combining these files to create a file for the analysis of who had a BMI
 
 ##  packages
@@ -19,7 +20,7 @@ library(arrow)
 
 BMI_complete_categories <- read_feather (here::here ("output/data", "BMI_complete_median_2020.feather"))
 input_all_2020_03_01 <- read_feather (here::here ("output/data", "input_all_2020-03-01.feather"))
-
+precovid_obese <- read_feather (here::here ("output/data", "BMI_complete_median.feather"))
   
 ## Input data on all patients (not just those with a BMI)
 all_patients_2020 <- as_tibble (input_all_2020_03_01)
@@ -168,6 +169,16 @@ BMI_complete_categories_all <- BMI_complete_categories %>%
 
 BMI_complete_categories_all <- left_join(all_patients_2020, BMI_complete_categories_all, by='patient_id')
 
+
+################################################################################
+# 5) add the pre-covid obese flag
+precovid_obese <- precovid_obese %>%
+  dplyr::filter(year==2020) %>%
+  dplyr::select(patient_id, 
+                precovid_obese_flag)
+
+
+BMI_complete_categories_all <- left_join(BMI_complete_categories_all, precovid_obese, by='patient_id')
 
 ### save outputs as feather
 
