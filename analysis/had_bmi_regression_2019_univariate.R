@@ -38,7 +38,6 @@ BMI_complete_categories_2019 <- BMI_complete_categories_2019 %>%
                 imd, 
                 ethnic_no_miss, 
                 eth_group_16,
-                precovid_obese_flag, 
                 starts_with("comorbid_"))
 
 
