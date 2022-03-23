@@ -1,7 +1,7 @@
 version: '3.0'
 
 expectations:
-  population_size: 1000
+  population_size: 100000
 
 actions:
 
@@ -145,7 +145,18 @@ actions:
       highly_sensitive:
         cohort1: output/data/BMI_complete_median.feather
         
- 
+#############################################################################################
+### >> CREATE DATA SET WITH BMI AND WHOLE POPULATION DATA TO ASSESS ODDS OF HAVING BMI TEST
+##############################################################################################
+  generate_whole_pop_2019:
+    run: r:latest analysis/create_BMI_all_2019.R --output-dir=output/data --output-format feather
+    needs: [join_ethnicity, generate_BMI_2020_data]
+    outputs:
+      highly_sensitive:
+        cohort1: output/data/BMI_all_2019.feather    
+
+
+
 
 ##################################################################
 ### >> HAD_BMI ANALYSIS
