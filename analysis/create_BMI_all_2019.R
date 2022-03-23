@@ -18,7 +18,7 @@ library(tidyverse)
 library(arrow)
 
 BMI_complete_categories <- read_feather (here::here ("output/data", "BMI_complete_median_2019.feather"))
-input_all_2019_03_01 <- read_feather (here::here ("output/data", "output/data/input_all_2019-03-01.feather"))
+input_all_2019_03_01 <- read_feather (here::here ("output/data", "input_all_2019-03-01.feather"))
 
   
 ## Input data on all patients (not just those with a BMI)
