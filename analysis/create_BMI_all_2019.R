@@ -142,7 +142,7 @@ dplyr::mutate(
     .cols = c(learning_disability,depression, dementia,psychosis_schiz_bipolar, diabetes_type, diabetes_t1, diabetes_t2, asthma, COPD, stroke_and_TIA, chronic_cardiac, hypertension, all_cancer), 
     .names = "comorbid_{col}")) %>%
   dplyr::select(
-    patient_id, sex, age_group, region, imd, ethnic_no_miss, eth_group_16, starts_with("comorbid_"))
+    patient_id, had_bmi, sex, age_group, region, imd, ethnic_no_miss, eth_group_16, starts_with("comorbid_"))
 
 
 
