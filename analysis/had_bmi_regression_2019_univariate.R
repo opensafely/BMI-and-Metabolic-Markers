@@ -1,6 +1,7 @@
 ##########################################
 ## Author: Miriam Samuel
 ## Updated: 17th March 2022
+## Updated: 23rd March 2022 to include whole population in 2019
 ## Univariate analysis of who had BMI measured in 2019
 
 
@@ -13,7 +14,7 @@ library(tidyverse)
 library(arrow)
 
 #read in file
-BMI_complete_categories <- read_feather (here::here ("output/data", "BMI_complete_median.feather"))
+BMI_complete_categories <- read_feather (here::here ("output/data", "BMI_all_2019.feather"))
 
 
 ################################################################################################
@@ -26,10 +27,9 @@ BMI_complete_categories <- read_feather (here::here ("output/data", "BMI_complet
 BMI_complete_categories_2019 <- BMI_complete_categories
 
 
-##  Filter by year
+##  select columns required
 BMI_complete_categories_2019 <- BMI_complete_categories_2019 %>%
   ungroup %>%
-  dplyr::filter(year==2019) %>%
   dplyr::select(patient_id,
                 had_bmi, 
                 sex, 
@@ -38,7 +38,6 @@ BMI_complete_categories_2019 <- BMI_complete_categories_2019 %>%
                 imd, 
                 ethnic_no_miss, 
                 eth_group_16,
-                precovid_obese_flag, 
                 starts_with("comorbid_"))
 
 
@@ -150,7 +149,7 @@ univ_tab_base <- explanatory_vars %>%
   bind_cols(., models) %>% 
   
   ## only keep columns interested in 
-  select(term, 2:3, estimate, conf.low, conf.high, p.value) %>% 
+  dplyr::select(term, 2:3, estimate, conf.low, conf.high, p.value) %>% 
   
   ## round decimal places
   mutate(across(where(is.numeric), round, digits = 2))
@@ -170,5 +169,5 @@ univariate_had_bmi_2019 <- univ_tab_base  %>%
 
 ####################################################################################
 ## OUTPUTS
-write.csv (univariate_had_bmi_2019, here::here ("output/data","regression_had_bmi_2019.csv"))
+write.csv (univariate_had_bmi_2019, here::here ("output/data","regression2_had_bmi_2019.csv"))
 

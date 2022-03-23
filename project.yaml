@@ -1,7 +1,7 @@
 version: '3.0'
 
 expectations:
-  population_size: 1000
+  population_size: 50000
 
 actions:
 
@@ -145,7 +145,18 @@ actions:
       highly_sensitive:
         cohort1: output/data/BMI_complete_median.feather
         
- 
+#############################################################################################
+### >> CREATE DATA SET WITH BMI AND WHOLE POPULATION DATA TO ASSESS ODDS OF HAVING BMI TEST
+##############################################################################################
+  generate_whole_pop_2019:
+    run: r:latest analysis/create_BMI_all_2019.R --output-dir=output/data --output-format feather
+    needs: [join_ethnicity, generate_BMI_2019_data]
+    outputs:
+      highly_sensitive:
+        cohort1: output/data/BMI_all_2019.feather    
+
+
+
 
 ##################################################################
 ### >> HAD_BMI ANALYSIS
@@ -153,84 +164,14 @@ actions:
 # who had_bmi measured:  univariate and multivariate analysis and tables
   generate_had_bmi_univariate_2019:
     run: r:latest analysis/had_bmi_regression_2019_univariate.R --output-dir=output/data 
-    needs: [generate_complete_median_BMI_data]
+    needs: [generate_whole_pop_2019]
     outputs:
       moderately_sensitive:
-        table1: output/data/regression_had_bmi_2019.csv
+        table1: output/data/regression2_had_bmi_2019.csv
 
-  generate_had_bmi_univariate_2020:
-    run: r:latest analysis/had_bmi_regression_2020_univariate.R --output-dir=output/data 
-    needs: [generate_complete_median_BMI_data]
-    outputs:
-      moderately_sensitive:
-        table1: output/data/regression_had_bmi_2020.csv
+
         
-  generate_had_bmi_univariate_2021:
-    run: r:latest analysis/had_bmi_regression_2021_univariate.R --output-dir=output/data 
-    needs: [generate_complete_median_BMI_data]
-    outputs:
-      moderately_sensitive:
-        table1: output/data/regression_had_bmi_2021.csv
-
-
-  generate_had_bmi_multivariate_2019:
-    run: r:latest analysis/had_bmi_regression_2019_multivariate.R --output-dir=output/data 
-    needs: [generate_complete_median_BMI_data]
-    outputs:
-      moderately_sensitive:
-        table1: output/data/multivariate_regression_had_bmi_2019.csv
-
-  generate_had_bmi_multivariate_2020:
-    run: r:latest analysis/had_bmi_regression_2020_multivariate.R --output-dir=output/data 
-    needs: [generate_complete_median_BMI_data]
-    outputs:
-      moderately_sensitive:
-        table1: output/data/multivariate_regression_had_bmi_2020.csv
-        
-  generate_had_bmi_multivariate_2021:
-    run: r:latest analysis/had_bmi_regression_2021_multivariate.R --output-dir=output/data 
-    needs: [generate_complete_median_BMI_data]
-    outputs:
-      moderately_sensitive:
-        table1: output/data/multivariate_regression_had_bmi_2021.csv
-
-
-######################################################################################
-#>> PROPORTION OBESE ANALYSIS
-######################################################################################
-  generate_obese_univariate_2019:
-    run: r:latest analysis/obese_regression_2019_univariate.R --output-dir=output/data 
-    needs: [generate_complete_median_BMI_data]
-    outputs:
-      moderately_sensitive:
-        table1: output/data/regression_obese_2019.csv   
   
-  
-  generate_obese_multivariate_2019:
-    run: r:latest analysis/obese_regression_2019_multivariate.R --output-dir=output/data 
-    needs: [generate_complete_median_BMI_data]
-    outputs:
-      moderately_sensitive:
-        table1: output/data/multivariate_regression_obese_2019.csv 
-
-
-
-  generate_obese_univariate_2020:
-    run: r:latest analysis/obese_regression_2020_univariate.R --output-dir=output/data 
-    needs: [generate_complete_median_BMI_data]
-    outputs:
-      moderately_sensitive:
-        table1: output/data/regression_obese_2020.csv   
-  
-  
-  generate_obese_multivariate_2020:
-    run: r:latest analysis/obese_regression_2020_multivariate.R --output-dir=output/data 
-    needs: [generate_complete_median_BMI_data]
-    outputs:
-      moderately_sensitive:
-        table1: output/data/multivariate_regression_obese_2020.csv 
-
- 
  
  ######################################################################################
  # >> Median BMI Analysis
