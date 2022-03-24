@@ -173,7 +173,6 @@ BMI_complete_categories_all <- left_join(all_patients_2020, BMI_complete_categor
 ################################################################################
 # 5) add the pre-covid obese flag
 precovid_obese <- precovid_obese %>%
-  dplyr::filter(year==2020) %>%
   dplyr::select(patient_id, 
                 precovid_obese_flag)
 
