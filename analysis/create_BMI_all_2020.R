@@ -174,14 +174,15 @@ BMI_complete_categories_all <- left_join(all_patients_2020, BMI_complete_categor
 ################################################################################
 # 5) add the pre-covid obese flag
 precovid_obese <- precovid_obese %>%
-  dplyr::select(patient_id, 
-                precovid_obese_flag)
+  dplyr::select(patient_id, precovid_obese_flag) %>%
+  dplyr::group_by (patient_id) %>%
+  dplyr::slice_head
 
 
 
 BMI_complete_categories_all <- left_join(BMI_complete_categories_all, precovid_obese, by='patient_id')
 
-BMI_complete_categories_all <- forcats::fct_explicit_na(BMI_complete_categories_all$precovid_obese_flag, na_level = "FALSE")
+
 
 ### save outputs as feather
 
