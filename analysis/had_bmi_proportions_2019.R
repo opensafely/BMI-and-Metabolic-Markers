@@ -15,6 +15,7 @@ library(broom)
 library(data.table)
 library(forcats)
 library(rstatix)
+library(janitor)
 
 ## Read in files  >>> Change PATH!!
 
