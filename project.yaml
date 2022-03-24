@@ -162,7 +162,12 @@ actions:
       highly_sensitive:
         cohort1: output/data/BMI_all_2020.feather 
 
-
+  generate_whole_pop_2021:
+    run: r:latest analysis/create_BMI_all_2021.R --output-dir=output/data --output-format feather
+    needs: [join_ethnicity, generate_BMI_2021_data, generate_complete_median_BMI_data]
+    outputs:
+      highly_sensitive:
+        cohort1: output/data/BMI_all_2021.feather 
 ##################################################################
 ### >> HAD_BMI ANALYSIS
 ######################################################################
@@ -181,7 +186,12 @@ actions:
       moderately_sensitive:
         table1: output/data/regression2_had_bmi_2020.csv
 
-
+  generate_had_bmi_univariate_2021:
+    run: r:latest analysis/had_bmi_regression_2021_univariate.R --output-dir=output/data 
+    needs: [generate_whole_pop_2021]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/regression2_had_bmi_2021.csv
         
   
  
