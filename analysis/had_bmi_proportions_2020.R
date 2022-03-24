@@ -28,7 +28,7 @@ BMI_complete_categories <- BMI_complete_categories %>%
   dplyr::mutate (imd = as.factor(imd)) %>%
   dplyr::mutate (imd = fct_relevel(imd, "1", "2", "3", "4", "5")) %>%
   dplyr::mutate(age_group = as.factor(age_group)) %>%
-  dplyr::mutate(age_group = fct_relevel(age_group, "0-17", "18-39", "40-65", "65-80", "80+")) %>% 
+  dplyr::mutate(age_group = fct_relevel(age_group, "0-17", "18-39", "40-65", "65-80", "80+")) 
 
 
 
