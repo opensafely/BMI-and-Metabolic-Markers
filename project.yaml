@@ -168,31 +168,18 @@ actions:
     outputs:
       highly_sensitive:
         cohort1: output/data/BMI_all_2021.feather 
+        
 ##################################################################
 ### >> HAD_BMI ANALYSIS
 ######################################################################
 # who had_bmi measured:  univariate and multivariate analysis and tables
-  generate_had_bmi_univariate_2019:
-    run: r:latest analysis/had_bmi_regression_2019_univariate.R --output-dir=output/data 
+  generate_had_bmi_proportion_2019:
+    run: r:latest analysis/had_bmi_proportions_2019.R --output-dir=output/data 
     needs: [generate_whole_pop_2019]
     outputs:
       moderately_sensitive:
-        table1: output/data/regression2_had_bmi_2019.csv
-
-  generate_had_bmi_univariate_2020:
-    run: r:latest analysis/had_bmi_regression_2020_univariate.R --output-dir=output/data 
-    needs: [generate_whole_pop_2020]
-    outputs:
-      moderately_sensitive:
-        table1: output/data/regression2_had_bmi_2020.csv
-
-  generate_had_bmi_univariate_2021:
-    run: r:latest analysis/had_bmi_regression_2021_univariate.R --output-dir=output/data 
-    needs: [generate_whole_pop_2021]
-    outputs:
-      moderately_sensitive:
-        table1: output/data/regression2_had_bmi_2021.csv
-        
+        table1: output/data/proportion_had_bmi_2019.csv
+  
   
  
  ######################################################################################
