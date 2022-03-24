@@ -728,4 +728,4 @@ had_bmi_table <- had_bmi_table %>%
 
 had_bmi_table
 
-
+write.csv (had_bmi_table, here::here ("output/data","proportion_had_bmi_2019.csv"))
