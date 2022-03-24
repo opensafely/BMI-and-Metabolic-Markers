@@ -17,6 +17,7 @@ library(dplyr)
 library(janitor)
 library(tidyverse)
 library(arrow)
+library(forcats)
 
 BMI_complete_categories <- read_feather (here::here ("output/data", "BMI_complete_median_2020.feather"))
 input_all_2020_03_01 <- read_feather (here::here ("output/data", "input_all_2020-03-01.feather"))
@@ -177,7 +178,10 @@ precovid_obese <- precovid_obese %>%
                 precovid_obese_flag)
 
 
+
 BMI_complete_categories_all <- left_join(BMI_complete_categories_all, precovid_obese, by='patient_id')
+
+BMI_complete_categories_all <- forcats::fct_explicit_na(BMI_complete_categories_all$precovid_obese_flag, na_level = "FALSE")
 
 ### save outputs as feather
 
