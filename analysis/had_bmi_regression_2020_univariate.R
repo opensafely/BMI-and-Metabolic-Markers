@@ -1,6 +1,7 @@
 ##########################################
 ## Author: Miriam Samuel
 ## Updated: 17th March 2022
+## Updated: 23rd March 2022 to include whole population in 2020
 ## Univariate analysis of who had BMI measured in 2020
 
 
@@ -13,7 +14,7 @@ library(tidyverse)
 library(arrow)
 
 #read in file
-BMI_complete_categories <- read_feather (here::here ("output/data", "BMI_complete_median.feather"))
+BMI_complete_categories <- read_feather (here::here ("output/data", "BMI_all_2020.feather"))
 
 
 ################################################################################################
@@ -29,7 +30,6 @@ BMI_complete_categories_2020 <- BMI_complete_categories
 ##  Filter by year
 BMI_complete_categories_2020 <- BMI_complete_categories_2020 %>%
   ungroup %>%
-  dplyr::filter(year==2020) %>%
   dplyr::select(patient_id,
                 had_bmi, 
                 sex, 
@@ -40,7 +40,6 @@ BMI_complete_categories_2020 <- BMI_complete_categories_2020 %>%
                 eth_group_16,
                 precovid_obese_flag, 
                 starts_with("comorbid_"))
-
 
 
 
@@ -171,6 +170,6 @@ univariate_had_bmi_2020 <- univ_tab_base  %>%
 
 ####################################################################################
 ## OUTPUTS
-write.csv (univariate_had_bmi_2020, here::here ("output/data","regression_had_bmi_2020.csv"))
+write.csv (univariate_had_bmi_2020, here::here ("output/data","regression2_had_bmi_2020.csv"))
 
 
