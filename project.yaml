@@ -180,6 +180,12 @@ actions:
       moderately_sensitive:
         table1: output/data/proportion_had_bmi_2019.csv
   
+  generate_had_bmi_proportion_2020:
+    run: r:latest analysis/had_bmi_proportions_2020.R --output-dir=output/data 
+    needs: [generate_whole_pop_2020]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/proportion_had_bmi_2020.csv
   
  
  ######################################################################################
