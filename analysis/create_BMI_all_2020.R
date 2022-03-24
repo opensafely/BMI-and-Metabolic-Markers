@@ -2,6 +2,14 @@
 ## Modified: 23rd March 2022
 ## Create a data set that has data on those who did and did not have BMI measured to perform a regression.
 
+
+
+# 1) Read in files
+#  BMI_complete_median_2020.feather :: contains BMI data on those who had a BMI check
+# input_all_2020:: contains demographic data on whole population
+# BMI_complete_median: contains the pre-covid obese flag
+# >> Combining these files to create a file for the analysis of who had a BMI
+
 ##  packages
 library(broom)
 library(purrr)
@@ -10,16 +18,9 @@ library(janitor)
 library(tidyverse)
 library(arrow)
 
-# 1) Read in files
-#  BMI_complete_median_2020.feather :: contains BMI data on those who had a BMI check
-# input_all_2020:: contains demographic data on whole population
-# >> Combining these files to create a file for the analysis of who had a BMI
-
-
-
 BMI_complete_categories <- read_feather (here::here ("output/data", "BMI_complete_median_2020.feather"))
-input_all_2020_03_01 <- read_feather (here::here ("output/data", "output/data/input_all_2020-03-01.feather"))
-
+input_all_2020_03_01 <- read_feather (here::here ("output/data", "input_all_2020-03-01.feather"))
+precovid_obese <- read_feather (here::here ("output/data", "BMI_complete_median.feather"))
   
 ## Input data on all patients (not just those with a BMI)
 all_patients_2020 <- as_tibble (input_all_2020_03_01)
@@ -142,7 +143,7 @@ dplyr::mutate(
     .cols = c(learning_disability,depression, dementia,psychosis_schiz_bipolar, diabetes_type, diabetes_t1, diabetes_t2, asthma, COPD, stroke_and_TIA, chronic_cardiac, hypertension, all_cancer), 
     .names = "comorbid_{col}")) %>%
   dplyr::select(
-    patient_id, sex, age_group, region, imd, ethnic_no_miss, eth_group_16, starts_with("comorbid_"))
+    patient_id, had_bmi, sex, age_group, region, imd, ethnic_no_miss, eth_group_16, starts_with("comorbid_"))
 
 
 
@@ -168,6 +169,16 @@ BMI_complete_categories_all <- BMI_complete_categories %>%
 
 BMI_complete_categories_all <- left_join(all_patients_2020, BMI_complete_categories_all, by='patient_id')
 
+
+################################################################################
+# 5) add the pre-covid obese flag
+precovid_obese <- precovid_obese %>%
+  dplyr::filter(year==2020) %>%
+  dplyr::select(patient_id, 
+                precovid_obese_flag)
+
+
+BMI_complete_categories_all <- left_join(BMI_complete_categories_all, precovid_obese, by='patient_id')
 
 ### save outputs as feather
 

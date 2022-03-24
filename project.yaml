@@ -155,7 +155,12 @@ actions:
       highly_sensitive:
         cohort1: output/data/BMI_all_2019.feather    
 
-
+  generate_whole_pop_2020:
+    run: r:latest analysis/create_BMI_all_2020.R --output-dir=output/data --output-format feather
+    needs: [join_ethnicity, generate_BMI_2020_data, generate_complete_median_BMI_data]
+    outputs:
+      highly_sensitive:
+        cohort1: output/data/BMI_all_2020.feather 
 
 
 ##################################################################
