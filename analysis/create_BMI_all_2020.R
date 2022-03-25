@@ -176,7 +176,7 @@ BMI_complete_categories_all <- left_join(all_patients_2020, BMI_complete_categor
 precovid_obese <- precovid_obese %>%
   dplyr::select(patient_id, precovid_obese_flag) %>%
   dplyr::group_by (patient_id) %>%
-  dplyr::slice_head
+  dplyr::slice_head(n=1)
 
 
 
