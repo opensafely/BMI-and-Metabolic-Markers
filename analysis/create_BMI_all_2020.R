@@ -181,7 +181,10 @@ precovid_obese <- precovid_obese %>%
 
 
 BMI_complete_categories_all <- left_join(BMI_complete_categories_all, precovid_obese, by='patient_id')
+BMI_complete_categories_all  
 
+BMI_complete_categories_all <- BMI_complete_categories_all %>%
+dplyr::mutate(precovid_obese_flag = replace_na(precovid_obese_flag, "FALSE"))
 
 
 ### save outputs as feather
