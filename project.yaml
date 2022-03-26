@@ -194,6 +194,21 @@ actions:
       moderately_sensitive:
         table1: output/data/proportion_had_bmi_2021.csv
  
+#########################################################
+## PROPORTION OBESE ANALYSIS
+
+  generate_obese_proportion_2019:
+    run: r:latest analysis/obese_proportions_2019.R --output-dir=output/data 
+    needs: [generate_whole_pop_2019]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/proportion_obese_2019.csv
+
+
+
+
+
+
  ######################################################################################
  # >> Median BMI Analysis
  
