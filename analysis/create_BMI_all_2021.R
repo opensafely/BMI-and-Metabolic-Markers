@@ -172,13 +172,17 @@ BMI_complete_categories_all <- left_join(all_patients_2021, BMI_complete_categor
 
 ################################################################################
 # 5) add the pre-covid obese flag
-precovid_obese <- precovid_obese %>%
-  dplyr::filter(year==2021) %>%
-  dplyr::select(patient_id, 
-                precovid_obese_flag)
+precovid_obese <- precovid_obese %>% 
+  dplyr::select(patient_id, precovid_obese_flag) %>%
+  dplyr::group_by (patient_id) %>%                             ## these lines identify duplicates.  
+  dplyr::slice_head(n=1)                                       ## without this left_join would have added rows (more than one row per patient)
 
 
 BMI_complete_categories_all <- left_join(BMI_complete_categories_all, precovid_obese, by='patient_id')
+BMI_complete_categories_all  
+
+BMI_complete_categories_all <- BMI_complete_categories_all %>%
+dplyr::mutate(precovid_obese_flag = replace_na(precovid_obese_flag, "FALSE"))
 
 ### save outputs as feather
 
