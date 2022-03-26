@@ -1,1 +1,2 @@
 #1.  IMD and demographics in BMI_complete_median.feather >>>>  Issue with recode.  use IMD from input all documents
+#2.  Issue with IMD recoding in had_bmi R scripts - used mutate instead of filter imd>0 ... no impact on results. but not tidy.  consider changing. 
