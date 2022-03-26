@@ -24,7 +24,9 @@ library(janitor)
 BMI_complete_categories <- read_feather (here::here ("output/data", "BMI_all_2019.feather"))
 
 
-BMI_complete_categories <- BMI_complete_categories %>%             
+BMI_complete_categories <- BMI_complete_categories %>% 
+  dplyr::mutate(imd=as.numeric(imd)) %>%
+  dplyr::mutate(imd>0) %>%  
   dplyr::mutate (imd = as.factor(imd)) %>%
   dplyr::mutate (imd = fct_relevel(imd, "1", "2", "3", "4", "5")) %>%
   dplyr::mutate(age_group = as.factor(age_group)) %>%
