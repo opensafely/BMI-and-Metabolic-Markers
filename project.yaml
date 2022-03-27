@@ -205,6 +205,21 @@ actions:
         table1: output/data/proportion_obese_2019.csv
 
 
+  generate_obese_proportion_2020:
+    run: r:latest analysis/obese_proportions_2020.R --output-dir=output/data 
+    needs: [generate_whole_pop_2020]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/proportion_obese_2020.csv
+
+  generate_obese_proportion_2021:
+    run: r:latest analysis/obese_proportions_2021.R --output-dir=output/data 
+    needs: [generate_whole_pop_2021]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/proportion_obese_2021.csv
+
+
 
 
 
