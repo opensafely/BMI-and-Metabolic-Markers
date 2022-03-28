@@ -249,4 +249,22 @@ actions:
         chart1: output/median_bmi_all_2019.png
         chart2: output/median_bmi_age_T2DM_2019.png
         chart3: output/median_bmi_age_hypertension_2019.png
-
+        
+        
+  generate_median_bmi_plots_2020:
+    run: r:latest analysis/median_bmi_plots_2020.R --output-dir=output/data 
+    needs: [generate_whole_pop_2020]
+    outputs:
+      moderately_sensitive:
+        chart1: output/median_bmi_all_2020.png
+        chart2: output/median_bmi_age_T2DM_2020.png
+        chart3: output/median_bmi_age_hypertension_2020.png
+        
+  generate_median_bmi_plots_2021:
+    run: r:latest analysis/median_bmi_plots_2021.R --output-dir=output/data 
+    needs: [generate_whole_pop_2021]
+    outputs:
+      moderately_sensitive:
+        chart1: output/median_bmi_all_2021.png
+        chart2: output/median_bmi_age_T2DM_2021.png
+        chart3: output/median_bmi_age_hypertension_2021.png
