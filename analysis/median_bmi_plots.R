@@ -15,6 +15,12 @@ BMI_plots <- read_feather (here::here ("output/data", "BMI_all_2019.feather"))
 BMI_plots <- BMI_plots %>%
   dplyr::select(patient_id, median_bmi, age_group, sex, ethnic_no_miss, comorbid_diabetes_t2, comorbid_hypertension)
 
+BMI_plots$comorbid_diabetes_t2[BMI_plots$comorbid_diabetes_t2==TRUE] <- "T2DM - Present"
+BMI_plots$comorbid_diabetes_t2[BMI_plots$comorbid_diabetes_t2==FALSE] <- "T2DM - Absent"
+
+BMI_plots$comorbid_hypertension[BMI_plots$comorbid_hypertension==TRUE] <- "Hypertension - Present"
+BMI_plots$comorbid_hypertension[BMI_plots$comorbid_hypertension==FALSE] <- "Hypertension - Absent"
+
 
 median_bmi_plot_all <- ggplot( data = BMI_plots, mapping = aes( x = median_bmi)) + geom_histogram()
 
@@ -27,7 +33,28 @@ bmi_age_T2DM <- ggplot( data = BMI_plots, mapping = aes( x = median_bmi)) + geom
 bmi_age_hypertension <- ggplot( data = BMI_plots, mapping = aes( x = median_bmi)) + geom_histogram() + facet_grid (age_group ~comorbid_hypertension)
 
 
+ggsave(
+    plot = median_bmi_plot_all,
+    filename = "median_bmi_all.png", 
+    path = here::here("output"),
+    dpi=600, width = 15, height = 15, units = "cm"
+)
 
-ggsave(filename=here::here("output", "plots","median_bmi_all.png")), median_bmi_plot_all, dpi=600, width = 30, height = 30, units = "cm")
+ggsave(
+    plot = bmi_age_T2DM,
+    filename = "median_bmi_age_T2DM.png", 
+    path = here::here("output"),
+    dpi=600, width = 30, height = 30, units = "cm"
+)
+
+ggsave(
+    plot = bmi_age_hypertension,
+    filename = "median_bmi_age_hypertension.png", 
+    path = here::here("output"),
+    dpi=600, width = 30, height = 30, units = "cm"
+)
+
+# ggsave(filename=here::here("output/plots","median_bmi_all.png")), median_bmi_plot_all, dpi=600, width = 30, height = 30, units = "cm")
 
 # write_feather (BMI_complete_categories_DWMP, here::here ("output/data","BMI_complete_median_2015.feather"))  ..  example file path
+
