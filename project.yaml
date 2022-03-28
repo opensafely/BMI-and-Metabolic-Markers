@@ -241,7 +241,7 @@ actions:
         table2: output/data/median_bmi_summary_table_covariates.csv
 
   # generate summary stats of median BMI by exposures
-  generate_median_bmi_plots:
+  generate_median_bmi_plots_2019:
     run: r:latest analysis/median_bmi_plots.R --output-dir=output/data 
     needs: [generate_whole_pop_2019]
     outputs:
