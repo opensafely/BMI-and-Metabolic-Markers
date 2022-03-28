@@ -29,3 +29,5 @@ bmi_age_hypertension <- ggplot( data = BMI_plots, mapping = aes( x = median_bmi)
 
 
 ggsave(filename=here::here("output", "plots","median_bmi_all.png")), median_bmi_plot_all, dpi=600, width = 30, height = 30, units = "cm")
+
+# write_feather (BMI_complete_categories_DWMP, here::here ("output/data","BMI_complete_median_2015.feather"))  ..  example file path
