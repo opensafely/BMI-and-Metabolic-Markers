@@ -22,34 +22,34 @@ BMI_plots$comorbid_hypertension[BMI_plots$comorbid_hypertension==TRUE] <- "Hyper
 BMI_plots$comorbid_hypertension[BMI_plots$comorbid_hypertension==FALSE] <- "Hypertension - Absent"
 
 
-median_bmi_plot_all <- ggplot( data = BMI_plots, mapping = aes( x = median_bmi)) + geom_histogram()
+median_bmi_plot_all <- ggplot( data = BMI_plots, mapping = aes( x = median_bmi)) + labs(title = "Median recorded BMI distribution of patients in 2019", subtitle = "Data from routine primary care electronic health records") + geom_histogram()
 
 bmi_age <- ggplot( data = BMI_plots, mapping = aes( x = median_bmi)) + geom_histogram() + facet_wrap (~age_group)
 bmi_ethnicity <- ggplot( data = BMI_plots, mapping = aes( x = median_bmi)) + geom_histogram() + facet_wrap (~ethnic_no_miss)
 bmi_T2DM  <-  ggplot( data = BMI_plots, mapping = aes( x = median_bmi)) + geom_histogram() + facet_wrap (~comorbid_diabetes_t2)
 bmi_hypertension <- ggplot( data = BMI_plots, mapping = aes( x = median_bmi)) + geom_histogram() + facet_wrap (~comorbid_hypertension)
 
-bmi_age_T2DM <- ggplot( data = BMI_plots, mapping = aes( x = median_bmi)) + geom_histogram() + facet_grid (age_group ~comorbid_diabetes_t2)
-bmi_age_hypertension <- ggplot( data = BMI_plots, mapping = aes( x = median_bmi)) + geom_histogram() + facet_grid (age_group ~comorbid_hypertension)
+bmi_age_T2DM <- ggplot( data = BMI_plots, mapping = aes( x = median_bmi)) +  labs(title = "Median recorded BMI distribution of patients in 2019", subtitle = "Data from routine primary care electronic health records") + geom_histogram() + facet_grid (age_group ~comorbid_diabetes_t2)
+bmi_age_hypertension <- ggplot( data = BMI_plots, mapping = aes( x = median_bmi)) + labs(title = "Median recorded BMI distribution of patients in 2019", subtitle = "Data from routine primary care electronic health records") +  geom_histogram() + facet_grid (age_group ~comorbid_hypertension)
 
 
 ggsave(
     plot = median_bmi_plot_all,
-    filename = "median_bmi_all.png", 
+    filename = "median_bmi_all_2019.png", 
     path = here::here("output"),
     dpi=600, width = 15, height = 15, units = "cm"
 )
 
 ggsave(
     plot = bmi_age_T2DM,
-    filename = "median_bmi_age_T2DM.png", 
+    filename = "median_bmi_age_T2DM_2019.png", 
     path = here::here("output"),
     dpi=600, width = 30, height = 30, units = "cm"
 )
 
 ggsave(
     plot = bmi_age_hypertension,
-    filename = "median_bmi_age_hypertension.png", 
+    filename = "median_bmi_age_hypertension_2019.png", 
     path = here::here("output"),
     dpi=600, width = 30, height = 30, units = "cm"
 )

@@ -246,7 +246,7 @@ actions:
     needs: [generate_whole_pop_2019]
     outputs:
       moderately_sensitive:
-        chart1: output/median_bmi_all.png
-        chart2: output/median_bmi_age_T2DM.png
-        chart3: output/median_bmi_age_hypertension.png
+        chart1: output/median_bmi_all_2019.png
+        chart2: output/median_bmi_age_T2DM_2019.png
+        chart3: output/median_bmi_age_hypertension_2019.png
 
