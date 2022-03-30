@@ -647,5 +647,4 @@ median_complete <- dplyr::bind_rows( median_all,
                                      median_comorbid_all_cancer)
 
 
-
-
+write.csv (median_complete, here::here ("output/data","median_range_bmi_2019.csv"))
