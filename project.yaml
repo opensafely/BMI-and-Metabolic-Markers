@@ -268,3 +268,14 @@ actions:
         chart1: output/median_bmi_all_2021.png
         chart2: output/median_bmi_age_T2DM_2021.png
         chart3: output/median_bmi_age_hypertension_2021.png
+        
+        
+        
+  ## tables of median BMI and range
+  generate_median_bmi_plots_2019:
+    run: r:latest analysis/median_range_2019.R --output-dir=output/data 
+    needs: [generate_whole_pop_2019]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/median_range_bmi_2019.csv
+
