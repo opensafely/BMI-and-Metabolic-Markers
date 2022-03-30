@@ -279,3 +279,17 @@ actions:
       moderately_sensitive:
         table1: output/data/median_range_bmi_2019.csv
 
+  generate_median_bmi_range_2020:
+    run: r:latest analysis/median_range_2020.R --output-dir=output/data 
+    needs: [generate_whole_pop_2020]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/median_range_bmi_2020.csv
+
+
+  generate_median_bmi_range_2021:
+    run: r:latest analysis/median_range_2021.R --output-dir=output/data 
+    needs: [generate_whole_pop_2021]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/median_range_bmi_2021.csv
