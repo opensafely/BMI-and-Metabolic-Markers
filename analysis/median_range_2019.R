@@ -19,11 +19,10 @@ library(janitor)
 
 ## Read in files  >>> Change PATH!!
 
-# check working directory:  getwd()
 
-#BMI_complete_categories <- read_feather (here::here ("output/data", "BMI_all_2019.feather"))
 
-BMI_complete_categories <- read_feather (here::here ("Documents/Academic GP/Open Safely/Dummy Data", "BMI_all_2019.feather"))
+BMI_complete_categories <- read_feather (here::here ("output/data", "BMI_all_2019.feather"))
+
 
 
 
