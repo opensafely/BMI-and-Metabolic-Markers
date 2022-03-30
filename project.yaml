@@ -272,7 +272,7 @@ actions:
         
         
   ## tables of median BMI and range
-  generate_median_bmi_plots_2019:
+  generate_median_bmi_range_2019:
     run: r:latest analysis/median_range_2019.R --output-dir=output/data 
     needs: [generate_whole_pop_2019]
     outputs:
