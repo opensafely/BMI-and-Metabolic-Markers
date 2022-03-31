@@ -144,7 +144,19 @@ actions:
     outputs:
       highly_sensitive:
         cohort1: output/data/BMI_complete_median.feather
-        
+
+##################################################################
+## IMD reference chart: issue with IMD codes in some of derived data sets
+
+  generate_imd:
+    run: r:latest analysis/IMD_reference_script.R --output-dir=output/data --output-format feather
+    needs: [generate_study_population_1, generate_study_population_2, generate_study_population_3, generate_study_population_4, generate_study_population_5, generate_study_population_6, generate_study_population_7]
+    outputs:
+      highly_sensitive:
+        cohort1: output/data/patient_imd.feather
+
+
+
 #############################################################################################
 ### >> CREATE DATA SET WITH BMI AND WHOLE POPULATION DATA TO ASSESS ODDS OF HAVING BMI TEST
 ##############################################################################################
