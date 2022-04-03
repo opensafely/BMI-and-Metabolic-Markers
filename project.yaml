@@ -333,3 +333,11 @@ actions:
     outputs:
       moderately_sensitive:
         table1: output/data/proportion_had_sbp_2020.csv
+
+
+  generate_had_sbp_proportion_2021:
+    run: r:latest analysis/had_sbp_proportions_2021.R --output-dir=output/data 
+    needs: [join_ethnicity, generate_BMI_2021_data, generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/proportion_had_sbp_2021.csv
