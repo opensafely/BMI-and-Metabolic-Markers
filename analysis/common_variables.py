@@ -256,7 +256,7 @@ bmi_march=patients.most_recent_bmi(
     include_measurement_date=True,
     date_format="YYYY-MM-DD",
     return_expectations={
-        "date": {"earliest": "2015-03-01", "latest": "2015-04-01"},
+        "date": {"earliest": "2015-03-01", "latest": "2021-04-01"},
         "float": {"distribution": "normal", "mean": 28, "stddev": 8},
         "incidence": 0.1,
     }
@@ -270,7 +270,7 @@ bmi_march=patients.most_recent_bmi(
     include_measurement_date=True,
     date_format="YYYY-MM-DD",
     return_expectations={
-        "date": {"earliest": "2015-04-01", "latest": "2015-05-01"},
+        "date": {"earliest": "2015-04-01", "latest": "2021-05-01"},
         "float": {"distribution": "normal", "mean": 28, "stddev": 8},
         "incidence": 0.05,
     }
@@ -283,7 +283,7 @@ bmi_march=patients.most_recent_bmi(
     include_measurement_date=True,
     date_format="YYYY-MM-DD",
     return_expectations={
-        "date": {"earliest": "2015-05-01", "latest": "2015-06-01"},
+        "date": {"earliest": "2015-05-01", "latest": "2021-06-01"},
         "float": {"distribution": "normal", "mean": 28, "stddev": 8},
         "incidence": 0.1,
     }
@@ -297,7 +297,7 @@ bmi_march=patients.most_recent_bmi(
     include_measurement_date=True,
     date_format="YYYY-MM-DD",
     return_expectations={
-        "date": {"earliest": "2015-06-01", "latest": "2015-07-01"},
+        "date": {"earliest": "2015-06-01", "latest": "2021-07-01"},
         "float": {"distribution": "normal", "mean": 28, "stddev": 8},
         "incidence": 0.05,
     }
@@ -311,7 +311,7 @@ bmi_march=patients.most_recent_bmi(
     include_measurement_date=True,
     date_format="YYYY-MM-DD",
     return_expectations={
-        "date": {"earliest": "2015-07-01", "latest": "2015-08-01"},
+        "date": {"earliest": "2015-07-01", "latest": "2021-08-01"},
         "float": {"distribution": "normal", "mean": 28, "stddev": 8},
         "incidence": 0.1,
     }
@@ -325,7 +325,7 @@ bmi_march=patients.most_recent_bmi(
     include_measurement_date=True,
     date_format="YYYY-MM-DD",
     return_expectations={
-        "date": {"earliest": "2015-08-01", "latest": "2015-09-01"},
+        "date": {"earliest": "2015-08-01", "latest": "2021-09-01"},
         "float": {"distribution": "normal", "mean": 28, "stddev": 8},
         "incidence": 0.05,
     }
@@ -340,7 +340,7 @@ bmi_march=patients.most_recent_bmi(
     include_measurement_date=True,
     date_format="YYYY-MM-DD",
     return_expectations={
-        "date": {"earliest": "2015-09-01", "latest": "2015-10-01"},
+        "date": {"earliest": "2015-09-01", "latest": "2021-10-01"},
         "float": {"distribution": "normal", "mean": 28, "stddev": 8},
         "incidence": 0.1,
     }
@@ -354,7 +354,7 @@ bmi_march=patients.most_recent_bmi(
     include_measurement_date=True,
     date_format="YYYY-MM-DD",
     return_expectations={
-        "date": {"earliest": "2015-10-01", "latest": "2015-11-01"},
+        "date": {"earliest": "2015-10-01", "latest": "2021-11-01"},
         "float": {"distribution": "normal", "mean": 28, "stddev": 8},
         "incidence": 0.05,
     }
@@ -368,7 +368,7 @@ bmi_march=patients.most_recent_bmi(
     include_measurement_date=True,
     date_format="YYYY-MM-DD",
     return_expectations={
-        "date": {"earliest": "2015-11-01", "latest": "2015-12-01"},
+        "date": {"earliest": "2015-11-01", "latest": "2021-12-01"},
         "float": {"distribution": "normal", "mean": 28, "stddev": 8},
         "incidence": 0.05,
     }
@@ -383,7 +383,7 @@ bmi_march=patients.most_recent_bmi(
     include_measurement_date=True,
     date_format="YYYY-MM-DD",
     return_expectations={
-        "date": {"earliest": "2015-12-01", "latest": "2016-01-01"},
+        "date": {"earliest": "2015-12-01", "latest": "2022-01-01"},
         "float": {"distribution": "normal", "mean": 28, "stddev": 8},
         "incidence": 0.05,
     }
@@ -397,7 +397,7 @@ bmi_march=patients.most_recent_bmi(
     include_measurement_date=True,
     date_format="YYYY-MM-DD",
     return_expectations={
-        "date": {"earliest": "2016-01-01", "latest": "2016-02-01"},
+        "date": {"earliest": "2016-01-01", "latest": "2022-02-01"},
         "float": {"distribution": "normal", "mean": 28, "stddev": 8},
         "incidence": 0.05,
     }
@@ -411,7 +411,7 @@ bmi_march=patients.most_recent_bmi(
     include_measurement_date=True,
     date_format="YYYY-MM-DD",
     return_expectations={
-        "date": {"earliest": "2016-02-01", "latest": "2016-03-01"},
+        "date": {"earliest": "2016-02-01", "latest": "2022-03-01"},
         "float": {"distribution": "normal", "mean": 28, "stddev": 8},
         "incidence": 0.01,
     }
@@ -508,7 +508,7 @@ bmi_march=patients.most_recent_bmi(
         include_date_of_match=True,
         date_format="YYYY-MM-DD",
         return_expectations={
-            "date": {"earliest": "2015-03-01", "latest": "2015-04-01"},
+            "date": {"earliest": "2015-03-01", "latest": "2021-04-01"},
             "float": {"distribution": "normal", "mean": 40, "stddev": 10},
             "incidence": 0.5,
         },
@@ -523,7 +523,7 @@ bmi_march=patients.most_recent_bmi(
         include_date_of_match=True,
         date_format="YYYY-MM-DD",
         return_expectations={
-            "date": {"earliest": "2015-04-01", "latest": "2015-05-01"},
+            "date": {"earliest": "2015-04-01", "latest": "2021-05-01"},
             "float": {"distribution": "normal", "mean": 40, "stddev": 10},
             "incidence": 0.5,
         },
@@ -538,7 +538,7 @@ bmi_march=patients.most_recent_bmi(
         include_date_of_match=True,
         date_format="YYYY-MM-DD",
         return_expectations={
-            "date": {"earliest": "2015-05-01", "latest": "2015-06-01"},
+            "date": {"earliest": "2015-05-01", "latest": "2021-06-01"},
             "float": {"distribution": "normal", "mean": 40, "stddev": 10},
             "incidence": 0.5,
         },
@@ -553,7 +553,7 @@ bmi_march=patients.most_recent_bmi(
         include_date_of_match=True,
         date_format="YYYY-MM-DD",
         return_expectations={
-            "date": {"earliest": "2015-06-01", "latest": "2015-07-01"},
+            "date": {"earliest": "2015-06-01", "latest": "2021-07-01"},
             "float": {"distribution": "normal", "mean": 40, "stddev": 10},
             "incidence": 0.5,
         },
@@ -568,7 +568,7 @@ bmi_march=patients.most_recent_bmi(
         include_date_of_match=True,
         date_format="YYYY-MM-DD",
         return_expectations={
-            "date": {"earliest": "2015-07-01", "latest": "2015-08-01"},
+            "date": {"earliest": "2015-07-01", "latest": "2021-08-01"},
             "float": {"distribution": "normal", "mean": 40, "stddev": 10},
             "incidence": 0.5,
         },
@@ -583,7 +583,7 @@ bmi_march=patients.most_recent_bmi(
         include_date_of_match=True,
         date_format="YYYY-MM-DD",
         return_expectations={
-            "date": {"earliest": "2015-08-01", "latest": "2015-09-01"},
+            "date": {"earliest": "2015-08-01", "latest": "2021-09-01"},
             "float": {"distribution": "normal", "mean": 40, "stddev": 10},
             "incidence": 0.5,
         },
@@ -598,7 +598,7 @@ bmi_march=patients.most_recent_bmi(
         include_date_of_match=True,
         date_format="YYYY-MM-DD",
         return_expectations={
-            "date": {"earliest": "2015-09-01", "latest": "2015-10-01"},
+            "date": {"earliest": "2015-09-01", "latest": "2021-10-01"},
             "float": {"distribution": "normal", "mean": 40, "stddev": 10},
             "incidence": 0.5,
         },
@@ -614,7 +614,7 @@ bmi_march=patients.most_recent_bmi(
         include_date_of_match=True,
         date_format="YYYY-MM-DD",
         return_expectations={
-            "date": {"earliest": "2015-10-01", "latest": "2015-11-01"},
+            "date": {"earliest": "2015-10-01", "latest": "2021-11-01"},
             "float": {"distribution": "normal", "mean": 40, "stddev": 10},
             "incidence": 0.5,
         },
@@ -630,7 +630,7 @@ bmi_march=patients.most_recent_bmi(
         include_date_of_match=True,
         date_format="YYYY-MM-DD",
         return_expectations={
-            "date": {"earliest": "2015-11-01", "latest": "2015-12-01"},
+            "date": {"earliest": "2015-11-01", "latest": "2021-12-01"},
             "float": {"distribution": "normal", "mean": 40, "stddev": 10},
             "incidence": 0.5,
         },
@@ -646,7 +646,7 @@ bmi_march=patients.most_recent_bmi(
         include_date_of_match=True,
         date_format="YYYY-MM-DD",
         return_expectations={
-            "date": {"earliest": "2015-12-01", "latest": "2016-01-01"},
+            "date": {"earliest": "2015-12-01", "latest": "2022-01-01"},
             "float": {"distribution": "normal", "mean": 40, "stddev": 10},
             "incidence": 0.5,
         },
@@ -661,7 +661,7 @@ bmi_march=patients.most_recent_bmi(
         include_date_of_match=True,
         date_format="YYYY-MM-DD",
         return_expectations={
-            "date": {"earliest": "2016-01-01", "latest": "2016-02-01"},
+            "date": {"earliest": "2016-01-01", "latest": "2022-02-01"},
             "float": {"distribution": "normal", "mean": 40, "stddev": 10},
             "incidence": 0.5,
         },
@@ -676,7 +676,7 @@ bmi_march=patients.most_recent_bmi(
         include_date_of_match=True,
         date_format="YYYY-MM-DD",
         return_expectations={
-            "date": {"earliest": "2016-02-01", "latest": "2016-03-01"},
+            "date": {"earliest": "2016-02-01", "latest": "2022-03-01"},
             "float": {"distribution": "normal", "mean": 40, "stddev": 10},
             "incidence": 0.5,
         },
