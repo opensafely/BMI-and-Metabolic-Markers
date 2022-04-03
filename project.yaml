@@ -315,6 +315,21 @@ actions:
         table1: output/data/all_bmi_long.feather
 
 
+###########################  
+## DWMP Eligible
+
+
+
+  generate_DWMP_proportion:
+    run: r:latest analysis/DWMP_proportion.R --output-dir=output/data 
+    needs: [generate_whole_pop_2019,generate_whole_pop_2021, generate_whole_pop_2020]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/proportion_DWMP_eligible_2019.csv
+        table2: output/data/proportion_DWMP_eligible_2020.csv
+        table3: output/data/proportion_DWMP_eligible_2021.csv
+
+
 ##################################################################
 ### >> HAD_SBP ANALYSIS
 ######################################################################
