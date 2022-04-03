@@ -144,10 +144,23 @@ hba1c_2020 <- hba1c_2020 %>%
   dplyr::select(-starts_with('ethnicity'))
 
 
+
+## create a flag for hba1c test in this year
+
+
+hba1c_2020 <- hba1c_2020 %>%
+  dplyr::mutate(hba1c_flag = replace_na(median_hba1c, 0))
+
+hba1c_2020 <- hba1c_2020 %>%
+  dplyr::mutate(hba1c_flag = case_when(
+    hba1c_flag == 0 ~ "FALSE", 
+    hba1c_flag >1   ~ "TRUE"
+  ))
+
 ## create a flag for hba1c
 
 ##  Need to: 
- #1.  create a had_hba1c flag
+ #1.  create a had_hba1c flag - DONE
  #2. create a previously elevated hba1c flag (look at 2018 and 2019)
 
 
