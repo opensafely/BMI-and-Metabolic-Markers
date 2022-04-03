@@ -313,3 +313,10 @@ actions:
     outputs:
       highly_sensitive:
         table1: output/data/all_bmi_long.feather
+
+  generate_bmi_period_change:
+    run: r:latest analysis/create_bmi_period_change.R --output-dir=output/data --output-format feather
+    needs: [generate_bmi_complete_long]
+    outputs:
+      highly_sensitive:
+        table1: output/data/bmi_period_change.feather
