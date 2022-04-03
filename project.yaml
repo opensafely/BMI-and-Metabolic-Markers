@@ -184,7 +184,7 @@ actions:
 ##################################################################
 ### >> HAD_BMI ANALYSIS
 ######################################################################
-# who had_bmi measured:  univariate and multivariate analysis and tables
+# who had_bmi measured: 
   generate_had_bmi_proportion_2019:
     run: r:latest analysis/had_bmi_proportions_2019.R --output-dir=output/data 
     needs: [generate_whole_pop_2019]
@@ -315,4 +315,13 @@ actions:
         table1: output/data/all_bmi_long.feather
 
 
-
+##################################################################
+### >> HAD_SBP ANALYSIS
+######################################################################
+# who had_bmi measured: 
+  generate_had_sbp_proportion_2019:
+    run: r:latest analysis/had_sbp_proportions_2019.R --output-dir=output/data 
+    needs: [join_ethnicity, generate_BMI_2019_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/proportion_had_sbp_2019.csv

@@ -16,12 +16,13 @@ library(data.table)
 library(forcats)
 library(rstatix)
 
-# BMI_complete_categories <- read_feather (here::here ("output/data", "BMI_complete_median_2019.feather"))
-# input_all_2019_03_01 <- read_feather (here::here ("output/data", "input_all_2019-03-01.feather"))
+BMI_complete_categories <- read_feather (here::here ("output/data", "BMI_complete_median_2019.feather"))
+all_2019 <- read_feather (here::here ("output/data", "input_all_2019-03-01.feather"))
 
 
-all_2019 <- read_feather (here::here ("Documents/Academic GP/Open Safely/Dummy Data", "input_all_2019-03-01.feather"))
-BMI_complete_categories <- read_feather(here::here ("Documents/Academic GP/Open Safely/Dummy Data", "BMI_complete_median_2019.feather" ))
+
+# all_2019 <- read_feather (here::here ("Documents/Academic GP/Open Safely/Dummy Data", "input_all_2019-03-01.feather"))
+# BMI_complete_categories <- read_feather(here::here ("Documents/Academic GP/Open Safely/Dummy Data", "BMI_complete_median_2019.feather" ))
 
 
 colnames(all_2019)
@@ -39,10 +40,10 @@ all_2019 <- all_2019 %>%
 
 # recode ethnicity so NA is 0 for ethnicity columns
 all_2019 <- all_2019 %>%
-  mutate(ethnic_no_miss = ifelse(is.na(ethnicity), 0, ethnicity ))
+  dplyr::mutate(ethnic_no_miss = ifelse(is.na(ethnicity), 0, ethnicity ))
 
 all_2019 <- all_2019 %>%
-  mutate(ethnicity_16_no_miss = ifelse(is.na(ethnicity_16), 0, ethnicity_16 )) 
+  dplyr::mutate(ethnicity_16_no_miss = ifelse(is.na(ethnicity_16), 0, ethnicity_16 )) 
 
 
 
@@ -60,14 +61,12 @@ all_2019 <- all_2019 %>%
    ethnic_no_miss=="0" ~ "Not_recorded"
   ))
 
-all_2019  %>%
-  tabyl(ethnic_no_miss)
 
 
 
 all_2019 <- all_2019 %>%             
-  mutate (ethnic_no_miss = as.factor(ethnic_no_miss)) %>%
-  mutate (ethnic_no_miss = fct_relevel(ethnic_no_miss, "White", "Asian", "Black", "Mixed","Other", "Not_recorded"))
+  dplyr::mutate (ethnic_no_miss = as.factor(ethnic_no_miss)) %>%
+  dplyr::mutate (ethnic_no_miss = fct_relevel(ethnic_no_miss, "White", "Asian", "Black", "Mixed","Other", "Not_recorded"))
 
 
 all_2019 <- all_2019 %>%
@@ -95,8 +94,8 @@ all_2019 <- all_2019 %>%
 
 
 all_2019 <- all_2019 %>%             
-  mutate (eth_group_16 = as.factor(eth_group_16)) %>%
-  mutate ( eth_group_16= fct_relevel(eth_group_16, 
+  dplyr::mutate (eth_group_16 = as.factor(eth_group_16)) %>%
+  dplyr::mutate ( eth_group_16= fct_relevel(eth_group_16, 
                                      "British",
                                      "Irish",
                                      "Other_White",
@@ -140,8 +139,6 @@ all_2019 <- all_2019 %>%
 
  
 
-  dplyr::mutate(had_sbp = case_when(
-    "sbp_date_measure" >10 ~ 1))
 
 
 
