@@ -871,6 +871,40 @@ had_sbp_comorbid_all_cancer <- had_sbp_comorbid_all_cancer %>%
 
 
 
+########  BMI_categories #######
+
+#1.  count by BMI_categories
+N_BMI_categories <- sbp_2019_DT[, .N, by="BMI_categories"]
+had_sbp_BMI_categories <- sbp_2019_DT[had_sbp=="TRUE", .(n_had_sbp= .N), by="BMI_categories"] 
+had_sbp_BMI_categories <-   had_sbp_BMI_categories[order(BMI_categories)]
+
+had_sbp_BMI_categories <- dplyr::left_join(had_sbp_BMI_categories, N_BMI_categories)
+had_sbp_BMI_categories <- had_sbp_BMI_categories %>%
+  dplyr::mutate(proportion=n_had_sbp/N) 
+
+# 2. calculate confidence interval of propotions
+had_sbp_BMI_categories <- had_sbp_BMI_categories %>%
+  dplyr::mutate(lower_limit = (proportion - ((proportion*(1-proportion))/N*1.96))) %>%   # confidence interval of proporion
+  dplyr::mutate(upper_limit = (proportion + ((proportion*(1-proportion))/N*1.96))) %>%
+  dplyr::mutate(across(where(is.numeric), round, 4)) %>%
+  dplyr::mutate(variable = "BMI_categories", .before=1) %>%
+  dplyr::rename(group = BMI_categories) %>%
+  dplyr::mutate(group = as.character(group))
+
+#.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
+
+# 3. chisq test
+BMI_categories_chisq <- as_tibble(sbp_2019) %>%
+  tabyl(BMI_categories, had_sbp) %>%
+  select(-1) %>% 
+  chisq_test() 
+BMI_categories_chisq <- dplyr::mutate (BMI_categories_chisq, variable = "BMI_categories") %>%
+  dplyr::select("variable", "p", "method")
+
+# 4.  Final table 
+had_sbp_BMI_categories <- had_sbp_BMI_categories %>%
+  dplyr::left_join(BMI_categories_chisq, by = "variable")
+
 
 
 had_sbp_table <- had_sbp_table %>%
@@ -880,6 +914,7 @@ had_sbp_table <- had_sbp_table %>%
   bind_rows (had_sbp_imd) %>%
   bind_rows (had_sbp_ethnic_no_miss) %>%
   bind_rows (had_sbp_eth_group_16) %>%   
+  bind_rows (had_sbp_BMI_categories) %>%
   bind_rows (had_sbp_comorbid_hypertension) %>%
   bind_rows (had_sbp_comorbid_diabetes_t1) %>%
   bind_rows (had_sbp_comorbid_diabetes_t2) %>%
@@ -892,6 +927,8 @@ had_sbp_table <- had_sbp_table %>%
   bind_rows (had_sbp_comorbid_stroke_and_TIA) %>%
   bind_rows (had_sbp_comorbid_chronic_cardiac) %>%
   bind_rows (had_sbp_comorbid_all_cancer)
+
+
 
 had_sbp_table
 
