@@ -13,8 +13,45 @@ colnames(input_all_2020_03_01)
 
 ## select relevant variables for hba1c analysis
 hba1c_2020 <- input_all_2020_03_01 %>%
-  dplyr::select(-starts_with("bmi_")) %>%
-  dplyr::select(-ends_with("_date"))
+  dplyr::select(-starts_with("bmi_")) 
+ 
+
+########################  NEW CODE TO ADD dates for flag pre-covd hba1c
+
+## Need HbA1c measured dates for long data
+
+hba1c_2020_long <- hba1c_2020 %>%   ## 1. pivot_longer date measured columns
+  pivot_longer(
+    cols = ends_with('_date'),
+           names_to = "month_hba1c",
+           values_to = "date_hba1c")%>% 
+  tidyr::drop_na("date_hba1c") %>%                # Drop rows with missing date values
+  group_by(patient_id,date_hba1c) %>%   # Drop duplicate values
+  slice_head %>%
+  mutate(month_hba1c = str_sub(month_hba1c, 7, -6)) 
+
+
+hba1c_2020_long <- hba1c_2020_long %>%
+  pivot_longer(                          #  step 2.  Pivot longer the values.
+    cols = starts_with("hba1c_"),
+    names_to = "date", 
+    values_to = "monthly_hba1c")  %>%    # step 3.  filter out duplicate row
+  mutate(date = str_sub(date, 7)) %>%  #3a.  create a column to identify matching events
+  dplyr::filter(month_hba1c == date) %>%
+  select(-'date')
+
+
+
+## save the long version to merge for trajectory analysis and creating a flag of last hba1c
+
+
+################################# need to make sure names are compatible with code below which did not include the date.  need date to identify most recent pre-covid hba1c
+
+
+
+
+
+
 
 
 ## pivot the monhtly hba1c measures longer
