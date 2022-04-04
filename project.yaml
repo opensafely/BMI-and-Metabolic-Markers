@@ -401,3 +401,12 @@ actions:
         cohort4: output/data/hba1c_2018_long.feather
         cohort5: output/data/precovid_hba1c_control.feather
        
+  generate_hba1c_2020_2021_data:
+    run: r:latest analysis/hba1c_2020_2021.R --output-dir=output/data --output-format feather
+    needs: [join_ethnicity]
+    outputs:
+      highly_sensitive:
+        cohort1: output/data/hba1c_2020_summary.feather
+        cohort2: output/data/hba1c_2021_summary.feather
+        cohort3: output/data/hba1c_2021_long.feather
+        cohort4: output/data/hba1c_2020_long.feather
