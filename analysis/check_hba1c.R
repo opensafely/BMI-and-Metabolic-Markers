@@ -11,10 +11,12 @@ library(forcats)
 library(rstatix)
 library(janitor)
 
-hba1c_summary <- read_feather (here::here ("output/data", "hba1c_2019_summary.feather"))
+check_hba1c <- read_feather (here::here ("output/data", "input_all_2018-03-01.feather"))
 
-check_hba1c <- hba1c_summary %>%
-ungroup()%>%
-tabyl(had_hba1c)
+check_hba1c <- check_hba1c %>%
+  ungroup() %>%
+  dplyr::filter(hba1c_march >0 ) %>%
+  dplyr::group_by(sex) %>%
+  dplyr::summarise(mean_hba1c_march = mean(hba1c_march))
 
 write.csv (check_hba1c, here::here ("output/data","check_hba1c.csv"))
