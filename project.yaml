@@ -428,7 +428,7 @@ actions:
 
   check_hba1c:
     run: r:latest analysis/check_hba1c.R --output-dir=output/data --output-format feather
-    needs: [generate_hba1c_2018_2019_data]
+    needs: [join_ethnicity]
     outputs:
       moderately_sensitive:
         table1: output/data/check_hba1c.csv
