@@ -418,3 +418,10 @@ actions:
     outputs:
       moderately_sensitive:
         table1: output/data/proportion_had_hba1c_2019.csv
+
+  generate_hba1c_proportions_2019:
+    run: r:latest analysis/had_hba1c_2019_proportions.R --output-dir=output/data --output-format feather
+    needs: [generate_hba1c_2018_2019_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/proportion_hba1c_2019.csv
