@@ -24,6 +24,9 @@ library(janitor)
 
 hba1c_summary <- read_feather (here::here ("output/data", "hba1c_2019_summary.feather"))
 
+hba1c_summary <- hba1c_summary %>% 
+  ungroup()
+
 ## limit analysis to type 2 diabetics
 hba1c_summary <- dplyr::filter(hba1c_summary, (diabetes_t2 == 'TRUE' & diabetes_t1=='FALSE'))
 
