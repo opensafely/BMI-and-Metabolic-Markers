@@ -391,7 +391,7 @@ actions:
 ##############################################################
 
   generate_hba1c_2018_2019_data:
-    run: r:latest analysis/hba1c_2018_19.R --output-dir=output/data --output-format feather
+    run: r:latest analysis/hba1c_2018_2019.R --output-dir=output/data --output-format feather
     needs: [join_ethnicity]
     outputs:
       highly_sensitive:
