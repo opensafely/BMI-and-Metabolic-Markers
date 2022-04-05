@@ -410,3 +410,11 @@ actions:
         cohort2: output/data/hba1c_2021_summary.feather
         cohort3: output/data/hba1c_2021_long.feather
         cohort4: output/data/hba1c_2020_long.feather
+
+
+  generate_hba1c_2019_proportion:
+    run: r:latest analysis/had_hba1c_2019.R --output-dir=output/data --output-format feather
+    needs: [generate_hba1c_2018_2019_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/proportion_had_hba1c_2019.csv
