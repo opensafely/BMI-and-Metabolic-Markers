@@ -758,18 +758,71 @@ bmi_march=patients.most_recent_bmi(
         ),
 
 
+ 
+
+
+
+#######################################
+        cholesterol_test=patients.with_these_clinical_events(
+            chol_codes,
+            between=["index_date", "index_date +1 year"]
+            returning="binary_flag",
+            return_expectations={"incidence": 0.01, },
+        ),
+
+
+        dbp=patients.mean_recorded_value(
+        diastolic_blood_pressure_codes,
+        on_most_recent_day_of_measurement=True,
+        include_measurement_date=True,
+        between=["index_date", "index_date + 1 year"],
+        date_format="YYYY-MM",
+        return_expectations={
+            "incidence": 0.1,
+            "float": {"distribution": "normal", "mean": 80, "stddev": 10},
+            "date": {"earliest": "index_date", "latest": "index_date + 1 month"},
+            "rate": "uniform",
+        },
+    ),
+
+         smoking_status=patients.categorised_as(
+            {
+                "S": "most_recent_smoking_code = 'S' OR smoked_last_18_months",
+                "E": """
+                        (most_recent_smoking_code = 'E' OR (
+                        most_recent_smoking_code = 'N' AND ever_smoked
+                        )
+                        ) AND NOT smoked_last_18_months
+                """,
+                "N": "most_recent_smoking_code = 'N' AND NOT ever_smoked",
+                "M": "DEFAULT",
+            },
+            return_expectations={
+                "category": {"ratios": {"S": 0.6, "E": 0.1, "N": 0.2, "M": 0.1}}
+            },
+            most_recent_smoking_code=patients.with_these_clinical_events(
+                clear_smoking_codes,
+                find_last_match_in_period=True,
+                on_or_before="index_date",
+                returning="category",
+            ),
+            ever_smoked=patients.with_these_clinical_events(
+                filter_codes_by_category(clear_smoking_codes, include=["S", "E"]),
+                returning="binary_flag",
+                on_or_before="index_date",
+            ),
+            smoked_last_18_months=patients.with_these_clinical_events(
+                filter_codes_by_category(clear_smoking_codes, include=["S"]),
+                between=["index_date - 548 day", "index_date"],
+            ),
+        ),   
+    
+    
     
 )
 
 
 
-
-
-
-
-
-# ignore diabetes type for now
-# For HbA1c level use codelist *opensafely/glycated-haemoglobin-hba1c-tests-numerical-value/5134e926  - this has included just IFCC measures. 
 
 
 ## Diabetes diagnosis:  https://github.com/opensafely/ethnicity-covid-research/issues/11  to identify Type 1 or Type 2 based on codes
