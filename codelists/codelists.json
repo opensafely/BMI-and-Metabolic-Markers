@@ -60,12 +60,6 @@
       "downloaded_at": "2022-02-17 14:13:33.360231Z",
       "sha": "f2781f0c9a0617b30996d681a798eedd152a09af"
     },
-    "opensafely-glycated-haemoglobin-hba1c-tests-numerical-value.csv": {
-      "id": "opensafely/glycated-haemoglobin-hba1c-tests-numerical-value/5134e926",
-      "url": "https://codelists.opensafely.org/codelist/opensafely/glycated-haemoglobin-hba1c-tests-numerical-value/5134e926/",
-      "downloaded_at": "2022-02-17 14:13:33.538517Z",
-      "sha": "bc7e48efd370be65686755f0a843058f1ec767e0"
-    },
     "opensafely-type-1-diabetes.csv": {
       "id": "opensafely/type-1-diabetes/2020-06-29",
       "url": "https://codelists.opensafely.org/codelist/opensafely/type-1-diabetes/2020-06-29/",
@@ -162,11 +156,11 @@
       "downloaded_at": "2022-02-17 14:13:36.680959Z",
       "sha": "0b5f3afe1db96dcce5141220e893a42ba2e5a8f7"
     },
-    "opensafely-systolic-blood-pressure-qof.csv": {
-      "id": "opensafely/systolic-blood-pressure-qof/3572b5fb",
-      "url": "https://codelists.opensafely.org/codelist/opensafely/systolic-blood-pressure-qof/3572b5fb/",
-      "downloaded_at": "2022-02-17 14:13:36.844627Z",
-      "sha": "f2bc461e351499f4e5573a6f94e760b99979491e"
+    "opensafely-cholesterol-tests.csv": {
+      "id": "opensafely/cholesterol-tests/09896c09",
+      "url": "https://codelists.opensafely.org/codelist/opensafely/cholesterol-tests/09896c09/",
+      "downloaded_at": "2022-04-07 20:53:23.028063Z",
+      "sha": "e5f9e7e0b44c18830aea207f001d015153a56b8e"
     }
   }
 }

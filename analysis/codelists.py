@@ -188,7 +188,7 @@ diastolic_blood_pressure_codes = codelist(["246A."], system="ctv3")
 
 # Cholesterol Codes
 chol_codes = codelist_from_csv(
-    "opensafely/cholesterol-tests.csv", 
+    "codelists/opensafely-cholesterol-tests.csv", 
     system="snomed",
     column="code"
 )

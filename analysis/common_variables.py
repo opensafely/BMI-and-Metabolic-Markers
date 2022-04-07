@@ -1,4 +1,9 @@
-from cohortextractor import patients
+from cohortextractor import (
+    patients,
+    codelist,
+    filter_codes_by_category,
+    combine_codelists,
+)
 from codelists import *
 
 ##############  NEED TO ADD MENTAL HEALTH CODES>>> removed as run error on actions.  Need to check code.
@@ -16,7 +21,6 @@ common_variables = dict(
     # Age
     age_group = patients.categorised_as(
         {
-            "0-17": "age >= 0 AND age < 18",
             "18-39": "age >= 18 AND age < 40",
             "40-65": "age >= 40 AND age < 65",
             "65-80": "age >= 65 AND age < 80",
@@ -27,12 +31,11 @@ common_variables = dict(
             "rate": "universal",
             "category": {
                 "ratios": {
-                    "0-17": 0.08,
                     "18-39": 0.3,
                     "40-65": 0.3,
                     "65-80": 0.2,
                     "80+": 0.1,
-                    "missing": 0.02,
+                    "missing": 0.1,
                 }
             },
         },
@@ -765,7 +768,7 @@ bmi_march=patients.most_recent_bmi(
 #######################################
         cholesterol_test=patients.with_these_clinical_events(
             chol_codes,
-            between=["index_date", "index_date +1 year"]
+            between=["index_date", "index_date +1 year"],
             returning="binary_flag",
             return_expectations={"incidence": 0.01, },
         ),
@@ -785,7 +788,7 @@ bmi_march=patients.most_recent_bmi(
         },
     ),
 
-         smoking_status=patients.categorised_as(
+        smoking_status=patients.categorised_as(
             {
                 "S": "most_recent_smoking_code = 'S' OR smoked_last_18_months",
                 "E": """
@@ -813,9 +816,9 @@ bmi_march=patients.most_recent_bmi(
             ),
             smoked_last_18_months=patients.with_these_clinical_events(
                 filter_codes_by_category(clear_smoking_codes, include=["S"]),
-                between=["index_date - 548 day", "index_date"],
+                between=["index_date- 548 day", "index_date"],
             ),
-        ),   
+        ),
     
     
     
@@ -825,8 +828,3 @@ bmi_march=patients.most_recent_bmi(
 
 
 
-## Diabetes diagnosis:  https://github.com/opensafely/ethnicity-covid-research/issues/11  to identify Type 1 or Type 2 based on codes
-# Type 1 diabetes:  opensafely/type-1-diabetes/2020-06-29
-# Type 2 diabetes: opensafely/type-2-diabetes/2020-06-29
-# Oral Antidiabetic drugs:  opensafely/antidiabetic-drugs/2020-07-16
-# Insulin: opensafely/insulin-medication/2020-04-26
