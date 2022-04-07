@@ -30,10 +30,19 @@ ethnicity_codes_16 = codelist_from_csv(
         category_column="Grouping_16",
 )
 
+clear_smoking_codes = codelist_from_csv(
+    "codelists/opensafely-smoking-clear.csv",
+    system="ctv3",
+    column="CTV3Code",
+    category_column="Category",
+)
+
+
 
 
 # HbA1c
 hba1c_new_codes = codelist(["XaPbt", "Xaeze", "Xaezd"], system="ctv3")
+
 
 
 # Insulin medication
@@ -172,8 +181,14 @@ all_cancer_codes = combine_codelists(
 
 # opensafely/lung-cancer/2020-04-15
 
-systolic_blood_pressure_codes = codelist_from_csv (
-    "codelists/opensafely-systolic-blood-pressure-qof.csv", 
+
+systolic_blood_pressure_codes = codelist(["2469."], system="ctv3")
+
+diastolic_blood_pressure_codes = codelist(["246A."], system="ctv3")
+
+# Cholesterol Codes
+chol_codes = codelist_from_csv(
+    "opensafely/cholesterol-tests.csv", 
     system="snomed",
-    column='code'
+    column="code"
 )
