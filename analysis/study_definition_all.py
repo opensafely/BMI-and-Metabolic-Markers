@@ -23,12 +23,12 @@ study = StudyDefinition(
         """
         registered_one_year AND
         (sex = "M" OR sex = "F") AND
-        (age >= 18 AND age <= 110) AND
+        (age >= 18 AND age <= 90) AND
         (region != "")
         """,
         
         registered_one_year=patients.registered_with_one_practice_between(
-        "2019-03-01", "2020-03-01",
+        "2021-03-01", "2022-03-01",
         return_expectations={"incidence": 0.9},
 
         )
