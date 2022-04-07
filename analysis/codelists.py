@@ -33,11 +33,8 @@ ethnicity_codes_16 = codelist_from_csv(
 
 
 # HbA1c
-hba1c_new_codes = codelist_from_csv(
-    "codelists/opensafely-glycated-haemoglobin-hba1c-tests-numerical-value.csv",
-    system="snomed",
-    column="term"
-)
+hba1c_new_codes = codelist(["XaPbt", "Xaeze", "Xaezd"], system="ctv3")
+
 
 # Insulin medication
 insulin_med_codes = codelist_from_csv(
