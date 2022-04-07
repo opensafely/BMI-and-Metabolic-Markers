@@ -43,6 +43,40 @@ common_variables = dict(
             "index_date",
         ),
     ),
+
+   age_group_2 = patients.categorised_as(
+        {
+            "18-29": "age_2 >= 18 AND age < 30",
+            "30-39": "age_2 >= 30 AND age < 40",
+            "40-49": "age_2 >= 40 AND age < 50",
+            "50-59": "age_2 >= 50 AND age < 60",
+            "60-69": "age_2 >= 60 AND age < 70",
+            "70-79": "age_2 >= 70 AND age < 80",
+            "80+": "age_2 >= 80",
+            "missing": "DEFAULT",
+        },
+        return_expectations = {
+            "rate": "universal",
+            "category": {
+                "ratios": {
+                    "18-29": 0.1,
+                    "30-39": 0.2,
+                    "40-49": 0.2,
+                    "50-59": 0.2,
+                    "60-69": 0.1,
+                    "70-79": 0.1,
+                    "80+": 0.05,
+                    "missing": 0.05,
+                }
+            },
+        },
+    
+        age_2 = patients.age_as_of(
+            "index_date",
+        ),
+    ),
+
+        
                        
     # Region
     region = patients.registered_practice_as_of(
@@ -422,61 +456,7 @@ bmi_march=patients.most_recent_bmi(
     ),   
     
     
-    
-### categorising BMI
-############### BUT THIS IS BASED ON MOST RECENT BMI - should we do based on average BMI from monthly readings. 
-    
-    bmi_base_groups = patients.categorised_as(
-        {
-            "1": "bmi < 18.5", 
-            "2": "bmi >= 18.5 AND bmi < 25", 
-            "3": "bmi >= 25 AND bmi < 27.5",
-            "4": "bmi >= 27.5 AND bmi < 30",
-            "5": "bmi >=30", 
-            "missing": "DEFAULT", 
-        }, 
-        return_expectations = {
-            "rate": "universal", 
-            "category": {
-                "ratios": {
-                    "1": 0.05,
-                    "2": 0.25,
-                    "3": 0.2,
-                    "4": 0.2,
-                    "5": 0.3,
-                }
-            },
-        },     
-    ),
 
-    
- bmi_groups = patients.categorised_as(
-        {
-            "underweight": "bmi < 18.5", 
-            "healthy_weight": "bmi >= 18.5 AND bmi < 25", 
-            "overweight": "bmi >= 25 AND bmi < 30",
-            "obese": "bmi >=30", 
-            "missing": "DEFAULT", 
-        }, 
-        return_expectations = {
-            "rate": "universal", 
-            "category": {
-                "ratios": {
-                    "underweight": 0.05, 
-                    "healthy_weight": 0.25, 
-                    "overweight": 0.4,
-                    "obese": 0.3, 
-                }
-            },
-        },
-        
-    ),   
-    
-    
-    
-    
-
-        
 
 ###################################################
 ### Systolic BP
