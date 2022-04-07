@@ -1,4 +1,9 @@
-from cohortextractor import patients
+from cohortextractor import (
+    patients,
+    codelist,
+    filter_codes_by_category,
+    combine_codelists,
+)
 from codelists import *
 
 ##############  NEED TO ADD MENTAL HEALTH CODES>>> removed as run error on actions.  Need to check code.
@@ -16,7 +21,6 @@ common_variables = dict(
     # Age
     age_group = patients.categorised_as(
         {
-            "0-17": "age >= 0 AND age < 18",
             "18-39": "age >= 18 AND age < 40",
             "40-65": "age >= 40 AND age < 65",
             "65-80": "age >= 65 AND age < 80",
@@ -27,12 +31,11 @@ common_variables = dict(
             "rate": "universal",
             "category": {
                 "ratios": {
-                    "0-17": 0.08,
                     "18-39": 0.3,
                     "40-65": 0.3,
                     "65-80": 0.2,
                     "80+": 0.1,
-                    "missing": 0.02,
+                    "missing": 0.1,
                 }
             },
         },
@@ -40,6 +43,40 @@ common_variables = dict(
             "index_date",
         ),
     ),
+
+   age_group_2 = patients.categorised_as(
+        {
+            "18-29": "age_2 >= 18 AND age < 30",
+            "30-39": "age_2 >= 30 AND age < 40",
+            "40-49": "age_2 >= 40 AND age < 50",
+            "50-59": "age_2 >= 50 AND age < 60",
+            "60-69": "age_2 >= 60 AND age < 70",
+            "70-79": "age_2 >= 70 AND age < 80",
+            "80+": "age_2 >= 80",
+            "missing": "DEFAULT",
+        },
+        return_expectations = {
+            "rate": "universal",
+            "category": {
+                "ratios": {
+                    "18-29": 0.1,
+                    "30-39": 0.2,
+                    "40-49": 0.2,
+                    "50-59": 0.2,
+                    "60-69": 0.1,
+                    "70-79": 0.1,
+                    "80+": 0.05,
+                    "missing": 0.05,
+                }
+            },
+        },
+    
+        age_2 = patients.age_as_of(
+            "index_date",
+        ),
+    ),
+
+        
                        
     # Region
     region = patients.registered_practice_as_of(
@@ -419,61 +456,7 @@ bmi_march=patients.most_recent_bmi(
     ),   
     
     
-    
-### categorising BMI
-############### BUT THIS IS BASED ON MOST RECENT BMI - should we do based on average BMI from monthly readings. 
-    
-    bmi_base_groups = patients.categorised_as(
-        {
-            "1": "bmi < 18.5", 
-            "2": "bmi >= 18.5 AND bmi < 25", 
-            "3": "bmi >= 25 AND bmi < 27.5",
-            "4": "bmi >= 27.5 AND bmi < 30",
-            "5": "bmi >=30", 
-            "missing": "DEFAULT", 
-        }, 
-        return_expectations = {
-            "rate": "universal", 
-            "category": {
-                "ratios": {
-                    "1": 0.05,
-                    "2": 0.25,
-                    "3": 0.2,
-                    "4": 0.2,
-                    "5": 0.3,
-                }
-            },
-        },     
-    ),
 
-    
- bmi_groups = patients.categorised_as(
-        {
-            "underweight": "bmi < 18.5", 
-            "healthy_weight": "bmi >= 18.5 AND bmi < 25", 
-            "overweight": "bmi >= 25 AND bmi < 30",
-            "obese": "bmi >=30", 
-            "missing": "DEFAULT", 
-        }, 
-        return_expectations = {
-            "rate": "universal", 
-            "category": {
-                "ratios": {
-                    "underweight": 0.05, 
-                    "healthy_weight": 0.25, 
-                    "overweight": 0.4,
-                    "obese": 0.3, 
-                }
-            },
-        },
-        
-    ),   
-    
-    
-    
-    
-
-        
 
 ###################################################
 ### Systolic BP
@@ -758,6 +741,66 @@ bmi_march=patients.most_recent_bmi(
         ),
 
 
+ 
+
+
+
+#######################################
+        cholesterol_test=patients.with_these_clinical_events(
+            chol_codes,
+            between=["index_date", "index_date +1 year"],
+            returning="binary_flag",
+            return_expectations={"incidence": 0.01, },
+        ),
+
+
+        dbp=patients.mean_recorded_value(
+        diastolic_blood_pressure_codes,
+        on_most_recent_day_of_measurement=True,
+        include_measurement_date=True,
+        between=["index_date", "index_date + 1 year"],
+        date_format="YYYY-MM",
+        return_expectations={
+            "incidence": 0.1,
+            "float": {"distribution": "normal", "mean": 80, "stddev": 10},
+            "date": {"earliest": "index_date", "latest": "index_date + 1 month"},
+            "rate": "uniform",
+        },
+    ),
+
+        smoking_status=patients.categorised_as(
+            {
+                "S": "most_recent_smoking_code = 'S' OR smoked_last_18_months",
+                "E": """
+                        (most_recent_smoking_code = 'E' OR (
+                        most_recent_smoking_code = 'N' AND ever_smoked
+                        )
+                        ) AND NOT smoked_last_18_months
+                """,
+                "N": "most_recent_smoking_code = 'N' AND NOT ever_smoked",
+                "M": "DEFAULT",
+            },
+            return_expectations={
+                "category": {"ratios": {"S": 0.6, "E": 0.1, "N": 0.2, "M": 0.1}}
+            },
+            most_recent_smoking_code=patients.with_these_clinical_events(
+                clear_smoking_codes,
+                find_last_match_in_period=True,
+                on_or_before="index_date",
+                returning="category",
+            ),
+            ever_smoked=patients.with_these_clinical_events(
+                filter_codes_by_category(clear_smoking_codes, include=["S", "E"]),
+                returning="binary_flag",
+                on_or_before="index_date",
+            ),
+            smoked_last_18_months=patients.with_these_clinical_events(
+                filter_codes_by_category(clear_smoking_codes, include=["S"]),
+                between=["index_date- 548 day", "index_date"],
+            ),
+        ),
+    
+    
     
 )
 
@@ -765,15 +808,3 @@ bmi_march=patients.most_recent_bmi(
 
 
 
-
-
-
-# ignore diabetes type for now
-# For HbA1c level use codelist *opensafely/glycated-haemoglobin-hba1c-tests-numerical-value/5134e926  - this has included just IFCC measures. 
-
-
-## Diabetes diagnosis:  https://github.com/opensafely/ethnicity-covid-research/issues/11  to identify Type 1 or Type 2 based on codes
-# Type 1 diabetes:  opensafely/type-1-diabetes/2020-06-29
-# Type 2 diabetes: opensafely/type-2-diabetes/2020-06-29
-# Oral Antidiabetic drugs:  opensafely/antidiabetic-drugs/2020-07-16
-# Insulin: opensafely/insulin-medication/2020-04-26
