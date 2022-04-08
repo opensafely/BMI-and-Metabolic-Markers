@@ -57,7 +57,7 @@ check_sbp <- all_2015 %>%
  
 
 
-check_bmi <- check_bmi %>%
+check_hba1c <- check_bmi %>%
   bind_rows(check_sbp) %>%
   bind_rows(check_age_group) 
 
