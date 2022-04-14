@@ -18,7 +18,7 @@ study = StudyDefinition(
         "date": {"earliest": "1900-01-01", "latest": "today"},
         "rate": "uniform",
         "incidence": 0.5,
-    },
+        },
     
     ############################### Robin's code
     population=patients.satisfying(
@@ -27,7 +27,7 @@ study = StudyDefinition(
         (sex = "M" OR sex = "F") AND
         (age >= 18 AND age <= 90) AND
         (region != "") AND
-        (diabetes_t1 = 1 OR diabetes_t2 = 1)
+        (diabetes_type = 'T1DM' OR diabetes_type = 'T2DM')
         
         """,
         
@@ -35,32 +35,31 @@ study = StudyDefinition(
         "2021-03-01", "2022-03-01",
         return_expectations={"incidence": 0.9},
 
-        )
-    ), 
-  
- # Diabetes
-    type1_diabetes=patients.with_these_clinical_events(
+        ),
+        
+        # Diabetes
+        type1_diabetes=patients.with_these_clinical_events(
         diabetes_t1_codes,
         on_or_before="index_date",
         return_last_date_in_period=True,
         include_month=True,
-    ),
+        ),
 
-    type2_diabetes=patients.with_these_clinical_events(
+        type2_diabetes=patients.with_these_clinical_events(
         diabetes_t2_codes,
         on_or_before="index_date",
         return_last_date_in_period=True,
         include_month=True,
-    ),
+        ),
 
-    unknown_diabetes=patients.with_these_clinical_events(
+        unknown_diabetes=patients.with_these_clinical_events(
         diabetes_unknown_codes,
         on_or_before="index_date",
         return_last_date_in_period=True,
         include_month=True,
-    ),
+        ),
     
-    diabetes_type=patients.categorised_as(
+        diabetes_type=patients.categorised_as(
         {
             "T1DM":
                 """
@@ -93,40 +92,44 @@ study = StudyDefinition(
                    
                 """,
             "NO_DM": "DEFAULT",
-        },
+            },
 
-        return_expectations={
+            return_expectations={
             "category": {"ratios": {"T1DM": 0.03, "T2DM": 0.2, "UNKNOWN_DM": 0.02, "NO_DM": 0.75}},
             "rate" : "universal"
 
-        },
+            },
 
         # Patient took antidiabetic drugs
-        oad_lastyear_meds=patients.with_these_medications(
+            oad_lastyear_meds=patients.with_these_medications(
             oad_med_codes, 
             between=["index_date - 365 days", "index_date - 1 day"],
             returning="number_of_matches_in_period",
         ),
         # Patient took insulin
-        insulin_lastyear_meds=patients.with_these_medications(
+            insulin_lastyear_meds=patients.with_these_medications(
             insulin_med_codes,
             between=["index_date - 365 days", "index_date - 1 day"],
             returning="number_of_matches_in_period",
         ),
-    ),
+        ),
     
     # Indicators for diabetes type
-    diabetes_t1=patients.satisfying(
+        diabetes_t1=patients.satisfying(
         """
         diabetes_type = 'T1DM'
         """         
-    ),
+        ),
     
-    diabetes_t2=patients.satisfying(
+        diabetes_t2=patients.satisfying(
         """
         diabetes_type = 'T2DM'
         """         
-    ),
+        ),
+        
+    ), 
+  
+ 
        
         
 
