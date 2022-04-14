@@ -129,9 +129,17 @@ study = StudyDefinition(
         
     ), 
   
- 
-       
+    oad_lastyear_meds=patients.with_these_medications(
+            oad_med_codes, 
+            between=["index_date - 365 days", "index_date - 1 day"],
+            return_expectations={"incidence": 0.50},
+    ),  
+    
+    insulin_lastyear_meds=patients.with_these_medications(
+            insulin_med_codes,
+            between=["index_date - 365 days", "index_date - 1 day"],
+            return_expectations={"incidence": 0.50},
         
-
+    ),
 )
 from codelists import *
