@@ -8,9 +8,8 @@ from cohortextractor import (
     Measure,
 )  # NOQA
 
-from common_variables import (
-    common_variables
-)
+
+from codelists import *
 
 study = StudyDefinition(
     index_date="2020-03-01",
@@ -27,7 +26,7 @@ study = StudyDefinition(
         (sex = "M" OR sex = "F") AND
         (age >= 18 AND age <= 90) AND
         (region != "") AND
-        (diabetes_type = 'T1DM' OR diabetes_type = 'T2DM')
+        (diabetes_type = 'T1DM' OR diabetes_type = 'T2DM' OR diabetes_type = 'UNKNOWN_DM')
         
         """,
         
@@ -37,6 +36,20 @@ study = StudyDefinition(
 
         ),
         
+        sex = patients.sex(return_expectations={
+        "rate": "universal",
+        "category": {"ratios": {"M": 0.49, "F": 0.51}},
+        }),
+
+        age = patients.age_as_of(
+        "index_date",
+        ),
+
+            region = patients.registered_practice_as_of(
+        "index_date",
+        returning = "nuts1_region_name",
+        ),
+
         # Diabetes
         type1_diabetes=patients.with_these_clinical_events(
         diabetes_t1_codes,
@@ -129,17 +142,18 @@ study = StudyDefinition(
         
     ), 
   
-    oad_lastyear_meds=patients.with_these_medications(
+    oad_meds=patients.with_these_medications(
             oad_med_codes, 
             between=["index_date - 365 days", "index_date - 1 day"],
             return_expectations={"incidence": 0.50},
     ),  
     
-    insulin_lastyear_meds=patients.with_these_medications(
+    insulin_meds=patients.with_these_medications(
             insulin_med_codes,
             between=["index_date - 365 days", "index_date - 1 day"],
             return_expectations={"incidence": 0.50},
         
     ),
+
 )
 from codelists import *

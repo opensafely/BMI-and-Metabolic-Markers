@@ -68,7 +68,47 @@ actions:
       highly_sensitive:
         cohort: output/data/input*.feather
 
+  generate_study_population_dm1:
+    run: cohortextractor:latest generate_cohort --study-definition study_definition_dm_meds --output-dir=output/data --index-date-range "2015-03-01" 
+    outputs:
+      highly_sensitive:
+        cohort: output/data/input_dm_meds_2015-03-01.csv
 
+  generate_study_population_dm2:
+    run: cohortextractor:latest generate_cohort --study-definition study_definition_dm_meds --output-dir=output/data --index-date-range "2016-03-01" 
+    outputs:
+      highly_sensitive:
+        cohort: output/data/input_dm_meds_2016-03-01.csv
+
+  generate_study_population_dm3:
+    run: cohortextractor:latest generate_cohort --study-definition study_definition_dm_meds --output-dir=output/data --index-date-range "2017-03-01" 
+    outputs:
+      highly_sensitive:
+        cohort: output/data/input_dm_meds_2017-03-01.csv
+
+  generate_study_population_dm4:
+    run: cohortextractor:latest generate_cohort --study-definition study_definition_dm_meds --output-dir=output/data --index-date-range "2018-03-01" 
+    outputs:
+      highly_sensitive:
+        cohort: output/data/input_dm_meds_2018-03-01.csv
+
+  generate_study_population_dm5:
+    run: cohortextractor:latest generate_cohort --study-definition study_definition_dm_meds --output-dir=output/data --index-date-range "2019-03-01" 
+    outputs:
+      highly_sensitive:
+        cohort: output/data/input_dm_meds_2019-03-01.csv
+
+  generate_study_population_dm6:
+    run: cohortextractor:latest generate_cohort --study-definition study_definition_dm_meds --output-dir=output/data --index-date-range "2020-03-01" 
+    outputs:
+      highly_sensitive:
+        cohort: output/data/input_dm_meds_2020-03-01.csv
+
+  generate_study_population_dm7:
+    run: cohortextractor:latest generate_cohort --study-definition study_definition_dm_meds --output-dir=output/data --index-date-range "2021-03-01" 
+    outputs:
+      highly_sensitive:
+        cohort: output/data/input_dm_meds_2021-03-01.csv
 ###  Develop yearly BMI data sets to de-duplicate data and calculate median BMI each year.   Feather format to reduce data quantity.
 
   generate_BMI_2015_data:
