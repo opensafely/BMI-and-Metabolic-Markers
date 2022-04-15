@@ -27,13 +27,13 @@ main_2020 <- read_feather (here::here ("output/data", "input_all_2020-03-01.feat
 main_2021 <- read_feather (here::here ("output/data", "input_all_2021-03-01.feather"))
 
 
-dm_meds_2015 <- read.csv (here::here ("output/data", "input_dm_meds_2015-03-01.csv))
-dm_meds_2016 <- read.csv (here::here ("output/data", "input_dm_meds_2016-03-01.csv))
-dm_meds_2017 <- read.csv (here::here ("output/data", "input_dm_meds_2017-03-01.csv))
-dm_meds_2018 <- read.csv (here::here ("output/data", "input_dm_meds_2018-03-01.csv))
-dm_meds_2019 <- read.csv (here::here ("output/data", "input_dm_meds_2019-03-01.csv))
-dm_meds_2020 <- read.csv (here::here ("output/data", "input_dm_meds_2020-03-01.csv))
-dm_meds_2021 <- read.csv (here::here ("output/data", "input_dm_meds_2021-03-01.csv))
+dm_meds_2015 <- read.csv (here::here ("output/data", "input_dm_meds_2015-03-01.csv"))
+dm_meds_2016 <- read.csv (here::here ("output/data", "input_dm_meds_2016-03-01.csv"))
+dm_meds_2017 <- read.csv (here::here ("output/data", "input_dm_meds_2017-03-01.csv"))
+dm_meds_2018 <- read.csv (here::here ("output/data", "input_dm_meds_2018-03-01.csv"))
+dm_meds_2019 <- read.csv (here::here ("output/data", "input_dm_meds_2019-03-01.csv"))
+dm_meds_2020 <- read.csv (here::here ("output/data", "input_dm_meds_2020-03-01.csv"))
+dm_meds_2021 <- read.csv (here::here ("output/data", "input_dm_meds_2021-03-01.csv"))
 
 ## join 2015 data
 
@@ -166,3 +166,10 @@ tabyl(diabetes_type, insulin_meds) %>%
   
   
   
+write_feather (main_2015, here::here ("output/data","complete_meds_2015.feather"))
+write_feather (main_2016, here::here ("output/data","complete_meds_2016.feather"))
+write_feather (main_2017, here::here ("output/data","complete_meds_2017.feather"))
+write_feather (main_2018, here::here ("output/data","complete_meds_2018.feather"))
+write_feather (main_2019, here::here ("output/data","complete_meds_2019.feather"))
+write_feather (main_2020, here::here ("output/data","complete_meds_2020.feather"))
+write_feather (main_2021, here::here ("output/data","complete_meds_2021.feather"))

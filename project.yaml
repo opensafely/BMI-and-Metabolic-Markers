@@ -111,6 +111,24 @@ actions:
         cohort: output/data/input_dm_meds_2021-03-01.csv
 ###  Develop yearly BMI data sets to de-duplicate data and calculate median BMI each year.   Feather format to reduce data quantity.
 
+
+  join_meds:
+    run: r:latest analysis/add_medication.R --output-dir=output/data --output-format feather
+    needs: [join_ethnicity, generate_study_population_dm1, generate_study_population_dm2, generate_study_population_dm3, generate_study_population_dm4, generate_study_population_dm5, generate_study_population_dm6, generate_study_population_dm7]
+    outputs:
+      highly_sensitive:
+        cohort1: output/data/complete_meds_2015.feather
+        cohort2: output/data/complete_meds_2016.feather
+        cohort3: output/data/complete_meds_2017.feather
+        cohort4: output/data/complete_meds_2018.feather
+        cohort5: output/data/complete_meds_2019.feather
+        cohort6: output/data/complete_meds_2020.feather
+        cohort7: output/data/complete_meds_2021.feather
+
+
+
+
+
   generate_BMI_2015_data:
     run: r:latest analysis/BMI_2015.R --output-dir=output/data --output-format feather
     needs: [join_ethnicity]
