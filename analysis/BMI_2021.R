@@ -1,7 +1,6 @@
 #####  YEARLY COHORTS FOR BMI
 ##### Author: M Samuel
-##### Updated:  7th March 2022
-
+##### Updated:  7th March 2022, 15th April
 
 
 
@@ -11,9 +10,18 @@ library(tidyverse)
 library(Hmisc)
 library(here)
 library(arrow)
-library(broom)
-library(dplyr)
+library(purrr)
+library(data.table)
+library(forcats)
+library(rstatix)
 library(janitor)
+library(skimr)
+
+
+
+#BMI_2021 <- read_feather (here::here ("Documents/Academic GP/Open Safely/Dummy Data", "complete_meds_2021.feather"))
+
+
 
 
 
@@ -21,7 +29,7 @@ library(janitor)
 ###################################
 #####  read in files
 
-input_all_2021_03_01<- read_feather (here::here ("output/data", "input_all_2021-03-01.feather"))
+BMI_2021 <- read_feather (here::here ("output/data", "complete_meds_2021.feather"))
 
 ###################
 ## 2021 analysis
@@ -30,7 +38,7 @@ input_all_2021_03_01<- read_feather (here::here ("output/data", "input_all_2021-
 ## 2021 analysis
 ###################
 
-BMI_2021 <- as_tibble (input_all_2021_03_01)
+BMI_2021 <- as_tibble (BMI_2021)
 
 
 
@@ -48,8 +56,6 @@ BMI_2021 <- BMI_2021 %>%
 
 
 
-
-
 ### label
 BMI_2021$ethnic_no_miss[BMI_2021$ethnic_no_miss=="1"]<-"White"
 BMI_2021$ethnic_no_miss[BMI_2021$ethnic_no_miss=="2"]<-"Mixed"
@@ -62,28 +68,27 @@ BMI_2021 <- BMI_2021 %>%
   mutate (ethnic_no_miss = as.factor(ethnic_no_miss)) %>%
   mutate (ethnic_no_miss = fct_relevel(ethnic_no_miss, "White", "Asian", "Black", "Mixed","Other", "Not_recorded"))
 
+BMI_2021 <- BMI_2021  %>%
+  dplyr::mutate(imd = na_if(imd, '0')) 
 
 
-BMI_2021$imd[BMI_2021$imd=="0"]<-"NA"
-BMI_2021$imd[BMI_2021$imd=="1"]<-"1 most deprived"
-BMI_2021$imd[BMI_2021$imd=="2"]<-"2"
-BMI_2021$imd[BMI_2021$imd=="3"]<-"3"
-BMI_2021$imd[BMI_2021$imd=="4"]<-"4"
-BMI_2021$imd[BMI_2021$imd=="5"]<-"5 least deprived"
 
 BMI_2021 <- BMI_2021 %>%             
   mutate (imd = as.factor(imd)) %>%
-  mutate (imd = fct_relevel(imd, "1 most deprived", "2", "3", "4", "5 least deprived", "NA"))
+  mutate (imd = fct_relevel(imd, "1", "2", "3", "4", "5"))
+
+BMI_2021 %>%
+  tabyl(imd)
 
 
 # had_bmi_imd_m <- glm(had_bmi ~ imd, data=BMI_2021, family=binomial) %>%
-  # broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
- #  dplyr::mutate(across(where(is.numeric), round, digits = 2)) 
+# broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
+#  dplyr::mutate(across(where(is.numeric), round, digits = 2)) 
 
 BMI_2021 <- BMI_2021 %>%
   mutate (eth_group_16=case_when(
-    ethnicity_16_no_miss == "1" ~ "British",
-    ethnicity_16_no_miss == "2" ~ "Irish",
+    ethnicity_16_no_miss == "1" ~ "White_British",
+    ethnicity_16_no_miss == "2" ~ "White_Irish",
     ethnicity_16_no_miss == "3" ~ "Other_White",
     ethnicity_16_no_miss == "4" ~ "White_Black_Carib",
     ethnicity_16_no_miss == "5" ~ "White_Black_African",
@@ -104,24 +109,34 @@ BMI_2021 <- BMI_2021 %>%
 BMI_2021 <- BMI_2021 %>%             
   mutate (eth_group_16 = as.factor(eth_group_16)) %>%
   mutate ( eth_group_16= fct_relevel(eth_group_16, 
-                                             "British",
-                                             "Irish",
-                                             "Other_White",
-                                             "Indian",
-                                             "Pakistani",
-                                             "Bangladeshi",
-                                             "Other_Asian",
-                                             "Caribbean",
-                                             "African",
-                                             "Other_Black",
-                                             "Chinese",
-                                             "White_Asian",
-                                             "White_Black_Carib",
-                                             "White_Black_African",
-                                             "Other_Mixed",
-                                             "Other",
-                                             "Missing"))
+                                     "White_British",
+                                     "White_Irish",
+                                     "Other_White",
+                                     "Indian",
+                                     "Pakistani",
+                                     "Bangladeshi",
+                                     "Other_Asian",
+                                     "Caribbean",
+                                     "African",
+                                     "Other_Black",
+                                     "Chinese",
+                                     "White_Asian",
+                                     "White_Black_Carib",
+                                     "White_Black_African",
+                                     "Other_Mixed",
+                                     "Other",
+                                     "Missing"))
 
+## Generate a data set of demographic and exposure variables: To link to BMI data after data manipulation
+
+demog_2021 <- BMI_2021  %>%
+  dplyr::select(-starts_with("bmi")) %>% 
+  dplyr::select(-starts_with("hba1c")) %>% 
+  dplyr::select(-("eth")) %>%
+  dplyr::select(-starts_with("ethnicity"))
+  
+
+colnames(demog_2021)
 
 
 
@@ -129,145 +144,128 @@ BMI_2021 <- BMI_2021 %>%
 ######################################### CODE to: 1) link BMI values and actual measured data; 2) de-duplicate any duplicate values due to monthly_bmi formula
 #########################################  Will need to also create a cohort with all values for median_bmi analysis
 
-bmi_2021_long <- BMI_2021 %>%   ## 1. pivot_longer date measured columns
-  pivot_longer(
+bmi_2021_long <- BMI_2021 %>% 
+  dplyr::select(patient_id, starts_with("bmi")) %>%
+  dplyr::select(-("bmi"), -("bmi_date_measured")) %>%
+   pivot_longer(                              ## 1. pivot_longer date measured columns
     cols = c('bmi_march_date_measured', 'bmi_apr_date_measured', 'bmi_may_date_measured', 'bmi_june_date_measured', 'bmi_july_date_measured', 'bmi_aug_date_measured', 'bmi_sep_date_measured', 'bmi_oct_date_measured', 'bmi_nov_date_measured', 'bmi_dec_date_measured', 'bmi_jan_date_measured', 'bmi_feb_date_measured', 'bmi_jan_date_measured'),
     values_to = "bmi_measured_date" ) %>% 
   dplyr::arrange(patient_id, bmi_measured_date) %>%
   tidyr::drop_na(bmi_measured_date) %>%
-  group_by(patient_id, bmi_measured_date) %>%
+  group_by(patient_id, bmi_measured_date) %>%  ## filter out duplicate values!!
   slice_head %>%                  #  step 2.  Pivot longer the values.  
   pivot_longer(
     cols = c('bmi_march', 'bmi_apr', 'bmi_may', 'bmi_june', 'bmi_july', 'bmi_aug', 'bmi_sep', 'bmi_oct', 'bmi_nov', 'bmi_dec', 'bmi_jan', 'bmi_feb', 'bmi_jan'),
     names_to = "date", 
-    values_to = "monthly_bmi")  %>%    # step 3.  filter out duplicate row
-  dplyr::select("patient_id", 
-                "name", 
-                "bmi_measured_date",
-                "date",
-                "monthly_bmi",
-                "sex", 
-                "age_group", 
-                "region", 
-                "imd",                 
-                "ethnic_no_miss",
-                "eth_group_16",
-                "learning_disability", 
-                "dementia", 
-                "depression",                   
-                "psychosis_schiz_bipolar", 
-                "diabetes_type",               
-                "diabetes_t1",                  
-                "diabetes_t2",
-                "bmi",
-                "had_bmi",
-                "asthma",                      
-                "COPD",                        
-                "stroke_and_TIA" ,
-                "chronic_cardiac",              
-                "hypertension",                 
-                "all_cancer")   %>%
+    values_to = "monthly_bmi")   %>%    # step 3.  filter out duplicate row created by the pivot step
   mutate(measured_month = str_sub(name, 1, -15)) %>%  #3a.  create a column to identify matching events
   dplyr::filter(measured_month == date) %>%
   select(-'name', -'measured_month')
 
 
 
-long_bmi_2021 <- bmi_2021_long
 
 
 
 
+##  Join with demographic data set to create a data set of all BMI values
+
+BMI_complete_long <- demog_2021 %>%
+  dplyr::left_join(bmi_2021_long) %>%
+  dplyr::mutate(year=2021)
+
+## DATA QUALITY CHECKS AND REPORTING:  HOW MANY VALUES FILTERED OUT ETC
+### Check how many patients had a BMI check before filtering out very high and very low values
+
+
+## TOTAL BMI VALUES BEFORE FILTERING HIGH AND LOW VALUES
+BMI_data_checks <- BMI_complete_long %>%
+  ungroup()%>%
+  skim_without_charts%>%
+  dplyr::select('skim_variable', 'n_missing', 'complete_rate') %>%
+  dplyr::mutate(N_total = n_missing/(1-complete_rate)) %>% 
+  dplyr::mutate(N_values = N_total - n_missing) %>% 
+  dplyr::filter(skim_variable == 'monthly_bmi')
 
 
 
-#  Hmisc::describe(long_bmi_2021)
-#  Missing BMIs have been recorded as '0' - will affect stats. Need to replace
+
+## NUMBER OF PATIENTS WITH A BMI BEFORE FILTERING OUT HIGH AND LOW VALUES
+patients_with_bmi <- BMI_complete_long  %>%
+  dplyr::group_by(patient_id) %>% 
+  dplyr::summarise(patients_with_bmi_all = median(monthly_bmi, na.rm = TRUE))
 
 
-## replace very high and very low BMIs with NA:  This will exclude erroneus values and exclude patients who are severely underweight/severely obese whose change in BMI may not reflect general population trends
-long_bmi_2021$monthly_bmi[long_bmi_2021$monthly_bmi<15|long_bmi_2021$monthly_bmi>65] <- NA
+patients_with_bmi_check <- skim_without_charts(patients_with_bmi)%>%
+  dplyr::select('skim_variable', 'n_missing', 'complete_rate') %>%
+  dplyr::mutate(N_total = n_missing/(1-complete_rate)) %>% 
+  dplyr::mutate(N_values = N_total - n_missing) %>% 
+  dplyr::filter(skim_variable == 'patients_with_bmi_all')
 
 
-## Add a year flag
-BMI_complete_long <- long_bmi_2021 %>%
-  mutate("year"= 2021)
 
+### REPLACE HIGH and LOW values with Missing
 
+BMI_complete_long$monthly_bmi[BMI_complete_long$monthly_bmi<15|BMI_complete_long$monthly_bmi>65] <- NA
+
+BMI_filtered_checks <- BMI_complete_long %>%
+  dplyr::mutate(monthly_bmi_filtered = monthly_bmi) %>%
+  ungroup()%>%
+  skim_without_charts%>%
+  dplyr::select('skim_variable', 'n_missing', 'complete_rate') %>%
+  dplyr::mutate(N_total = n_missing/(1-complete_rate)) %>% 
+  dplyr::mutate(N_values = N_total - n_missing) %>%
+  dplyr::filter(skim_variable == 'monthly_bmi_filtered')
 
 #>>>>>> FINAL LONG DATA SET::  BMI_complete_long
+
+
+
 
 ########################################################################################################################################################
 #######################################################################################################################################################
 ## MEDIAN BMI ANALYSIS
 
-### Calculate the median BMI for each patient based on measurements in that year
 
-bmi_2021_bypatid <- group_by(long_bmi_2021,patient_id)
-median_bmi_2021 <- dplyr::summarise(bmi_2021_bypatid,
-                                    median_bmi = median(monthly_bmi, na.rm=TRUE)
-)
+## create a data set with patient's median BMI
+### Very high and low values already filtered out
 
-
-
+median_bmi <- BMI_complete_long  %>%
+  dplyr::group_by(patient_id) %>% 
+  dplyr::summarise(median_bmi = median(monthly_bmi, na.rm = TRUE))
 
 
-## add median BMI onto main data set using a merge
-long_bmi_2021_median <- left_join(long_bmi_2021, median_bmi_2021)
+## First complete the data checks to identify how many patients lost at each step
+patients_with_bmi_filtered <- median_bmi %>%
+  dplyr::mutate(patients_with_bmi_filtered = median_bmi) %>%
+  skim_without_charts()%>%
+  dplyr::select('skim_variable', 'n_missing', 'complete_rate') %>%
+  dplyr::mutate(N_total = n_missing/(1-complete_rate)) %>% 
+  dplyr::mutate(N_values = N_total - n_missing) %>% 
+  dplyr::filter(skim_variable == 'patients_with_bmi_filtered')
 
 
-## group and then slice head
-BMI_2021_median <- long_bmi_2021_median %>%
-  group_by(patient_id) %>%
-  slice_head() %>%
-  select("patient_id", 
-         "median_bmi",
-         "sex", 
-         "age_group", 
-         "region", 
-         "imd",                 
-         "ethnic_no_miss",
-         "eth_group_16",
-         "learning_disability", 
-         "dementia", 
-         "depression",                   
-         "psychosis_schiz_bipolar", 
-         "diabetes_type",               
-         "diabetes_t1",                  
-         "diabetes_t2",
-         "bmi",
-         "had_bmi",
-         "asthma",                      
-         "COPD",                        
-         "stroke_and_TIA" ,
-         "chronic_cardiac",              
-         "hypertension",                 
-         "all_cancer")              
+## COMPLETE DATA CHECK TABLE
 
-BMI_2021_median <- BMI_2021_median %>%
-  mutate("year"= 2021)
+BMI_data_checks <- BMI_data_checks %>% 
+  bind_rows(BMI_filtered_checks) %>%
+  bind_rows(patients_with_bmi_check) %>%
+  bind_rows(patients_with_bmi_filtered)
 
 
-## 2021 mediam BMI per patient:  BMI_2021_median
+#################################################################################
 
-
-
-## CREATE FLAGS and LABEL DEMOGRAPHIS
-
-BMI_complete_median <- BMI_2021_median
-
-
-
-## Ungroup to assign BMI categories
-BMI_complete_median <- ungroup(BMI_complete_median)
+## JOIN MEDIAN BMI RESULTS TO DEMOGRAPHIC AND COVARIATES TABLES
+BMI_2021_median <- median_bmi %>% 
+  left_join(demog_2021) %>% 
+  dplyr::mutate("year" = "2021")
 
 
 ### classify as underweight, healthyweight, overweight, obese
-BMI_complete_categories <- BMI_complete_median
+BMI_complete_categories <- ungroup(BMI_2021_median)
 BMI_complete_categories$BMI_categories <- cut(BMI_complete_categories$median_bmi, 
                                               breaks=c(0, 20,25,30,1000),
                                               labels= c("underweight", "healthy", "overweight", "obese"))
-
 
 ## classify as above 27.5
 
@@ -306,14 +304,11 @@ BMI_complete_categories_DWMP <-BMI_complete_categories_DWMP %>%
     )
   )
 
-
+BMI_complete_categories_DWMP <- BMI_complete_categories_DWMP %>% 
+  dplyr::select(-c(learning_disability,depression, dementia,psychosis_schiz_bipolar, diabetes_type, diabetes_t1, diabetes_t2, asthma, COPD, stroke_and_TIA, chronic_cardiac, hypertension, all_cancer, type1_diabetes, type2_diabetes, unknown_diabetes))
 
 BMI_complete_categories_DWMP <- ungroup (BMI_complete_categories_DWMP)
 
-BMI_complete_categories_DWMP <- BMI_complete_categories_DWMP %>%
-  dplyr::select(
-    patient_id, year,  median_bmi, had_bmi, BMI_categories, BMI_over27.5, DWMP, sex, age_group, region, imd, ethnic_no_miss, eth_group_16, starts_with("comorbid_"), 
-  )
 
 
 ###  add binary obese variable
@@ -328,12 +323,12 @@ BMI_complete_categories_DWMP <- BMI_complete_categories_DWMP %>%
   )                       
 
 
-
-
-
+skim_without_charts(BMI_complete_categories_DWMP)
+## SAVE BMI_data_checks as csv
 
 
 ###########################################################################################################
+write.csv (BMI_data_checks, here::here ("output/data","BMI_data_checks_2021.csv"))
 
 write_feather (BMI_complete_categories_DWMP, here::here ("output/data","BMI_complete_median_2021.feather"))
 
