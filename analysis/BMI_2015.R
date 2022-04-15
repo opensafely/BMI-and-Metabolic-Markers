@@ -323,8 +323,7 @@ BMI_complete_categories_DWMP <- BMI_complete_categories_DWMP %>%
   )                       
 
 
-
-
+skim_without_charts(BMI_complete_categories_DWMP)
 ## SAVE BMI_data_checks as csv
 
 
