@@ -21,18 +21,17 @@ library(janitor)
 
 # check working directory:  getwd()
 
-BMI_complete_categories <- read_feather (here::here ("output/data", "BMI_all_2020.feather"))
-
-
-
+BMI_complete_categories <- read_feather (here::here ("output/data", "BMI_complete_median.feather"))
 
 
 BMI_complete_categories <- BMI_complete_categories %>% 
-  dplyr::mutate(imd=as.numeric(imd)) %>%
+  dplyr::ungroup() %>%
+  dplyr::filter (year == "2020") %>%
   dplyr::mutate (imd = as.factor(imd)) %>%
   dplyr::mutate (imd = fct_relevel(imd, "1", "2", "3", "4", "5")) %>%
   dplyr::mutate(age_group = as.factor(age_group)) %>%
-  dplyr::mutate(age_group = fct_relevel(age_group, "0-17", "18-39", "40-65", "65-80", "80+"))
+  dplyr::mutate(age_group = fct_relevel(age_group, "18-39", "40-65", "65-80", "80+"))
+
 
 BMI_complete_categories$obese[BMI_complete_categories$obese == 1] <- "TRUE"
 BMI_complete_categories$obese[BMI_complete_categories$obese == 0] <- "FALSE"

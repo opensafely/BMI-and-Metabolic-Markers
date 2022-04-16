@@ -19,22 +19,21 @@ library(janitor)
 
 ## Read in files  >>> Change PATH!!
 
-
-
-BMI_complete_categories <- read_feather (here::here ("output/data", "BMI_all_2019.feather"))
-
-
-
-
+BMI_complete_categories <- read_feather (here::here ("output/data", "BMI_complete_median.feather"))
 
 BMI_complete_categories <- BMI_complete_categories %>% 
-  dplyr::mutate(imd=as.numeric(imd)) %>%
-  # dplyr::filter (imd>0) %>%  
+  dplyr::ungroup() %>%
+  dplyr::filter (year == "2019") %>%
   dplyr::mutate (imd = as.factor(imd)) %>%
   dplyr::mutate (imd = fct_relevel(imd, "1", "2", "3", "4", "5")) %>%
   dplyr::mutate(age_group = as.factor(age_group)) %>%
-  dplyr::mutate(age_group = fct_relevel(age_group, "0-17", "18-39", "40-65", "65-80", "80+")) %>%
-  dplyr::mutate(year = "2019")
+  dplyr::mutate(age_group = fct_relevel(age_group, "18-39", "40-65", "65-80", "80+"))
+
+
+BMI_complete_categories <- BMI_complete_categories %>% 
+  replace_na(list(precovid_obese_flag=FALSE))
+
+
 
 
 BMI_complete_categories %>%
@@ -100,7 +99,8 @@ median_age_group <- N_median_age_group %>%
   dplyr::mutate(across(where(is.numeric), round, 3)) %>%
   dplyr::rename('group' = 'age_group') %>%
   dplyr::mutate(variable="age_group", .before = 1 ) %>%
-  dplyr::mutate(method = "Kruskal_Wallis")
+  dplyr::mutate(method = "Kruskal_Wallis") %>%
+  dplyr::arrange(group)
 
 
 ### SEX
@@ -190,7 +190,8 @@ median_imd <- N_median_imd %>%
   dplyr::mutate(across(where(is.numeric), round, 3)) %>%
   dplyr::rename('group' = 'imd') %>%
   dplyr::mutate(variable="imd", .before = 1 ) %>%
-  dplyr::mutate(method = "Kruskal_Wallis")
+  dplyr::mutate(method = "Kruskal_Wallis") %>%
+  dplyr::arrange(group)
 
 
 ## 6 category ethnicity
@@ -220,7 +221,8 @@ median_ethnic_no_miss <- N_median_ethnic_no_miss %>%
   dplyr::mutate(across(where(is.numeric), round, 3)) %>%
   dplyr::rename('group' = 'ethnic_no_miss') %>%
   dplyr::mutate(variable="ethnic_no_miss", .before = 1 ) %>%
-  dplyr::mutate(method = "Kruskal_Wallis")
+  dplyr::mutate(method = "Kruskal_Wallis") %>%
+  dplyr::arrange(group)
 
 
 ## ethnic 16 categories
@@ -250,7 +252,8 @@ median_eth_group_16 <- N_median_eth_group_16 %>%
   dplyr::mutate(across(where(is.numeric), round, 3)) %>%
   dplyr::rename('group' = 'eth_group_16') %>%
   dplyr::mutate(variable="eth_group_16", .before = 1 ) %>%
-  dplyr::mutate(method = "Kruskal_Wallis")
+  dplyr::mutate(method = "Kruskal_Wallis") %>%
+  dplyr::arrange(group)
 
 
 N_median_comorbid_learning_disability <- BMI_complete_categories_DT [, .(N_population = length(median_bmi)) , by="comorbid_learning_disability"]
