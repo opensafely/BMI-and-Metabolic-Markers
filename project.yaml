@@ -259,7 +259,7 @@ actions:
 # who had_bmi measured: 
   generate_had_bmi_proportion_2019:
     run: r:latest analysis/had_bmi_proportions_2019.R --output-dir=output/data 
-    needs: [generate_whole_pop_2019]
+    needs: [generate_complete_median_BMI_data]
     outputs:
       moderately_sensitive:
         table1: output/data/proportion_had_bmi_2019.csv
