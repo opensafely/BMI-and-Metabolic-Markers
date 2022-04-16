@@ -358,14 +358,14 @@ actions:
   ## tables of median BMI and range
   generate_median_bmi_range_2019:
     run: r:latest analysis/median_range_2019.R --output-dir=output/data 
-    needs: [generate_whole_pop_2019]
+    needs: [generate_complete_median_BMI_data]
     outputs:
       moderately_sensitive:
         table1: output/data/median_range_bmi_2019.csv
 
   generate_median_bmi_range_2020:
     run: r:latest analysis/median_range_2020.R --output-dir=output/data 
-    needs: [generate_whole_pop_2020]
+    needs: [generate_complete_median_BMI_data]
     outputs:
       moderately_sensitive:
         table1: output/data/median_range_bmi_2020.csv
@@ -373,7 +373,7 @@ actions:
 
   generate_median_bmi_range_2021:
     run: r:latest analysis/median_range_2021.R --output-dir=output/data 
-    needs: [generate_whole_pop_2021]
+    needs: [generate_complete_median_BMI_data]
     outputs:
       moderately_sensitive:
         table1: output/data/median_range_bmi_2021.csv
