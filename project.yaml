@@ -403,7 +403,7 @@ actions:
 
   generate_DWMP_hypertension_proportion:
     run: r:latest analysis/DWMP_proportion_hypertension.R --output-dir=output/data 
-    needs: [generate_whole_pop_2019,generate_whole_pop_2021, generate_whole_pop_2020]
+    needs: [generate_complete_median_BMI_data]
     outputs:
       moderately_sensitive:
         table1: output/data/proportion_DWMP_hypertension_2019.csv
@@ -412,7 +412,7 @@ actions:
 
   generate_DWMP_t2dm_proportion:
     run: r:latest analysis/DWMP_proportion_t2dm.R --output-dir=output/data 
-    needs: [generate_whole_pop_2019,generate_whole_pop_2021, generate_whole_pop_2020]
+    needs: [generate_complete_median_BMI_data]
     outputs:
       moderately_sensitive:
         table1: output/data/proportion_DWMP_T2DM_2019.csv
@@ -422,7 +422,7 @@ actions:
 
   generate_DWMP_t1dm_proportion:
     run: r:latest analysis/DWMP_proportion_t1dm.R --output-dir=output/data 
-    needs: [generate_whole_pop_2019,generate_whole_pop_2021, generate_whole_pop_2020]
+    needs: [generate_complete_median_BMI_data]
     outputs:
       moderately_sensitive:
         table1: output/data/proportion_DWMP_T1DM_2019.csv
