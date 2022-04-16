@@ -283,7 +283,7 @@ actions:
 
   generate_obese_proportion_2019:
     run: r:latest analysis/obese_proportions_2019.R --output-dir=output/data 
-    needs: [generate_whole_pop_2019]
+    needs: [generate_complete_median_BMI_data]
     outputs:
       moderately_sensitive:
         table1: output/data/proportion_obese_2019.csv
@@ -291,14 +291,14 @@ actions:
 
   generate_obese_proportion_2020:
     run: r:latest analysis/obese_proportions_2020.R --output-dir=output/data 
-    needs: [generate_whole_pop_2020]
+    needs: [generate_complete_median_BMI_data]
     outputs:
       moderately_sensitive:
         table1: output/data/proportion_obese_2020.csv
 
   generate_obese_proportion_2021:
     run: r:latest analysis/obese_proportions_2021.R --output-dir=output/data 
-    needs: [generate_whole_pop_2021]
+    needs: [generate_complete_median_BMI_data]
     outputs:
       moderately_sensitive:
         table1: output/data/proportion_obese_2021.csv
