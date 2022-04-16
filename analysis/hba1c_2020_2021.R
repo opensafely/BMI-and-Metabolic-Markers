@@ -13,7 +13,7 @@ library(broom)
 library(dplyr)
 library(janitor)
 
-input_all_2020_03_01 <- read_feather (here::here ("output/data", "input_all_2020-03-01.feather"))
+input_all_2020_03_01 <- read_feather (here::here ("output/data", "complete_meds_2020.feather"))
 
 
 
@@ -206,7 +206,7 @@ hba1c_2020 <- had_hba1c_2020 %>%
 
 
 
-input_all_2021_03_01 <- read_feather (here::here ("output/data", "input_all_2021-03-01.feather"))
+input_all_2021_03_01 <- read_feather (here::here ("output/data", "complete_meds_2021.feather"))
 
 
 

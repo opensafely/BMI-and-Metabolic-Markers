@@ -13,8 +13,8 @@ library(broom)
 library(dplyr)
 library(janitor)
 
-input_all_2019_03_01 <- read_feather (here::here ("output/data", "input_all_2019-03-01.feather"))
-input_all_2018_03_01 <- read_feather (here::here ("output/data", "input_all_2018-03-01.feather"))
+input_all_2019_03_01 <- read_feather (here::here ("output/data", "complete_meds_2019.feather"))
+input_all_2018_03_01 <- read_feather (here::here ("output/data", "complete_meds_2018.feather"))
 
 
 colnames(input_all_2019_03_01)
@@ -139,7 +139,7 @@ hba1c_2019_long <- hba1c_2019_long %>%
   mutate(date = str_sub(date, 7)) %>%  #3a.  create a column to identify matching events
   dplyr::filter(month_hba1c == date) %>%
   dplyr::select(-'date') %>% 
-  dplyr::filter(monthly_hba1c >= 15)  %>%  ## FILTER OUT ANY VERY LOW HbA1c (likely miscoded DCCT)
+  dplyr::filter(monthly_hba1c >= 15)  %>%  ## FILTER OUT ANY VERY LOW HbA1c (likely miscoded DCCT)(do this in the analysis)
   dplyr::mutate(year = "2019")
 ## missing hba1c values are 0 >> change to NA
 # hba1c_2019_long$hba1c[hba1c_2019$hba1c == 0] <- NA
@@ -298,7 +298,7 @@ hba1c_2018_long <- hba1c_2018_long %>%
   mutate(date = str_sub(date, 7)) %>%  #3a.  create a column to identify matching events
   dplyr::filter(month_hba1c == date) %>%
   dplyr::select(-'date') %>% 
-  dplyr::filter(monthly_hba1c >= 15)  %>%  ## FILTER OUT ANY VERY LOW HbA1c (likely miscoded DCCT)
+  dplyr::filter(monthly_hba1c >= 15)  %>%  ## FILTER OUT ANY VERY LOW HbA1c (likely miscoded DCCT)(do this in the main analysis)
   dplyr::mutate(year = "2018")
 ## missing hba1c values are 0 >> change to NA
 # hba1c_2018_long$hba1c[hba1c_2018$hba1c == 0] <- NA
