@@ -16,112 +16,25 @@ library(data.table)
 library(forcats)
 library(rstatix)
 
-BMI_complete_categories <- read_feather (here::here ("output/data", "BMI_complete_median_2021.feather"))
-all_2021 <- read_feather (here::here ("output/data", "input_all_2021-03-01.feather"))
-precovid_obese <- read_feather (here::here ("output/data", "BMI_complete_median.feather"))
+BMI_complete_categories <- read_feather (here::here ("output/data", "BMI_complete_median.feather"))
 
 
-
-# all_2021 <- read_feather (here::here ("Documents/Academic GP/Open Safely/Dummy Data", "input_all_2021-03-01.feather"))
-# BMI_complete_categories <- read_feather(here::here ("Documents/Academic GP/Open Safely/Dummy Data", "BMI_complete_median_2021.feather" ))
-
-
-colnames(all_2021)
-
-all_2021 <- all_2021 %>%
-  dplyr::select(, -starts_with("bmi"), -starts_with("hba1c"), -starts_with("type")) %>%
-  dplyr:: select(, -("eth"), -("ethnicity_sus"))
+BMI_complete_categories <- BMI_complete_categories %>% 
+  dplyr::ungroup() %>%
+  dplyr::filter (year == "2021") %>%
+  dplyr::mutate (imd = as.factor(imd)) %>%
+  dplyr::mutate (imd = fct_relevel(imd, "1", "2", "3", "4", "5")) %>%
+  dplyr::mutate(age_group = as.factor(age_group)) %>%
+  dplyr::mutate(age_group = fct_relevel(age_group, "18-39", "40-65", "65-80", "80+"))
 
 
-
-
-
-
-## Code and label ethnicity
-
-# recode ethnicity so NA is 0 for ethnicity columns
-all_2021 <- all_2021 %>%
-  dplyr::mutate(ethnic_no_miss = ifelse(is.na(ethnicity), 0, ethnicity ))
-
-all_2021 <- all_2021 %>%
-  dplyr::mutate(ethnicity_16_no_miss = ifelse(is.na(ethnicity_16), 0, ethnicity_16 )) 
+BMI_complete_categories <- BMI_complete_categories %>% 
+  replace_na(list(precovid_obese_flag=FALSE))
 
 
 
 
-
-### label
-
-all_2021 <- all_2021 %>%
-  dplyr::mutate(ethnic_no_miss = case_when(
-   ethnic_no_miss=="1" ~"White",
-   ethnic_no_miss=="2" ~ "Mixed",
-   ethnic_no_miss=="3" ~ "Asian",
-   ethnic_no_miss=="4" ~ "Black",
-   ethnic_no_miss=="5" ~ "Other",
-   ethnic_no_miss=="0" ~ "Not_recorded"
-  ))
-
-
-
-
-all_2021 <- all_2021 %>%             
-  dplyr::mutate (ethnic_no_miss = as.factor(ethnic_no_miss)) %>%
-  dplyr::mutate (ethnic_no_miss = fct_relevel(ethnic_no_miss, "White", "Asian", "Black", "Mixed","Other", "Not_recorded"))
-
-
-all_2021 <- all_2021 %>%
-  mutate (eth_group_16=case_when(
-    ethnicity_16_no_miss == "1" ~ "British",
-    ethnicity_16_no_miss == "2" ~ "Irish",
-    ethnicity_16_no_miss == "3" ~ "Other_White",
-    ethnicity_16_no_miss == "4" ~ "White_Black_Carib",
-    ethnicity_16_no_miss == "5" ~ "White_Black_African",
-    ethnicity_16_no_miss == "6" ~ "White_Asian",
-    ethnicity_16_no_miss == "7" ~ "Other_Mixed",
-    ethnicity_16_no_miss == "8" ~ "Indian",
-    ethnicity_16_no_miss == "9" ~ "Pakistani",
-    ethnicity_16_no_miss == "10" ~ "Bangladeshi",
-    ethnicity_16_no_miss == "11" ~ "Other_Asian",
-    ethnicity_16_no_miss == "12" ~ "Caribbean",
-    ethnicity_16_no_miss == "13" ~ "African",
-    ethnicity_16_no_miss == "14" ~ "Other_Black",
-    ethnicity_16_no_miss == "15" ~ "Chinese",
-    ethnicity_16_no_miss == "16" ~ "Other",
-    ethnicity_16_no_miss ==  "0" ~  "Missing"))  
-
-
-
-
-
-all_2021 <- all_2021 %>%             
-  dplyr::mutate (eth_group_16 = as.factor(eth_group_16)) %>%
-  dplyr::mutate ( eth_group_16= fct_relevel(eth_group_16, 
-                                     "British",
-                                     "Irish",
-                                     "Other_White",
-                                     "Indian",
-                                     "Pakistani",
-                                     "Bangladeshi",
-                                     "Other_Asian",
-                                     "Caribbean",
-                                     "African",
-                                     "Other_Black",
-                                     "Chinese",
-                                     "White_Asian",
-                                     "White_Black_Carib",
-                                     "White_Black_African",
-                                     "Other_Mixed",
-                                     "Other",
-                                     "Missing"))
-
-
-all_2021 <- all_2021 %>%
-  dplyr::select(-("ethnicity"), -("ethnicity_16_no_miss"), -("ethnicity_16"))
-
-Hmisc::describe(all_2021$sbp)
-## all missing sbp have been coded as 0 >> replace with NA
-all_2021$sbp[all_2021$sbp<10] <- NA
+all_2021 <- BMI_complete_categories
 
 
 Hmisc::describe(all_2021$sbp_date_measured)
@@ -138,101 +51,15 @@ all_2021 <- all_2021 %>%
     had_sbp == 0 ~0
   ))
 
- 
 
 
-
-
-
-all_2021 <- all_2021 %>%
-      dplyr::select("patient_id", 
-                    starts_with("sbp"),
-                    "had_sbp",
-                    "sex", 
-                    "age_group", 
-                    "region", 
-                    "imd",                 
-                    "ethnic_no_miss",
-                    "eth_group_16",
-                    "learning_disability", 
-                    "dementia", 
-                    "depression",                   
-                    "psychosis_schiz_bipolar", 
-                    "diabetes_type",               
-                    "diabetes_t1",                  
-                    "diabetes_t2",
-                    "asthma",                      
-                    "COPD",                        
-                    "stroke_and_TIA" ,
-                    "chronic_cardiac",              
-                    "hypertension",                 
-                    "all_cancer", 
-                    "had_bmi") 
-  
-## Recode comorbidity names to make compatible with code
-
-all_2021 <- all_2021 %>%  
-  dplyr::mutate(
-    across(
-      .cols = c(learning_disability,depression, dementia,psychosis_schiz_bipolar, diabetes_type, diabetes_t1, diabetes_t2, asthma, COPD, stroke_and_TIA, chronic_cardiac, hypertension, all_cancer), 
-      .names = "comorbid_{col}")) %>%
-  dplyr::select(
-    patient_id, had_bmi, had_sbp, sbp_date_measured, sbp, sex, age_group, region, imd, ethnic_no_miss, eth_group_16, starts_with("comorbid_"))
-
-all_2021 <- all_2021 %>%
-  dplyr::mutate(year = 2021)
-
-#  Join data on patient_bmi
-
-BMI_complete_categories <- as_tibble(BMI_complete_categories)
-
-
-BMI_complete_categories <- BMI_complete_categories %>%
-  dplyr::select(patient_id,
-                median_bmi,
-                obese,
-                BMI_categories,
-                BMI_over27.5,
-                DWMP)   
-
-
-sbp_2021 <- left_join(all_2021, BMI_complete_categories, by='patient_id')
+sbp_2021 <- all_2021
 
 colnames(sbp_2021)
-
-# 5) add the pre-covid obese flag
-precovid_obese <- precovid_obese %>%
-  dplyr::select(patient_id, precovid_obese_flag) %>%
-  dplyr::group_by (patient_id) %>%                             ## these lines identify duplicates.  
-  dplyr::slice_head(n=1)                                       ## without this left_join would have added rows (more than one row per patient)
-
-
-
-sbp_2021 <- left_join(sbp_2021, precovid_obese, by='patient_id')
-
-
-sbp_2021 <- sbp_2021 %>%
-dplyr::mutate(precovid_obese_flag = replace_na(precovid_obese_flag, "FALSE"))
-
-
-
-
 
 
 #########################################################################
 ## Data set for analysis
-sbp_2021$imd[sbp_2021$imd == 0] <- NA
-
-
-
-## change age and imd into ordered factor
-sbp_2021 <- sbp_2021 %>% 
-  dplyr::mutate(imd=as.numeric(imd)) %>%
-  dplyr::mutate (imd = as.factor(imd)) %>%
-  dplyr::mutate (imd = fct_relevel(imd, "1", "2", "3", "4", "5")) %>%
-  dplyr::mutate(age_group = as.factor(age_group)) %>%
-  dplyr::mutate(age_group = fct_relevel(age_group, "0-17", "18-39", "40-65", "65-80", "80+"))
-
 
 ## Change had_sbp into a TRUE FALSE logical
 
@@ -926,6 +753,38 @@ had_sbp_BMI_categories <- had_sbp_BMI_categories %>%
   dplyr::left_join(BMI_categories_chisq, by = "variable")
 
 
+########### had_bmi
+#1.  count by had_bmi
+N_had_bmi <- sbp_2021_DT[, .N, by="had_bmi"]
+had_sbp_had_bmi <- sbp_2021_DT[had_sbp=="TRUE", .(n_had_sbp= .N), by="had_bmi"] 
+had_sbp_had_bmi <-   had_sbp_had_bmi[order(had_bmi)]
+
+had_sbp_had_bmi <- dplyr::left_join(had_sbp_had_bmi, N_had_bmi)
+had_sbp_had_bmi <- had_sbp_had_bmi %>%
+  dplyr::mutate(proportion=n_had_sbp/N) 
+
+# 2. calculate confidence interval of propotions
+had_sbp_had_bmi <- had_sbp_had_bmi %>%
+  dplyr::mutate(lower_limit = (proportion - ((proportion*(1-proportion))/N*1.96))) %>%   # confidence interval of proporion
+  dplyr::mutate(upper_limit = (proportion + ((proportion*(1-proportion))/N*1.96))) %>%
+  dplyr::mutate(across(where(is.numeric), round, 4)) %>%
+  dplyr::mutate(variable = "had_bmi", .before=1) %>%
+  dplyr::rename(group = had_bmi) %>%
+  dplyr::mutate(group = as.character(group))
+
+#.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
+
+# 3. chisq test
+had_bmi_chisq <- as_tibble(sbp_2021) %>%
+  tabyl(had_bmi, had_sbp) %>%
+  select(-1) %>% 
+  chisq_test() 
+had_bmi_chisq <- dplyr::mutate (had_bmi_chisq, variable = "had_bmi") %>%
+  dplyr::select("variable", "p", "method")
+
+# 4.  Final table 
+had_sbp_had_bmi <- had_sbp_had_bmi %>%
+  dplyr::left_join(had_bmi_chisq, by = "variable")
 
 #####################################
 ###### PRECOVID OBESE FLAG
@@ -964,7 +823,7 @@ had_sbp_precovid_obese_flag <- had_sbp_precovid_obese_flag %>%
   dplyr::left_join(precovid_obese_flag_chisq, by = "variable")
 
 
-################################################
+
 
 had_sbp_table <- had_sbp_table %>%
   bind_rows(had_sbp_age_group) %>%
@@ -972,7 +831,8 @@ had_sbp_table <- had_sbp_table %>%
   bind_rows (had_sbp_region) %>%
   bind_rows (had_sbp_imd) %>%
   bind_rows (had_sbp_ethnic_no_miss) %>%
-  bind_rows (had_sbp_eth_group_16) %>%   
+  bind_rows (had_sbp_eth_group_16) %>%  
+  bind_rows (had_sbp_had_bmi) %>%
   bind_rows (had_sbp_BMI_categories) %>%
   bind_rows (had_sbp_precovid_obese_flag) %>%
   bind_rows (had_sbp_comorbid_hypertension) %>%

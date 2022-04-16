@@ -436,7 +436,7 @@ actions:
 # who had_bmi measured: 
   generate_had_sbp_proportion_2019:
     run: r:latest analysis/had_sbp_proportions_2019.R --output-dir=output/data 
-    needs: [join_ethnicity, generate_BMI_2019_data]
+    needs: [generate_complete_median_BMI_data]
     outputs:
       moderately_sensitive:
         table1: output/data/proportion_had_sbp_2019.csv
@@ -444,7 +444,7 @@ actions:
 
   generate_had_sbp_proportion_2020:
     run: r:latest analysis/had_sbp_proportions_2020.R --output-dir=output/data 
-    needs: [join_ethnicity, generate_BMI_2020_data, generate_complete_median_BMI_data]
+    needs: [generate_complete_median_BMI_data]
     outputs:
       moderately_sensitive:
         table1: output/data/proportion_had_sbp_2020.csv
@@ -452,7 +452,7 @@ actions:
 
   generate_had_sbp_proportion_2021:
     run: r:latest analysis/had_sbp_proportions_2021.R --output-dir=output/data 
-    needs: [join_ethnicity, generate_BMI_2021_data, generate_complete_median_BMI_data]
+    needs: [generate_complete_median_BMI_data]
     outputs:
       moderately_sensitive:
         table1: output/data/proportion_had_sbp_2021.csv
