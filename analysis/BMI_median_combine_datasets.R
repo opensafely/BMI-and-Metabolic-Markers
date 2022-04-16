@@ -14,6 +14,7 @@ library(tidyverse)
 library(Hmisc)
 library(here)
 library(arrow)
+library(skimr)
 
 
 ## read in data files
@@ -53,5 +54,11 @@ BMI_complete_median <- BMI_complete_median %>%
     .after = "precovid_obese"
   )
 
+
+BMI_complete_median <- BMI_complete_median %>% 
+ungroup()
+
+BMI_complete_median %>%
+skim_without_charts
 
 write_feather (BMI_complete_median, here::here ("output/data","BMI_complete_median.feather"))
