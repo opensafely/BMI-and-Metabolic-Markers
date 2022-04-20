@@ -218,6 +218,13 @@ actions:
         cohort1: output/data/BMI_complete_median.feather
 
 
+  generate_complete_long_BMI_data:
+    run: r:latest analysis/BMI_complete_long.R --output-dir=output/data --output-format feather
+    needs: [generate_BMI_2015_data, generate_BMI_2016_data, generate_BMI_2017_data, generate_BMI_2018_data, generate_BMI_2019_data, generate_BMI_2020_data, generate_BMI_2021_data ]
+    outputs:
+      highly_sensitive:
+        cohort1: output/data/all_bmi_long.feather
+
         
 ##################################################################
 ### >> HAD_BMI ANALYSIS
