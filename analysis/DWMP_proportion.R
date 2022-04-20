@@ -2290,8 +2290,8 @@ DWMP_eligible_table_2021 <- DWMP_eligible_table %>%
 
 
 
-write.csv (DWMP_eligible_table_2021, here::here ("output/data","proportion_DWMP_hypertension_2021.csv"))
+write.csv (DWMP_eligible_table_2021, here::here ("output/data","proportion_DWMP_eligible_2021.csv"))
 
-write.csv (DWMP_eligible_table_2020, here::here ("output/data","proportion_DWMP_hypertension_2020.csv"))
+write.csv (DWMP_eligible_table_2020, here::here ("output/data","proportion_DWMP_eligible_2020.csv"))
 
-write.csv (DWMP_eligible_table_2019, here::here ("output/data","proportion_DWMP_hypertension_2019.csv"))
+write.csv (DWMP_eligible_table_2019, here::here ("output/data","proportion_DWMP_eligible_2019.csv"))
