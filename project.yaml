@@ -431,6 +431,13 @@ actions:
       moderately_sensitive:
         table1: output/data/T2DM_proportion_hba1c_2020.csv
 
+  T2DM_hba1c_proportions_2021:
+    run: r:latest analysis/hba1c_had_proportion_2021_t2dm.R --output-dir=output/data --output-format feather
+    needs: [generate_hba1c_2018_2019_data, generate_hba1c_2020_2021_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/T2DM_proportion_hba1c_2021.csv
+
 
   check_hba1c:
     run: r:latest analysis/check_hba1c.R --output-dir=output/data --output-format feather
