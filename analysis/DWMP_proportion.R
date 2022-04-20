@@ -20,10 +20,27 @@ library(janitor)
 
 # check working directory:  getwd()
 
-BMI_complete_categories_2019 <- read_feather (here::here ("output/data", "BMI_all_2019.feather"))
-BMI_complete_categories_2020 <- read_feather (here::here ("output/data", "BMI_all_2020.feather"))
-BMI_complete_categories_2021 <- read_feather (here::here ("output/data", "BMI_all_2021.feather"))
+BMI_complete_categories <- read_feather (here::here ("output/data", "BMI_complete_median.feather"))
 
+
+BMI_complete_categories <- BMI_complete_categories %>% 
+  dplyr::ungroup() %>%
+  dplyr::mutate (imd = as.factor(imd)) %>%
+  dplyr::mutate (imd = fct_relevel(imd, "1", "2", "3", "4", "5")) %>%
+  dplyr::mutate(age_group = as.factor(age_group)) %>%
+  dplyr::mutate(age_group = fct_relevel(age_group, "18-39", "40-65", "65-80", "80+"))
+
+
+BMI_complete_categories_2019 <- BMI_complete_categories %>% 
+  dplyr::filter(year == "2019")
+
+BMI_complete_categories_2020 <- BMI_complete_categories %>% 
+  dplyr::filter(year == "2020")
+
+BMI_complete_categories_2021 <- BMI_complete_categories %>% 
+  dplyr::filter(year == "2021")
+
+## 2019 analysis
 
 BMI_complete_categories_2019 <- BMI_complete_categories_2019 %>%
   dplyr::mutate(DWMP_eligible = case_when(
@@ -36,19 +53,12 @@ BMI_complete_categories_2019 <- BMI_complete_categories_2019 %>%
 
 
 
-BMI_complete_categories <- BMI_complete_categories_2019 %>% 
-  dplyr::mutate(imd=as.numeric(imd)) %>%
-  dplyr::mutate (imd = as.factor(imd)) %>%
-  dplyr::mutate (imd = fct_relevel(imd, "1", "2", "3", "4", "5")) %>%
-  dplyr::mutate(age_group = as.factor(age_group)) %>%
-  dplyr::mutate(age_group = fct_relevel(age_group, "0-17", "18-39", "40-65", "65-80", "80+"))
-
-BMI_complete_categories$DWMP_eligible[BMI_complete_categories$DWMP_eligible == 1] <- "TRUE"
-BMI_complete_categories$DWMP_eligible[BMI_complete_categories$DWMP_eligible == 0] <- "FALSE"
+BMI_complete_categories_2019$DWMP_eligible[BMI_complete_categories_2019$DWMP_eligible == 1] <- "TRUE"
+BMI_complete_categories_2019$DWMP_eligible[BMI_complete_categories_2019$DWMP_eligible == 0] <- "FALSE"
 
 
 
-BMI_complete_categories_2019_DT <- data.table(BMI_complete_categories)
+BMI_complete_categories_2019_DT <- data.table(BMI_complete_categories_2019)
 
 
 
@@ -114,7 +124,7 @@ DWMP_eligible_age_group <- DWMP_eligible_age_group %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-age_group_chisq <- as_tibble(BMI_complete_categories) %>%
+age_group_chisq <- as_tibble(BMI_complete_categories_2019) %>%
   tabyl(age_group, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -151,7 +161,7 @@ DWMP_eligible_sex <- DWMP_eligible_sex %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-sex_chisq <- as_tibble(BMI_complete_categories) %>%
+sex_chisq <- as_tibble(BMI_complete_categories_2019) %>%
   tabyl(sex, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -185,7 +195,7 @@ DWMP_eligible_region <- DWMP_eligible_region %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-region_chisq <- as_tibble(BMI_complete_categories) %>%
+region_chisq <- as_tibble(BMI_complete_categories_2019) %>%
   tabyl(region, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -218,7 +228,7 @@ DWMP_eligible_imd <- DWMP_eligible_imd %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-imd_chisq <- as_tibble(BMI_complete_categories) %>%
+imd_chisq <- as_tibble(BMI_complete_categories_2019) %>%
   tabyl(imd, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -251,7 +261,7 @@ DWMP_eligible_ethnic_no_miss <- DWMP_eligible_ethnic_no_miss %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-ethnic_no_miss_chisq <- as_tibble(BMI_complete_categories) %>%
+ethnic_no_miss_chisq <- as_tibble(BMI_complete_categories_2019) %>%
   tabyl(ethnic_no_miss, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -284,7 +294,7 @@ DWMP_eligible_eth_group_16 <- DWMP_eligible_eth_group_16 %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-eth_group_16_chisq <- as_tibble(BMI_complete_categories) %>%
+eth_group_16_chisq <- as_tibble(BMI_complete_categories_2019) %>%
   tabyl(eth_group_16, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -318,7 +328,7 @@ DWMP_eligible_comorbid_learning_disability <- DWMP_eligible_comorbid_learning_di
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-comorbid_learning_disability_chisq <- as_tibble(BMI_complete_categories) %>%
+comorbid_learning_disability_chisq <- as_tibble(BMI_complete_categories_2019) %>%
   tabyl(comorbid_learning_disability, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -354,7 +364,7 @@ DWMP_eligible_comorbid_depression <- DWMP_eligible_comorbid_depression %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-comorbid_depression_chisq <- as_tibble(BMI_complete_categories) %>%
+comorbid_depression_chisq <- as_tibble(BMI_complete_categories_2019) %>%
   tabyl(comorbid_depression, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -389,7 +399,7 @@ DWMP_eligible_comorbid_dementia <- DWMP_eligible_comorbid_dementia %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-comorbid_dementia_chisq <- as_tibble(BMI_complete_categories) %>%
+comorbid_dementia_chisq <- as_tibble(BMI_complete_categories_2019) %>%
   tabyl(comorbid_dementia, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -424,7 +434,7 @@ DWMP_eligible_comorbid_psychosis_schiz_bipolar <- DWMP_eligible_comorbid_psychos
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-comorbid_psychosis_schiz_bipolar_chisq <- as_tibble(BMI_complete_categories) %>%
+comorbid_psychosis_schiz_bipolar_chisq <- as_tibble(BMI_complete_categories_2019) %>%
   tabyl(comorbid_psychosis_schiz_bipolar, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -460,7 +470,7 @@ DWMP_eligible_comorbid_diabetes_t1 <- DWMP_eligible_comorbid_diabetes_t1 %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-comorbid_diabetes_t1_chisq <- as_tibble(BMI_complete_categories) %>%
+comorbid_diabetes_t1_chisq <- as_tibble(BMI_complete_categories_2019) %>%
   tabyl(comorbid_diabetes_t1, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -495,7 +505,7 @@ DWMP_eligible_comorbid_diabetes_t2 <- DWMP_eligible_comorbid_diabetes_t2 %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-comorbid_diabetes_t2_chisq <- as_tibble(BMI_complete_categories) %>%
+comorbid_diabetes_t2_chisq <- as_tibble(BMI_complete_categories_2019) %>%
   tabyl(comorbid_diabetes_t2, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -531,7 +541,7 @@ DWMP_eligible_comorbid_asthma <- DWMP_eligible_comorbid_asthma %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-comorbid_asthma_chisq <- as_tibble(BMI_complete_categories) %>%
+comorbid_asthma_chisq <- as_tibble(BMI_complete_categories_2019) %>%
   tabyl(comorbid_asthma, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -566,7 +576,7 @@ DWMP_eligible_comorbid_COPD <- DWMP_eligible_comorbid_COPD %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-comorbid_COPD_chisq <- as_tibble(BMI_complete_categories) %>%
+comorbid_COPD_chisq <- as_tibble(BMI_complete_categories_2019) %>%
   tabyl(comorbid_COPD, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -600,7 +610,7 @@ DWMP_eligible_comorbid_stroke_and_TIA <- DWMP_eligible_comorbid_stroke_and_TIA %
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-comorbid_stroke_and_TIA_chisq <- as_tibble(BMI_complete_categories) %>%
+comorbid_stroke_and_TIA_chisq <- as_tibble(BMI_complete_categories_2019) %>%
   tabyl(comorbid_stroke_and_TIA, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -634,7 +644,7 @@ DWMP_eligible_comorbid_chronic_cardiac <- DWMP_eligible_comorbid_chronic_cardiac
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-comorbid_chronic_cardiac_chisq <- as_tibble(BMI_complete_categories) %>%
+comorbid_chronic_cardiac_chisq <- as_tibble(BMI_complete_categories_2019) %>%
   tabyl(comorbid_chronic_cardiac, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -670,7 +680,7 @@ DWMP_eligible_comorbid_hypertension <- DWMP_eligible_comorbid_hypertension %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-comorbid_hypertension_chisq <- as_tibble(BMI_complete_categories) %>%
+comorbid_hypertension_chisq <- as_tibble(BMI_complete_categories_2019) %>%
   tabyl(comorbid_hypertension, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -705,7 +715,7 @@ DWMP_eligible_comorbid_all_cancer <- DWMP_eligible_comorbid_all_cancer %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-comorbid_all_cancer_chisq <- as_tibble(BMI_complete_categories) %>%
+comorbid_all_cancer_chisq <- as_tibble(BMI_complete_categories_2019) %>%
   tabyl(comorbid_all_cancer, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -717,7 +727,39 @@ DWMP_eligible_comorbid_all_cancer <- DWMP_eligible_comorbid_all_cancer %>%
   dplyr::left_join(comorbid_all_cancer_chisq, by = "variable")
 
 
+#########  had_bmi #######
 
+#1.  count by had_bmi
+N_had_bmi <- BMI_complete_categories_2019_DT[, .N, by="had_bmi"]
+DWMP_eligible_had_bmi <- BMI_complete_categories_2019_DT[DWMP_eligible=="TRUE", .(n_DWMP_eligible= .N), by="had_bmi"] 
+DWMP_eligible_had_bmi <-   DWMP_eligible_had_bmi[order(had_bmi)]
+
+DWMP_eligible_had_bmi <- dplyr::left_join(DWMP_eligible_had_bmi, N_had_bmi)
+DWMP_eligible_had_bmi <- DWMP_eligible_had_bmi %>%
+  dplyr::mutate(proportion=n_DWMP_eligible/N) 
+
+# 2. calculate confidence interval of propotions
+DWMP_eligible_had_bmi <- DWMP_eligible_had_bmi %>%
+  dplyr::mutate(lower_limit = (proportion - ((proportion*(1-proportion))/N*1.96))) %>%   # confidence interval of proporion
+  dplyr::mutate(upper_limit = (proportion + ((proportion*(1-proportion))/N*1.96))) %>%
+  dplyr::mutate(across(where(is.numeric), round, 4)) %>%
+  dplyr::mutate(variable = "had_bmi", .before=1) %>%
+  dplyr::rename(group = had_bmi) %>%
+  dplyr::mutate(group = as.character(group))
+
+#.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
+
+# 3. chisq test
+had_bmi_chisq <- as_tibble(BMI_complete_categories_2019) %>%
+  tabyl(had_bmi, DWMP_eligible) %>%
+  select(-1) %>% 
+  chisq_test() 
+had_bmi_chisq <- dplyr::mutate (had_bmi_chisq, variable = "had_bmi") %>%
+  dplyr::select("variable", "p", "method")
+
+# 4.  Final table 
+DWMP_eligible_had_bmi <- DWMP_eligible_had_bmi %>%
+  dplyr::left_join(had_bmi_chisq, by = "variable")
 
 
 DWMP_eligible_table_2019 <- DWMP_eligible_table %>%
@@ -727,6 +769,7 @@ DWMP_eligible_table_2019 <- DWMP_eligible_table %>%
   bind_rows (DWMP_eligible_imd) %>%
   bind_rows (DWMP_eligible_ethnic_no_miss) %>%
   bind_rows (DWMP_eligible_eth_group_16) %>%   
+  bind_rows (DWMP_eligible_had_bmi) %>%   
   bind_rows (DWMP_eligible_comorbid_hypertension) %>%
   bind_rows (DWMP_eligible_comorbid_diabetes_t1) %>%
   bind_rows (DWMP_eligible_comorbid_diabetes_t2) %>%
@@ -739,8 +782,6 @@ DWMP_eligible_table_2019 <- DWMP_eligible_table %>%
   bind_rows (DWMP_eligible_comorbid_stroke_and_TIA) %>%
   bind_rows (DWMP_eligible_comorbid_chronic_cardiac) %>%
   bind_rows (DWMP_eligible_comorbid_all_cancer)
-
-
 
 
 #####################################################################################
@@ -758,19 +799,13 @@ BMI_complete_categories_2020 <- BMI_complete_categories_2020 %>%
 
 
 
-BMI_complete_categories <- BMI_complete_categories_2020 %>% 
-  dplyr::mutate(imd=as.numeric(imd)) %>%
-  dplyr::mutate (imd = as.factor(imd)) %>%
-  dplyr::mutate (imd = fct_relevel(imd, "1", "2", "3", "4", "5")) %>%
-  dplyr::mutate(age_group = as.factor(age_group)) %>%
-  dplyr::mutate(age_group = fct_relevel(age_group, "0-17", "18-39", "40-65", "65-80", "80+"))
 
-BMI_complete_categories$DWMP_eligible[BMI_complete_categories$DWMP_eligible == 1] <- "TRUE"
-BMI_complete_categories$DWMP_eligible[BMI_complete_categories$DWMP_eligible == 0] <- "FALSE"
+BMI_complete_categories_2020$DWMP_eligible[BMI_complete_categories_2020$DWMP_eligible == 1] <- "TRUE"
+BMI_complete_categories_2020$DWMP_eligible[BMI_complete_categories_2020$DWMP_eligible == 0] <- "FALSE"
 
 
 
-BMI_complete_categories_2020_DT <- data.table(BMI_complete_categories)
+BMI_complete_categories_2020_DT <- data.table(BMI_complete_categories_2020)
 
 
 
@@ -836,7 +871,7 @@ DWMP_eligible_age_group <- DWMP_eligible_age_group %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-age_group_chisq <- as_tibble(BMI_complete_categories) %>%
+age_group_chisq <- as_tibble(BMI_complete_categories_2020) %>%
   tabyl(age_group, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -873,7 +908,7 @@ DWMP_eligible_sex <- DWMP_eligible_sex %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-sex_chisq <- as_tibble(BMI_complete_categories) %>%
+sex_chisq <- as_tibble(BMI_complete_categories_2020) %>%
   tabyl(sex, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -907,7 +942,7 @@ DWMP_eligible_region <- DWMP_eligible_region %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-region_chisq <- as_tibble(BMI_complete_categories) %>%
+region_chisq <- as_tibble(BMI_complete_categories_2020) %>%
   tabyl(region, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -940,7 +975,7 @@ DWMP_eligible_imd <- DWMP_eligible_imd %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-imd_chisq <- as_tibble(BMI_complete_categories) %>%
+imd_chisq <- as_tibble(BMI_complete_categories_2020) %>%
   tabyl(imd, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -973,7 +1008,7 @@ DWMP_eligible_ethnic_no_miss <- DWMP_eligible_ethnic_no_miss %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-ethnic_no_miss_chisq <- as_tibble(BMI_complete_categories) %>%
+ethnic_no_miss_chisq <- as_tibble(BMI_complete_categories_2020) %>%
   tabyl(ethnic_no_miss, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -1006,7 +1041,7 @@ DWMP_eligible_eth_group_16 <- DWMP_eligible_eth_group_16 %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-eth_group_16_chisq <- as_tibble(BMI_complete_categories) %>%
+eth_group_16_chisq <- as_tibble(BMI_complete_categories_2020) %>%
   tabyl(eth_group_16, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -1040,7 +1075,7 @@ DWMP_eligible_comorbid_learning_disability <- DWMP_eligible_comorbid_learning_di
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-comorbid_learning_disability_chisq <- as_tibble(BMI_complete_categories) %>%
+comorbid_learning_disability_chisq <- as_tibble(BMI_complete_categories_2020) %>%
   tabyl(comorbid_learning_disability, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -1076,7 +1111,7 @@ DWMP_eligible_comorbid_depression <- DWMP_eligible_comorbid_depression %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-comorbid_depression_chisq <- as_tibble(BMI_complete_categories) %>%
+comorbid_depression_chisq <- as_tibble(BMI_complete_categories_2020) %>%
   tabyl(comorbid_depression, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -1111,7 +1146,7 @@ DWMP_eligible_comorbid_dementia <- DWMP_eligible_comorbid_dementia %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-comorbid_dementia_chisq <- as_tibble(BMI_complete_categories) %>%
+comorbid_dementia_chisq <- as_tibble(BMI_complete_categories_2020) %>%
   tabyl(comorbid_dementia, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -1146,7 +1181,7 @@ DWMP_eligible_comorbid_psychosis_schiz_bipolar <- DWMP_eligible_comorbid_psychos
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-comorbid_psychosis_schiz_bipolar_chisq <- as_tibble(BMI_complete_categories) %>%
+comorbid_psychosis_schiz_bipolar_chisq <- as_tibble(BMI_complete_categories_2020) %>%
   tabyl(comorbid_psychosis_schiz_bipolar, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -1182,7 +1217,7 @@ DWMP_eligible_comorbid_diabetes_t1 <- DWMP_eligible_comorbid_diabetes_t1 %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-comorbid_diabetes_t1_chisq <- as_tibble(BMI_complete_categories) %>%
+comorbid_diabetes_t1_chisq <- as_tibble(BMI_complete_categories_2020) %>%
   tabyl(comorbid_diabetes_t1, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -1217,7 +1252,7 @@ DWMP_eligible_comorbid_diabetes_t2 <- DWMP_eligible_comorbid_diabetes_t2 %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-comorbid_diabetes_t2_chisq <- as_tibble(BMI_complete_categories) %>%
+comorbid_diabetes_t2_chisq <- as_tibble(BMI_complete_categories_2020) %>%
   tabyl(comorbid_diabetes_t2, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -1253,7 +1288,7 @@ DWMP_eligible_comorbid_asthma <- DWMP_eligible_comorbid_asthma %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-comorbid_asthma_chisq <- as_tibble(BMI_complete_categories) %>%
+comorbid_asthma_chisq <- as_tibble(BMI_complete_categories_2020) %>%
   tabyl(comorbid_asthma, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -1288,7 +1323,7 @@ DWMP_eligible_comorbid_COPD <- DWMP_eligible_comorbid_COPD %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-comorbid_COPD_chisq <- as_tibble(BMI_complete_categories) %>%
+comorbid_COPD_chisq <- as_tibble(BMI_complete_categories_2020) %>%
   tabyl(comorbid_COPD, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -1322,7 +1357,7 @@ DWMP_eligible_comorbid_stroke_and_TIA <- DWMP_eligible_comorbid_stroke_and_TIA %
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-comorbid_stroke_and_TIA_chisq <- as_tibble(BMI_complete_categories) %>%
+comorbid_stroke_and_TIA_chisq <- as_tibble(BMI_complete_categories_2020) %>%
   tabyl(comorbid_stroke_and_TIA, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -1356,7 +1391,7 @@ DWMP_eligible_comorbid_chronic_cardiac <- DWMP_eligible_comorbid_chronic_cardiac
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-comorbid_chronic_cardiac_chisq <- as_tibble(BMI_complete_categories) %>%
+comorbid_chronic_cardiac_chisq <- as_tibble(BMI_complete_categories_2020) %>%
   tabyl(comorbid_chronic_cardiac, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -1392,7 +1427,7 @@ DWMP_eligible_comorbid_hypertension <- DWMP_eligible_comorbid_hypertension %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-comorbid_hypertension_chisq <- as_tibble(BMI_complete_categories) %>%
+comorbid_hypertension_chisq <- as_tibble(BMI_complete_categories_2020) %>%
   tabyl(comorbid_hypertension, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -1427,7 +1462,7 @@ DWMP_eligible_comorbid_all_cancer <- DWMP_eligible_comorbid_all_cancer %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-comorbid_all_cancer_chisq <- as_tibble(BMI_complete_categories) %>%
+comorbid_all_cancer_chisq <- as_tibble(BMI_complete_categories_2020) %>%
   tabyl(comorbid_all_cancer, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -1438,6 +1473,39 @@ comorbid_all_cancer_chisq <- dplyr::mutate (comorbid_all_cancer_chisq, variable 
 DWMP_eligible_comorbid_all_cancer <- DWMP_eligible_comorbid_all_cancer %>%
   dplyr::left_join(comorbid_all_cancer_chisq, by = "variable")
 
+#########  had_bmi #######
+
+#1.  count by had_bmi
+N_had_bmi <- BMI_complete_categories_2020_DT[, .N, by="had_bmi"]
+DWMP_eligible_had_bmi <- BMI_complete_categories_2020_DT[DWMP_eligible=="TRUE", .(n_DWMP_eligible= .N), by="had_bmi"] 
+DWMP_eligible_had_bmi <-   DWMP_eligible_had_bmi[order(had_bmi)]
+
+DWMP_eligible_had_bmi <- dplyr::left_join(DWMP_eligible_had_bmi, N_had_bmi)
+DWMP_eligible_had_bmi <- DWMP_eligible_had_bmi %>%
+  dplyr::mutate(proportion=n_DWMP_eligible/N) 
+
+# 2. calculate confidence interval of propotions
+DWMP_eligible_had_bmi <- DWMP_eligible_had_bmi %>%
+  dplyr::mutate(lower_limit = (proportion - ((proportion*(1-proportion))/N*1.96))) %>%   # confidence interval of proporion
+  dplyr::mutate(upper_limit = (proportion + ((proportion*(1-proportion))/N*1.96))) %>%
+  dplyr::mutate(across(where(is.numeric), round, 4)) %>%
+  dplyr::mutate(variable = "had_bmi", .before=1) %>%
+  dplyr::rename(group = had_bmi) %>%
+  dplyr::mutate(group = as.character(group))
+
+#.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
+
+# 3. chisq test
+had_bmi_chisq <- as_tibble(BMI_complete_categories_2020) %>%
+  tabyl(had_bmi, DWMP_eligible) %>%
+  select(-1) %>% 
+  chisq_test() 
+had_bmi_chisq <- dplyr::mutate (had_bmi_chisq, variable = "had_bmi") %>%
+  dplyr::select("variable", "p", "method")
+
+# 4.  Final table 
+DWMP_eligible_had_bmi <- DWMP_eligible_had_bmi %>%
+  dplyr::left_join(had_bmi_chisq, by = "variable")
 
 
 
@@ -1448,7 +1516,8 @@ DWMP_eligible_table_2020 <- DWMP_eligible_table %>%
   bind_rows (DWMP_eligible_region) %>%
   bind_rows (DWMP_eligible_imd) %>%
   bind_rows (DWMP_eligible_ethnic_no_miss) %>%
-  bind_rows (DWMP_eligible_eth_group_16) %>%   
+  bind_rows (DWMP_eligible_eth_group_16) %>%  
+  bind_rows (DWMP_eligible_had_bmi) %>%   
   bind_rows (DWMP_eligible_comorbid_hypertension) %>%
   bind_rows (DWMP_eligible_comorbid_diabetes_t1) %>%
   bind_rows (DWMP_eligible_comorbid_diabetes_t2) %>%
@@ -1463,9 +1532,8 @@ DWMP_eligible_table_2020 <- DWMP_eligible_table %>%
   bind_rows (DWMP_eligible_comorbid_all_cancer)
 
 
-##################################################################
-#########  2021 DATA
-
+#####################################################################################
+###  2021
 
 
 BMI_complete_categories_2021 <- BMI_complete_categories_2021 %>%
@@ -1479,19 +1547,13 @@ BMI_complete_categories_2021 <- BMI_complete_categories_2021 %>%
 
 
 
-BMI_complete_categories <- BMI_complete_categories_2021 %>% 
-  dplyr::mutate(imd=as.numeric(imd)) %>%
-  dplyr::mutate (imd = as.factor(imd)) %>%
-  dplyr::mutate (imd = fct_relevel(imd, "1", "2", "3", "4", "5")) %>%
-  dplyr::mutate(age_group = as.factor(age_group)) %>%
-  dplyr::mutate(age_group = fct_relevel(age_group, "0-17", "18-39", "40-65", "65-80", "80+"))
 
-BMI_complete_categories$DWMP_eligible[BMI_complete_categories$DWMP_eligible == 1] <- "TRUE"
-BMI_complete_categories$DWMP_eligible[BMI_complete_categories$DWMP_eligible == 0] <- "FALSE"
+BMI_complete_categories_2021$DWMP_eligible[BMI_complete_categories_2021$DWMP_eligible == 1] <- "TRUE"
+BMI_complete_categories_2021$DWMP_eligible[BMI_complete_categories_2021$DWMP_eligible == 0] <- "FALSE"
 
 
 
-BMI_complete_categories_2021_DT <- data.table(BMI_complete_categories)
+BMI_complete_categories_2021_DT <- data.table(BMI_complete_categories_2021)
 
 
 
@@ -1557,7 +1619,7 @@ DWMP_eligible_age_group <- DWMP_eligible_age_group %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-age_group_chisq <- as_tibble(BMI_complete_categories) %>%
+age_group_chisq <- as_tibble(BMI_complete_categories_2021) %>%
   tabyl(age_group, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -1594,7 +1656,7 @@ DWMP_eligible_sex <- DWMP_eligible_sex %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-sex_chisq <- as_tibble(BMI_complete_categories) %>%
+sex_chisq <- as_tibble(BMI_complete_categories_2021) %>%
   tabyl(sex, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -1628,7 +1690,7 @@ DWMP_eligible_region <- DWMP_eligible_region %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-region_chisq <- as_tibble(BMI_complete_categories) %>%
+region_chisq <- as_tibble(BMI_complete_categories_2021) %>%
   tabyl(region, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -1661,7 +1723,7 @@ DWMP_eligible_imd <- DWMP_eligible_imd %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-imd_chisq <- as_tibble(BMI_complete_categories) %>%
+imd_chisq <- as_tibble(BMI_complete_categories_2021) %>%
   tabyl(imd, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -1694,7 +1756,7 @@ DWMP_eligible_ethnic_no_miss <- DWMP_eligible_ethnic_no_miss %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-ethnic_no_miss_chisq <- as_tibble(BMI_complete_categories) %>%
+ethnic_no_miss_chisq <- as_tibble(BMI_complete_categories_2021) %>%
   tabyl(ethnic_no_miss, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -1727,7 +1789,7 @@ DWMP_eligible_eth_group_16 <- DWMP_eligible_eth_group_16 %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-eth_group_16_chisq <- as_tibble(BMI_complete_categories) %>%
+eth_group_16_chisq <- as_tibble(BMI_complete_categories_2021) %>%
   tabyl(eth_group_16, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -1761,7 +1823,7 @@ DWMP_eligible_comorbid_learning_disability <- DWMP_eligible_comorbid_learning_di
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-comorbid_learning_disability_chisq <- as_tibble(BMI_complete_categories) %>%
+comorbid_learning_disability_chisq <- as_tibble(BMI_complete_categories_2021) %>%
   tabyl(comorbid_learning_disability, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -1797,7 +1859,7 @@ DWMP_eligible_comorbid_depression <- DWMP_eligible_comorbid_depression %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-comorbid_depression_chisq <- as_tibble(BMI_complete_categories) %>%
+comorbid_depression_chisq <- as_tibble(BMI_complete_categories_2021) %>%
   tabyl(comorbid_depression, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -1832,7 +1894,7 @@ DWMP_eligible_comorbid_dementia <- DWMP_eligible_comorbid_dementia %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-comorbid_dementia_chisq <- as_tibble(BMI_complete_categories) %>%
+comorbid_dementia_chisq <- as_tibble(BMI_complete_categories_2021) %>%
   tabyl(comorbid_dementia, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -1867,7 +1929,7 @@ DWMP_eligible_comorbid_psychosis_schiz_bipolar <- DWMP_eligible_comorbid_psychos
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-comorbid_psychosis_schiz_bipolar_chisq <- as_tibble(BMI_complete_categories) %>%
+comorbid_psychosis_schiz_bipolar_chisq <- as_tibble(BMI_complete_categories_2021) %>%
   tabyl(comorbid_psychosis_schiz_bipolar, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -1903,7 +1965,7 @@ DWMP_eligible_comorbid_diabetes_t1 <- DWMP_eligible_comorbid_diabetes_t1 %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-comorbid_diabetes_t1_chisq <- as_tibble(BMI_complete_categories) %>%
+comorbid_diabetes_t1_chisq <- as_tibble(BMI_complete_categories_2021) %>%
   tabyl(comorbid_diabetes_t1, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -1938,7 +2000,7 @@ DWMP_eligible_comorbid_diabetes_t2 <- DWMP_eligible_comorbid_diabetes_t2 %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-comorbid_diabetes_t2_chisq <- as_tibble(BMI_complete_categories) %>%
+comorbid_diabetes_t2_chisq <- as_tibble(BMI_complete_categories_2021) %>%
   tabyl(comorbid_diabetes_t2, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -1974,7 +2036,7 @@ DWMP_eligible_comorbid_asthma <- DWMP_eligible_comorbid_asthma %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-comorbid_asthma_chisq <- as_tibble(BMI_complete_categories) %>%
+comorbid_asthma_chisq <- as_tibble(BMI_complete_categories_2021) %>%
   tabyl(comorbid_asthma, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -2009,7 +2071,7 @@ DWMP_eligible_comorbid_COPD <- DWMP_eligible_comorbid_COPD %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-comorbid_COPD_chisq <- as_tibble(BMI_complete_categories) %>%
+comorbid_COPD_chisq <- as_tibble(BMI_complete_categories_2021) %>%
   tabyl(comorbid_COPD, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -2043,7 +2105,7 @@ DWMP_eligible_comorbid_stroke_and_TIA <- DWMP_eligible_comorbid_stroke_and_TIA %
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-comorbid_stroke_and_TIA_chisq <- as_tibble(BMI_complete_categories) %>%
+comorbid_stroke_and_TIA_chisq <- as_tibble(BMI_complete_categories_2021) %>%
   tabyl(comorbid_stroke_and_TIA, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -2077,7 +2139,7 @@ DWMP_eligible_comorbid_chronic_cardiac <- DWMP_eligible_comorbid_chronic_cardiac
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-comorbid_chronic_cardiac_chisq <- as_tibble(BMI_complete_categories) %>%
+comorbid_chronic_cardiac_chisq <- as_tibble(BMI_complete_categories_2021) %>%
   tabyl(comorbid_chronic_cardiac, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -2113,7 +2175,7 @@ DWMP_eligible_comorbid_hypertension <- DWMP_eligible_comorbid_hypertension %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-comorbid_hypertension_chisq <- as_tibble(BMI_complete_categories) %>%
+comorbid_hypertension_chisq <- as_tibble(BMI_complete_categories_2021) %>%
   tabyl(comorbid_hypertension, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -2148,7 +2210,7 @@ DWMP_eligible_comorbid_all_cancer <- DWMP_eligible_comorbid_all_cancer %>%
 #.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
 
 # 3. chisq test
-comorbid_all_cancer_chisq <- as_tibble(BMI_complete_categories) %>%
+comorbid_all_cancer_chisq <- as_tibble(BMI_complete_categories_2021) %>%
   tabyl(comorbid_all_cancer, DWMP_eligible) %>%
   select(-1) %>% 
   chisq_test() 
@@ -2159,6 +2221,39 @@ comorbid_all_cancer_chisq <- dplyr::mutate (comorbid_all_cancer_chisq, variable 
 DWMP_eligible_comorbid_all_cancer <- DWMP_eligible_comorbid_all_cancer %>%
   dplyr::left_join(comorbid_all_cancer_chisq, by = "variable")
 
+#########  had_bmi #######
+
+#1.  count by had_bmi
+N_had_bmi <- BMI_complete_categories_2021_DT[, .N, by="had_bmi"]
+DWMP_eligible_had_bmi <- BMI_complete_categories_2021_DT[DWMP_eligible=="TRUE", .(n_DWMP_eligible= .N), by="had_bmi"] 
+DWMP_eligible_had_bmi <-   DWMP_eligible_had_bmi[order(had_bmi)]
+
+DWMP_eligible_had_bmi <- dplyr::left_join(DWMP_eligible_had_bmi, N_had_bmi)
+DWMP_eligible_had_bmi <- DWMP_eligible_had_bmi %>%
+  dplyr::mutate(proportion=n_DWMP_eligible/N) 
+
+# 2. calculate confidence interval of propotions
+DWMP_eligible_had_bmi <- DWMP_eligible_had_bmi %>%
+  dplyr::mutate(lower_limit = (proportion - ((proportion*(1-proportion))/N*1.96))) %>%   # confidence interval of proporion
+  dplyr::mutate(upper_limit = (proportion + ((proportion*(1-proportion))/N*1.96))) %>%
+  dplyr::mutate(across(where(is.numeric), round, 4)) %>%
+  dplyr::mutate(variable = "had_bmi", .before=1) %>%
+  dplyr::rename(group = had_bmi) %>%
+  dplyr::mutate(group = as.character(group))
+
+#.... confidence interval proportion: (((proportion(1-proportion)/N))^0.5) * 1.96
+
+# 3. chisq test
+had_bmi_chisq <- as_tibble(BMI_complete_categories_2021) %>%
+  tabyl(had_bmi, DWMP_eligible) %>%
+  select(-1) %>% 
+  chisq_test() 
+had_bmi_chisq <- dplyr::mutate (had_bmi_chisq, variable = "had_bmi") %>%
+  dplyr::select("variable", "p", "method")
+
+# 4.  Final table 
+DWMP_eligible_had_bmi <- DWMP_eligible_had_bmi %>%
+  dplyr::left_join(had_bmi_chisq, by = "variable")
 
 
 
@@ -2169,7 +2264,8 @@ DWMP_eligible_table_2021 <- DWMP_eligible_table %>%
   bind_rows (DWMP_eligible_region) %>%
   bind_rows (DWMP_eligible_imd) %>%
   bind_rows (DWMP_eligible_ethnic_no_miss) %>%
-  bind_rows (DWMP_eligible_eth_group_16) %>%   
+  bind_rows (DWMP_eligible_eth_group_16) %>%  
+  bind_rows (DWMP_eligible_had_bmi) %>%   
   bind_rows (DWMP_eligible_comorbid_hypertension) %>%
   bind_rows (DWMP_eligible_comorbid_diabetes_t1) %>%
   bind_rows (DWMP_eligible_comorbid_diabetes_t2) %>%
@@ -2183,7 +2279,6 @@ DWMP_eligible_table_2021 <- DWMP_eligible_table %>%
   bind_rows (DWMP_eligible_comorbid_chronic_cardiac) %>%
   bind_rows (DWMP_eligible_comorbid_all_cancer)
 
-DWMP_eligible_table
 
 
 
@@ -2192,8 +2287,11 @@ DWMP_eligible_table
 
 
 
-write.csv (DWMP_eligible_table_2021, here::here ("output/data","proportion_DWMP_eligible_2021.csv"))
 
-write.csv (DWMP_eligible_table_2020, here::here ("output/data","proportion_DWMP_eligible_2020.csv"))
 
-write.csv (DWMP_eligible_table_2019, here::here ("output/data","proportion_DWMP_eligible_2019.csv"))
+
+write.csv (DWMP_eligible_table_2021, here::here ("output/data","proportion_DWMP_hypertension_2021.csv"))
+
+write.csv (DWMP_eligible_table_2020, here::here ("output/data","proportion_DWMP_hypertension_2020.csv"))
+
+write.csv (DWMP_eligible_table_2019, here::here ("output/data","proportion_DWMP_hypertension_2019.csv"))
