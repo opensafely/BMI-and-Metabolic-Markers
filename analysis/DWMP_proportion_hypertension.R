@@ -2296,3 +2296,4 @@ write.csv (DWMP_eligible_table_2021, here::here ("output/data","proportion_DWMP_
 write.csv (DWMP_eligible_table_2020, here::here ("output/data","proportion_DWMP_hypertension_2020.csv"))
 
 write.csv (DWMP_eligible_table_2019, here::here ("output/data","proportion_DWMP_hypertension_2019.csv"))
+

@@ -217,41 +217,7 @@ actions:
       highly_sensitive:
         cohort1: output/data/BMI_complete_median.feather
 
-##################################################################
-## IMD reference chart: issue with IMD codes in some of derived data sets
 
-  generate_imd:
-    run: r:latest analysis/IMD_reference_script.R --output-dir=output/data --output-format feather
-    needs: [generate_study_population_1, generate_study_population_2, generate_study_population_3, generate_study_population_4, generate_study_population_5, generate_study_population_6, generate_study_population_7]
-    outputs:
-      highly_sensitive:
-        cohort1: output/data/patient_imd.feather
-
-
-
-#############################################################################################
-### >> CREATE DATA SET WITH BMI AND WHOLE POPULATION DATA TO ASSESS ODDS OF HAVING BMI TEST
-##############################################################################################
-  generate_whole_pop_2019:
-    run: r:latest analysis/create_BMI_all_2019.R --output-dir=output/data --output-format feather
-    needs: [join_ethnicity, generate_BMI_2019_data]
-    outputs:
-      highly_sensitive:
-        cohort1: output/data/BMI_all_2019.feather    
-
-  generate_whole_pop_2020:
-    run: r:latest analysis/create_BMI_all_2020.R --output-dir=output/data --output-format feather
-    needs: [join_ethnicity, generate_BMI_2020_data, generate_complete_median_BMI_data]
-    outputs:
-      highly_sensitive:
-        cohort1: output/data/BMI_all_2020.feather 
-
-  generate_whole_pop_2021:
-    run: r:latest analysis/create_BMI_all_2021.R --output-dir=output/data --output-format feather
-    needs: [join_ethnicity, generate_BMI_2021_data, generate_complete_median_BMI_data]
-    outputs:
-      highly_sensitive:
-        cohort1: output/data/BMI_all_2021.feather 
         
 ##################################################################
 ### >> HAD_BMI ANALYSIS
@@ -323,35 +289,6 @@ actions:
       moderately_sensitive:
         table1: output/data/median_bmi_summary_table_demographic.csv
         table2: output/data/median_bmi_summary_table_covariates.csv
-
-  # generate summary stats of median BMI by exposures
-  generate_median_bmi_plots_2019:
-    run: r:latest analysis/median_bmi_plots.R --output-dir=output/data 
-    needs: [generate_whole_pop_2019]
-    outputs:
-      moderately_sensitive:
-        chart1: output/median_bmi_all_2019.png
-        chart2: output/median_bmi_age_T2DM_2019.png
-        chart3: output/median_bmi_age_hypertension_2019.png
-        
-        
-  generate_median_bmi_plots_2020:
-    run: r:latest analysis/median_bmi_plots_2020.R --output-dir=output/data 
-    needs: [generate_whole_pop_2020]
-    outputs:
-      moderately_sensitive:
-        chart1: output/median_bmi_all_2020.png
-        chart2: output/median_bmi_age_T2DM_2020.png
-        chart3: output/median_bmi_age_hypertension_2020.png
-        
-  generate_median_bmi_plots_2021:
-    run: r:latest analysis/median_bmi_plots_2021.R --output-dir=output/data 
-    needs: [generate_whole_pop_2021]
-    outputs:
-      moderately_sensitive:
-        chart1: output/median_bmi_all_2021.png
-        chart2: output/median_bmi_age_T2DM_2021.png
-        chart3: output/median_bmi_age_hypertension_2021.png
         
         
         
@@ -378,13 +315,7 @@ actions:
       moderately_sensitive:
         table1: output/data/median_range_bmi_2021.csv
 
-## Trajectory analysis
-  generate_bmi_complete_long:
-    run: r:latest analysis/BMI_complete_long.R --output-dir=output/data --output-format feather
-    needs: [generate_imd, generate_BMI_2015_data, generate_BMI_2016_data, generate_BMI_2017_data, generate_BMI_2018_data, generate_BMI_2019_data, generate_BMI_2020_data, generate_BMI_2021_data ]
-    outputs:
-      highly_sensitive:
-        table1: output/data/all_bmi_long.feather
+
 
 
 ###########################  
@@ -394,7 +325,7 @@ actions:
 
   generate_DWMP_proportion:
     run: r:latest analysis/DWMP_proportion.R --output-dir=output/data 
-    needs: [generate_whole_pop_2019,generate_whole_pop_2021, generate_whole_pop_2020]
+    needs: [generate_complete_median_BMI_data]
     outputs:
       moderately_sensitive:
         table1: output/data/proportion_DWMP_eligible_2019.csv
