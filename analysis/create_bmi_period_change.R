@@ -3,27 +3,61 @@
 ##:  R.script -  create data set required for trajectory analysis
 
 
-library(dplyr)
-library(janitor)
+
+## Specify libraries
+library(pacman)
 library(tidyverse)
+library(Hmisc)
+library(here)
 library(arrow)
+library(purrr)
+library(broom)
+library(data.table)
+library(forcats)
+library(rstatix)
+library(janitor)
+library(lubridate)
+
+## Read in files  >>> Change PATH!!
+
+# check working directory:  getwd()
+
+#BMI_complete_categories <- read_feather (here::here ("output/data", "BMI_all_2019.feather"))
+
+BMI_all_long <- read_feather (here::here ("Documents/Academic GP/Open Safely/Dummy Data", "all_bmi_long.feather"))
 
 
-## Read in data
+#################################################### remove to run main analysis
+## Analysis just for dummy data to allow years to be extracted.  
+# creates a year variable that correlates to the date BMI measured in dummy data.  (That does not correlate with year due to return expectations)
+BMI_all <- BMI_all_long %>%
+  dplyr::select(-("year"))
 
-all_long <- read_feather (here::here ("output/data", "all_bmi_long.feather"))
+BMI_all$year <- lubridate::year(ymd(BMI_all$bmi_date))
 
-all_long_date_cat <- all_long %>%                                        # split into year categories
+#############################################
+## Real analysis starts here
+
+
+#BMI_all <- read_feather (here::here ("output/data", "all_bmi_long.feather"))
+BMI_demog <- BMI_all %>% 
+  dplyr::group_by(patient_id) %>% 
+  dplyr::slice_head() %>%
+  dplyr::select(-(monthly_bmi), -(bmi_date))
+
+
+## reduce the number of columns for data manipulation - join to demographic data at end
+all_long_date_cat <- BMI_all %>%
+  drop_na(monthly_bmi) %>% 
+  dplyr::select("patient_id", "monthly_bmi", "bmi_date", "year")
+
+all_long_date_cat <- all_long_date_cat %>%                                        # split into year categories
   dplyr::mutate(time_frame = cut(
     year,
     breaks = c(2015, 2016, 2017, 2019, 2020, 2021),
     include.lowest = TRUE,
     labels = c("Y2015-2016", "Y2017", "Y2018-2019", "Y2020", "Y2021")   ## Note: years not correlating with date in dummy data due to return expectations
   ))
-  
-  
-# all_long_date_cat %>% tabyl(year, time_frame)     ##  check correlation
-
 
 ## generate a code to pick at random a bmi from each patient for each time frame  
 all_long_sample <- all_long_date_cat %>%       
@@ -33,11 +67,10 @@ all_long_sample <- all_long_date_cat %>%
 
 
 
-
 ##  Analysis logic
-# 1.  Time frame 1:  Use BMI from 2015/16 if available, 2017 if not available
+# 1.  Time frame 1:  Use random BMI from 2015/16 if available, 2017 if not available
 # 2.  Time frame 2:  Use random BMI from 2017/2018
-# 3.  Time frame 3:  Use BMI from 2021 if available, if not 2020.  
+# 3.  Time frame 3:  Use random BMI from 2021 if available, if not 2020.  
 # 4.  calculate trajectories by time frame.   change per year for pre-pandemic and post pandemic measures. 
 
 
@@ -53,7 +86,7 @@ sample_flag <- all_long_sample %>%     # create a logical column - was the BMI m
 sample_flag_2 <- sample_flag %>%  # create a flag within patient groups:  did they have a BMI in 2015/2016
   dplyr::group_by(patient_id) %>%
   dplyr::summarise (                         # summarise command is performed on the grouped objects.  Output just patient_id and presence of
-   tf1_flag = max(tf1_2015_16))
+    tf1_flag = max(tf1_2015_16))
 
 sample_flag <- sample_flag  %>%
   left_join(sample_flag_2) 
@@ -82,20 +115,17 @@ sample_flag <- sample_flag %>%
 all_long_sample <- all_long_sample %>%   
   dplyr::left_join(sample_flag)  ## join by patient_id and time frame
 
-##
 
-
-## next step: create a code that takes a random sample of bmi from 2015/2016 first, then 2017 if that was not present. 
+## next step: create a code that takes keeps bmi from 2015/2016 first, then 2017 (if no 2015/16 data). 
 ## this reduces the chance of selecting data from time frame 1 and time frame2 which are too close together... without ignoring BMI data from 2017 if there is none in 2015/2016. 
 
 
 sample_3 <- all_long_sample %>%
   dplyr::mutate(keep_2017 = case_when(
-    year==2017  & tf1_flag==0 ~ 1,   # keep data from 2017 if none from 2015/16
-    year==2017  & tf1_flag==1 ~ 0,   # drop data from 2017 if there is a result from 2015/16
+    year==2017  & tf1_2017==1 ~ 1,   # keep data from 2017 if none from 2015/16
+    year==2017  & tf1_flag==0 ~ 0,   # drop data from 2017 if there is a result from 2015/16
     year !=2017 ~ 1                  # keep data from all other years
   ))
-
 
 
 
@@ -104,10 +134,11 @@ sample_3 <- sample_3 %>%
 
 
 
-
+## select relevant columns
+sample_3 <- sample_3 %>% 
+  dplyr::select("patient_id", "monthly_bmi", "bmi_date", "year")
 
 ##########################
-
 
 ## Code to flag if BMI measure is in 2021
 flag_2021 <- sample_3 %>%             
@@ -117,7 +148,7 @@ flag_2021 <- sample_3 %>%
   ))
 
 
-##  flag by group patients who had a BMI in 2021
+##  create a flag to identify patients who had a BMI in 2021
 had_2021_flag <- flag_2021 %>%
   group_by(patient_id) %>%
   dplyr::summarise(
@@ -128,7 +159,7 @@ flag_2021 <- flag_2021 %>%
   dplyr::left_join(had_2021_flag)
 
 
-
+## create code to identify BMIs from 2021 preferentially or 2020 if not available
 flag_2021 <- flag_2021 %>%
   dplyr::mutate(keep_2020 = case_when(        
     year==2020 & had_2021==1 ~ 0,               # drop 2020 data if had BMI in 2021
@@ -155,129 +186,58 @@ flag_2021 %>%
 ###############################################
 ################################################
 
-## Reshape wide to allow across row calculations
+## Will need to pivot wider to allow across column calculations.  
+## will have to split into three data sets first to keep BMI date data
 
-flag_2021_wide <- flag_2021 %>%
-  tidyr::spread('time_period', 'monthly_bmi')
-  
-flag_2021_wide <- flag_2021_wide %>%
-  dplyr::mutate(base = replace_na(base, 0)) %>%
-  dplyr::mutate(post_pandemic = replace_na(post_pandemic, 0)) %>%
-  dplyr::mutate(pre_pandemic = replace_na(pre_pandemic, 0))
+## 1.  base bmi
+base_bmi <- flag_2021 %>% 
+  dplyr::filter(time_period == 'base')
 
+base_bmi <- base_bmi %>% 
+  dplyr::mutate (base_bmi = monthly_bmi) %>% 
+  dplyr::mutate (base_bmi_date = bmi_date) 
 
-flag_2021_wide %>%
-  ungroup %>%
-  group_by(patient_id)
+base_bmi <- base_bmi %>% 
+  dplyr::ungroup() %>%
+  dplyr::select(patient_id, base_bmi, base_bmi_date)
+ 
 
-## create column for to indicate by patient groups each of the recorded BMIs in the time frames
-time_frame_1 <- flag_2021_wide %>%
-  group_by(patient_id) %>%
-  dplyr::summarise(
-    TF1 = max(base))
+## 2.  pre-pandemic bmi
+precovid_bmi <- flag_2021 %>% 
+  dplyr::filter(time_period == 'pre_pandemic')
 
-time_frame_2 <- flag_2021_wide %>%
-  group_by(patient_id) %>%
-  dplyr::summarise(
-    TF2 = max(pre_pandemic))
+precovid_bmi <- precovid_bmi %>% 
+  dplyr::mutate (precovid_bmi = monthly_bmi) %>% 
+  dplyr::mutate (precovid_bmi_date = bmi_date) 
 
-time_frame_3 <- flag_2021_wide %>%
-  group_by(patient_id) %>%
-  dplyr::summarise(
-    TF3 = max(post_pandemic))
-
-##  add the columns to the base data set so each patient event has all recorded BMIs
-flag_2021_wide <- flag_2021_wide %>%
-  left_join(time_frame_1) %>%
-  left_join(time_frame_2) %>%
-  left_join(time_frame_3)
-
-## add the dates of the BMI taken
-base_bmi_date <- flag_2021 %>%
-  ungroup %>%
-  dplyr::filter(time_period == 'base') %>%
-  dplyr::mutate(TF1_bmi_date = bmi_date) %>%
-  dplyr::select(patient_id, TF1_bmi_date)
-
-pre_pandemic_bmi_date <- flag_2021 %>%
-  ungroup %>%
-  dplyr::filter(time_period == 'pre_pandemic') %>%
-  dplyr::mutate(TF2_bmi_date = bmi_date) %>%
-  dplyr::select(patient_id, TF2_bmi_date)
-
-post_pandemic_bmi_date <- flag_2021 %>%
-  ungroup %>%
-  dplyr::filter(time_period == 'post_pandemic') %>%
-  dplyr::mutate(TF3_bmi_date = bmi_date) %>%
-  dplyr::select(patient_id, TF3_bmi_date)
+precovid_bmi <- precovid_bmi %>% 
+  dplyr::ungroup() %>%
+  dplyr::select(patient_id, precovid_bmi, precovid_bmi_date) 
 
 
-flag_2021_wide <- flag_2021_wide %>%
-  left_join(base_bmi_date) %>%
-  left_join(pre_pandemic_bmi_date) %>%
-  left_join(post_pandemic_bmi_date)
+## 2.  post-pandemic bmi
+postcovid_bmi <- flag_2021 %>% 
+  dplyr::filter(time_period == 'post_pandemic')
 
-bmi_trajectories <- flag_2021_wide %>%
-  ungroup %>%
-  dplyr::arrange(patient_id, desc(year)) %>%
-  group_by (patient_id) %>%
-  dplyr::slice_head()
+postcovid_bmi <- postcovid_bmi %>% 
+  dplyr::mutate (postcovid_bmi = monthly_bmi) %>% 
+  dplyr::mutate (postcovid_bmi_date = bmi_date) 
 
+postcovid_bmi <- postcovid_bmi %>% 
+  dplyr::ungroup() %>%
+  dplyr::select(patient_id, postcovid_bmi, postcovid_bmi_date) 
 
-bmi_trajectories <- bmi_trajectories %>%
- dplyr::mutate(TF1 = na_if(TF1, '0')) %>%
- dplyr::mutate(TF2 = na_if(TF2, '0')) %>% 
- dplyr::mutate(TF3 = na_if(TF3, '0')) 
+#####
+## join data sets with demographic data to get full data set
 
-
-
-##  BMI_change: absolute
-
-bmi_trajectories <- bmi_trajectories %>%
-  dplyr::mutate(bmi_change1 = (TF2-TF1))
+BMI_trajectories <- BMI_demog %>% 
+  dplyr::left_join(base_bmi) %>% 
+  dplyr::left_join(precovid_bmi) %>% 
+  dplyr::left_join(postcovid_bmi)
 
 
-bmi_trajectories <- bmi_trajectories %>%
-  dplyr::mutate(time_change1 = (TF2_bmi_date - TF1_bmi_date)/365.25)
+## calculate BMI change for each period
 
-
-bmi_trajectories <- bmi_trajectories %>%
-  dplyr::mutate(time_change1 = as.numeric(time_change1))%>%
-  dplyr::mutate(yearly_bmi_change_base = (bmi_change1/time_change1))
-  
-
-
-
-## time period 2
-
-bmi_trajectories <- bmi_trajectories %>%
-  dplyr::mutate(bmi_change2 = (TF3-TF2))
-
-
-bmi_trajectories <- bmi_trajectories %>%
-  dplyr::mutate(time_change2 = (TF3_bmi_date - TF2_bmi_date)/365.25)
-
-
-bmi_trajectories <- bmi_trajectories %>%
-  dplyr::mutate(time_change2 = as.numeric(time_change2))%>%
-  dplyr::mutate(yearly_bmi_change_covid= (bmi_change2/time_change2))
-
-
-
-
-##  change in percentage bmi change
-
-bmi_trajectories <- bmi_trajectories %>%
-  dplyr::mutate(diff_bmi_change_py = (yearly_bmi_change_covid - yearly_bmi_change_base))
-
-bmi_trajectories <- bmi_trajectories %>%
-  dplyr::select(-("time_frame"), -("tf1_2015_16"), -("tf1_2015_16"), -("tf1_flag"), -("tf1_2017"),  -("keep_2017"),    -("bmi_2021"),  -("had_2021"), -("keep_2020")) 
-                 
-
-                                              
-write_feather (bmi_trajectories, here::here ("output/data","bmi_period_change.feather")
-                                               
-                      
-
-
-##  Export file for analysis
+BMI_trajectories <- BMI_trajectories %>% 
+  dplyr::mutate(bmi_change1 = (precovid_bmi - base_bmi)) %>% 
+  dplyr::mutate(bmi_change2 = (postcovid_bmi - precovid_bmi))
