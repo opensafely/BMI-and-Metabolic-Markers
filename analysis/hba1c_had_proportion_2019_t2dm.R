@@ -33,6 +33,21 @@ hba1c_summary <-hba1c_summary %>%
   )
 
 
+## create a flag for whether they had any DM meds
+hba1c_summary <- hba1c_summary %>%                   
+  dplyr::mutate(dm_meds = oad_meds + insulin_meds)  ## combine oral meds and insulin
+
+
+
+hba1c_summary <-   hba1c_summary %>%    
+  dplyr::mutate(dm_meds = case_when(
+    dm_meds == 0 ~ FALSE,
+    dm_meds > 0 ~ TRUE
+  ))  
+
+hba1c_summary %>% 
+  tabyl(dm_meds) 
+
 
 
 
@@ -487,6 +502,38 @@ hba1c_2019_comorbid_all_cancer <- hba1c_2019_comorbid_all_cancer %>%
   bind_cols(chisq_comorbid_all_cancer)
 
 
+## Patients who are on diabetic meds (tablets or insulin)
+
+hba1c_2019_comorbid_dm_meds  <- hba1c_summary %>%
+  tabyl(dm_meds, had_hba1c)
+
+hba1c_2019_comorbid_dm_meds <- hba1c_2019_comorbid_dm_meds %>%
+  dplyr::rename(n_had_hba1c = 'TRUE') %>% 
+  dplyr::rename(n_no_hba1c = 'FALSE') %>%
+  dplyr::mutate(N_total = n_no_hba1c + n_had_hba1c) %>%
+  dplyr::select(-('n_no_hba1c'))  %>%
+  dplyr:: mutate(percent_hba1c = ((n_had_hba1c/N_total)*100)) %>%
+  dplyr::mutate(percent_hba1c = round(percent_hba1c, 2)) %>%
+  dplyr::mutate(variable = "dm_meds", .before=1) %>%
+  dplyr::rename(group = dm_meds) %>%
+  dplyr::mutate(group = as.character(group))
+
+
+
+
+
+
+chisq_comorbid_dm_meds <- chisq.test(hba1c_summary$dm_meds, hba1c_summary$had_hba1c) 
+
+chisq_comorbid_dm_meds <- broom::tidy(chisq_comorbid_dm_meds) %>%
+  dplyr::select(p.value, method)
+
+hba1c_2019_comorbid_dm_meds <- hba1c_2019_comorbid_dm_meds %>%
+  bind_cols(chisq_comorbid_dm_meds)
+
+
+
+
 
 
 
@@ -497,6 +544,7 @@ had_hba1c_2019 <- hba1c_population %>%
   bind_rows(hba1c_2019_imd) %>%
   bind_rows(hba1c_2019_ethnic_no_miss) %>% 
   bind_rows(hba1c_2019_eth_group_16) %>% 
+  bind_rows(hba1c_2019_comorbid_dm_meds) %>%
   bind_rows(hba1c_2019_comorbid_hypertension) %>% 
   bind_rows(hba1c_2019_comorbid_learning_disability) %>% 
   bind_rows(hba1c_2019_comorbid_depression) %>% 
