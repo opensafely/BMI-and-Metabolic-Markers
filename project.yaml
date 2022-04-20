@@ -325,7 +325,7 @@ actions:
 
   generate_DWMP_proportion:
     run: r:latest analysis/DWMP_proportion.R --output-dir=output/data 
-    needs: [generate_whole_pop_2019,generate_whole_pop_2021, generate_whole_pop_2020]
+    needs: [generate_complete_median_BMI_data]
     outputs:
       moderately_sensitive:
         table1: output/data/proportion_DWMP_eligible_2019.csv
