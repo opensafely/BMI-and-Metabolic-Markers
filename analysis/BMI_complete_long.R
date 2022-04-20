@@ -10,7 +10,7 @@ library(janitor)
 library(tidyverse)
 library(arrow)
 
-### Read in data sets  <<<  CHANGE PATH!!
+### Read in data sets  
 
 bmi_long_2015 <- read_feather (here::here ("output/data", "BMI_complete_long_2015.feather"))
 bmi_long_2016 <- read_feather (here::here ("output/data", "BMI_complete_long_2016.feather"))
@@ -19,9 +19,6 @@ bmi_long_2018 <- read_feather (here::here ("output/data", "BMI_complete_long_201
 bmi_long_2019 <- read_feather (here::here ("output/data", "BMI_complete_long_2019.feather"))
 bmi_long_2020 <- read_feather (here::here ("output/data", "BMI_complete_long_2020.feather"))
 bmi_long_2021 <- read_feather (here::here ("output/data", "BMI_complete_long_2021.feather"))
-
-
-patient_imd <- read_feather (here::here ("output/data", "patient_imd.feather"))
 
 
 all_long <- bmi_long_2015 %>%
@@ -33,12 +30,6 @@ all_long <- bmi_long_2015 %>%
   dplyr::bind_rows(bmi_long_2021) 
 
 
-
-## Recode IMD as error in previous code
-all_long <- all_long %>%
-  dplyr::ungroup() %>%
-  dplyr::select(-(imd)) %>% 
-  dplyr::left_join(patient_imd)
 
 all_long <- all_long %>%
   dplyr::mutate(bmi_date = as.Date(bmi_measured_date)) %>%

@@ -218,6 +218,13 @@ actions:
         cohort1: output/data/BMI_complete_median.feather
 
 
+  generate_complete_long_BMI_data:
+    run: r:latest analysis/BMI_complete_long.R --output-dir=output/data --output-format feather
+    needs: [generate_BMI_2015_data, generate_BMI_2016_data, generate_BMI_2017_data, generate_BMI_2018_data, generate_BMI_2019_data, generate_BMI_2020_data, generate_BMI_2021_data ]
+    outputs:
+      highly_sensitive:
+        cohort1: output/data/all_bmi_long.feather
+
         
 ##################################################################
 ### >> HAD_BMI ANALYSIS
@@ -415,19 +422,29 @@ actions:
         cohort4: output/data/hba1c_2020_long.feather
 
 
-  generate_hba1c_2019_proportion:
-    run: r:latest analysis/had_hba1c_2019.R --output-dir=output/data --output-format feather
-    needs: [generate_hba1c_2018_2019_data]
-    outputs:
-      moderately_sensitive:
-        table1: output/data/proportion_had_hba1c_2019.csv
 
-  generate_hba1c_proportions_2019:
-    run: r:latest analysis/had_hba1c_2019_proportions.R --output-dir=output/data --output-format feather
+
+  T2DM_hba1c_proportions_2019:
+    run: r:latest analysis/hba1c_had_proportion_2019_t2dm.R --output-dir=output/data --output-format feather
     needs: [generate_hba1c_2018_2019_data]
     outputs:
       moderately_sensitive:
-        table1: output/data/proportion_hba1c_2019.csv
+        table1: output/data/T2DM_proportion_hba1c_2019.csv
+
+  T2DM_hba1c_proportions_2020:
+    run: r:latest analysis/hba1c_had_proportion_2020_t2dm.R --output-dir=output/data --output-format feather
+    needs: [generate_hba1c_2018_2019_data, generate_hba1c_2020_2021_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/T2DM_proportion_hba1c_2020.csv
+
+  T2DM_hba1c_proportions_2021:
+    run: r:latest analysis/hba1c_had_proportion_2021_t2dm.R --output-dir=output/data --output-format feather
+    needs: [generate_hba1c_2018_2019_data, generate_hba1c_2020_2021_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/T2DM_proportion_hba1c_2021.csv
+
 
   check_hba1c:
     run: r:latest analysis/check_hba1c.R --output-dir=output/data --output-format feather
