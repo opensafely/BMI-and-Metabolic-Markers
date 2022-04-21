@@ -25,7 +25,7 @@ library(skimr)
 
 
 
-BMI_all_long <- read_feather (here::here ("output/data", "all_bmi_long.feather"))
+BMI_all <- read_feather (here::here ("output/data", "all_bmi_long.feather"))
 
 # BMI_all_long <- read_feather (here::here ("/data/home/hmy926/BMI Open Safely", "all_bmi_long_new.feather"))
 
@@ -33,14 +33,13 @@ BMI_all_long <- read_feather (here::here ("output/data", "all_bmi_long.feather")
 #################################################### remove to run main analysis
 ## Analysis just for dummy data to allow years to be extracted.  
 # creates a year variable that correlates to the date BMI measured in dummy data.  (That does not correlate with year due to return expectations)
-BMI_all <- BMI_all_long %>%
-  dplyr::select(-("year"))
+# BMI_all <- BMI_all_long %>%
+  # dplyr::select(-("year"))
 
-BMI_all$year <- lubridate::year(ymd(BMI_all$bmi_date))
+# BMI_all$year <- lubridate::year(ymd(BMI_all$bmi_date))
 
 #############################################
 ## Real analysis starts here
-
 
 
 #BMI_all <- read_feather (here::here ("output/data", "all_bmi_long.feather"))
