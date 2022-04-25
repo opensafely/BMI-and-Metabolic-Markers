@@ -241,7 +241,7 @@ BMI_trajectories <- BMI_demog_2 %>%
   dplyr::left_join(precovid_bmi) %>% 
   dplyr::left_join(postcovid_bmi)
 
-
+###########################################  CUT for next script
 ## calculate BMI change for each period
 
 BMI_trajectories <- BMI_trajectories %>% 
