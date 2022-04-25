@@ -225,12 +225,13 @@ actions:
       highly_sensitive:
         cohort1: output/data/all_bmi_long.feather
 
-  generate_BMI_trajectories_data:
+  generate_BMI_trajectories_data1:
     run: r:latest analysis/bmi_change.R --output-dir=output/data --output-format feather
     needs: [generate_complete_long_BMI_data]
     outputs:
       highly_sensitive:
-        cohort1: output/data/BMI_trajectories.feather     
+        cohort1: output/data/BMI_demog.feather     
+        cohort2: output/data/BMI_all_long_sample.feather 
 ##################################################################
 ### >> HAD_BMI ANALYSIS
 ######################################################################

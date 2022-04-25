@@ -72,4 +72,4 @@ all_long_sample <- all_long_date_cat %>%
 
 
 write_feather (BMI_demog, here::here ("output/data","BMI_demog.feather"))
-write_feather (all_long_sampel, here::here ("output/data","BMI_all_long_sample.feather"))  
+write_feather (all_long_sample, here::here ("output/data","BMI_all_long_sample.feather"))  
