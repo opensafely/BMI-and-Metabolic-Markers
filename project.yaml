@@ -226,7 +226,7 @@ actions:
         cohort1: output/data/all_bmi_long.feather
 
   generate_BMI_trajectories_data1:
-    run: r:latest analysis/bmi_change.R --output-dir=output/data --output-format feather
+    run: r:latest analysis/BMI_change_1.R --output-dir=output/data --output-format feather
     needs: [generate_complete_long_BMI_data]
     outputs:
       highly_sensitive:
