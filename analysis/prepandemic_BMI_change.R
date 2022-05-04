@@ -1,4 +1,6 @@
-## R Trajectories
+## This script looks at the average weight change in the prepandemic periods by exposure groups
+## Author: M Samuel
+## Date: 4th May 2022
 
 
 
@@ -20,7 +22,7 @@ library(skimr)
 
 
 
-BMI_trajectories <- read_feather (here::here ("/Users/miriamsamuel/Documents/Academic GP/Open Safely/Dummy Data", "BMI_trajectories_final_1.feather"))
+BMI_trajectories <- read_feather (here::here ("output/data", "BMI_trajectories_final.feather"))
 
 BMI_trajectories <- BMI_trajectories %>% 
 dplyr:: mutate(
@@ -28,6 +30,16 @@ dplyr:: mutate(
 
 
 colnames(BMI_trajectories)
+
+BMI_trajectories <- BMI_trajectories %>%
+  dplyr::mutate(
+    across(
+      .cols = c(learning_disability,depression, dementia,psychosis_schiz_bipolar, diabetes_type, diabetes_t1, diabetes_t2, asthma, COPD, stroke_and_TIA, chronic_cardiac, hypertension, all_cancer), 
+      .names = "comorbid_{col}"))
+
+
+
+
 
 BMI_traj_DT <- setDT(BMI_trajectories)
 
@@ -146,21 +158,7 @@ prepandemic_BMI_eth_group_16 <- N_prepandemic_BMI %>%
   dplyr::arrange(group)
 
 
-## precovid_obese_flag
-N_prepandemic_BMI <- BMI_traj_DT [, .(N_population = length(yearly_bmi_change1)) , by="precovid_obese_flag"]
-n_prepandemic_BMI <- BMI_traj_DT [, .(N_missing = sum(is.na(yearly_bmi_change1))) , by="precovid_obese_flag"]
-mean_prepandemic_BMI <- BMI_traj_DT[, .( mean_bmi_change = (mean(yearly_bmi_change1,  na.rm = TRUE))), by="precovid_obese_flag"]
-sd_prepandemic_BMI <- BMI_traj_DT[, .( sd_bmi_change = (sd(yearly_bmi_change1,  na.rm = TRUE))), by="precovid_obese_flag"]
 
-prepandemic_BMI_precovid_obese_flag <- N_prepandemic_BMI %>%
-  dplyr::left_join(n_prepandemic_BMI, by = "precovid_obese_flag") %>%
-  dplyr::mutate("N" = N_population - N_missing) %>%
-  dplyr::left_join(mean_prepandemic_BMI, by = "precovid_obese_flag") %>%
-  dplyr::left_join(sd_prepandemic_BMI, by = "precovid_obese_flag") %>%
-  dplyr::select(precovid_obese_flag, "N", N_population, mean_bmi_change, sd_bmi_change) %>%
-  dplyr::rename('group' = 'precovid_obese_flag') %>%
-  dplyr::mutate(variable="precovid_obese_flag", .before = 1 ) %>%
-  dplyr::arrange(group)
 
 ## comorbid_hypertension
 N_prepandemic_BMI <- BMI_traj_DT [, .(N_population = length(yearly_bmi_change1)) , by="comorbid_hypertension"]
@@ -176,7 +174,8 @@ prepandemic_BMI_comorbid_hypertension <- N_prepandemic_BMI %>%
   dplyr::select(comorbid_hypertension, "N", N_population, mean_bmi_change, sd_bmi_change) %>%
   dplyr::rename('group' = 'comorbid_hypertension') %>%
   dplyr::mutate(variable="comorbid_hypertension", .before = 1 ) %>%
-  dplyr::arrange(group)
+  dplyr::arrange(group) %>%
+  dplyr::mutate(group = as.character(group))
 
 ## comorbid_diabetes_t2
 N_prepandemic_BMI <- BMI_traj_DT [, .(N_population = length(yearly_bmi_change1)) , by="comorbid_diabetes_t2"]
@@ -192,7 +191,8 @@ prepandemic_BMI_comorbid_diabetes_t2 <- N_prepandemic_BMI %>%
   dplyr::select(comorbid_diabetes_t2, "N", N_population, mean_bmi_change, sd_bmi_change) %>%
   dplyr::rename('group' = 'comorbid_diabetes_t2') %>%
   dplyr::mutate(variable="comorbid_diabetes_t2", .before = 1 ) %>%
-  dplyr::arrange(group)
+  dplyr::arrange(group) %>% 
+  dplyr::mutate(group = as.character(group))
 
 ## comorbid_diabetes_t1
 N_prepandemic_BMI <- BMI_traj_DT [, .(N_population = length(yearly_bmi_change1)) , by="comorbid_diabetes_t1"]
@@ -208,7 +208,8 @@ prepandemic_BMI_comorbid_diabetes_t1 <- N_prepandemic_BMI %>%
   dplyr::select(comorbid_diabetes_t1, "N", N_population, mean_bmi_change, sd_bmi_change) %>%
   dplyr::rename('group' = 'comorbid_diabetes_t1') %>%
   dplyr::mutate(variable="comorbid_diabetes_t1", .before = 1 ) %>%
-  dplyr::arrange(group)
+  dplyr::arrange(group) %>% 
+  dplyr::mutate(group = as.character(group))
 
 ## learning_disability
 N_prepandemic_BMI <- BMI_traj_DT [, .(N_population = length(yearly_bmi_change1)) , by="learning_disability"]
@@ -224,7 +225,8 @@ prepandemic_BMI_learning_disability <- N_prepandemic_BMI %>%
   dplyr::select(learning_disability, "N", N_population, mean_bmi_change, sd_bmi_change) %>%
   dplyr::rename('group' = 'learning_disability') %>%
   dplyr::mutate(variable="learning_disability", .before = 1 ) %>%
-  dplyr::arrange(group)
+  dplyr::arrange(group) %>% 
+  dplyr::mutate(group = as.character(group))
 
 ## depression
 N_prepandemic_BMI <- BMI_traj_DT [, .(N_population = length(yearly_bmi_change1)) , by="depression"]
@@ -240,7 +242,8 @@ prepandemic_BMI_depression <- N_prepandemic_BMI %>%
   dplyr::select(depression, "N", N_population, mean_bmi_change, sd_bmi_change) %>%
   dplyr::rename('group' = 'depression') %>%
   dplyr::mutate(variable="depression", .before = 1 ) %>%
-  dplyr::arrange(group)
+  dplyr::arrange(group) %>% 
+  dplyr::mutate(group = as.character(group))
 
 ## dementia
 N_prepandemic_BMI <- BMI_traj_DT [, .(N_population = length(yearly_bmi_change1)) , by="dementia"]
@@ -256,7 +259,8 @@ prepandemic_BMI_dementia <- N_prepandemic_BMI %>%
   dplyr::select(dementia, "N", N_population, mean_bmi_change, sd_bmi_change) %>%
   dplyr::rename('group' = 'dementia') %>%
   dplyr::mutate(variable="dementia", .before = 1 ) %>%
-  dplyr::arrange(group)
+  dplyr::arrange(group) %>% 
+  dplyr::mutate(group = as.character(group))
 
 ## psychosis_schiz_bipolar
 N_prepandemic_BMI <- BMI_traj_DT [, .(N_population = length(yearly_bmi_change1)) , by="psychosis_schiz_bipolar"]
@@ -272,7 +276,8 @@ prepandemic_BMI_psychosis_schiz_bipolar <- N_prepandemic_BMI %>%
   dplyr::select(psychosis_schiz_bipolar, "N", N_population, mean_bmi_change, sd_bmi_change) %>%
   dplyr::rename('group' = 'psychosis_schiz_bipolar') %>%
   dplyr::mutate(variable="psychosis_schiz_bipolar", .before = 1 ) %>%
-  dplyr::arrange(group)
+  dplyr::arrange(group) %>% 
+  dplyr::mutate(group = as.character(group))
 
 
 ## COPD
@@ -289,7 +294,8 @@ prepandemic_BMI_COPD <- N_prepandemic_BMI %>%
   dplyr::select(COPD, "N", N_population, mean_bmi_change, sd_bmi_change) %>%
   dplyr::rename('group' = 'COPD') %>%
   dplyr::mutate(variable="COPD", .before = 1 ) %>%
-  dplyr::arrange(group)
+  dplyr::arrange(group) %>% 
+  dplyr::mutate(group = as.character(group))
 
 
 ## asthma
@@ -306,7 +312,8 @@ prepandemic_BMI_asthma <- N_prepandemic_BMI %>%
   dplyr::select(asthma, "N", N_population, mean_bmi_change, sd_bmi_change) %>%
   dplyr::rename('group' = 'asthma') %>%
   dplyr::mutate(variable="asthma", .before = 1 ) %>%
-  dplyr::arrange(group)
+  dplyr::arrange(group) %>% 
+  dplyr::mutate(group = as.character(group))
 
 ## chronic_cardiac
 N_prepandemic_BMI <- BMI_traj_DT [, .(N_population = length(yearly_bmi_change1)) , by="chronic_cardiac"]
@@ -322,7 +329,8 @@ prepandemic_BMI_chronic_cardiac <- N_prepandemic_BMI %>%
   dplyr::select(chronic_cardiac, "N", N_population, mean_bmi_change, sd_bmi_change) %>%
   dplyr::rename('group' = 'chronic_cardiac') %>%
   dplyr::mutate(variable="chronic_cardiac", .before = 1 ) %>%
-  dplyr::arrange(group)
+  dplyr::arrange(group) %>% 
+  dplyr::mutate(group = as.character(group))
 
 ## stroke_and_TIA
 N_prepandemic_BMI <- BMI_traj_DT [, .(N_population = length(yearly_bmi_change1)) , by="stroke_and_TIA"]
@@ -338,7 +346,8 @@ prepandemic_BMI_stroke_and_TIA <- N_prepandemic_BMI %>%
   dplyr::select(stroke_and_TIA, "N", N_population, mean_bmi_change, sd_bmi_change) %>%
   dplyr::rename('group' = 'stroke_and_TIA') %>%
   dplyr::mutate(variable="stroke_and_TIA", .before = 1 ) %>%
-  dplyr::arrange(group)
+  dplyr::arrange(group) %>% 
+  dplyr::mutate(group = as.character(group))
 
 ## all_cancer
 N_prepandemic_BMI <- BMI_traj_DT [, .(N_population = length(yearly_bmi_change1)) , by="all_cancer"]
@@ -354,7 +363,8 @@ prepandemic_BMI_all_cancer <- N_prepandemic_BMI %>%
   dplyr::select(all_cancer, "N", N_population, mean_bmi_change, sd_bmi_change) %>%
   dplyr::rename('group' = 'all_cancer') %>%
   dplyr::mutate(variable="all_cancer", .before = 1 ) %>%
-  dplyr::arrange(group)  
+  dplyr::arrange(group)  %>% 
+  dplyr::mutate(group = as.character(group))
 
 
 prepandemic_bmi_change <- dplyr::bind_rows( bmi_change_all, 
@@ -364,18 +374,17 @@ prepandemic_bmi_change <- dplyr::bind_rows( bmi_change_all,
                                             prepandemic_BMI_imd, 
                                             prepandemic_BMI_ethnic_no_miss,
                                             prepandemic_BMI_eth_group_16,
-                                            prepandemic_BMI_precovid_obese_flag,                                     
                                             prepandemic_BMI_comorbid_hypertension, 
                                             prepandemic_BMI_comorbid_diabetes_t2,
                                             prepandemic_BMI_comorbid_diabetes_t1, 
-                                            prepandemic_BMI_comorbid_learning_disability,
-                                            prepandemic_BMI_comorbid_depression,
-                                            prepandemic_BMI_comorbid_dementia,
-                                            prepandemic_BMI_comorbid_psychosis_schiz_bipolar, 
-                                            prepandemic_BMI_comorbid_COPD, 
-                                            prepandemic_BMI_comorbid_asthma,
-                                            prepandemic_BMI_comorbid_chronic_cardiac, 
-                                            prepandemic_BMI_comorbid_stroke_and_TIA,
-                                            prepandemic_BMI_comorbid_all_cancer)
+                                            prepandemic_BMI_learning_disability,
+                                            prepandemic_BMI_depression,
+                                            prepandemic_BMI_dementia,
+                                            prepandemic_BMI_psychosis_schiz_bipolar, 
+                                            prepandemic_BMI_COPD, 
+                                            prepandemic_BMI_asthma,
+                                            prepandemic_BMI_chronic_cardiac, 
+                                            prepandemic_BMI_stroke_and_TIA,
+                                            prepandemic_BMI_all_cancer)
 
-
+write.csv (pre_pandemic_bmi_change, here::here ("output/data","prepandemic_bmi_change_per_year.csv"))
