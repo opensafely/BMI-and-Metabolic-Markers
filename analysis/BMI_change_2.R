@@ -22,7 +22,7 @@ BMI_demog <- read_feather (here::here ("output/data", "BMI_demog.feather"))
 
 ##  Analysis logic
 # 1.  Time frame 1:  Use random BMI from 2015/16 if available, 2017 if not available
-# 2.  Time frame 2:  Use random BMI from 2017/2018
+# 2.  Time frame 2:  Use random BMI from 2018/2019
 # 3.  Time frame 3:  Use random BMI from 2021 if available, if not 2020.  
 # 4.  calculate trajectories by time frame.   change per year for pre-pandemic and post pandemic measures. 
 
