@@ -345,6 +345,9 @@ actions:
       moderately_sensitive:
         table1: output/data/median_range_bmi_2021.csv
 
+
+########## BMI_trajectory_data
+
   complete_bmi_trajectory_data:
     run: r:latest analysis/proportion_complete_BMI_trajectory.R --output-dir=output/data 
     needs: [generate_BMI_trajectories_data3]
@@ -353,6 +356,14 @@ actions:
         table1: output/data/complete_bmi_trajectories_proportions.csv
 
 
+
+  prepandemic_bmi_changes:
+    run: r:latest analysis/prepandemic_BMI_change.R --output-dir=output/data 
+    needs: [generate_BMI_trajectories_data3]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/prepandemic_bmi_change_per_year.csv
+        
 ###########################  
 ## DWMP Eligible
 
