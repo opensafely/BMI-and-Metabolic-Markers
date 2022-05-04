@@ -387,4 +387,4 @@ prepandemic_bmi_change <- dplyr::bind_rows( bmi_change_all,
                                             prepandemic_BMI_stroke_and_TIA,
                                             prepandemic_BMI_all_cancer)
 
-write.csv (pre_pandemic_bmi_change, here::here ("output/data","prepandemic_bmi_change_per_year.csv"))
+write.csv (prepandemic_bmi_change, here::here ("output/data","prepandemic_bmi_change_per_year.csv"))
