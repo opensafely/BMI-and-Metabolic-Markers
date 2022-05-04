@@ -361,7 +361,7 @@ complete_bmi_trajectories_comorbid_psychosis_schiz_bipolar <- complete_bmi_traje
 
 
 
-## comorbid_COPD
+## comorbid_asthma
 
 complete_bmi_trajectories_comorbid_asthma <- bmi_trajectories %>%
   tabyl(comorbid_asthma, complete_trajectories) 
@@ -520,6 +520,64 @@ chisq_comorbid_all_cancer <- broom::tidy(chisq_comorbid_all_cancer) %>%
 
 complete_bmi_trajectories_comorbid_all_cancer <- complete_bmi_trajectories_comorbid_all_cancer %>%
   bind_cols(chisq_comorbid_all_cancer)
+############### NEW CODE
+
+## comorbid_diabetes_t1
+
+complete_bmi_trajectories_comorbid_diabetes_t1 <- bmi_trajectories %>%
+  tabyl(comorbid_diabetes_t1, complete_trajectories) 
+
+complete_bmi_trajectories_comorbid_diabetes_t1 <- complete_bmi_trajectories_comorbid_diabetes_t1 %>%
+  dplyr::rename(n_complete_trajectories = 'TRUE') %>% 
+  dplyr::rename(n_no_complete_trajectories = 'FALSE') %>%
+  dplyr::mutate(N_total = n_no_complete_trajectories + n_complete_trajectories) %>%
+  dplyr::select(-('n_no_complete_trajectories'))  %>%
+  dplyr:: mutate(percent_complete_trajectories = ((n_complete_trajectories/N_total)*100)) %>%
+  dplyr::mutate(percent_complete_trajectories = round(percent_complete_trajectories, 2)) %>%
+  dplyr::mutate(variable = "comorbid_diabetes_t1", .before=1) %>%
+  dplyr::rename(group = comorbid_diabetes_t1) %>%
+  dplyr::mutate(group = as.character(group))
+
+
+
+chisq_comorbid_diabetes_t1 <- chisq.test(bmi_trajectories$comorbid_diabetes_t1, bmi_trajectories$complete_trajectories) 
+
+chisq_comorbid_diabetes_t1 <- broom::tidy(chisq_comorbid_diabetes_t1) %>%
+  dplyr::select(p.value, method)
+
+complete_bmi_trajectories_comorbid_diabetes_t1 <- complete_bmi_trajectories_comorbid_diabetes_t1 %>%
+  bind_cols(chisq_comorbid_diabetes_t1)
+
+
+## comorbid_diabetes_t2
+
+complete_bmi_trajectories_comorbid_diabetes_t2 <- bmi_trajectories %>%
+  tabyl(comorbid_diabetes_t2, complete_trajectories) 
+
+complete_bmi_trajectories_comorbid_diabetes_t2 <- complete_bmi_trajectories_comorbid_diabetes_t2 %>%
+  dplyr::rename(n_complete_trajectories = 'TRUE') %>% 
+  dplyr::rename(n_no_complete_trajectories = 'FALSE') %>%
+  dplyr::mutate(N_total = n_no_complete_trajectories + n_complete_trajectories) %>%
+  dplyr::select(-('n_no_complete_trajectories'))  %>%
+  dplyr:: mutate(percent_complete_trajectories = ((n_complete_trajectories/N_total)*100)) %>%
+  dplyr::mutate(percent_complete_trajectories = round(percent_complete_trajectories, 2)) %>%
+  dplyr::mutate(variable = "comorbid_diabetes_t2", .before=1) %>%
+  dplyr::rename(group = comorbid_diabetes_t2) %>%
+  dplyr::mutate(group = as.character(group))
+
+
+
+chisq_comorbid_diabetes_t2 <- chisq.test(bmi_trajectories$comorbid_diabetes_t2, bmi_trajectories$complete_trajectories) 
+
+chisq_comorbid_diabetes_t2 <- broom::tidy(chisq_comorbid_diabetes_t2) %>%
+  dplyr::select(p.value, method)
+
+complete_bmi_trajectories_comorbid_diabetes_t2 <- complete_bmi_trajectories_comorbid_diabetes_t2 %>%
+  bind_cols(chisq_comorbid_diabetes_t2)
+
+
+
+######################  END OF NEW CODE:  two new rows added to below
 
 
 ## complete bmi trajectories
@@ -533,6 +591,8 @@ had_complete_bmi_trajectories <- bmi_trajectories_population %>%
   bind_rows(complete_bmi_trajectories_ethnic_no_miss) %>% 
   bind_rows(complete_bmi_trajectories_eth_group_16) %>% 
   bind_rows(complete_bmi_trajectories_comorbid_hypertension) %>% 
+  bind_rows (complete_bmi_trajectories_comorbid_diabetes_t2) %>%
+  bind_rows (complete_bmi_trajectories_comorbid_diabetes_t1) %>%
   bind_rows(complete_bmi_trajectories_comorbid_learning_disability) %>% 
   bind_rows(complete_bmi_trajectories_comorbid_depression) %>% 
   bind_rows(complete_bmi_trajectories_comorbid_dementia) %>% 
