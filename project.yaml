@@ -364,6 +364,13 @@ actions:
         chart1: output/bmi_change_plot.png
         chart2: output/bmi_change_plot_age.png
 
+  bmi_timeinterval_check:
+    run: r:latest analysis/check_timeintervals_BMI_change.R --output-dir=output/data 
+    needs: [generate_BMI_trajectories_data3]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/bmi_timeinterval_check.csv
+        table2: output/data/time1_error.csv
 
 
   prepandemic_bmi_changes:
