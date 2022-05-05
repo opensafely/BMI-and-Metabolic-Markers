@@ -35,7 +35,7 @@ BMI_all <- read_feather (here::here ("output/data", "all_bmi_long.feather"))
 #################################################### removed to run main analysis:: added back in to produce reasonable dummy data
 ## Analysis just for dummy data to allow years to be extracted.  
 # creates a year variable that correlates to the date BMI measured in dummy data.  (That does not correlate with year due to return expectations)
-BMI_all <- BMI_all_long %>%
+BMI_all <- BMI_all %>%
   dplyr::select(-("year"))
 
 BMI_all$year <- lubridate::year(ymd(BMI_all$bmi_date))
