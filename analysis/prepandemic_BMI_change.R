@@ -28,7 +28,10 @@ BMI_trajectories <- read_feather (here::here ("output/data", "BMI_trajectories_f
 BMI_trajectories <- BMI_trajectories %>% 
   dplyr::mutate(timechange1_check = time_change1)
 
-## create a flag to identify when a time difference between BMI measures is recorded as '0'
+
+## Due to way BMI is extracted 141 patients with a value recorded on 1st March 2018 were counted in two time windows
+## This created a time difference of 0 and therefore an infinity value with BMI change/time
+## create a flag to identify when a time difference between BMI measures is recorded as '0'  Then filter these out.
 BMI_trajectories <- BMI_trajectories %>% 
   dplyr::mutate(time_change_error = case_when(
     timechange1_check == 0 ~ 1, 
