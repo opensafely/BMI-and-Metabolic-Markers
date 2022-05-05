@@ -24,9 +24,43 @@ library(skimr)
 
 BMI_trajectories <- read_feather (here::here ("output/data", "BMI_trajectories_final.feather"))
 
+
 BMI_trajectories <- BMI_trajectories %>% 
-dplyr:: mutate(
-  age_group = forcats::fct_relevel(age_group, "18-39", "40-65", "65-80", "80+", "missing"))
+  dplyr::mutate(timechange1_check = time_change1)
+
+## create a flag to identify when a time difference between BMI measures is recorded as '0'
+BMI_trajectories <- BMI_trajectories %>% 
+  dplyr::mutate(time_change_error = case_when(
+    timechange1_check == 0 ~ 1, 
+    timechange1_check != 0 ~ 0
+  ))
+
+
+BMI_trajectories %>% 
+  tabyl(time_change_error)
+
+
+BMI_trajectories <- BMI_trajectories %>% 
+dplyr::filter(time_change_error == 0)
+
+
+
+#BMI_trajectories <- BMI_trajectories %>% 
+#dplyr:: mutate(
+  #age_group = forcats::fct_relevel(age_group, "18-39", "40-65", "65-80", "80+", "missing"))
+
+
+## Change to factors.  
+BMI_trajectories$age_group <- factor(BMI_trajectories$age_group,      # Reordering group factor levels
+                                       levels = c("18-39", "40-65", "65-80", "80+", "missing"))
+
+
+
+BMI_trajectories$age_group_2 <- factor(BMI_trajectories$age_group_2,      # Reordering group factor levels
+                                       levels = c("18-29", "30-39", "40-49", "50-59", "60-69", "70-79", "80+"))
+
+
+
 
 
 colnames(BMI_trajectories)
@@ -75,6 +109,21 @@ prepandemic_BMI_age_group <- N_prepandemic_BMI %>%
   dplyr::mutate(variable="age_group", .before = 1 ) %>%
   dplyr::arrange(group)
 
+## age_group_2
+N_prepandemic_BMI <- BMI_traj_DT [, .(N_population = length(yearly_bmi_change1)) , by="age_group_2"]
+n_prepandemic_BMI <- BMI_traj_DT [, .(N_missing = sum(is.na(yearly_bmi_change1))) , by="age_group_2"]
+mean_prepandemic_BMI <- BMI_traj_DT[, .( mean_bmi_change = (mean(yearly_bmi_change1,  na.rm = TRUE))), by="age_group_2"]
+sd_prepandemic_BMI <- BMI_traj_DT[, .( sd_bmi_change = (sd(yearly_bmi_change1,  na.rm = TRUE))), by="age_group_2"]
+
+prepandemic_BMI_age_group_2 <- N_prepandemic_BMI %>%
+  dplyr::left_join(n_prepandemic_BMI, by = "age_group_2") %>%
+  dplyr::mutate("N" = N_population - N_missing) %>%
+  dplyr::left_join(mean_prepandemic_BMI, by = "age_group_2") %>%
+  dplyr::left_join(sd_prepandemic_BMI, by = "age_group_2") %>%
+  dplyr::select(age_group_2, "N", N_population, mean_bmi_change, sd_bmi_change) %>%
+  dplyr::rename('group' = 'age_group_2') %>%
+  dplyr::mutate(variable="age_group_2", .before = 1 ) %>%
+  dplyr::arrange(group)
 
 ## sex
 N_prepandemic_BMI <- BMI_traj_DT [, .(N_population = length(yearly_bmi_change1)) , by="sex"]
@@ -368,7 +417,8 @@ prepandemic_BMI_all_cancer <- N_prepandemic_BMI %>%
 
 
 prepandemic_bmi_change <- dplyr::bind_rows( bmi_change_all, 
-                                            prepandemic_BMI_age_group, 
+                                            prepandemic_BMI_age_group,
+                                            prepandemic_BMI_age_group_2,
                                             prepandemic_BMI_sex, 
                                             prepandemic_BMI_region, 
                                             prepandemic_BMI_imd, 
