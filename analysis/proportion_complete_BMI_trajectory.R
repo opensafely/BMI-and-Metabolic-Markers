@@ -22,10 +22,50 @@ library(skimr)
 
 #BMI_complete_categories <- read_feather (here::here ("output/data", "BMI_all_2019.feather"))
 
-BMI_trajectories <- read_feather (here::here ("output/data", "BMI_trajectories_final.feather"))
+BMI_trajectories <- read_feather (here::here ("output/data", "BMI_trajectories_final_demog.feather"))
 
 BMI_trajectories <- BMI_trajectories %>% 
   dplyr::mutate(complete_trajectories = complete_bmi_data)
+
+BMI_trajectories <- BMI_trajectories %>% 
+  dplyr::mutate(timechange1_check = time_change1)
+
+
+## Due to way BMI is extracted 141 patients with a value recorded on 1st March 2018 were counted in two time windows
+## This created a time difference of 0 and therefore an infinity value with BMI change/time
+## create a flag to identify when a time difference between BMI measures is recorded as '0'  Then filter these out.
+BMI_trajectories <- BMI_trajectories %>% 
+  dplyr::mutate(time_change_error = case_when(
+    timechange1_check == 0 ~ 1, 
+    timechange1_check != 0 ~ 0
+  ))
+
+
+BMI_trajectories %>% 
+  tabyl(time_change_error)
+
+
+BMI_trajectories <- BMI_trajectories %>% 
+dplyr::filter(time_change_error == 0)
+
+## Change to factors.  
+BMI_trajectories$age_group <- factor(BMI_trajectories$age_group,      # Reordering group factor levels
+                                       levels = c("18-39", "40-65", "65-80", "80+", "missing"))
+
+
+
+BMI_trajectories$age_group_2 <- factor(BMI_trajectories$age_group_2,      # Reordering group factor levels
+                                       levels = c("18-29", "30-39", "40-49", "50-59", "60-69", "70-79", "80+"))
+
+
+
+
+
+
+#BMI_trajectories <- BMI_trajectories %>% 
+#dplyr:: mutate(
+  #age_group = forcats::fct_relevel(age_group, "18-39", "40-65", "65-80", "80+", "missing"))
+
 
 
 BMI_trajectories <- BMI_trajectories %>% 

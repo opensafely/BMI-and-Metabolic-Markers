@@ -357,9 +357,9 @@ actions:
 
 ########## BMI_trajectory_data
 
-  complete_bmi_trajectory_data:
+  proportion_complete_bmi_trajectory:
     run: r:latest analysis/proportion_complete_BMI_trajectory.R --output-dir=output/data 
-    needs: [generate_BMI_trajectories_data3]
+    needs: [BMI_trajectories_demographics_correction]
     outputs:
       moderately_sensitive:
         table1: output/data/complete_bmi_trajectories_proportions.csv
