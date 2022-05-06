@@ -403,6 +403,27 @@ actions:
         chart2: output/precovid_slow_inc_bmi.png
         chart3: output/precovid_mod_inc_bmi.png
         chart4: output/precovid_rapid_inc_bmi.png
+
+  postcovid_BMI_change_plots: 
+    run: r:latest analysis/bmi_change_postcovid_distribution_plots.R --output-dir=output/data 
+    needs: [pandemic_bmi_trajectory_plots]
+    outputs:
+      moderately_sensitive:
+        chart1: output/SMI_postcovid_trajetory.png
+        chart2: output/region_postcovid_trajetory.png
+        chart3: output/precovid_traj_postcovid_trajetory.png
+        chart4: output/bmi_postcovid_trajetory.png
+        chart5: output/LD_postcovid_trajetory.png
+        chart6: output/imd_postcovid_trajetory.png
+        chart7: output/hypertension_postcovid_trajetory.png
+        chart8: output/ethnic_postcovid_trajetory.png
+        chart9: output/diabetes2_postcovid_trajetory.png
+        chart10: output/diabetes1_postcovid_trajetory.png
+        chart11: output/depression_postcovid_trajetory.png
+        chart12: aoutput/age_postcovid_trajetory.png
+
+
+
 ###########################  
 ## DWMP Eligible
 
