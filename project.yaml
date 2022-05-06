@@ -254,8 +254,8 @@ actions:
       highly_sensitive:
         cohort1: output/data/BMI_trajectories_final_demog.feather
       moderately_sensitive:
-        table1: output/data/BMI_traj_demog.png
-        table2: outpute/data/BMI_traj_demog.html 
+        table1: output/data/BMI_traj_demog.html
+
 
 
 ##################################################################
