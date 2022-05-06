@@ -143,3 +143,5 @@ summary_extract
 BMI_demog_table %>% gtsave("BMI_traj_demog.png", expand = 10, path=here::here("output/data"))        
 
 BMI_demog_table %>% gtsave("BMI_traj_demog.html", path=here::here("output/data"))
+
+write_feather (BMI_trajectories_final_demog, here::here ("output/data","BMI_trajectories_final_demog.feather"))
