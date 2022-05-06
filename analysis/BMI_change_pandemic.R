@@ -18,11 +18,12 @@ library(rstatix)
 library(janitor)
 library(lubridate)
 library(skimr)
+library(gtsummary)
 
 
 
 
-BMI_trajectories <- read_feather (here::here ("output/data", "BMI_trajectories_final.feather"))
+BMI_trajectories <- read_feather (here::here ("output/data", "BMI_trajectories_final_demog.feather"))
 
 
 BMI_trajectories <- BMI_trajectories %>% 
@@ -438,7 +439,14 @@ prepandemic_bmi_change <- dplyr::bind_rows( bmi_change_all,
                                             prepandemic_BMI_asthma,
                                             prepandemic_BMI_chronic_cardiac, 
                                             prepandemic_BMI_stroke_and_TIA,
-                                            prepandemic_BMI_all_cancer)
+                                            prepandemic_BMI_all_cancer) %>% 
+  mutate(across(where(is.numeric), round, 1))
+
+
+
+
+
+### Post Pandemic
 
 BMI_traj_DT <- setDT(BMI_trajectories)
 
@@ -800,7 +808,13 @@ postpandemic_bmi_change <- dplyr::bind_rows( bmi_change_all,
                                             postpandemic_BMI_asthma,
                                             postpandemic_BMI_chronic_cardiac, 
                                             postpandemic_BMI_stroke_and_TIA,
-                                            postpandemic_BMI_all_cancer)
+                                            postpandemic_BMI_all_cancer) %>%
+   mutate(across(where(is.numeric), round, 1))
+
+
+
+
+
 
 write.csv (postpandemic_bmi_change, here::here ("output/data","postpandemic_bmi_change_per_year.csv"))
 

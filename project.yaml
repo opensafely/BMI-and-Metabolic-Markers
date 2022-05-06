@@ -383,8 +383,8 @@ actions:
 
 
   pandemic_bmi_changes:
-    run: r:latest analysis/prepandemic_BMI_change.R --output-dir=output/data 
-    needs: [generate_BMI_trajectories_data3]
+    run: r:latest analysis/BMI_change_pandemic.R --output-dir=output/data 
+    needs: [BMI_trajectories_demographics_correction]
     outputs:
       moderately_sensitive:
         table1: output/data/prepandemic_bmi_change_per_year.csv
