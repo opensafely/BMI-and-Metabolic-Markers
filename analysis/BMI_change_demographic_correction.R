@@ -21,13 +21,13 @@ library(skimr)
 library(ggplot2)
 library(gtsummary)
 library(gt)  
-p_load(webshot)
-webshot::install_phantomjs()
+library(webshot)
+# webshot::install_phantomjs()
 
 
 
 ## Read in files
-BMI_all <- read_feather (here::here ("output/feather", "all_bmi_long.feather"))
+BMI_all <- read_feather (here::here ("output/data", "all_bmi_long.feather"))
 BMI_trajectories <- read_feather (here::here ("output/data", "BMI_trajectories_final.feather"))
 
 
@@ -109,7 +109,7 @@ BMI_demog_table <- BMI_traj_demog_table %>%
       type   = all_categorical() ~ "categorical",                 # force all categorical levels to display
       label  = list(                                            # display labels for column names
         sex ~ "Sex",
-        age_group_2 ~ "Age Group",
+        age_group_2 ~ "Age Group (Years)",
         region ~ "Region",         
         imd ~ "Index of Multiple Deprivation",
         ethnic_no_miss ~ "Ethnicity (5 Categories)",  
@@ -135,11 +135,11 @@ BMI_demog_table <- BMI_demog_table %>%
     title = "Demographic characteristics of patients with and without complete BMI trajectory data"
   )
 
-summary_extract <- BMI_demog_table
-  extract_summary()
-  
-summary_extract
 
-BMI_demog_table %>% gtsave("BMI_traj_demog.png", expand = 10, path=here::here("output/data"))        
+
+#BMI_demog_table %>% gtsave("BMI_traj_demog.png", expand = 10, path=here::here("output/data"))        
+
 
 BMI_demog_table %>% gtsave("BMI_traj_demog.html", path=here::here("output/data"))
+
+write_feather (BMI_trajectories_final_demog, here::here ("output/data","BMI_trajectories_final_demog.feather"))
