@@ -18,7 +18,32 @@ library(skimr)
 library(ggplot2)
 
 
-BMI_trajectories <- read_feather (here::here ("output/data", "BMI_trajectories_final.feather"))
+BMI_trajectories <- read_feather (here::here ("output/data", "BMI_trajectories_final_demog.feather"))
+
+
+## Remove infinity time change values
+
+
+## Due to way BMI is extracted 141 patients with a value recorded on 1st March 2018 were counted in two time windows
+## This created a time difference of 0 and therefore an infinity value with BMI change/time
+## create a flag to identify when a time difference between BMI measures is recorded as '0'  Then filter these out.
+BMI_trajectories <- BMI_trajectories %>% 
+  dplyr::mutate(timechange1_check = time_change1)
+
+BMI_trajectories <- BMI_trajectories %>% 
+  dplyr::mutate(time_change_error = case_when(
+    timechange1_check == 0 ~ 1, 
+    timechange1_check != 0 ~ 0
+  ))
+
+
+BMI_trajectories %>% 
+  tabyl(time_change_error)
+
+
+BMI_trajectories <- BMI_trajectories %>% 
+dplyr::filter(time_change_error == 0)
+
 
 
 
@@ -76,7 +101,8 @@ BMI_change_summary <- BMI_trajectories_long %>%
   ungroup() %>%
   dplyr::select(precovid, postcovid) 
 
-BMI_change_summary <-  skimr::skim_without_charts(BMI_change_summary)
+BMI_change_summary <-  skimr::skim_without_charts(BMI_change_summary) %>% 
+    dplyr::mutate(across(where(is.numeric), round, 2))
 
 
 ## saveoutputs

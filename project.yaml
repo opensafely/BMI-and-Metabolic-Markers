@@ -366,7 +366,7 @@ actions:
 
   bmi_change_plots:
     run: r:latest analysis/BMI_change_plot.R --output-dir=output/data 
-    needs: [generate_BMI_trajectories_data3]
+    needs: [BMI_trajectories_demographics_correction]
     outputs:
       moderately_sensitive:
         table1: output/data/short_bmi_change_summary.csv
