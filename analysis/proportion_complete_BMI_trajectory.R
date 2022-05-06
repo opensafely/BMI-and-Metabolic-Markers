@@ -45,6 +45,14 @@ BMI_trajectories %>%
   tabyl(time_change_error)
 
 
+########### CODE ADDED - to stop NAs from being excluded from analysis
+## need to add this code to other trajectory analyses
+BMI_trajectories <- BMI_trajectories %>% 
+  replace_na(list(time_change_error = 0))
+
+###########
+
+
 BMI_trajectories <- BMI_trajectories %>% 
 dplyr::filter(time_change_error == 0)
 
