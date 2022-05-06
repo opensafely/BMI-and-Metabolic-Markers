@@ -389,6 +389,20 @@ actions:
       moderately_sensitive:
         table1: output/data/prepandemic_bmi_change_per_year.csv
         table2: output/data/postpandemic_bmi_change_per_year.csv
+  
+
+  pandemic_bmi_trajectory_plots:
+    run: r:latest analysis/BMI_change_postcovid_plots.R --output-dir=output/data 
+    needs: [BMI_trajectories_demographics_correction]
+    outputs:
+      highly_sensitive:
+        table1: output/data/BMI_trajectory_data.feather
+        table2: output/data/BMI_trajectory_data_filtered.feather
+      moderately_sensitive:
+        chart1: output/precovid_stable_bmi.png
+        chart2: output/precovid_slow_inc_bmi.png
+        chart3: output/precovid_mod_inc_bmi.png
+        chart4: output/precovid_rapid_inc_bmi.png
 ###########################  
 ## DWMP Eligible
 
