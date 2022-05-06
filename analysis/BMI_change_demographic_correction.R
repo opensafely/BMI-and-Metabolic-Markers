@@ -21,8 +21,8 @@ library(skimr)
 library(ggplot2)
 library(gtsummary)
 library(gt)  
-p_load(webshot)
-webshot::install_phantomjs()
+library(webshot)
+# webshot::install_phantomjs()
 
 
 
