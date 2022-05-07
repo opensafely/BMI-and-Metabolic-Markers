@@ -413,6 +413,8 @@ actions:
         chart3: output/precovid_mod_inc_bmi.png
         chart4: output/precovid_rapid_inc_bmi.png
 
+
+## violin plots to see distribution before filtering
   postcovid_BMI_change_plots: 
     run: r:latest analysis/bmi_change_postcovid_distribution_plots.R --output-dir=output/data 
     needs: [pandemic_bmi_trajectory_plots]
@@ -431,8 +433,23 @@ actions:
         chart11: output/depression_postcovid_trajectory.png
         chart12: output/age_postcovid_trajectory.png
 
-
-
+## box plots with filtered data (excluding extreme changes
+  bmi_change_boxplots: 
+    run: r:latest analysis/bmi_change_boxplots.R --output-dir=output/data 
+    needs: [BMI_trajectories_demographics_correction]
+    outputs:
+      moderately_sensitive:
+        chart1: output/covid_bmi_change_cardiac.png
+        chart2: output/covid_bmi_change_depression.png
+        chart3: output/covid_bmi_change_ethnicity.png
+        chart4: output/covid_bmi_change_learning_diff.png
+        chart5: output/covid_bmi_change_region.png
+        chart6: output/covid_bmi_change_sex.png
+        chart7: output/covid_bmi_change_serious_mental.png
+        chart8: output/covid_bmi_change_t1dm.png
+        chart9: output/covid_bmi_change_t2dm.png
+        chart10: output/covid_bmi_change_imd.png
+        chart11: output/covid_bmi_change_hypertension.png
 ###########################  
 ## DWMP Eligible
 
