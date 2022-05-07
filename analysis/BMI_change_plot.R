@@ -41,8 +41,14 @@ BMI_trajectories %>%
   tabyl(time_change_error)
 
 
+########### IMPORTANT 
+## need to add this code to other trajectory analyses or NA will be filtered out
+## Actually just want to filter out the infinity values
 BMI_trajectories <- BMI_trajectories %>% 
-dplyr::filter(time_change_error == 0)
+  replace_na(list(time_change_error = 0))
+
+BMI_trajectories <- BMI_trajectories %>% 
+  dplyr::filter(time_change_error == 0)
 
 
 
@@ -59,68 +65,95 @@ BMI_trajectories_long <- BMI_trajectories %>%
   dplyr::select(patient_id, age_group_2, yearly_bmi_change1, yearly_bmi_change2) %>% 
   dplyr::rename(precovid = yearly_bmi_change1) %>% 
   dplyr::rename(postcovid = yearly_bmi_change2) 
-  
 
-BMi_trajectories_long_DT <- as.data.table(BMI_trajectories_long)
+
+BMI_trajectories_long_DT <- as.data.table(BMI_trajectories_long)
 
 ## reshape long in data table format
 
-BMi_trajectories_long_DT = melt(BMi_trajectories_long_DT, 
+BMI_trajectories_long_DT = melt(BMI_trajectories_long_DT, 
                                 id.vars = c("patient_id", "age_group_2"), 
                                 measure.vars = c("precovid", 'postcovid'), 
                                 variable.name = "pandemic_stage", 
                                 value.name = "yearly_bmi_change")
-  
 
 
-  
+
+
 
 ## histograms with pre and post pandemic data
 
 
-bmi_change_plot <-  ggplot( data = BMi_trajectories_long_DT, 
+bmi_change_plot <-  ggplot( data = BMI_trajectories_long_DT, 
+                            mapping = aes( x = yearly_bmi_change, color=pandemic_stage)) + 
+  labs(title = "Rate of BMI change per year in whole population", 
+       subtitle = "Data on BMI collected through routine primary care electronic health records between March 2015 and March 2022") + 
+  geom_histogram() +
+  xlim (-10, 10) 
+
+
+bmi_change_plot_age <- ggplot( data = BMI_trajectories_long_DT, 
                                mapping = aes( x = yearly_bmi_change, color=pandemic_stage)) + 
-                                  labs(title = "Rate of BMI change per year in whole population", 
-                                  subtitle = "Data on BMI collected through routine primary care electronic health records between March 2015 and March 2022") + 
-                                  geom_histogram() +
-                                  xlim (-10, 10) 
-
-
-bmi_change_plot_age <- ggplot( data = BMi_trajectories_long_DT, 
-                                    mapping = aes( x = yearly_bmi_change, color=pandemic_stage)) + 
-                                    labs(title = "Rate of BMI change per year by Age Group", 
-                                    subtitle = "Data on BMI collected through routine primary care electronic health records between March 2015 and March 2022") + 
-                                    geom_histogram() +
-                                    xlim (-10, 10) +
-                                    facet_wrap(~age_group_2)
+  labs(title = "Rate of BMI change per year by Age Group", 
+       subtitle = "Data on BMI collected through routine primary care electronic health records between March 2015 and March 2022") + 
+  geom_histogram() +
+  xlim (-10, 10) +
+  facet_wrap(~age_group_2)
 
 
 
 ## create a short summary table to check
+
+
 BMI_change_summary <- BMI_trajectories_long %>% 
   ungroup() %>%
   dplyr::select(precovid, postcovid) 
 
-BMI_change_summary <-  skimr::skim_without_charts(BMI_change_summary) %>% 
-    dplyr::mutate(across(where(is.numeric), round, 2))
+BMI_change_summary<-  skimr::skim_without_charts(BMI_change_summary) %>% 
+  dplyr::mutate(across(where(is.numeric), round, 2))
+
+BMI_change_summary <- BMI_change_summary %>% 
+  dplyr::select(skim_variable, n_missing, complete_rate) %>% 
+  dplyr::rename(pandemic_stage = skim_variable)
+
+
+
+
+BMI_change_summary_2 <- BMI_trajectories_long_DT[, 
+                         list(mean = mean(yearly_bmi_change, na.rm=TRUE),
+                              sd = sd(yearly_bmi_change, na.rm=TRUE),
+                              median = median(yearly_bmi_change, na.rm=TRUE),
+                              minimum = quantile(yearly_bmi_change, probs = c(0), na.rm = TRUE),
+                              '5th' = quantile(yearly_bmi_change, probs = c(.05), na.rm = TRUE), 
+                              '10th' = quantile(yearly_bmi_change, probs = c(.10), na.rm = TRUE),
+                              '25th' = quantile(yearly_bmi_change, probs = c(.25), na.rm = TRUE),
+                              '75th' = quantile(yearly_bmi_change, probs = c(.75), na.rm = TRUE), 
+                              '90th' = quantile(yearly_bmi_change, probs = c(.90), na.rm = TRUE), 
+                              '95th' = quantile(yearly_bmi_change, probs = c(.95), na.rm = TRUE),
+                              '100th' = quantile(yearly_bmi_change, probs = c(1), na.rm = TRUE)), # specify the percentiles you want
+                         by = .(pandemic_stage)]
+
+BMI_change_summary <- BMI_change_summary %>% 
+  dplyr::left_join(BMI_change_summary_2) %>%
+  dplyr::mutate(across(where(is.numeric), round, 2))
+
 
 
 ## saveoutputs
 ggsave(
-    plot = bmi_change_plot,
-    filename = "bmi_change_plot.png", 
-    path = here::here("output"),
-    dpi=600, width = 30, height = 30, units = "cm"
+  plot = bmi_change_plot,
+  filename = "bmi_change_plot.png", 
+  path = here::here("output"),
+  dpi=600, width = 30, height = 30, units = "cm"
 )
 
 ggsave(
-    plot = bmi_change_plot_age,
-    filename = "bmi_change_plot_age.png", 
-    path = here::here("output"),
-    dpi=600, width = 30, height = 30, units = "cm"
+  plot = bmi_change_plot_age,
+  filename = "bmi_change_plot_age.png", 
+  path = here::here("output"),
+  dpi=600, width = 30, height = 30, units = "cm"
 )
 
 
 write.csv (BMI_change_summary, here::here ("output/data","short_bmi_change_summary.csv"))
-
 
