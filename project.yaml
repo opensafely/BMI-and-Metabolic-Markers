@@ -409,18 +409,18 @@ actions:
     needs: [pandemic_bmi_trajectory_plots]
     outputs:
       moderately_sensitive:
-        chart1: output/SMI_postcovid_trajetory.png
-        chart2: output/region_postcovid_trajetory.png
-        chart3: output/precovid_traj_postcovid_trajetory.png
-        chart4: output/bmi_postcovid_trajetory.png
-        chart5: output/LD_postcovid_trajetory.png
-        chart6: output/imd_postcovid_trajetory.png
-        chart7: output/hypertension_postcovid_trajetory.png
-        chart8: output/ethnic_postcovid_trajetory.png
-        chart9: output/diabetes2_postcovid_trajetory.png
-        chart10: output/diabetes1_postcovid_trajetory.png
-        chart11: output/depression_postcovid_trajetory.png
-        chart12: aoutput/age_postcovid_trajetory.png
+        chart1: output/SMI_postcovid_trajectory.png
+        chart2: output/region_postcovid_trajectory.png
+        chart3: output/precovid_traj_postcovid_trajectory.png
+        chart4: output/bmi_postcovid_trajectory.png
+        chart5: output/LD_postcovid_trajectory.png
+        chart6: output/imd_postcovid_trajectory.png
+        chart7: output/hypertension_postcovid_trajectory.png
+        chart8: output/ethnic_postcovid_trajectory.png
+        chart9: output/diabetes2_postcovid_trajectory.png
+        chart10: output/diabetes1_postcovid_trajectory.png
+        chart11: output/depression_postcovid_trajectory.png
+        chart12: output/age_postcovid_trajectory.png
 
 
 
