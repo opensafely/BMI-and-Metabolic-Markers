@@ -470,6 +470,19 @@ actions:
         chart9: output/covid_bmi_change_t2dm.png
         chart10: output/covid_bmi_change_imd.png
         chart11: output/covid_bmi_change_hypertension.png
+
+## Tables of BMI change categories
+  bmi_change_category_tables: 
+    run: r:latest analysis/BMI_change_trajectories_table.R --output-dir=output/data 
+    needs: [bmi_change_category_proportion_plots]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/postcovid_bmi_trajectories.csv
+        table2: output/data/precovid_bmi_trajectories.csv
+
+
+
+
 ###########################  
 ###########################  
 ## DWMP Eligible
