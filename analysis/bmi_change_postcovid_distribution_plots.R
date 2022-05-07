@@ -224,49 +224,49 @@ hypertension_plot <- ggplot(BMI_trajectories_change,
 
 ggsave(
   plot = age_plot,
-  filename = "age_postcovid_trajetory.png", 
+  filename = "age_postcovid_trajectory.png", 
   path = here::here("output"),
   dpi=600, width = 30, height = 30, units = "cm"
 )
  
 ggsave(
   plot = depression_plot,
-  filename = "depression_postcovid_trajetory.png", 
+  filename = "depression_postcovid_trajectory.png", 
   path = here::here("output"),
   dpi=600, width = 30, height = 30, units = "cm"
 ) 
 
 ggsave(
   plot = diabetes1_plot,
-  filename = "diabetes1_postcovid_trajetory.png", 
+  filename = "diabetes1_postcovid_trajectory.png", 
   path = here::here("output"),
   dpi=600, width = 30, height = 30, units = "cm"
 )
 
 ggsave(
   plot = diabetes2_plot,
-  filename = "diabetes2_postcovid_trajetory.png", 
+  filename = "diabetes2_postcovid_trajectory.png", 
   path = here::here("output"),
   dpi=600, width = 30, height = 30, units = "cm"
 )
 
 ggsave(
   plot = ethnic_plot,
-  filename = "ethnic_postcovid_trajetory.png", 
+  filename = "ethnic_postcovid_trajectory.png", 
   path = here::here("output"),
   dpi=600, width = 30, height = 30, units = "cm"
 )
 
 ggsave(
   plot = hypertension_plot,
-  filename = "hypertension_postcovid_trajetory.png", 
+  filename = "hypertension_postcovid_trajectory.png", 
   path = here::here("output"),
   dpi=600, width = 30, height = 30, units = "cm"
 )
 
 ggsave(
   plot = imd_plot,
-  filename = "imd_postcovid_trajetory.png", 
+  filename = "imd_postcovid_trajectory.png", 
   path = here::here("output"),
   dpi=600, width = 30, height = 30, units = "cm"
 )
@@ -274,35 +274,35 @@ ggsave(
 
 ggsave(
   plot = learning_disability_plot,
-  filename = "LD_postcovid_trajetory.png", 
+  filename = "LD_postcovid_trajectory.png", 
   path = here::here("output"),
   dpi=600, width = 30, height = 30, units = "cm"
 )
 
 ggsave(
   plot = precovid_bmi_plot,
-  filename = "bmi_postcovid_trajetory.png", 
+  filename = "bmi_postcovid_trajectory.png", 
   path = here::here("output"),
   dpi=600, width = 30, height = 30, units = "cm"
 )
 
 ggsave(
   plot = precovid_traj_plot,
-  filename = "precovid_traj_postcovid_trajetory.png", 
+  filename = "precovid_traj_postcovid_trajectory.png", 
   path = here::here("output"),
   dpi=600, width = 30, height = 30, units = "cm"
 )
 
 ggsave(
   plot = region_plot,
-  filename = "region_postcovid_trajetory.png", 
+  filename = "region_postcovid_trajectory.png", 
   path = here::here("output"),
   dpi=600, width = 30, height = 30, units = "cm"
 )
 
 ggsave(
   plot = serious_mental_plot,
-  filename = "SMI_postcovid_trajetory.png", 
+  filename = "SMI_postcovid_trajectory.png", 
   path = here::here("output"),
   dpi=600, width = 30, height = 30, units = "cm"
 )
