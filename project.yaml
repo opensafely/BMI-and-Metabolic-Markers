@@ -433,6 +433,26 @@ actions:
         chart11: output/depression_postcovid_trajectory.png
         chart12: output/age_postcovid_trajectory.png
 
+## stacked column charts showing proportion in different BMI change categories
+  bmi_change_category_proportion_plots: 
+    run: r:latest analysis/BMI_change_category_prop_plots.R --output-dir=output/data 
+    needs: [BMI_trajectories_demographics_correction]
+    outputs:
+      highly_sensitive: 
+        table1: output/data/BMI_trajectory_data_long.feather
+      moderately_sensitive:
+        chart1: output/category_bmi_change_depression.png
+        chart2: output/category_bmi_change_ethnicity.png
+        chart3: output/category_bmi_change_learning_diff.png
+        chart4: output/category_bmi_change_region.png
+        chart5: output/category_bmi_change_sex.png
+        chart6: output/category_bmi_change_serious_mental.png
+        chart7: output/category_bmi_change_t1dm.png
+        chart8: output/category_bmi_change_t2dm.png
+        chart9: output/category_bmi_change_imd.png
+        chart10: output/category_bmi_change_hypertension.png
+
+
 ## box plots with filtered data (excluding extreme changes
   bmi_change_boxplots: 
     run: r:latest analysis/bmi_change_boxplots.R --output-dir=output/data 
@@ -450,6 +470,7 @@ actions:
         chart9: output/covid_bmi_change_t2dm.png
         chart10: output/covid_bmi_change_imd.png
         chart11: output/covid_bmi_change_hypertension.png
+###########################  
 ###########################  
 ## DWMP Eligible
 
