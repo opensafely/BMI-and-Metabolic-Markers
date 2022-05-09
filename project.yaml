@@ -453,6 +453,20 @@ actions:
         chart10: output/category_bmi_change_hypertension.png
 
 
+
+## stacked column charts showing proportion in different BMI change categories
+  bmi_change_univariate: 
+    run: r:latest analysis/BMI_change_rapid_univariate.R --output-dir=output/data 
+    needs: [bmi_change_category_proportion_plots]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/rapid_bmi_change_univariate_precovid.csv
+        table2: output/data/rapid_bmi_change_univariate_postcovid.csv
+
+
+
+
+
 ## box plots with filtered data (excluding extreme changes
   bmi_change_boxplots: 
     run: r:latest analysis/bmi_change_boxplots.R --output-dir=output/data 
