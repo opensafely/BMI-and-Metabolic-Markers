@@ -454,7 +454,7 @@ actions:
 
 
 
-## stacked column charts showing proportion in different BMI change categories
+## logistic regression predictors of rapid bmi change in pre and post covid period
   bmi_change_univariate: 
     run: r:latest analysis/BMI_change_rapid_univariate.R --output-dir=output/data 
     needs: [bmi_change_category_proportion_plots]
@@ -462,6 +462,8 @@ actions:
       moderately_sensitive: 
         table1: output/data/rapid_bmi_change_univariate_precovid.csv
         table2: output/data/rapid_bmi_change_univariate_postcovid.csv
+        table3: output/data/rapid_bmi_change_models_popcharac_precovid.csv
+        table4: output/data/rapid_bmi_change_models_popcharac_postcovid.csv
 
 
 
