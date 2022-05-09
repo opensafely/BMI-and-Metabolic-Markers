@@ -627,3 +627,19 @@ actions:
     outputs:
       moderately_sensitive:
         table1: output/data/check_hba1c.csv
+
+
+  merge_tables:
+    run: r:latest analysis/combine_proportions.R --output-dir=output/data --output-format feather
+    needs: [generate_median_bmi_range_2019, generate_median_bmi_range_2020, generate_median_bmi_range_2021, generate_DWMP_proportion, generate_DWMP_hypertension_proportion, generate_DWMP_t2dm_proportion, generate_DWMP_t1dm_proportion, generate_had_bmi_proportion_2019, generate_had_bmi_proportion_2020, generate_had_bmi_proportion_2021, generate_obese_proportion_2019, generate_obese_proportion_2020, generate_obese_proportion_2021, generate_had_sbp_proportion_2019, generate_had_sbp_proportion_2020, generate_had_sbp_proportion_2021]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/had_bmi_all.csv
+        table2: output/data/proportion_obese_all.csv
+        table3: output/data/had_sbp_all.csv
+        table4: output/data/DWMP_all.csv
+        table5: output/data/DWMP_hypertension_all.csv
+        table6: output/data/DWMP_T2DM_all.csv
+        table7: output/data/DWMP_T1DM_all.csv
+        table8: output/data/BMI_median_range_all.csv
+
