@@ -65,6 +65,9 @@ BMI_trajectories <- BMI_trajectories %>%
     bmi_change_cat != 'over 0.5' ~ 0, 
   ))
 
+BMI_trajectories$precovid_bmi_category <- factor(BMI_trajectories$precovid_bmi_category, levels = c("healthy","overweight", "obese", "underweight"))
+
+
 
 explanatory_vars <- c("sex",
                        "age_group_2", 
@@ -106,7 +109,7 @@ models_precov_rapidinc_bmi_univar <- explanatory_vars %>%       # begin with var
     .f = ~glm(                       # pass the formulas one-by-one to glm()
       formula = as.formula(.x),      # within glm(), the string formula is .x
       family = "binomial",           # specify type of glm (logistic)
-      data = BMI_trajectories)) %>%          # dataset
+      data = precovid_change)) %>%          # dataset
   
   # tidy up each of the glm regression outputs from above
   map(
@@ -124,7 +127,8 @@ models_precov_rapidinc_bmi_univar <- explanatory_vars %>%       # begin with var
 
 ## population composition
 
-
+models_precov_rapidinc_bmi_univar <- models_precov_rapidinc_bmi_univar %>%
+  dplyr::mutate(stage = "precovid", .before = 1)
 
 
   
@@ -246,7 +250,8 @@ precovid_demog <- bind_rows(sex,
           chronic_cardiac,
           all_cancer,
           smoking_status,
-          precovid_bmi_category)
+          precovid_bmi_category) %>% 
+        dplyr::mutate(stage = "precovid", .before=1)
 
 
 
@@ -267,7 +272,7 @@ models_postcov_rapidinc_bmi_univar <- explanatory_vars %>%       # begin with va
     .f = ~glm(                       # pass the formulas one-by-one to glm()
       formula = as.formula(.x),      # within glm(), the string formula is .x
       family = "binomial",           # specify type of glm (logistic)
-      data = BMI_trajectories)) %>%          # dataset
+      data = postcovid_change)) %>%          # dataset
   
   # tidy up each of the glm regression outputs from above
   map(
@@ -283,7 +288,8 @@ models_postcov_rapidinc_bmi_univar <- explanatory_vars %>%       # begin with va
   mutate(across(where(is.numeric), round, digits = 2))
 
 
-
+models_postcov_rapidinc_bmi_univar <- models_postcov_rapidinc_bmi_univar %>% 
+  dplyr::mutate(stage="postcovid", .before=1)
 
 
 population_demog_function2 <- function(my_var) {
@@ -404,13 +410,16 @@ postcovid_demog <- bind_rows(sex,
                              chronic_cardiac,
                              all_cancer,
                              smoking_status,
-                             precovid_bmi_category)
+                             precovid_bmi_category) %>% 
+                          dplyr::mutate(stage = "postcovid", .before=1)
 
 
+models_univariate <- models_precov_rapidinc_bmi_univar %>% 
+  bind_rows(models_postcov_rapidinc_bmi_univar)
 
 
-
-
+demog <- precovid_demog %>% 
+  bind_rows(postcovid_demog)
 
 ### Write outputs
 
@@ -418,3 +427,7 @@ write_csv (models_precov_rapidinc_bmi_univar, here::here ("output/data","rapid_b
 write_csv (models_postcov_rapidinc_bmi_univar, here::here ("output/data","rapid_bmi_change_univariate_postcovid.csv"))
 write_csv (precovid_demog, here::here("output/data", "rapid_bmi_change_models_popcharac_precovid.csv"))
 write_csv (postcovid_demog, here::here("output/data", "rapid_bmi_change_models_popcharac_postcovid.csv"))
+
+
+write_csv (models_univariate, here::here ("output/data","rapid_bmi_change_univariate.csv"))
+write_csv (demog, here::here ("output/data","rapid_bmi_change_popcharac.csv"))

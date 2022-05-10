@@ -460,10 +460,8 @@ actions:
     needs: [bmi_change_category_proportion_plots]
     outputs:
       moderately_sensitive: 
-        table1: output/data/rapid_bmi_change_univariate_precovid.csv
-        table2: output/data/rapid_bmi_change_univariate_postcovid.csv
-        table3: output/data/rapid_bmi_change_models_popcharac_precovid.csv
-        table4: output/data/rapid_bmi_change_models_popcharac_postcovid.csv
+        table1: output/data/rapid_bmi_change_univariate.csv
+        table2: output/data/rapid_bmi_change_popcharac.csv
 
 
 
