@@ -423,10 +423,6 @@ demog <- precovid_demog %>%
 
 ### Write outputs
 
-write_csv (models_precov_rapidinc_bmi_univar, here::here ("output/data","rapid_bmi_change_univariate_precovid.csv"))
-write_csv (models_postcov_rapidinc_bmi_univar, here::here ("output/data","rapid_bmi_change_univariate_postcovid.csv"))
-write_csv (precovid_demog, here::here("output/data", "rapid_bmi_change_models_popcharac_precovid.csv"))
-write_csv (postcovid_demog, here::here("output/data", "rapid_bmi_change_models_popcharac_postcovid.csv"))
 
 
 write_csv (models_univariate, here::here ("output/data","rapid_bmi_change_univariate.csv"))
