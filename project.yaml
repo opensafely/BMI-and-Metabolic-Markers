@@ -463,6 +463,14 @@ actions:
         table1: output/data/rapid_bmi_change_univariate.csv
         table2: output/data/rapid_bmi_change_popcharac.csv
 
+  bmi_change_age_adjusted: 
+    run: r:latest analysis/BMI_change_rapid_age_model.R --output-dir=output/data 
+    needs: [bmi_change_category_proportion_plots]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/rapid_bmi_change_age_adjusted.csv
+
+
 
 
 
