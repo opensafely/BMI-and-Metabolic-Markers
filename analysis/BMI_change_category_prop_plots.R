@@ -97,6 +97,8 @@ BMI_trajectories_long_DT = melt(BMI_trajectories_long_DT,
                                 value.name = "yearly_bmi_change")
 
 
+
+## Filter out extreme valyes of BMI change (includes >99.5% of population)
 BMI_trajectory_analysis <- BMI_trajectories_long_DT %>%
   dplyr::filter(yearly_bmi_change>-6 & yearly_bmi_change<6)
 
