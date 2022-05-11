@@ -471,7 +471,24 @@ actions:
         table1: output/data/rapid_bmi_change_age_adjusted.csv
 
 
+## change in BMI trajectory pre and post covid
+  bmi_trajectory_change_summary: 
+    run: r:latest analysis/BMI_change_diff_trajectories_summary.R --output-dir=output/data 
+    needs: [BMI_trajectories_demographics_correction]
+    outputs:
+      highly_sensitive: 
+        cohort1: output/data/BMI_trajectory_models_data.feather
+      moderately_sensitive: 
+        table1: output/data/mean_bmi_traj_change.csv
+        chart1: output/change_bmi_trajecotries.png
 
+
+  bmi_trajectory_change_model_univariate: 
+    run: r:latest analysis/BMI_change_diff_trajectories_univariate.R --output-dir=output/data 
+    needs: [bmi_trajectory_change_summary]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/univariate_bmi_trajectory_change.csv
 
 
 
