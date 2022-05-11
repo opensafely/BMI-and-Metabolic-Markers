@@ -97,6 +97,8 @@ BMI_trajectories_long_DT = melt(BMI_trajectories_long_DT,
                                 value.name = "yearly_bmi_change")
 
 
+## filter out extreme BMI Change values.  Likely to be error entries.  Limits cover >95.5% of population
+
 BMI_trajectory_analysis <- BMI_trajectories_long_DT %>%
   dplyr::filter(yearly_bmi_change>-6 & yearly_bmi_change<6)
 
