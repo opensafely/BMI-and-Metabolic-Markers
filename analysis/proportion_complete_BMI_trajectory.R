@@ -15,6 +15,7 @@ library(rstatix)
 library(janitor)
 library(lubridate)
 library(skimr)
+library(plyr)
 
 ## Read in files  >>> Change PATH!!
 
@@ -652,7 +653,12 @@ had_complete_bmi_trajectories <- bmi_trajectories_population %>%
   bind_rows(complete_bmi_trajectories_comorbid_all_cancer)
 
 had_complete_bmi_trajectories <- had_complete_bmi_trajectories %>%
-  dplyr::mutate('p.value' = round(p.value, 2)) 
+  dplyr::mutate('p.value' = round(p.value, 2))  %>%
+  dplyr::filter(n_complete_trajectories >5) 
+
+had_complete_bmi_trajectories <- as.data.frame(had_complete_bmi_trajectories) %>%
+  dplyr::mutate(n_complete_trajectories = plyr::round_any(had_complete_bmi_trajectories$n_complete_trajectories, 5)) %>% 
+  dplyr::mutate(N = plyr::round_any(had_complete_bmi_trajectories$N_total, 5)) 
 
 write.csv (had_complete_bmi_trajectories, here::here ("output/data","complete_bmi_trajectories_proportions.csv"))                
                 
