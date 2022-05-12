@@ -675,3 +675,11 @@ actions:
         table2: output/data/precovid_bmi_trajectories.round.csv
         table3: output/data/postcovid_bmi_trajectories.round.csv
         table4: output/data/mean_bmi_traj_change_round.csv
+
+  round_tables_2:
+    run: r:latest analysis/admin_round_2.R --output-dir=output/data --output-format feather
+    needs: [BMI_trajectories_demographics_correction]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/complete_bmi_trajectory_data.csv
+
