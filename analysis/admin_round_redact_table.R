@@ -3,8 +3,30 @@
 ## Author: M Samuel
 
 
-## Add libraries
+## This script rounds and redacts tables to ensure no counts <5 and all values rounded to 5
+## 12th May
+## Author: M Samuel
 
+
+## Add libraries
+## Load libraries
+## Specify libraries
+library(pacman)
+library(tidyverse)
+library(Hmisc)
+library(here)
+library(arrow)
+library(purrr)
+library(broom)
+library(data.table)
+library(forcats)
+library(rstatix)
+library(janitor)
+library(lubridate)
+library(skimr)
+library(ggplot2)
+library(gtsummary)
+library(stringr)
 
 
 ## Add data
@@ -13,24 +35,37 @@
 
 
 
- ## extract numbers from strings
-tabyl_test <- tabyl_test %>% 
-  dplyr::mutate(F_percent = stringr::str_extract(tabyl_test$F, "[0-9]+[.]?[0-9]*(?=%)")) %>% 
-  dplyr::mutate(F_N = stringr::str_extract(string = tabyl_test$F,
-                                         pattern = "(?<=\\().*(?=\\))")) %>% 
-  dplyr::mutate(F_N = as.numeric(F_N)) %>% 
-  dplyr::filter(F_N >5) %>%
-  dplyr::mutate(M_percent = stringr::str_extract(tabyl_test$M, "[0-9]+[.]?[0-9]*(?=%)")) %>% 
-  dplyr::mutate(M_N = stringr::str_extract(string = tabyl_test$M,
+## ACTION: bmi_change_univariate
+## DATA:  rapid_bmi_change_popcharac.csv
+data <- read_csv (here::here ("output/data", "rapid_bmi_change_popcharac.csv"))
+
+data <- data %>% 
+ dplyr::rename('not_rapid' = '0') %>% 
+ dplyr::rename('rapid' = '1')
+
+
+data <- data %>% 
+  dplyr::mutate(percent_not_rapid = stringr::str_extract(data$not_rapid, "[0-9]+[.]?[0-9]*(?=%)")) %>% 
+  dplyr::mutate(N_not_rapid = stringr::str_extract(string = data$not_rapid,
                                            pattern = "(?<=\\().*(?=\\))")) %>% 
-  dplyr::select(M_percent, M_N, F_percent, F_N) %>%     ## add group and variable
-  dplyr::mutate(M_N = as.numeric(M_N)) %>% 
-  dplyr::filter(M_N >5)
+  dplyr::mutate(N_not_rapid = as.numeric(N_not_rapid)) %>% 
+  dplyr::mutate(percent_rapid = stringr::str_extract(data$rapid, "[0-9]+[.]?[0-9]*(?=%)")) %>% 
+  dplyr::mutate(N_rapid = stringr::str_extract(string = data$rapid,
+                                           pattern = "(?<=\\().*(?=\\))")) %>% 
+  dplyr::mutate(N_rapid = as.numeric(N_rapid)) %>% 
+  dplyr::select(-("rapid"), -("not_rapid")) %>%     ## add group and variable
+  dplyr::filter(N_rapid >5) %>%
+  dplyr::filter(N_not_rapid >5) 
+
+data <- data %>% 
+  dplyr::mutate(N_rapid = plyr::round_any(data$N_rapid, 5)) %>% 
+  dplyr::mutate(N_not_rapid = plyr::round_any(data$N_not_rapid, 5))
+
+rapid_change <- data
 
 
-## round
-tabyl_test <- tabyl_test%>%
-  dplyr::mutate(F_N = plyr::round_any(tabyl_test$F_N, 5)) %>% 
-  dplyr::mutate(M_N = plyr::round_any(tabyl_test$M_N, 5)) 
-  
-  
+
+ write.csv (rapid_change, here::here ("output/data","rapid_bmi_change_popcharac_round.csv"))
+
+
+
