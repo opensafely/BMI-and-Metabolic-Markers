@@ -658,7 +658,7 @@ had_complete_bmi_trajectories <- had_complete_bmi_trajectories %>%
 
 had_complete_bmi_trajectories <- as.data.frame(had_complete_bmi_trajectories) %>%
   dplyr::mutate(n_complete_trajectories = plyr::round_any(had_complete_bmi_trajectories$n_complete_trajectories, 5)) %>% 
-  dplyr::mutate(N = plyr::round_any(had_complete_bmi_trajectories$N_total, 5)) 
+  dplyr::mutate(N_total = plyr::round_any(had_complete_bmi_trajectories$N_total, 5)) 
 
 write.csv (had_complete_bmi_trajectories, here::here ("output/data","complete_bmi_trajectories_proportions.csv"))                
                 
