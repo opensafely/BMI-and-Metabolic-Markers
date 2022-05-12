@@ -213,3 +213,21 @@ data$N_rapid_gain[data$N_rapid_gain == 5] <- ">5"
 postcovid_change_categories <- data
 
 write.csv (postcovid_change_categories, here::here ("output/data","postcovid_bmi_trajectories.round.csv"))
+
+
+## Mean Change in BMI trajectories
+data2 <- read_csv (here::here ("output/data", "mean_bmi_traj_change.csv"))
+
+data <- as.data.frame(data2)
+  
+data <- data %>% 
+  dplyr::filter(n>5)
+
+data <- data %>% 
+  dplyr::mutate(n = plyr::round_any(data$n, 5))
+
+data$n[data$n == 5] <- ">5"
+
+trajectory_change <- data
+
+write.csv (trajectory_change, here::here ("output/data", "mean_bmi_traj_change_round.csv"))
