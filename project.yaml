@@ -665,4 +665,11 @@ actions:
         table6: output/data/DWMP_T2DM_all.csv
         table7: output/data/DWMP_T1DM_all.csv
         table8: output/data/BMI_median_range_all.csv
+        
+  round_tables:
+    run: r:latest analysis/admin_round_redact_table.R --output-dir=output/data --output-format feather
+    needs: [bmi_change_univariate]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/rapid_bmi_change_popcharac_round.csv
 
