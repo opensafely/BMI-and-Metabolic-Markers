@@ -361,11 +361,18 @@ traj_change_plot <- ggplot( data = BMI_DT,
                                mapping = aes( x = trajectory_change)) + 
   labs(title = "Change in BMI Trajectory (rate of bmi change/year) before and after 1st March 2020", 
        subtitle = "Data on BMI collected through routine primary care electronic health records between March 2015 and March 2022") + 
-  geom_histogram() +
+  geom_histogram(bins=10) +
   xlim (-5, 5) +
-  facet_wrap(~age_group_2)
+  facet_wrap(~age_group_2) 
 
-
+traj_change_plot_counts <- ggplot( data = BMI_DT, 
+                               mapping = aes( x = trajectory_change)) + 
+  labs(title = "Change in BMI Trajectory (rate of bmi change/year) before and after 1st March 2020", 
+       subtitle = "Data on BMI collected through routine primary care electronic health records between March 2015 and March 2022") + 
+  geom_histogram(bins=10) +
+  xlim (-5, 5) +
+  facet_wrap(~age_group_2)  +
+  stat_bin(bins =10, geom="text", aes(label=..count..), vjust = 1)
       
                   
 ###### SAVE OUTPUTS
@@ -378,7 +385,14 @@ write_feather (BMI_DT_save, here::here ("output/data","BMI_trajectory_models_dat
 
 ggsave(
   plot = traj_change_plot,
-  filename = "change_bmi_trajecotries.png", 
+  filename = "change_bmi_trajectories.png", 
+  path = here::here("output"),
+  dpi=600, width = 30, height = 30, units = "cm"
+)
+
+ggsave(
+  plot = traj_change_plot_counts,
+  filename = "change_bmi_trajectories_counts.png", 
   path = here::here("output"),
   dpi=600, width = 30, height = 30, units = "cm"
 )

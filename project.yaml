@@ -480,7 +480,8 @@ actions:
         cohort1: output/data/BMI_trajectory_models_data.feather
       moderately_sensitive: 
         table1: output/data/mean_bmi_traj_change.csv
-        chart1: output/change_bmi_trajecotries.png
+        chart1: output/change_bmi_trajectories.png
+        chart2: output/change_bmi_trajectories_counts.png
 
 
   bmi_trajectory_change_model_univariate: 
