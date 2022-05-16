@@ -88,8 +88,11 @@ bmi_change_plot <-  ggplot( data = BMI_trajectories_long_DT,
                             mapping = aes( x = yearly_bmi_change, color=pandemic_stage)) + 
   labs(title = "Rate of BMI change per year in whole population", 
        subtitle = "Data on BMI collected through routine primary care electronic health records between March 2015 and March 2022") + 
-  geom_histogram() +
-  xlim (-10, 10) 
+  geom_histogram(bins = 10) +
+  xlim (-7, 7)  +
+  stat_bin(bins =10, geom="text", aes(label=..count..), vjust = 1)
+
+
 
 
 bmi_change_plot_age <- ggplot( data = BMI_trajectories_long_DT, 
@@ -116,22 +119,48 @@ BMI_change_summary <- BMI_change_summary %>%
   dplyr::select(skim_variable, n_missing, complete_rate) %>% 
   dplyr::rename(pandemic_stage = skim_variable)
 
-
-
-
 BMI_change_summary_2 <- BMI_trajectories_long_DT[, 
-                         list(mean = mean(yearly_bmi_change, na.rm=TRUE),
-                              sd = sd(yearly_bmi_change, na.rm=TRUE),
-                              median = median(yearly_bmi_change, na.rm=TRUE),
-                              minimum = quantile(yearly_bmi_change, probs = c(0), na.rm = TRUE),
-                              '5th' = quantile(yearly_bmi_change, probs = c(.05), na.rm = TRUE), 
-                              '10th' = quantile(yearly_bmi_change, probs = c(.10), na.rm = TRUE),
-                              '25th' = quantile(yearly_bmi_change, probs = c(.25), na.rm = TRUE),
-                              '75th' = quantile(yearly_bmi_change, probs = c(.75), na.rm = TRUE), 
-                              '90th' = quantile(yearly_bmi_change, probs = c(.90), na.rm = TRUE), 
-                              '95th' = quantile(yearly_bmi_change, probs = c(.95), na.rm = TRUE),
-                              '100th' = quantile(yearly_bmi_change, probs = c(1), na.rm = TRUE)), # specify the percentiles you want
-                         by = .(pandemic_stage)]
+                                                 list(mean = mean(yearly_bmi_change, na.rm=TRUE),
+                                                      sd = sd(yearly_bmi_change, na.rm=TRUE),
+                                                      median = median(yearly_bmi_change, na.rm=TRUE),
+                                                      '0.1st' = quantile(yearly_bmi_change, probs = c(.001), na.rm = TRUE),
+                                                      '0.5th' = quantile(yearly_bmi_change, probs = c(.005), na.rm = TRUE),
+                                                      '5th' = quantile(yearly_bmi_change, probs = c(.05), na.rm = TRUE), 
+                                                      '10th' = quantile(yearly_bmi_change, probs = c(.10), na.rm = TRUE),
+                                                      '25th' = quantile(yearly_bmi_change, probs = c(.25), na.rm = TRUE),
+                                                      '75th' = quantile(yearly_bmi_change, probs = c(.75), na.rm = TRUE), 
+                                                      '90th' = quantile(yearly_bmi_change, probs = c(.90), na.rm = TRUE), 
+                                                      '95th' = quantile(yearly_bmi_change, probs = c(.95), na.rm = TRUE),
+                                                      '99.5th' = quantile(yearly_bmi_change, probs = c(.995), na.rm = TRUE),
+                                                      '99.9th' = quantile(yearly_bmi_change, probs = c(.999), na.rm = TRUE)),
+                                                 by = .(pandemic_stage)]
+
+
+extreme_low <- BMI_trajectories_long_DT %>% 
+  dplyr::arrange(yearly_bmi_change) %>%
+  dplyr::group_by(pandemic_stage) %>%
+  dplyr::slice_head(n=10) %>%
+  dplyr::mutate(n10_0th = mean(yearly_bmi_change)) %>% 
+  slice_head() %>% 
+  dplyr::select("n10_0th", "pandemic_stage" )
+
+extreme_high <- BMI_trajectories_long_DT %>% 
+  dplyr::filter(yearly_bmi_change < 999999999) %>%   ## filter out NA
+  dplyr::arrange(yearly_bmi_change, na.rm=TRUE) %>%
+  dplyr::group_by(pandemic_stage) %>%
+  dplyr::slice_tail(n=10) %>%
+  dplyr::mutate(n10_100th = mean(yearly_bmi_change)) %>% 
+  slice_head() %>% 
+  dplyr::select("n10_100th", "pandemic_stage" )
+
+BMI_change_summary_2 <- BMI_change_summary_2 %>% 
+  dplyr::left_join(extreme_low) %>% 
+  dplyr::left_join(extreme_high)
+
+
+
+
+
 
 BMI_change_summary <- BMI_change_summary %>% 
   dplyr::left_join(BMI_change_summary_2) %>%
