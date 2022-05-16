@@ -519,6 +519,17 @@ actions:
         table1: output/data/postcovid_bmi_trajectories.csv
         table2: output/data/precovid_bmi_trajectories.csv
 
+### Transition between BMI categories
+  generate_bmi_category_data: 
+    run: r:latest analysis/BMI_cat_change_data.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      highly_sensitive:
+        table1: output/data/BMI_category_transition.feather
+      
+
+
+
 
 
 
