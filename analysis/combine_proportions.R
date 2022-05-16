@@ -54,7 +54,7 @@ had_bmi <- as.data.frame(had_bmi) %>%
   dplyr::mutate(N = plyr::round_any(had_bmi$N, 5)) 
 
 # values of 5 or below have already been filtered out
-had_bmi$n_had_bmi[had_bmi$n_had_bmi==5] <- ">5"
+had_bmi$n_had_bmi[had_bmi$n_had_bmi==5] <- "5-10"
 
 
 
@@ -93,7 +93,7 @@ proportion_obese <- as.data.frame(proportion_obese) %>%
   dplyr::mutate(N = plyr::round_any(proportion_obese$N, 5)) 
 
 # values of 5 or below have already been filtered out
-proportion_obese$n_obese[proportion_obese$n_obese==5] <- ">5"
+proportion_obese$n_obese[proportion_obese$n_obese==5] <- "5-10"
 
 
 
@@ -129,7 +129,7 @@ had_sbp <- as.data.frame(had_sbp) %>%
   dplyr::mutate(N = plyr::round_any(had_sbp$N, 5)) 
 
 # values of 5 or below have already been filtered out
-had_sbp$n_had_sbp[had_sbp$n_had_sbp==5] <- ">5"
+had_sbp$n_had_sbp[had_sbp$n_had_sbp==5] <- "5-10"
 
 
 ## DWMP eligible
@@ -162,7 +162,7 @@ proportion_DWMP_eligible <- as.data.frame(proportion_DWMP_eligible) %>%
   dplyr::mutate(N = plyr::round_any(proportion_DWMP_eligible$N, 5)) 
 
 # values of 5 or below have already been filtered out
-proportion_DWMP_eligible$n_DWMP_eligible[proportion_DWMP_eligible$n_DWMP_eligible==5] <- ">5"
+proportion_DWMP_eligible$n_DWMP_eligible[proportion_DWMP_eligible$n_DWMP_eligible==5] <- "5-10"
 
 
 
@@ -198,7 +198,7 @@ proportion_DWMP_hypertension <- as.data.frame(proportion_DWMP_hypertension) %>%
   dplyr::mutate(N = plyr::round_any(proportion_DWMP_hypertension$N, 5)) 
 
 # values of 5 or below have already been filtered out
-proportion_DWMP_hypertension$n_DWMP_eligible[proportion_DWMP_hypertension$n_DWMP_eligible==5] <- ">5"
+proportion_DWMP_hypertension$n_DWMP_eligible[proportion_DWMP_hypertension$n_DWMP_eligible==5] <- "5-10"
 
 ## DWMP T2DM
 proportion_DWMP_T2DM_2019 <- read_csv (here::here ("output/data", "proportion_DWMP_T2DM_2019.csv"))
@@ -229,7 +229,7 @@ proportion_DWMP_T2DM <- as.data.frame(proportion_DWMP_T2DM) %>%
   dplyr::mutate(N = plyr::round_any(proportion_DWMP_T2DM$N, 5)) 
 
 # values of 5 or below have already been filtered out
-proportion_DWMP_T2DM$n_DWMP_eligible[proportion_DWMP_T2DM$n_DWMP_eligible==5] <- ">5"
+proportion_DWMP_T2DM$n_DWMP_eligible[proportion_DWMP_T2DM$n_DWMP_eligible==5] <- "5-10"
 
 ## T1DM DWMP
 
@@ -261,7 +261,7 @@ proportion_DWMP_T1DM <- as.data.frame(proportion_DWMP_T1DM) %>%
   dplyr::mutate(N = plyr::round_any(proportion_DWMP_T1DM$N, 5)) 
 
 # values of 5 or below have already been filtered out
-proportion_DWMP_T1DM$n_DWMP_eligible[proportion_DWMP_T1DM$n_DWMP_eligible==5] <- ">5"
+proportion_DWMP_T1DM$n_DWMP_eligible[proportion_DWMP_T1DM$n_DWMP_eligible==5] <- "5-10"
 
 
 
@@ -295,7 +295,7 @@ median_range_bmi <- as.data.frame(median_range_bmi) %>%
   dplyr::mutate(N_population = plyr::round_any(median_range_bmi$N_population, 5)) 
 
 # values of 5 or below have already been filtered out
-median_range_bmi$N[median_range_bmi$N==5] <- ">5"
+median_range_bmi$N[median_range_bmi$N==5] <- "5-10"
 
 
 write.csv (proportion_obese, here::here ("output/data","proportion_obese_all.csv"))
