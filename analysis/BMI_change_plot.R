@@ -84,7 +84,7 @@ BMI_trajectories_long_DT = melt(BMI_trajectories_long_DT,
 ## histograms with pre and post pandemic data
 
 
-bmi_change_plot <-  ggplot( data = BMI_trajectories_long_DT, 
+bmi_change_plot_counts <-  ggplot( data = BMI_trajectories_long_DT, 
                             mapping = aes( x = yearly_bmi_change, color=pandemic_stage)) + 
   labs(title = "Rate of BMI change per year in whole population", 
        subtitle = "Data on BMI collected through routine primary care electronic health records between March 2015 and March 2022") + 
@@ -93,17 +93,32 @@ bmi_change_plot <-  ggplot( data = BMI_trajectories_long_DT,
   stat_bin(bins =10, geom="text", aes(label=..count..), vjust = 1)
 
 
+bmi_change_plot <-  ggplot( data = BMI_trajectories_long_DT, 
+                            mapping = aes( x = yearly_bmi_change, color=pandemic_stage)) + 
+  labs(title = "Rate of BMI change per year in whole population", 
+       subtitle = "Data on BMI collected through routine primary care electronic health records between March 2015 and March 2022") + 
+  geom_histogram(bins = 10) +
+  xlim (-7, 7) 
+
+
+
+bmi_change_plot_age_counts <- ggplot( data = BMI_trajectories_long_DT, 
+                               mapping = aes( x = yearly_bmi_change, color=pandemic_stage)) + 
+  labs(title = "Rate of BMI change per year by Age Group", 
+       subtitle = "Data on BMI collected through routine primary care electronic health records between March 2015 and March 2022") + 
+  geom_histogram(bins = 10) +
+  xlim (-10, 10) +
+  stat_bin(bins =10, geom="text", aes(label=..count..), vjust = 1) +
+  facet_wrap(~age_group_2)
 
 
 bmi_change_plot_age <- ggplot( data = BMI_trajectories_long_DT, 
                                mapping = aes( x = yearly_bmi_change, color=pandemic_stage)) + 
   labs(title = "Rate of BMI change per year by Age Group", 
        subtitle = "Data on BMI collected through routine primary care electronic health records between March 2015 and March 2022") + 
-  geom_histogram() +
+  geom_histogram(bins = 10) +
   xlim (-10, 10) +
   facet_wrap(~age_group_2)
-
-
 
 ## create a short summary table to check
 
@@ -172,6 +187,20 @@ BMI_change_summary <- BMI_change_summary %>%
 ggsave(
   plot = bmi_change_plot,
   filename = "bmi_change_plot.png", 
+  path = here::here("output"),
+  dpi=600, width = 30, height = 30, units = "cm"
+)
+
+ggsave(
+  plot = bmi_change_plot_counts,
+  filename = "bmi_change_plot_counts.png", 
+  path = here::here("output"),
+  dpi=600, width = 30, height = 30, units = "cm"
+)
+
+ggsave(
+  plot = bmi_change_plot_age_counts,
+  filename = "bmi_change_plot_age_counts.png", 
   path = here::here("output"),
   dpi=600, width = 30, height = 30, units = "cm"
 )
