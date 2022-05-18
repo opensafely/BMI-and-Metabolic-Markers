@@ -112,6 +112,34 @@ bmi_change_plot_age_counts <- ggplot( data = BMI_trajectories_long_DT,
   facet_wrap(~age_group_2)
 
 
+## get precovid and postcovid counts
+precovid_age_plot <- BMI_trajectories_long_DT %>% 
+  dplyr::filter(pandemic_stage == "precovid")
+
+bmi_change_plot_age_precovid_counts <- ggplot( data = precovid_age_plot, 
+                               mapping = aes( x = yearly_bmi_change)) + 
+  labs(title = "Rate of BMI change per year by Age Group before 1st March 2020", 
+       subtitle = "Data on BMI collected through routine primary care electronic health records between March 2015 and March 2022") + 
+  geom_histogram(bins = 10) +
+  xlim (-10, 10) +
+  stat_bin(bins =10, geom="text", aes(label=..count..), vjust = 1) +
+  facet_wrap(~age_group_2)
+
+
+postcovid_age_plot <- BMI_trajectories_long_DT %>% 
+  dplyr::filter(pandemic_stage == "postcovid")
+
+bmi_change_plot_age_postcovid_counts <- ggplot( data = postcovid_age_plot, 
+                               mapping = aes( x = yearly_bmi_change)) + 
+  labs(title = "Rate of BMI change per year by Age Group after 1st March 2020", 
+       subtitle = "Data on BMI collected through routine primary care electronic health records between March 2015 and March 2022") + 
+  geom_histogram(bins = 10) +
+  xlim (-10, 10) +
+  stat_bin(bins =10, geom="text", aes(label=..count..), vjust = 1) +
+  facet_wrap(~age_group_2)
+
+
+
 bmi_change_plot_age <- ggplot( data = BMI_trajectories_long_DT, 
                                mapping = aes( x = yearly_bmi_change, color=pandemic_stage)) + 
   labs(title = "Rate of BMI change per year by Age Group", 
@@ -199,8 +227,16 @@ ggsave(
 )
 
 ggsave(
-  plot = bmi_change_plot_age_counts,
-  filename = "bmi_change_plot_age_counts.png", 
+  plot = bmi_change_plot_age_precovid_counts,
+  filename = "bmi_change_plot_age_precovid_counts.png", 
+  path = here::here("output"),
+  dpi=600, width = 30, height = 30, units = "cm"
+)
+
+
+ggsave(
+  plot = bmi_change_plot_age_postcovid_counts,
+  filename = "bmi_change_plot_age_postcovid_counts.png", 
   path = here::here("output"),
   dpi=600, width = 30, height = 30, units = "cm"
 )

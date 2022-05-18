@@ -373,7 +373,8 @@ actions:
         chart1: output/bmi_change_plot.png
         chart2: output/bmi_change_plot_age.png
         chart3: output/bmi_change_plot_counts.png
-        chart4: output/bmi_change_plot_age_counts.png
+        chart4: output/bmi_change_plot_age_precovid_counts.png
+        chart5: output/bmi_change_plot_age_postcovid_counts.png
 
 
   bmi_change_extremes:
