@@ -13,8 +13,7 @@ library(rstatix)
 library(janitor)
 library(lubridate)
 library(skimr)
-library(mlogit)
-library(plyr)
+library(dplyr)
 
 data <- read_feather (here::here ("output/data", "BMI_category_transition.feather"))
 
@@ -535,7 +534,6 @@ models_obese_weightloss_2019 <- explanatory_vars_2 %>%       # begin with variab
   
   # round all numeric columns
   mutate(across(where(is.numeric), round, digits = 2))
-
 
 
 
