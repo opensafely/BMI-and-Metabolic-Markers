@@ -536,7 +536,7 @@ actions:
       highly_sensitive:
         table1: output/data/BMI_category_transition.feather
       
-
+## univariate models of transition between categories
   bmi_category_transitions: 
     run: r:latest analysis/BMI_category_transitions_univariate.R --output-dir=output/data 
     needs: [generate_bmi_category_data]
@@ -556,6 +556,26 @@ actions:
         table12: output/data/obese_transition_weightloss_2017_univariate.csv 
         table13: output/data/obese_transition_weightloss_2019_univariate.csv 
 
+
+## age adjusted models of transition between categories
+  bmi_category_transitions_age_adjusted: 
+    run: r:latest analysis/BMI_category_transitions_age_adj.R --output-dir=output/data 
+    needs: [generate_bmi_category_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/bmi_category_transitions_round.csv
+        table2: output/data/healthy_transition_weightgain_age_adj.csv
+        table3: output/data/healthy_transition_weightgain_2017_age_adj.csv
+        table4: output/data/healthy_transition_weightgain_2019_age_adj.csv
+        table5: output/data/overweight_transition_weightgain_age_adj.csv 
+        table6: output/data/overweight_transition_weightgain_2017_age_adj.csv 
+        table7: output/data/overweight_transition_weightgain_2019_age_adj.csv 
+        table8: output/data/overweight_transition_weightloss_age_adj.csv 
+        table9: output/data/overweight_transition_weightloss_2017_age_adj.csv 
+        table10: output/data/overweight_transition_weightloss_2019_age_adj.csv 
+        table11: output/data/obese_transition_weightloss_age_adj.csv 
+        table12: output/data/obese_transition_weightloss_2017_age_adj.csv 
+        table13: output/data/obese_transition_weightloss_2019_age_adj.csv 
 
 
 ###########################  
