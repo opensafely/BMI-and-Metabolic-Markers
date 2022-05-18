@@ -494,7 +494,12 @@ actions:
       moderately_sensitive: 
         table1: output/data/univariate_bmi_trajectory_change.csv
 
-
+  bmi_trajectory_change_model_age: 
+    run: r:latest analysis/BMI_change_diff_trajectories_age_model.R --output-dir=output/data 
+    needs: [bmi_trajectory_change_summary]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/age_adjusted_bmi_trajectory_change.csv
 
 ## box plots with filtered data (excluding extreme changes
   bmi_change_boxplots: 
