@@ -537,8 +537,24 @@ actions:
         table1: output/data/BMI_category_transition.feather
       
 
-
-
+  bmi_category_transitions: 
+    run: r:latest analysis/BMI_category_transitions_univariate.R --output-dir=output/data 
+    needs: [generate_bmi_category_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/bmi_category_transitions.csv
+        table2: output/data/healthy_transition_weightgain_univariate.csv
+        table3: output/data/healthy_transition_weightgain_2017_univariate.csv
+        table4: output/data/healthy_transition_weightgain_2019_univariate.csv
+        table5: output/data/overweight_transition_weightgain_univariate.csv 
+        table6: output/data/overweight_transition_weightgain_2017_univariate.csv 
+        table7: output/data/overweight_transition_weightgain_2019_univariate.csv 
+        table8: output/data/overweight_transition_weightloss_univariate.csv 
+        table9: output/data/overweight_transition_weightloss_2017_univariate.csv 
+        table10: output/data/overweight_transition_weightloss_2019_univariate.csv 
+        table11: output/data/obese_transition_weightloss_univariate.csv 
+        table12: output/data/obese_transition_weightloss_2017_univariate.csv 
+        table13: output/data/obese_transition_weightloss_2019_univariate.csv 
 
 
 
