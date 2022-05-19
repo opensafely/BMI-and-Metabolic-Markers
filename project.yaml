@@ -583,6 +583,7 @@ actions:
     outputs:
       moderately_sensitive:
         table1: output/data/healthy_transition_weightgain_counts.csv
+        table2: output/data/overweight_cat_weightgain_counts.csv
 
 
 

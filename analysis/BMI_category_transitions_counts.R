@@ -236,6 +236,201 @@ counts_normal_weight_all <- counts_normal_weight_all %>%
   bind_rows(counts_normal_weight_2019)
 
 
+### OVERWEIGHT TO OBESE TRANSITION
+########### OVERWEIGHT TO OBESE
+## models to predict variable association with transitions
+overweight <- categories_change %>% 
+  dplyr::filter(category_1 =="overweight")
+
+
+
+## variable to show if 2nd BMI <25
+
+overweight <- overweight %>% 
+  dplyr::mutate(bmi2_under25= as.character(category_2))
+
+
+overweight$bmi2_under25[overweight$bmi2_under25 == "obese"] <- 0
+overweight$bmi2_under25[overweight$bmi2_under25 == "overweight" ] <- 0
+overweight$bmi2_under25[overweight$bmi2_under25 == "healthy" ] <- 1
+overweight$bmi2_under25[overweight$bmi2_under25 == "underweight" ] <- 1
+
+
+overweight %>% 
+  tabyl(category_2, bmi2_under25)
+
+
+
+
+
+### function overweight to obese counts
+
+overweight_to_obese_function <- function(data, var){
+  v1 <- deparse(substitute(var))
+  
+  data %>%
+    tabyl({{var}}, become_obese) %>% 
+    adorn_totals() %>%
+    dplyr::rename(weightgain = 3) %>%       ## rename identified by column number in function
+    dplyr::rename(stable_weight = 2) %>% 
+    dplyr::mutate(N_total = stable_weight + weightgain) %>% 
+    dplyr::mutate(percent = weightgain/N_total) %>% 
+    dplyr::select(-(stable_weight)) %>%
+    dplyr::mutate(across(where(is.numeric), round, digits = 2)) %>%
+    ungroup()%>%
+    dplyr::mutate(weightgain = plyr::round_any(weightgain, 5)) %>% 
+    dplyr::mutate(N_total = plyr::round_any(N_total, 5))  %>% 
+    dplyr::rename(group = {{var}}) %>%
+    ungroup() %>%
+    dplyr::mutate(variable = (v1))
+}
+
+age_group_2 <- overweight_to_obese_function (overweight, age_group_2)
+sex <- overweight_to_obese_function(overweight, sex)
+ethnic_no_miss <- overweight_to_obese_function(overweight, ethnic_no_miss)
+eth_group_16 <- overweight_to_obese_function(overweight, eth_group_16)
+imd <- overweight_to_obese_function(overweight, imd)
+region <- overweight_to_obese_function(overweight, region)
+hypertension <- overweight_to_obese_function(overweight, hypertension)
+diabetes_t1 <- overweight_to_obese_function(overweight, diabetes_t1)
+diabetes_t2 <- overweight_to_obese_function(overweight, diabetes_t2)
+chronic_cardiac <- overweight_to_obese_function(overweight, chronic_cardiac)
+learning_disability <- overweight_to_obese_function(overweight, learning_disability)
+depression <- overweight_to_obese_function(overweight, depression)
+dementia <- overweight_to_obese_function(overweight, dementia)
+psychosis_schiz_bipolar <- overweight_to_obese_function(overweight, psychosis_schiz_bipolar)
+asthma <- overweight_to_obese_function(overweight, asthma)
+COPD <- overweight_to_obese_function(overweight, COPD)
+stroke_and_TIA <- overweight_to_obese_function(overweight, stroke_and_TIA)
+all_cancer <- overweight_to_obese_function(overweight, all_cancer)
+smoking_status <- overweight_to_obese_function(overweight, smoking_status)
+year <- overweight_to_obese_function(overweight, year)
+
+
+counts_overweight_obese_all <- sex %>%
+  bind_rows(age_group_2) %>%
+  bind_rows(imd) %>%
+  bind_rows(region) %>%
+  bind_rows(ethnic_no_miss) %>%
+  bind_rows(eth_group_16) %>%
+  bind_rows(hypertension) %>%
+  bind_rows(diabetes_t2) %>%
+  bind_rows(diabetes_t1) %>%
+  bind_rows(chronic_cardiac) %>%
+  bind_rows(learning_disability) %>%
+  bind_rows(depression) %>%
+  bind_rows(psychosis_schiz_bipolar) %>%
+  bind_rows(dementia) %>%
+  bind_rows(asthma) %>%
+  bind_rows(COPD) %>%
+  bind_rows(stroke_and_TIA) %>%
+  bind_rows(smoking_status) %>%
+  bind_rows(year)  %>%
+  dplyr::select(variable, group, weightgain, N_total, percent) %>% 
+  dplyr::mutate(year= "all", .before=1)
+
+
+### overweight 2017 data
+overweight_2017 <- overweight %>% 
+  dplyr::filter(year == 2017)
+
+
+age_group_2 <- overweight_to_obese_function (overweight_2017, age_group_2)
+sex <- overweight_to_obese_function(overweight_2017, sex)
+ethnic_no_miss <- overweight_to_obese_function(overweight_2017, ethnic_no_miss)
+eth_group_16 <- overweight_to_obese_function(overweight_2017, eth_group_16)
+imd <- overweight_to_obese_function(overweight_2017, imd)
+region <- overweight_to_obese_function(overweight_2017, region)
+hypertension <- overweight_to_obese_function(overweight_2017, hypertension)
+diabetes_t1 <- overweight_to_obese_function(overweight_2017, diabetes_t1)
+diabetes_t2 <- overweight_to_obese_function(overweight_2017, diabetes_t2)
+chronic_cardiac <- overweight_to_obese_function(overweight_2017, chronic_cardiac)
+learning_disability <- overweight_to_obese_function(overweight_2017, learning_disability)
+depression <- overweight_to_obese_function(overweight_2017, depression)
+dementia <- overweight_to_obese_function(overweight_2017, dementia)
+psychosis_schiz_bipolar <- overweight_to_obese_function(overweight_2017, psychosis_schiz_bipolar)
+asthma <- overweight_to_obese_function(overweight_2017, asthma)
+COPD <- overweight_to_obese_function(overweight_2017, COPD)
+stroke_and_TIA <- overweight_to_obese_function(overweight_2017, stroke_and_TIA)
+all_cancer <- overweight_to_obese_function(overweight_2017, all_cancer)
+smoking_status <- overweight_to_obese_function(overweight_2017, smoking_status)
+
+
+
+counts_overweight_obese_2017 <- sex %>%
+  bind_rows(age_group_2) %>%
+  bind_rows(imd) %>%
+  bind_rows(region) %>%
+  bind_rows(ethnic_no_miss) %>%
+  bind_rows(eth_group_16) %>%
+  bind_rows(hypertension) %>%
+  bind_rows(diabetes_t2) %>%
+  bind_rows(diabetes_t1) %>%
+  bind_rows(chronic_cardiac) %>%
+  bind_rows(learning_disability) %>%
+  bind_rows(depression) %>%
+  bind_rows(psychosis_schiz_bipolar) %>%
+  bind_rows(dementia) %>%
+  bind_rows(asthma) %>%
+  bind_rows(COPD) %>%
+  bind_rows(stroke_and_TIA) %>%
+  bind_rows(smoking_status) %>%
+  dplyr::select(variable, group, weightgain, N_total, percent) %>% 
+  dplyr::mutate(year= "2017", .before=1)
+
+### overweight 2019 data
+overweight_2019 <- overweight %>% 
+  dplyr::filter(year == 2019)
+
+
+age_group_2 <- overweight_to_obese_function (overweight_2019, age_group_2)
+sex <- overweight_to_obese_function(overweight_2019, sex)
+ethnic_no_miss <- overweight_to_obese_function(overweight_2019, ethnic_no_miss)
+eth_group_16 <- overweight_to_obese_function(overweight_2019, eth_group_16)
+imd <- overweight_to_obese_function(overweight_2019, imd)
+region <- overweight_to_obese_function(overweight_2019, region)
+hypertension <- overweight_to_obese_function(overweight_2019, hypertension)
+diabetes_t1 <- overweight_to_obese_function(overweight_2019, diabetes_t1)
+diabetes_t2 <- overweight_to_obese_function(overweight_2019, diabetes_t2)
+chronic_cardiac <- overweight_to_obese_function(overweight_2019, chronic_cardiac)
+learning_disability <- overweight_to_obese_function(overweight_2019, learning_disability)
+depression <- overweight_to_obese_function(overweight_2019, depression)
+dementia <- overweight_to_obese_function(overweight_2019, dementia)
+psychosis_schiz_bipolar <- overweight_to_obese_function(overweight_2019, psychosis_schiz_bipolar)
+asthma <- overweight_to_obese_function(overweight_2019, asthma)
+COPD <- overweight_to_obese_function(overweight_2019, COPD)
+stroke_and_TIA <- overweight_to_obese_function(overweight_2019, stroke_and_TIA)
+all_cancer <- overweight_to_obese_function(overweight_2019, all_cancer)
+smoking_status <- overweight_to_obese_function(overweight_2019, smoking_status)
+
+
+
+counts_overweight_obese_2019 <- sex %>%
+  bind_rows(age_group_2) %>%
+  bind_rows(imd) %>%
+  bind_rows(region) %>%
+  bind_rows(ethnic_no_miss) %>%
+  bind_rows(eth_group_16) %>%
+  bind_rows(hypertension) %>%
+  bind_rows(diabetes_t2) %>%
+  bind_rows(diabetes_t1) %>%
+  bind_rows(chronic_cardiac) %>%
+  bind_rows(learning_disability) %>%
+  bind_rows(depression) %>%
+  bind_rows(psychosis_schiz_bipolar) %>%
+  bind_rows(dementia) %>%
+  bind_rows(asthma) %>%
+  bind_rows(COPD) %>%
+  bind_rows(stroke_and_TIA) %>%
+  bind_rows(smoking_status) %>%
+  dplyr::select(variable, group, weightgain, N_total, percent) %>% 
+  dplyr::mutate(year= "2019", .before=1)
+
+counts_overweight_obese_all <- counts_overweight_obese_all %>% 
+  bind_rows(counts_overweight_obese_2017) %>% 
+  bind_rows(counts_overweight_obese_2019)
+
+
 
 
 
@@ -245,3 +440,4 @@ counts_normal_weight_all <- counts_normal_weight_all %>%
 ## Save Outputs
 
 write.csv (counts_normal_weight_all, here::here ("output/data","healthy_transition_weightgain_counts.csv"))
+write.csv (counts_overweight_obese_all, here::here ("output/data","overweight_cat_weightgain_counts.csv"))

@@ -228,7 +228,7 @@ overweight <- categories_change %>%
 
 
 
-## variable to show if normal became overweight/obese
+## variable to show if 2nd BMI <25
 
 overweight <- overweight %>% 
   dplyr::mutate(bmi2_under25= as.character(category_2))
