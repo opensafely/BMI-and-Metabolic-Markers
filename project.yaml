@@ -577,6 +577,16 @@ actions:
         table12: output/data/obese_transition_weightloss_2017_age_adj.csv 
         table13: output/data/obese_transition_weightloss_2019_age_adj.csv 
 
+  bmi_category_transitions_counts: 
+    run: r:latest analysis/BMI_category_transitions_counts.R --output-dir=output/data 
+    needs: [generate_bmi_category_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/healthy_transition_weightgain_counts.csv
+
+
+
+
 
 ###########################  
 ###########################  
