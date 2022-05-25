@@ -71,7 +71,7 @@ models_trajectory_change <- explanatory_vars %>%       # begin with variables of
   bind_rows() %>% 
   
   # round all numeric columns
-  mutate(across(where(is.numeric), round, digits = 2))
+  mutate(across(where(is.numeric), round, digits = 4))
 
 
 

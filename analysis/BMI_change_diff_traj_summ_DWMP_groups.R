@@ -431,7 +431,7 @@ BMI_T2DM_traj_change_summary <- BMI_T2DM_DT_summ %>%
 ## filter out missing
 BMI_T1DM_DT <- BMI_DT %>%
 dplyr::filter(complete_bmi_data == "complete")  %>% 
-dplyr::filter(diabetes_t2 == TRUE)
+dplyr::filter(diabetes_t1 == TRUE)
 
 BMI_T1DM_DT %>%
 tabyl(age_group_2, sex)
