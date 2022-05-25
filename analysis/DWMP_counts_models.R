@@ -127,6 +127,45 @@ explanatory_vars_diabetes <- c(
   "smoking_status", 
   "year")
 
+
+explanatory_vars_hypertension_2 <- c(
+      "sex", 
+      "ethnic_no_miss", 
+      "eth_group_16",
+      "imd", 
+      "region", 
+      "diabetes_t1",           
+      "diabetes_t2",
+      "chronic_cardiac", 
+      "learning_disability",     
+      "depression",            
+      "dementia",               
+      "psychosis_schiz_bipolar",
+      "asthma",                
+      "COPD",                   
+      "stroke_and_TIA",       
+      "all_cancer", 
+      "smoking_status", 
+      "year")
+
+explanatory_vars_diabetes_2 <- c(
+  "sex", 
+  "ethnic_no_miss", 
+  "eth_group_16",
+  "imd", 
+  "region", 
+  "hypertension",  
+  "chronic_cardiac", 
+  "learning_disability",     
+  "depression",            
+  "dementia",               
+  "psychosis_schiz_bipolar",
+  "asthma",                
+  "COPD",                   
+  "stroke_and_TIA",       
+  "all_cancer", 
+  "smoking_status", 
+  "year")
 ## univariate models predictors of being DWMP eligible in subgroups
 
 
@@ -258,7 +297,7 @@ models_DWMP_T1DM
 
 ## Limit to patients with hypertension
 
-models_DWMP_hypertension_2 <- explanatory_vars_hypertension %>%       # begin with variables of interest
+models_DWMP_hypertension_2 <- explanatory_vars_hypertension_2 %>%       # begin with variables of interest
   str_c("DWMP ~ age_group_2 +", .) %>%         # combine each variable into formula ("outcome ~ variable of interest")
   
   # iterate through each age_adjusted formula
@@ -290,7 +329,7 @@ models_DWMP_hypertension_2
 
 ## limite to patient withT2DM
 
-models_DWMP_T2DM_2 <- explanatory_vars_diabetes %>%       # begin with variables of interest
+models_DWMP_T2DM_2 <- explanatory_vars_diabetes_2 %>%       # begin with variables of interest
   str_c("DWMP ~ age_group_2 +", .) %>%         # combine each variable into formula ("outcome ~ variable of interest")
   
   # iterate through each age_adjusted formula
@@ -324,7 +363,7 @@ models_DWMP_T2DM_2
 
 ## Limit to patients with T1DM
 
-models_DWMP_T1DM_2 <- explanatory_vars_diabetes %>%       # begin with variables of interest
+models_DWMP_T1DM_2 <- explanatory_vars_diabetes_2 %>%       # begin with variables of interest
   str_c("DWMP ~ age_group_2 +", .) %>%         # combine each variable into formula ("outcome ~ variable of interest")
   
   # iterate through each age_adjusted formula
