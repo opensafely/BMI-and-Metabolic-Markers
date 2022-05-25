@@ -139,7 +139,7 @@ explanatory_vars_diabetes <- c(
 
 
 ###
-
+## Hypertension
 
 ## Limit to patients with hypertension
 DWMP2_hypertension <-  DWMP2 %>% 
@@ -176,15 +176,13 @@ models_DWMP_hypertension <- explanatory_vars_hypertension %>%       # begin with
 models_DWMP_hypertension
 
 
+## T2DM
 ## Limit to patients with T2 diabetes
 DWMP2_T2DM <-  DWMP2 %>% 
 dplyr::filter(diabetes_t2 == TRUE)
 
 
 
-
-## REGRESSION MODELLING
-### Predictors of DWMP eligibility
 
 
 
@@ -218,14 +216,14 @@ models_DWMP_T2DM <- explanatory_vars_diabetes %>%       # begin with variables o
 
 models_DWMP_T2DM
 
+## T1DM
+
 DWMP2_T1DM <-  DWMP2 %>% 
 dplyr::filter(diabetes_t1 == TRUE)
 
 
 
 
-## REGRESSION MODELLING
-### Predictors of DWMP eligibility
 
 
 models_DWMP_T1DM <- explanatory_vars_diabetes %>%       # begin with variables of interest
@@ -262,7 +260,7 @@ models_DWMP_T1DM
 
 ## Limit to patients with hypertension
 
-models_DWMP_hypertension <- explanatory_vars_hypertension %>%       # begin with variables of interest
+models_DWMP_hypertension_2 <- explanatory_vars_hypertension %>%       # begin with variables of interest
   str_c("DWMP ~ age_group_2 +", .) %>%         # combine each variable into formula ("outcome ~ variable of interest")
   
   # iterate through each age_adjusted formula
@@ -288,23 +286,13 @@ models_DWMP_hypertension <- explanatory_vars_hypertension %>%       # begin with
 
 
 
-models_DWMP_hypertension
-
-
-## Limit to patients with T2 diabetes
-DWMP2_T2DM <-  DWMP2 %>% 
-dplyr::filter(diabetes_t2 == TRUE)
-
-
-
-
-
+models_DWMP_hypertension_2
 
 
 
 ## limite to patient withT2DM
 
-models_DWMP_T2DM <- explanatory_vars_diabetes %>%       # begin with variables of interest
+models_DWMP_T2DM_2 <- explanatory_vars_diabetes %>%       # begin with variables of interest
   str_c("DWMP ~ age_group_2 +", .) %>%         # combine each variable into formula ("outcome ~ variable of interest")
   
   # iterate through each age_adjusted formula
@@ -330,7 +318,7 @@ models_DWMP_T2DM <- explanatory_vars_diabetes %>%       # begin with variables o
 
 
 
-models_DWMP_T2DM
+models_DWMP_T2DM_2
 
 
 
@@ -338,7 +326,7 @@ models_DWMP_T2DM
 
 ## Limit to patients with T1DM
 
-models_DWMP_T1DM <- explanatory_vars_diabetes %>%       # begin with variables of interest
+models_DWMP_T1DM_2 <- explanatory_vars_diabetes %>%       # begin with variables of interest
   str_c("DWMP ~ age_group_2 +", .) %>%         # combine each variable into formula ("outcome ~ variable of interest")
   
   # iterate through each age_adjusted formula
@@ -364,7 +352,7 @@ models_DWMP_T1DM <- explanatory_vars_diabetes %>%       # begin with variables o
 
 
 
-models_DWMP_T1DM
+models_DWMP_T1DM_2
 
 
 
@@ -374,9 +362,9 @@ models_DWMP_T1DM
 
 
 
-write.csv (models_DWMP_hypertension, here::here ("output/data","age_adjusted_DWMP_hypertension.csv"))
-write.csv (models_DWMP_T2DM, here::here ("output/data","age_adjusted_DWMP_T2DM.csv"))
-write.csv (models_DWMP_T1DM, here::here ("output/data","age_adjusted_DWMP_T1DM.csv"))
+write.csv (models_DWMP_hypertension_2, here::here ("output/data","age_adjusted_DWMP_hypertension.csv"))
+write.csv (models_DWMP_T2DM_2, here::here ("output/data","age_adjusted_DWMP_T2DM.csv"))
+write.csv (models_DWMP_T1DM_2, here::here ("output/data","age_adjusted_DWMP_T1DM.csv"))
 
 
 
