@@ -511,6 +511,9 @@ actions:
     outputs:
       moderately_sensitive: 
         table1: output/data/age_adjusted_bmi_trajectory_change.csv
+        table2: output/data/age_adjusted_bmi_trajectory_change_hypertension.csv
+        table3: output/data/age_adjusted_bmi_trajectory_change_T1DM.csv
+        table4: output/data/age_adjusted_bmi_trajectory_change_T2DM.csv
 
 ## box plots with filtered data (excluding extreme changes
   bmi_change_boxplots: 
