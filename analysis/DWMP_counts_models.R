@@ -16,8 +16,6 @@ library(data.table)
 library(forcats)
 library(rstatix)
 library(janitor)
-library(lubridate)
-library(skimr)
 library(ggplot2)
 
 
