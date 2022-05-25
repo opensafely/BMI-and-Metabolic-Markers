@@ -486,6 +486,14 @@ actions:
         chart1: output/change_bmi_trajectories.png
         chart2: output/change_bmi_trajectories_counts.png
 
+  bmi_trajectory_change_summary_DWMP:
+    run: r:latest analysis/BMI_change_diff_traj_summ_DWMP_groups.R --output-dir=output/data 
+    needs: [bmi_trajectory_change_summary]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/mean_bmi_traj_change_hypertension.csv
+
+
 
   bmi_trajectory_change_model_univariate: 
     run: r:latest analysis/BMI_change_diff_trajectories_univariate.R --output-dir=output/data 

@@ -342,7 +342,7 @@ BMI_traj_change_summary <- BMI_DT_summ %>%
   bind_rows(BMI_summ_precovid_bmi_category) %>% 
   bind_rows(BMI_summ_hypertension) %>% 
   bind_rows(BMI_summ_diabetes_t2) %>% 
-  bind_rows(BMI_summ_diabetes_t2) %>% 
+  bind_rows(BMI_summ_diabetes_t1) %>% 
   bind_rows(BMI_summ_learning_disability) %>%
   bind_rows(BMI_summ_depression) %>% 
   bind_rows(BMI_summ_psychosis_schiz_bipolar) %>% 
