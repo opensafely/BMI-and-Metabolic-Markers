@@ -23,6 +23,22 @@ library(ggplot2)
 
 DWMP <- read_feather (here::here ("output/data", "BMI_complete_median.feather"))
 
+## order the age-groups for ordered plots
+DWMP <- DWMP# Replicate data
+DWMP$age_group_2 <- factor(DWMP$age_group_2,      # Reordering group factor levels
+                                       levels = c("18-29", "30-39", "40-49", "50-59", "60-69", "70-79", "80+"))
+
+DWMP$age_group <- factor(DWMP$age_group,      # Reordering group factor levels
+                                     levels = c("18-39", "40-65", "65-80", "80+"))
+
+
+DWMP$smoking_status <- factor(DWMP$smoking_status, 
+                                          levels = c('N',"S", "E", "M"))
+
+
+## selected the variables for analysis
+
+
 DWMP2 <- DWMP %>% 
   dplyr::filter(year==2017| year==2018| year==2019| year==2020| year==2021)
 
