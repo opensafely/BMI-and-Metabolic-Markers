@@ -492,8 +492,8 @@ actions:
     outputs:
       moderately_sensitive: 
         table1: output/data/mean_bmi_traj_change_hypertension.csv
-
-
+        table2: output/data/mean_bmi_traj_change_t2dm.csv
+        table3: output/data/mean_bmi_traj_change_t1dm.csv
 
   bmi_trajectory_change_model_univariate: 
     run: r:latest analysis/BMI_change_diff_trajectories_univariate.R --output-dir=output/data 

@@ -353,7 +353,8 @@ BMI_traj_change_summary <- BMI_DT_summ %>%
   bind_rows(BMI_summ_all_cancer) %>% 
   bind_rows(BMI_summ_stroke_and_TIA) %>% 
   bind_rows(BMI_summ_smoking_status) %>% 
-  dplyr::mutate(across(where(is.numeric), round, digits=2))
+  dplyr::mutate(across(where(is.numeric), round, digits=2)) %>% 
+  dplyr::mutate(n = plyr::round_any(n, 5)) 
 
 
 
