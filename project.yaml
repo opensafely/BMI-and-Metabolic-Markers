@@ -648,6 +648,18 @@ actions:
         table2: output/data/proportion_DWMP_T1DM_2020.csv
         table3: output/data/proportion_DWMP_T1DM_2021.csv
 
+  DWMP_2017_2021_counts:
+    run: r:latest analysis/DWMP_counts.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/DWMP_counts_total_pop.csv
+        table2: output/data/DWMP_counts_all_eligible.csv
+        table3: output/data/DWMP_counts_hypertension.csv
+        table4: output/data/DWMP_counts_T1DM.csv
+        table5: output/data/DWMP_counts_T2DM.csv
+
+
 
 ##################################################################
 ### >> HAD_SBP ANALYSIS
