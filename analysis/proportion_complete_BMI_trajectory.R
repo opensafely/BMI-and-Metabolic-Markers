@@ -175,6 +175,30 @@ complete_bmi_trajectories_age_group <- complete_bmi_trajectories_age_group %>%
   bind_cols(chisq_age_group)
 
 
+complete_bmi_trajectories_age_group_2 <- bmi_trajectories %>%
+  tabyl(age_group_2, complete_trajectories) 
+
+complete_bmi_trajectories_age_group_2 <- complete_bmi_trajectories_age_group_2 %>%
+  dplyr::rename(n_complete_trajectories = 'TRUE') %>% 
+  dplyr::rename(n_no_complete_trajectories = 'FALSE') %>%
+  dplyr::mutate(N_total = n_no_complete_trajectories + n_complete_trajectories) %>%
+  dplyr::select(-('n_no_complete_trajectories'))  %>%
+  dplyr:: mutate(percent_complete_trajectories = ((n_complete_trajectories/N_total)*100)) %>%
+  dplyr::mutate(percent_complete_trajectories = round(percent_complete_trajectories, 2)) %>%
+  dplyr::mutate(variable = "age_group_2", .before=1) %>%
+  dplyr::rename(group = age_group_2)
+
+
+
+chisq_age_group_2 <- chisq.test(bmi_trajectories$age_group_2, bmi_trajectories$complete_trajectories) 
+
+chisq_age_group_2 <- broom::tidy(chisq_age_group_2) %>%
+  dplyr::select(p.value, method)
+
+complete_bmi_trajectories_age_group_2 <- complete_bmi_trajectories_age_group_2 %>%
+  bind_cols(chisq_age_group_2)
+
+
 ### sex
 complete_bmi_trajectories_sex <- bmi_trajectories %>%
   tabyl(sex, complete_trajectories) 
@@ -634,6 +658,7 @@ complete_bmi_trajectories_comorbid_diabetes_t2 <- complete_bmi_trajectories_como
 
 had_complete_bmi_trajectories <- bmi_trajectories_population %>% 
   bind_rows(complete_bmi_trajectories_age_group) %>%
+  bind_rows(complete_bmi_trajectories_age_group_2) %>%
   bind_rows(complete_bmi_trajectories_sex) %>%
   bind_rows(complete_bmi_trajectories_region) %>%
   bind_rows(complete_bmi_trajectories_imd) %>%
