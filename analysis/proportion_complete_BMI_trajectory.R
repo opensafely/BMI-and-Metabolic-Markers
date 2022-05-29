@@ -650,6 +650,33 @@ complete_bmi_trajectories_comorbid_diabetes_t2 <- complete_bmi_trajectories_como
 
 
 
+## by smoking_status
+
+
+complete_bmi_trajectories_smoking_status <- bmi_trajectories %>%
+  tabyl(smoking_status, complete_trajectories) 
+
+complete_bmi_trajectories_smoking_status <- complete_bmi_trajectories_smoking_status %>%
+  dplyr::rename(n_complete_trajectories = 'TRUE') %>% 
+  dplyr::rename(n_no_complete_trajectories = 'FALSE') %>%
+  dplyr::mutate(N_total = n_no_complete_trajectories + n_complete_trajectories) %>%
+  dplyr::select(-('n_no_complete_trajectories'))  %>%
+  dplyr:: mutate(percent_complete_trajectories = ((n_complete_trajectories/N_total)*100)) %>%
+  dplyr::mutate(percent_complete_trajectories = round(percent_complete_trajectories, 2)) %>%
+  dplyr::mutate(variable = "smoking_status", .before=1) %>%
+  dplyr::rename(group = smoking_status)
+
+
+
+chisq_smoking_status <- chisq.test(bmi_trajectories$smoking_status, bmi_trajectories$complete_trajectories) 
+
+chisq_smoking_status <- broom::tidy(chisq_smoking_status) %>%
+  dplyr::select(p.value, method)
+
+complete_bmi_trajectories_smoking_status <- complete_bmi_trajectories_smoking_status %>%
+  bind_cols(chisq_smoking_status)
+
+
 ######################  END OF NEW CODE:  two new rows added to below
 
 
@@ -675,7 +702,8 @@ had_complete_bmi_trajectories <- bmi_trajectories_population %>%
   bind_rows(complete_bmi_trajectories_comorbid_COPD) %>% 
   bind_rows(complete_bmi_trajectories_comorbid_stroke_and_TIA) %>% 
   bind_rows(complete_bmi_trajectories_comorbid_chronic_cardiac) %>% 
-  bind_rows(complete_bmi_trajectories_comorbid_all_cancer)
+  bind_rows(complete_bmi_trajectories_comorbid_all_cancer) %>%
+  bind_rows(complete_bmi_trajectories_smoking_status)
 
 had_complete_bmi_trajectories <- had_complete_bmi_trajectories %>%
   dplyr::mutate('p.value' = round(p.value, 2))  %>%
