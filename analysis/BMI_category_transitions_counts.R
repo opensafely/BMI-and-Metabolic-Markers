@@ -228,7 +228,7 @@ counts_normal_weight_2019 <- sex %>%
   bind_rows(stroke_and_TIA) %>%
   bind_rows(smoking_status) %>%
   dplyr::select(variable, group, weightgain, N_total, percent) %>%
-  dplyr::mutate(year= "2017", .before=1)
+  dplyr::mutate(year= "2019", .before=1)
 
 
 counts_normal_weight_all <- counts_normal_weight_all %>% 
