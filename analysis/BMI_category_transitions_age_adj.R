@@ -1,5 +1,5 @@
 ##This R script will describe how patients transitioned between BMI categories.  
-## Also univariate models predicting category change
+## Also age adjusted models 
 
 ## Load libraries
 library(pacman)
@@ -13,7 +13,7 @@ library(rstatix)
 library(janitor)
 library(lubridate)
 library(skimr)
-library(dplyr)
+library(mlogit)
 
 data <- read_feather (here::here ("output/data", "BMI_category_transition.feather"))
 
@@ -65,17 +65,9 @@ cat_1 <- categories_change %>%
 transitions$percent <- round(transitions$percent, digits=2)
 
 
-
-transitions <- transitions %>% 
-    ungroup()%>%
-  dplyr::mutate(n = plyr::round_any(transitions$n, 5)) %>% 
-  dplyr::mutate(total = plyr::round_any(transitions$total, 5))
-
-
 ### models to predict transitions in different groups
 
 explanatory_vars_1 <- c("sex", 
-                      "age_group_2", 
                       "ethnic_no_miss", 
                       "eth_group_16",
                       "imd", 
@@ -96,7 +88,6 @@ explanatory_vars_1 <- c("sex",
                       "year")
 
 explanatory_vars_2 <- c("sex", 
-                        "age_group_2", 
                         "ethnic_no_miss", 
                         "eth_group_16",
                         "imd", 
@@ -140,8 +131,9 @@ models_normal_weight <- explanatory_vars_1 %>%       # begin with variables of i
   
   # iterate through each univariate formula
   map(                               
-    .f = ~lm(                       # pass the formulas one-by-one to glm()
+    .f = ~glm(                       # pass the formulas one-by-one to glm()
       formula = as.formula(.x),      # within glm(), the string formula is .x
+        family = "binomial",           # specify type of glm (logistic)
       data = normal_weight)) %>%          # dataset
   
   # tidy up each of the glm regression outputs from above
@@ -155,7 +147,7 @@ models_normal_weight <- explanatory_vars_1 %>%       # begin with variables of i
   bind_rows() %>% 
   
   # round all numeric columns
-  mutate(across(where(is.numeric), round, digits = 2))
+  mutate(across(where(is.numeric), round, digits = 3))
 
 
 
@@ -175,8 +167,9 @@ models_normal_weight_2017 <- explanatory_vars_2 %>%       # begin with variables
   
   # iterate through each univariate formula
   map(                               
-    .f = ~lm(                       # pass the formulas one-by-one to glm()
+    .f = ~glm(                       # pass the formulas one-by-one to glm()
       formula = as.formula(.x),      # within glm(), the string formula is .x
+        family = "binomial",           # specify type of glm (logistic)
       data = normal_weight_2017)) %>%          # dataset
   
   # tidy up each of the glm regression outputs from above
@@ -190,7 +183,7 @@ models_normal_weight_2017 <- explanatory_vars_2 %>%       # begin with variables
   bind_rows() %>% 
   
   # round all numeric columns
-  mutate(across(where(is.numeric), round, digits = 2))
+  mutate(across(where(is.numeric), round, digits = 3))
 
 
 
@@ -209,8 +202,9 @@ models_normal_weight_2019 <- explanatory_vars_2 %>%       # begin with variables
   
   # iterate through each univariate formula
   map(                               
-    .f = ~lm(                       # pass the formulas one-by-one to glm()
+    .f = ~glm(                       # pass the formulas one-by-one to glm()
       formula = as.formula(.x),      # within glm(), the string formula is .x
+        family = "binomial",           # specify type of glm (logistic)
       data = normal_weight_2019)) %>%          # dataset
   
   # tidy up each of the glm regression outputs from above
@@ -224,7 +218,7 @@ models_normal_weight_2019 <- explanatory_vars_2 %>%       # begin with variables
   bind_rows() %>% 
   
   # round all numeric columns
-  mutate(across(where(is.numeric), round, digits = 2))
+  mutate(across(where(is.numeric), round, digits = 3))
 
 
 
@@ -247,10 +241,14 @@ overweight$bmi2_under25[overweight$bmi2_under25 == "healthy" ] <- 1
 overweight$bmi2_under25[overweight$bmi2_under25 == "underweight" ] <- 1
 
 
+
+
 overweight %>% 
   tabyl(category_2, bmi2_under25)
 
-
+##** NEW CODE
+overweight <- overweight %>% 
+dplyr::mutate(bmi2_under25 = as.numeric(bmi2_under25))
 
 
 ## models_overweight to obese
@@ -260,8 +258,9 @@ models_overweight <- explanatory_vars_1 %>%       # begin with variables of inte
   
   # iterate through each univariate formula
   map(                               
-    .f = ~lm(                       # pass the formulas one-by-one to glm()
+    .f = ~glm(                       # pass the formulas one-by-one to glm()
       formula = as.formula(.x),      # within glm(), the string formula is .x
+        family = "binomial",           # specify type of glm (logistic)
       data = overweight)) %>%          # dataset
   
   # tidy up each of the glm regression outputs from above
@@ -275,7 +274,7 @@ models_overweight <- explanatory_vars_1 %>%       # begin with variables of inte
   bind_rows() %>% 
   
   # round all numeric columns
-  mutate(across(where(is.numeric), round, digits = 2))
+  mutate(across(where(is.numeric), round, digits = 3))
 
 
 
@@ -291,8 +290,9 @@ models_overweight_2017 <- explanatory_vars_2 %>%       # begin with variables of
   
   # iterate through each univariate formula
   map(                               
-    .f = ~lm(                       # pass the formulas one-by-one to glm()
+    .f = ~glm(                       # pass the formulas one-by-one to glm()
       formula = as.formula(.x),      # within glm(), the string formula is .x
+        family = "binomial",           # specify type of glm (logistic)
       data = overweight_2017)) %>%          # dataset
   
   # tidy up each of the glm regression outputs from above
@@ -306,7 +306,7 @@ models_overweight_2017 <- explanatory_vars_2 %>%       # begin with variables of
   bind_rows() %>% 
   
   # round all numeric columns
-  mutate(across(where(is.numeric), round, digits = 2))
+  mutate(across(where(is.numeric), round, digits = 3))
 
 
 
@@ -321,8 +321,9 @@ models_overweight_2019 <- explanatory_vars_2 %>%       # begin with variables of
   
   # iterate through each univariate formula
   map(                               
-    .f = ~lm(                       # pass the formulas one-by-one to glm()
+    .f = ~glm(                       # pass the formulas one-by-one to glm()
       formula = as.formula(.x),      # within glm(), the string formula is .x
+        family = "binomial",           # specify type of glm (logistic)
       data = overweight_2019)) %>%          # dataset
   
   # tidy up each of the glm regression outputs from above
@@ -336,7 +337,7 @@ models_overweight_2019 <- explanatory_vars_2 %>%       # begin with variables of
   bind_rows() %>% 
   
   # round all numeric columns
-  mutate(across(where(is.numeric), round, digits = 2))
+  mutate(across(where(is.numeric), round, digits = 3))
 
 ######################
 ######################
@@ -349,8 +350,9 @@ models_overweight_weightloss <- explanatory_vars_1 %>%       # begin with variab
   
   # iterate through each univariate formula
   map(                               
-    .f = ~lm(                       # pass the formulas one-by-one to glm()
+    .f = ~glm(                       # pass the formulas one-by-one to glm()
       formula = as.formula(.x),      # within glm(), the string formula is .x
+        family = "binomial",           # specify type of glm (logistic)
       data = overweight)) %>%          # dataset
   
   # tidy up each of the glm regression outputs from above
@@ -364,7 +366,7 @@ models_overweight_weightloss <- explanatory_vars_1 %>%       # begin with variab
   bind_rows() %>% 
   
   # round all numeric columns
-  mutate(across(where(is.numeric), round, digits = 2))
+  mutate(across(where(is.numeric), round, digits = 3))
 
 
 
@@ -380,8 +382,9 @@ models_overweight_weightloss_2017 <- explanatory_vars_2 %>%       # begin with v
   
   # iterate through each univariate formula
   map(                               
-    .f = ~lm(                       # pass the formulas one-by-one to glm()
+    .f = ~glm(                       # pass the formulas one-by-one to glm()
       formula = as.formula(.x),      # within glm(), the string formula is .x
+        family = "binomial",           # specify type of glm (logistic)
       data = overweight_2017)) %>%          # dataset
   
   # tidy up each of the glm regression outputs from above
@@ -395,7 +398,7 @@ models_overweight_weightloss_2017 <- explanatory_vars_2 %>%       # begin with v
   bind_rows() %>% 
   
   # round all numeric columns
-  mutate(across(where(is.numeric), round, digits = 2))
+  mutate(across(where(is.numeric), round, digits = 3))
 
 
 
@@ -410,8 +413,9 @@ models_overweight_weightloss_2019 <- explanatory_vars_2 %>%       # begin with v
   
   # iterate through each univariate formula
   map(                               
-    .f = ~lm(                       # pass the formulas one-by-one to glm()
+    .f = ~glm(                       # pass the formulas one-by-one to glm()
       formula = as.formula(.x),      # within glm(), the string formula is .x
+        family = "binomial",           # specify type of glm (logistic)
       data = overweight_2019)) %>%          # dataset
   
   # tidy up each of the glm regression outputs from above
@@ -425,7 +429,7 @@ models_overweight_weightloss_2019 <- explanatory_vars_2 %>%       # begin with v
   bind_rows() %>% 
   
   # round all numeric columns
-  mutate(across(where(is.numeric), round, digits = 2))
+  mutate(across(where(is.numeric), round, digits = 3))
 
 
 ########################
@@ -447,6 +451,8 @@ obese$weightloss[obese$weightloss == "underweight" ] <- 1
 obese %>% 
   tabyl(category_2, weightloss)
 
+obese <- obese %>% 
+  dplyr::mutate(weightloss = as.numeric(weightloss))
 
 
 
@@ -457,8 +463,9 @@ models_obese_weightloss <- explanatory_vars_1 %>%       # begin with variables o
   
   # iterate through each univariate formula
   map(                               
-    .f = ~lm(                       # pass the formulas one-by-one to glm()
+    .f = ~glm(                       # pass the formulas one-by-one to glm()
       formula = as.formula(.x),      # within glm(), the string formula is .x
+        family = "binomial",           # specify type of glm (logistic)
       data = obese)) %>%          # dataset
   
   # tidy up each of the glm regression outputs from above
@@ -472,7 +479,7 @@ models_obese_weightloss <- explanatory_vars_1 %>%       # begin with variables o
   bind_rows() %>% 
   
   # round all numeric columns
-  mutate(across(where(is.numeric), round, digits = 2))
+  mutate(across(where(is.numeric), round, digits = 3))
 
 
 
@@ -488,8 +495,9 @@ models_obese_weightloss_2017 <- explanatory_vars_2 %>%       # begin with variab
   
   # iterate through each univariate formula
   map(                               
-    .f = ~lm(                       # pass the formulas one-by-one to glm()
+    .f = ~glm(                       # pass the formulas one-by-one to glm()
       formula = as.formula(.x),      # within glm(), the string formula is .x
+        family = "binomial",           # specify type of glm (logistic)
       data = obese_2017)) %>%          # dataset
   
   # tidy up each of the glm regression outputs from above
@@ -503,7 +511,7 @@ models_obese_weightloss_2017 <- explanatory_vars_2 %>%       # begin with variab
   bind_rows() %>% 
   
   # round all numeric columns
-  mutate(across(where(is.numeric), round, digits = 2))
+  mutate(across(where(is.numeric), round, digits = 3))
 
 
 
@@ -518,8 +526,9 @@ models_obese_weightloss_2019 <- explanatory_vars_2 %>%       # begin with variab
   
   # iterate through each univariate formula
   map(                               
-    .f = ~lm(                       # pass the formulas one-by-one to glm()
+    .f = ~glm(                       # pass the formulas one-by-one to glm()
       formula = as.formula(.x),      # within glm(), the string formula is .x
+        family = "binomial",           # specify type of glm (logistic)
       data = obese_2019)) %>%          # dataset
   
   # tidy up each of the glm regression outputs from above
@@ -533,24 +542,13 @@ models_obese_weightloss_2019 <- explanatory_vars_2 %>%       # begin with variab
   bind_rows() %>% 
   
   # round all numeric columns
-  mutate(across(where(is.numeric), round, digits = 2))
+  mutate(across(where(is.numeric), round, digits = 3))
+
 
 
 
 
 ## save outputs
-
-
-
-
-
-
-
-
-
-# save outputs
-
-
 
 
 
@@ -578,6 +576,3 @@ write.csv (models_obese_weightloss, here::here ("output/data","obese_transition_
 write.csv (models_obese_weightloss_2017, here::here ("output/data","obese_transition_weightloss_2017_age_adj.csv"))
 write.csv (models_obese_weightloss_2019, here::here ("output/data","obese_transition_weightloss_2019_age_adj.csv"))
 
-
-
-models_obese_weightloss 
