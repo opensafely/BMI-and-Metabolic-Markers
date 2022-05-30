@@ -542,6 +542,15 @@ actions:
         table3: output/data/mean_bmi_traj_change_cancerandlowbmi_removed_t1dm.csv
         table4: output/data/mean_bmi_traj_change_cancerandlowbmi_removed.csv
 
+  bmi_trajectory_change_lowbmi_excluded_univariate: 
+    run: r:latest analysis/BMI_trajectory_change_lowbmi_excluded_univariate.R --output-dir=output/data 
+    needs: [bmi_trajectory_change_summary]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/univariate_lowbmi_excluded_bmi_trajectory_change.csv
+        table2: output/data/univariate_lowbmi_excluded_bmi_trajectory_change_hypertension.csv
+        table3: output/data/univariate_lowbmi_excluded_bmi_trajectory_change_T1DM.csv
+        table4: output/data/univariate_lowbmi_excluded_bmi_trajectory_change_T2DM.csv
 
 
 
