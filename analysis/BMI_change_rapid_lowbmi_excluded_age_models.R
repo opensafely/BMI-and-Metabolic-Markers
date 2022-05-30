@@ -86,6 +86,26 @@ explanatory_vars_2 <- c("sex",
                       "eth_group_16",           
                       "precovid_bmi_category")
 
+explanatory_vars_3 <- c("sex",
+                      "region",                
+                      "imd",
+                      "hypertension",
+                      "diabetes_t1", 
+                      "diabetes_t2",
+                      "learning_disability", 
+                      "depression",               
+                      "psychosis_schiz_bipolar", 
+                      "dementia", 
+                      "asthma",
+                      "COPD",
+                      "stroke_and_TIA",          
+                      "chronic_cardiac",                                         
+                      "smoking_status", 
+                      "ethnic_no_miss",         
+                      "eth_group_16",           
+                      "precovid_bmi_category", 
+                      "pandemic_stage")
+
 
 ##*** Change to code.  FILTER OUT UNDERWEIGHT AND THOSE WITH CANCER
 BMI_trajectories <- BMI_trajectories %>% 
@@ -100,11 +120,40 @@ BMI_trajectories %>%
 BMI_trajectories %>% 
   tabyl(precovid_bmi_category)
 
-## *** Change to code complete
+##  ALL population - does pandemic affect odds
+models_all_age <- explanatory_vars_3 %>%       # begin with variables of interest
+  str_c("rapid_bmi_change ~ age_group_2 +", .) %>%         # combine each variable into formula ("outcome ~ variable of interest")
+  
+  # iterate through each formula
+  map(                               
+    .f = ~glm(                       # pass the formulas one-by-one to glm()
+      formula = as.formula(.x),      # within glm(), the string formula is .x
+      family = "binomial",           # specify type of glm (logistic)
+      data = BMI_trajectories)) %>%          # dataset
+  
+  # tidy up each of the glm regression outputs from above
+  map(
+    .f = ~tidy(
+      .x, 
+      exponentiate = TRUE,           # exponentiate 
+      conf.int = TRUE)) %>%          # return confidence intervals
+  
+  # collapse the list of regression outputs in to one data frame
+  bind_rows() %>% 
+  
+  # round all numeric columns
+  mutate(across(where(is.numeric), round, digits = 4))
 
 
 
 
+models_all_age <- models_all_age %>%
+  dplyr::mutate(stage = "all", .before = 1)
+
+
+
+
+## population composition
 
 
 ### Precovid analysis
@@ -132,7 +181,7 @@ models_precov_age <- explanatory_vars_2 %>%       # begin with variables of inte
   bind_rows() %>% 
   
   # round all numeric columns
-  mutate(across(where(is.numeric), round, digits = 2))
+  mutate(across(where(is.numeric), round, digits = 4))
 
 
 ## population composition
@@ -169,7 +218,7 @@ models_postcov_age <- explanatory_vars_2 %>%       # begin with variables of int
   bind_rows() %>% 
   
   # round all numeric columns
-  mutate(across(where(is.numeric), round, digits = 2))
+  mutate(across(where(is.numeric), round, digits = 4))
 
 
 ## population composition
@@ -178,7 +227,8 @@ models_postcov_age <- models_postcov_age %>%
   dplyr::mutate(stage = "postcovid", .before = 1)
 
 
-models_age_adjusted <- models_precov_age %>% 
+models_age_adjusted <-  models_all_age %>%
+  bind_rows (models_precov_age) %>% 
   bind_rows(models_postcov_age)
 
 
