@@ -49,15 +49,15 @@ BMI_trajectories <- BMI_trajectories %>%
                 "asthma",
                 "COPD",
                 "stroke_and_TIA",          
-                "chronic_cardiac",                 
+                "chronic_cardiac", 
+                "all_cancer",                
                 "smoking_status", 
                 "ethnic_no_miss",         
                 "eth_group_16",           
                 "complete_bmi_data", 
                 "bmi_change_cat", 
                 "precovid_bmi_category", 
-                "pandemic_stage", 
-                "all_cancer")
+                "pandemic_stage")
 
 BMI_trajectories <- BMI_trajectories %>% 
   dplyr::mutate(rapid_bmi_change = case_when(
@@ -83,7 +83,7 @@ explanatory_vars <- c("sex",
                       "asthma",
                       "COPD",
                       "stroke_and_TIA",          
-                      "chronic_cardiac",                 
+                      "chronic_cardiac",              
                       "smoking_status", 
                       "ethnic_no_miss",         
                       "eth_group_16",           
@@ -137,105 +137,111 @@ models_precov_rapidinc_bmi_univar <- explanatory_vars %>%       # begin with var
   # round all numeric columns
   mutate(across(where(is.numeric), round, digits = 2))
 
-
-## population composition
-
 models_precov_rapidinc_bmi_univar <- models_precov_rapidinc_bmi_univar %>%
   dplyr::mutate(stage = "precovid", .before = 1)
 
 
 
-population_demog_function2 <- function(my_var) {
-  precovid_change %>%
-    tabyl({{my_var}}, rapid_bmi_change)%>% 
-    adorn_percentages() %>% 
-    adorn_pct_formatting(digits = 2) %>%
-    adorn_ns() %>% 
-    dplyr::rename(group={{my_var}})
-} 
+
+## population composition
+
+# function to calculate
+population_demog_function2 <- function(data, var){
+  v1 <- deparse(substitute(var))
+  
+  data %>%
+    tabyl({{var}}, rapid_bmi_change) %>% 
+    dplyr::mutate(N_total = c(not_rapid) + c(rapid)) %>% 
+    dplyr::mutate(percent_rapid = rapid/N_total*100) %>% 
+    dplyr::mutate(rapid = plyr::round_any(rapid, 5)) %>% 
+    dplyr::mutate(N_total = plyr::round_any(N_total, 5)) %>% 
+    dplyr::rename(group = {{var}}) %>%
+    ungroup() %>%
+    dplyr::mutate(variable = (v1))
+}
 
 
 
-sex <- population_demog_function2(sex) %>% 
-  dplyr::mutate(variable = 'sex')%>% 
+## precovid population counts 
+
+
+
+precovid_change$rapid_bmi_change[precovid_change$rapid_bmi_change==0] <- "not_rapid"
+precovid_change$rapid_bmi_change[precovid_change$rapid_bmi_change==1] <- "rapid"
+
+
+precovid_change %>% 
+  tabyl(sex, rapid_bmi_change) %>% 
+  dplyr::mutate(N_total = c(not_rapid) + c(rapid)) %>% 
+  dplyr::mutate(percent_rapid = rapid/N_total*100) %>% 
+  dplyr::mutate(rapid = plyr::round_any(rapid, 5)) %>% 
+  dplyr::mutate(N_total = plyr::round_any(N_total, 5)) 
+
+
+
+
+population_demog_function2(precovid_change, sex)
+
+sex <- population_demog_function2(precovid_change, sex) %>% 
   dplyr::mutate(group = as.factor(group))
 
 
-age_group_2 <- population_demog_function2(age_group_2) %>% 
-  dplyr::mutate(variable = 'age_group_2')%>% 
+age_group_2 <- population_demog_function2(precovid_change, age_group_2) %>% 
   dplyr::mutate(group = as.factor(group))
 
-region <- population_demog_function2(region) %>% 
-  dplyr::mutate(variable = 'region')%>% 
+region <- population_demog_function2(precovid_change, region) %>% 
   dplyr::mutate(group = as.factor(group))
 
-imd <- population_demog_function2(imd) %>% 
-  dplyr::mutate(variable = 'imd') %>% 
+imd <- population_demog_function2(precovid_change, imd) %>% 
   dplyr::mutate(group = as.factor(group))
 
 
-hypertension <- population_demog_function2(hypertension) %>% 
-  dplyr::mutate(variable = 'hypertension') %>% 
+hypertension <- population_demog_function2(precovid_change, hypertension) %>% 
   dplyr::mutate(group = as.factor(group)) 
 
-diabetes_t1 <- population_demog_function2(diabetes_t1) %>% 
-  dplyr::mutate(variable = 'diabetes_t1')%>% 
+diabetes_t1 <- population_demog_function2(precovid_change, diabetes_t1) %>% 
   dplyr::mutate(group = as.factor(group))
 
-diabetes_t2 <- population_demog_function2(diabetes_t1) %>% 
-  dplyr::mutate(variable = 'diabetes_t1')%>% 
+diabetes_t2 <- population_demog_function2(precovid_change, diabetes_t1) %>% 
   dplyr::mutate(group = as.factor(group))
 
-learning_disability <- population_demog_function2(learning_disability) %>% 
-  dplyr::mutate(variable = 'learning_disability')%>% 
+learning_disability <- population_demog_function2(precovid_change,learning_disability) %>% 
   dplyr::mutate(group = as.factor(group))
 
-depression <- population_demog_function2(depression) %>% 
-  dplyr::mutate(variable = 'depression')%>% 
+depression <- population_demog_function2(precovid_change, depression) %>% 
   dplyr::mutate(group = as.factor(group))
 
-psychosis_schiz_bipolar <- population_demog_function2(psychosis_schiz_bipolar) %>% 
-  dplyr::mutate(variable = 'psychosis_schiz_bipolar')%>% 
+psychosis_schiz_bipolar <- population_demog_function2(precovid_change, psychosis_schiz_bipolar) %>% 
   dplyr::mutate(group = as.factor(group))
 
-dementia <- population_demog_function2(dementia) %>% 
-  dplyr::mutate(variable = 'dementia')%>% 
+dementia <- population_demog_function2(precovid_change, dementia) %>% 
   dplyr::mutate(group = as.factor(group))
 
-asthma <- population_demog_function2(asthma) %>% 
-  dplyr::mutate(variable = 'asthma')%>% 
+asthma <- population_demog_function2(precovid_change, asthma) %>% 
   dplyr::mutate(group = as.factor(group))
 
 
-COPD <- population_demog_function2(COPD) %>% 
-  dplyr::mutate(variable = 'COPD')%>% 
+COPD <- population_demog_function2(precovid_change, COPD) %>% 
   dplyr::mutate(group = as.factor(group))
 
-stroke_and_TIA <- population_demog_function2(stroke_and_TIA) %>% 
-  dplyr::mutate(variable = 'stroke_and_TIA')%>% 
+stroke_and_TIA <- population_demog_function2(precovid_change, stroke_and_TIA) %>% 
   dplyr::mutate(group = as.factor(group))
 
-chronic_cardiac <- population_demog_function2(chronic_cardiac) %>% 
-  dplyr::mutate(variable = 'chronic_cardiac')%>% 
+chronic_cardiac <- population_demog_function2(precovid_change, chronic_cardiac) %>% 
   dplyr::mutate(group = as.factor(group))
 
 
-
-smoking_status <- population_demog_function2(smoking_status) %>% 
-  dplyr::mutate(variable = 'smoking_status')%>% 
+smoking_status <- population_demog_function2(precovid_change, smoking_status) %>% 
   dplyr::mutate(group = as.factor(group))
 
-ethnic_no_miss <- population_demog_function2(ethnic_no_miss) %>% 
-  dplyr::mutate(variable = 'ethnic_no_miss')%>% 
+ethnic_no_miss <- population_demog_function2(precovid_change, ethnic_no_miss) %>% 
   dplyr::mutate(group = as.factor(group))
 
 
-eth_group_16 <- population_demog_function2(eth_group_16) %>% 
-  dplyr::mutate(variable = 'eth_group_16')%>% 
+eth_group_16 <- population_demog_function2(precovid_change, eth_group_16) %>% 
   dplyr::mutate(group = as.factor(group))
 
-precovid_bmi_category <- population_demog_function2(precovid_bmi_category) %>% 
-  dplyr::mutate(variable = 'precovid_bmi_category')%>% 
+precovid_bmi_category <- population_demog_function2(precovid_change, precovid_bmi_category) %>% 
   dplyr::mutate(group = as.factor(group))
 
 
@@ -264,11 +270,7 @@ precovid_demog <- bind_rows(sex,
 
 
 
-
-
-
-
-### Postcovid Analysis
+## postcovid
 
 postcovid_change <- BMI_trajectories %>% 
   dplyr::filter(pandemic_stage == "postcovid")
@@ -301,97 +303,89 @@ models_postcov_rapidinc_bmi_univar <- models_postcov_rapidinc_bmi_univar %>%
   dplyr::mutate(stage="postcovid", .before=1)
 
 
-population_demog_function2 <- function(my_var) {
-  postcovid_change %>%
-    tabyl({{my_var}}, rapid_bmi_change)%>% 
-    adorn_percentages() %>% 
-    adorn_pct_formatting(digits = 2) %>%
-    adorn_ns() %>% 
-    dplyr::rename(group={{my_var}})
-} 
 
 
 
-sex <- population_demog_function2(sex) %>% 
-  dplyr::mutate(variable = 'sex')%>% 
+
+
+
+
+postcovid_change$rapid_bmi_change[postcovid_change$rapid_bmi_change==0] <- "not_rapid"
+postcovid_change$rapid_bmi_change[postcovid_change$rapid_bmi_change==1] <- "rapid"
+
+
+postcovid_change %>% 
+  tabyl(sex, rapid_bmi_change) %>% 
+  dplyr::mutate(N_total = c(not_rapid) + c(rapid)) %>% 
+  dplyr::mutate(percent_rapid = rapid/N_total*100) %>% 
+  dplyr::mutate(rapid = plyr::round_any(rapid, 5)) %>% 
+  dplyr::mutate(N_total = plyr::round_any(N_total, 5)) 
+
+
+
+
+population_demog_function2(postcovid_change, sex)
+
+sex <- population_demog_function2(postcovid_change, sex) %>% 
   dplyr::mutate(group = as.factor(group))
 
 
-age_group_2 <- population_demog_function2(age_group_2) %>% 
-  dplyr::mutate(variable = 'age_group_2')%>% 
+age_group_2 <- population_demog_function2(postcovid_change, age_group_2) %>% 
   dplyr::mutate(group = as.factor(group))
 
-region <- population_demog_function2(region) %>% 
-  dplyr::mutate(variable = 'region')%>% 
+region <- population_demog_function2(postcovid_change, region) %>% 
   dplyr::mutate(group = as.factor(group))
 
-imd <- population_demog_function2(imd) %>% 
-  dplyr::mutate(variable = 'imd') %>% 
+imd <- population_demog_function2(postcovid_change, imd) %>% 
   dplyr::mutate(group = as.factor(group))
 
 
-hypertension <- population_demog_function2(hypertension) %>% 
-  dplyr::mutate(variable = 'hypertension') %>% 
+hypertension <- population_demog_function2(postcovid_change, hypertension) %>% 
   dplyr::mutate(group = as.factor(group)) 
 
-diabetes_t1 <- population_demog_function2(diabetes_t1) %>% 
-  dplyr::mutate(variable = 'diabetes_t1')%>% 
+diabetes_t1 <- population_demog_function2(postcovid_change, diabetes_t1) %>% 
   dplyr::mutate(group = as.factor(group))
 
-diabetes_t2 <- population_demog_function2(diabetes_t1) %>% 
-  dplyr::mutate(variable = 'diabetes_t1')%>% 
+diabetes_t2 <- population_demog_function2(postcovid_change, diabetes_t1) %>% 
   dplyr::mutate(group = as.factor(group))
 
-learning_disability <- population_demog_function2(learning_disability) %>% 
-  dplyr::mutate(variable = 'learning_disability')%>% 
+learning_disability <- population_demog_function2(postcovid_change,learning_disability) %>% 
   dplyr::mutate(group = as.factor(group))
 
-depression <- population_demog_function2(depression) %>% 
-  dplyr::mutate(variable = 'depression')%>% 
+depression <- population_demog_function2(postcovid_change, depression) %>% 
   dplyr::mutate(group = as.factor(group))
 
-psychosis_schiz_bipolar <- population_demog_function2(psychosis_schiz_bipolar) %>% 
-  dplyr::mutate(variable = 'psychosis_schiz_bipolar')%>% 
+psychosis_schiz_bipolar <- population_demog_function2(postcovid_change, psychosis_schiz_bipolar) %>% 
   dplyr::mutate(group = as.factor(group))
 
-dementia <- population_demog_function2(dementia) %>% 
-  dplyr::mutate(variable = 'dementia')%>% 
+dementia <- population_demog_function2(postcovid_change, dementia) %>% 
   dplyr::mutate(group = as.factor(group))
 
-asthma <- population_demog_function2(asthma) %>% 
-  dplyr::mutate(variable = 'asthma')%>% 
+asthma <- population_demog_function2(postcovid_change, asthma) %>% 
   dplyr::mutate(group = as.factor(group))
 
 
-COPD <- population_demog_function2(COPD) %>% 
-  dplyr::mutate(variable = 'COPD')%>% 
+COPD <- population_demog_function2(postcovid_change, COPD) %>% 
   dplyr::mutate(group = as.factor(group))
 
-stroke_and_TIA <- population_demog_function2(stroke_and_TIA) %>% 
-  dplyr::mutate(variable = 'stroke_and_TIA')%>% 
+stroke_and_TIA <- population_demog_function2(postcovid_change, stroke_and_TIA) %>% 
   dplyr::mutate(group = as.factor(group))
 
-chronic_cardiac <- population_demog_function2(chronic_cardiac) %>% 
-  dplyr::mutate(variable = 'chronic_cardiac')%>% 
+chronic_cardiac <- population_demog_function2(postcovid_change, chronic_cardiac) %>% 
   dplyr::mutate(group = as.factor(group))
 
 
-
-smoking_status <- population_demog_function2(smoking_status) %>% 
-  dplyr::mutate(variable = 'smoking_status')%>% 
+smoking_status <- population_demog_function2(postcovid_change, smoking_status) %>% 
   dplyr::mutate(group = as.factor(group))
 
-ethnic_no_miss <- population_demog_function2(ethnic_no_miss) %>% 
-  dplyr::mutate(variable = 'ethnic_no_miss')%>% 
+ethnic_no_miss <- population_demog_function2(postcovid_change, ethnic_no_miss) %>% 
   dplyr::mutate(group = as.factor(group))
 
 
-eth_group_16 <- population_demog_function2(eth_group_16) %>% 
-  dplyr::mutate(variable = 'eth_group_16')%>% 
+eth_group_16 <- population_demog_function2(postcovid_change, eth_group_16) %>% 
   dplyr::mutate(group = as.factor(group))
 
-precovid_bmi_category <- population_demog_function2(precovid_bmi_category) %>% 
-  dplyr::mutate(variable = 'precovid_bmi_category')%>% 
+precovid_bmi_category <- population_demog_function2(postcovid_change, precovid_bmi_category) %>% 
   dplyr::mutate(group = as.factor(group))
 
 
@@ -416,7 +410,16 @@ postcovid_demog <- bind_rows(sex,
                              chronic_cardiac,
                              smoking_status,
                              precovid_bmi_category) %>% 
-  dplyr::mutate(stage = "postcovid", .before=1)
+  dplyr::mutate(stage = "postcovid", .before=1) 
+
+
+
+
+
+
+
+
+
 
 
 models_univariate <- models_precov_rapidinc_bmi_univar %>% 
@@ -424,7 +427,8 @@ models_univariate <- models_precov_rapidinc_bmi_univar %>%
 
 
 demog <- precovid_demog %>% 
-  bind_rows(postcovid_demog)
+  bind_rows(postcovid_demog) %>% 
+  dplyr::select(stage,variable,group,not_rapid,rapid,N_total,percent_rapid)
 
 ### Write outputs
 
