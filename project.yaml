@@ -531,6 +531,20 @@ actions:
         table3: output/data/age_adjusted_bmi_trajectory_change_T1DM.csv
         table4: output/data/age_adjusted_bmi_trajectory_change_T2DM.csv
 
+## trajectory change calculations - with prepandemic underweight and cancer excluded
+  bmi_trajectory_change_summary_lowbmi_excluded:
+    run: r:latest analysis/BMI_change_diff_traj_summ_cancerandlowbmi_removed.R --output-dir=output/data 
+    needs: [bmi_trajectory_change_summary]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/mean_bmi_traj_change_cancerandlowbmi_removed_hypertension.csv
+        table2: output/data/mean_bmi_traj_change_cancerandlowbmi_removed_t2dm.csv
+        table3: output/data/mean_bmi_traj_change_cancerandlowbmi_removed_t1dm.csv
+        table4: output/data/mean_bmi_traj_change_cancerandlowbmi_removed.csv
+
+
+
+
 ## box plots with filtered data (excluding extreme changes
   bmi_change_boxplots: 
     run: r:latest analysis/bmi_change_boxplots.R --output-dir=output/data 
