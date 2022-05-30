@@ -26,7 +26,7 @@ library(gtsummary)
 
 
 ## Read in files
-BMI_trajectories <- read_feather (here::here ("/Users/miriamsamuel/Documents/Academic GP/Open Safely/Dummy Data", "BMI_trajectory_data_long.feather"))
+BMI_trajectories <- read_feather (here::here ("output/data", "BMI_trajectory_data_long.feather"))
 
 colnames(BMI_trajectories)
 
@@ -56,7 +56,8 @@ BMI_trajectories <- BMI_trajectories %>%
                 "complete_bmi_data", 
                 "bmi_change_cat", 
                 "precovid_bmi_category", 
-                "pandemic_stage")
+                "pandemic_stage", 
+                "all_cancer")
 
 BMI_trajectories <- BMI_trajectories %>% 
   dplyr::mutate(rapid_bmi_change = case_when(
@@ -219,9 +220,6 @@ chronic_cardiac <- population_demog_function2(chronic_cardiac) %>%
   dplyr::mutate(group = as.factor(group))
 
 
-all_cancer <- population_demog_function2(all_cancer) %>% 
-  dplyr::mutate(variable = 'all_cancer')%>% 
-  dplyr::mutate(group = as.factor(group))
 
 smoking_status <- population_demog_function2(smoking_status) %>% 
   dplyr::mutate(variable = 'smoking_status')%>% 
@@ -260,7 +258,6 @@ precovid_demog <- bind_rows(sex,
                             COPD,
                             stroke_and_TIA,
                             chronic_cardiac,
-                            all_cancer,
                             smoking_status,
                             precovid_bmi_category) %>% 
   dplyr::mutate(stage = "precovid", .before=1)
@@ -379,9 +376,6 @@ chronic_cardiac <- population_demog_function2(chronic_cardiac) %>%
   dplyr::mutate(group = as.factor(group))
 
 
-all_cancer <- population_demog_function2(all_cancer) %>% 
-  dplyr::mutate(variable = 'all_cancer')%>% 
-  dplyr::mutate(group = as.factor(group))
 
 smoking_status <- population_demog_function2(smoking_status) %>% 
   dplyr::mutate(variable = 'smoking_status')%>% 
@@ -420,7 +414,6 @@ postcovid_demog <- bind_rows(sex,
                              COPD,
                              stroke_and_TIA,
                              chronic_cardiac,
-                             all_cancer,
                              smoking_status,
                              precovid_bmi_category) %>% 
   dplyr::mutate(stage = "postcovid", .before=1)
