@@ -18,15 +18,13 @@ library(data.table)
 library(forcats)
 library(rstatix)
 library(janitor)
-library(lubridate)
-library(skimr)
-library(ggplot2)
-library(gtsummary)
-library(gt)  
 
-mean <- read_csv (here::here ("output/data", "mean_bmi_traj_change_T1DM"))
-univariate <- read_csv (here::here ("output/data", "univariate_bmi_trajectory_change_T1DM"))
-age_adjusted <- read_csv (here::here ("output/data", "age_adjusted_bmi_trajectory_change_T1DM"))
+
+
+
+mean <- read_csv (here::here ("output/data", "mean_bmi_traj_change_t1dm.csv"))
+univariate <- read_csv (here::here ("output/data", "univariate_bmi_trajectory_change_T1DM.csv"))
+age_adjusted <- read_csv (here::here ("output/data", "age_adjusted_bmi_trajectory_change_T1DM.csv"))
 
 mean <- mean %>% 
   dplyr::filter(n>0)
@@ -40,5 +38,5 @@ age_adjusted <- age_adjusted %>%
   
 write.csv (mean, here::here ("output/data","mean_bmi_traj_change_t1dm_redacted.csv"))
 write.csv (univariate, here::here ("output/data","univariate_bmi_traj_change_t1dm_redacted.csv"))
-write.csv (age_adjusted, here::here ("output/data","univariate_bmi_traj_change_t1dm_redacted.csv"))
+write.csv (age_adjusted, here::here ("output/data","age_adj_bmi_traj_change_t1dm_redacted.csv"))
   

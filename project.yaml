@@ -531,6 +531,18 @@ actions:
         table3: output/data/age_adjusted_bmi_trajectory_change_T1DM.csv
         table4: output/data/age_adjusted_bmi_trajectory_change_T2DM.csv
 
+
+  redact_bmi_trajectory_change_T1DM:
+    run: r:latest analysis/redact_bmi_trajectory_change_T1DM.R --output-dir=output/data 
+    needs: [bmi_trajectory_change_summary_DWMP, bmi_trajectory_change_model_univariate, bmi_trajectory_change_model_age]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/mean_bmi_traj_change_t1dm_redacted.csv
+        table2: output/data/univariate_bmi_traj_change_t1dm_redacted.csv
+        table3: output/data/age_adj_bmi_traj_change_t1dm_redacted.csv
+
+
+
 ## trajectory change calculations - with prepandemic underweight and cancer excluded
   bmi_trajectory_change_summary_lowbmi_excluded:
     run: r:latest analysis/BMI_change_diff_traj_summ_cancerandlowbmi_removed.R --output-dir=output/data 
