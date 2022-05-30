@@ -482,6 +482,12 @@ actions:
         table1: output/data/rapid_bmi_change_cancerandlowbmi_removed_univariate.csv
         table2: output/data/rapid_bmi_change_cancerandlowbmi_removed_popcharac.csv
 
+  bmi_change_age_adjusted_lowbmiexcluded: 
+    run: r:latest analysis/BMI_change_rapid_lowbmi_excluded_age_models.R --output-dir=output/data 
+    needs: [bmi_change_category_proportion_plots]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/rapid_bmi_change_cancerandlowbmi_removed_age_adjusted.csv
 
 
 ## change in BMI trajectory pre and post covid
