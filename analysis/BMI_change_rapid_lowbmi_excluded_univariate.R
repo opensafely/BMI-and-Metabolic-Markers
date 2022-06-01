@@ -212,6 +212,7 @@ population_demog_function2 <- function(data, var){
     dplyr::mutate(percent_rapid = rapid/N_total*100) %>% 
     dplyr::mutate(rapid = plyr::round_any(rapid, 5)) %>% 
     dplyr::mutate(N_total = plyr::round_any(N_total, 5)) %>% 
+    dplyr::mutate(not_rapid = plyr::round_any(not_rapid, 5)) %>% 
     dplyr::rename(group = {{var}}) %>%
     ungroup() %>%
     dplyr::mutate(variable = (v1))
