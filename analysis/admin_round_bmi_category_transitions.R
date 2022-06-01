@@ -41,7 +41,8 @@ data <- data %>%
  
 
 data <- data %>% 
-  dplyr::mutate(n_transition = plyr::round_any(data$n_transition, 5)) 
+  dplyr::mutate(n_transition = plyr::round_any(data$n_transition, 5)) %>% 
+  dplyr::mutate(total = plyr::round_any(data$total, 5)) 
 
 rapid_change <- data
 
