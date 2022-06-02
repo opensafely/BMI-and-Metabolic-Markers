@@ -674,6 +674,18 @@ actions:
         table3: output/data/sexageimd_adjusted_lowbmi_excluded_bmi_trajectory_change_T1DM.csv
         table4: output/data/sexageimd_adjusted_lowbmi_excluded_bmi_trajectory_change_T2DM.csv
 
+  bmi_trajectory_change_lowbmi_excluded_sexageethnic_adjusted: 
+    run: r:latest analysis/bmi_trajectory/trajectory_change/BMI_trajectory_change_lowbmi_excluded_sexageethnic_adjusted.R --output-dir=output/data 
+    needs: [bmi_trajectory_change_summary]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/sexageethnic_adjusted_lowbmi_excluded_bmi_trajectory_change.csv
+        table2: output/data/sexageethnic_adjusted_lowbmi_excluded_bmi_trajectory_change_hypertension.csv
+        table3: output/data/sexageethnic_adjusted_lowbmi_excluded_bmi_trajectory_change_T1DM.csv
+        table4: output/data/sexageethnic_adjusted_lowbmi_excluded_bmi_trajectory_change_T2DM.csv
+
+
+
   bmi_trajectory_change_lowbmi_excluded_sexageimdethnic_adjusted: 
     run: r:latest analysis/bmi_trajectory/trajectory_change/BMI_trajectory_change_lowbmi_excluded_sexageimdethnic_adjusted.R --output-dir=output/data 
     needs: [bmi_trajectory_change_summary]
