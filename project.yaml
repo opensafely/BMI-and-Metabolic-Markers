@@ -606,6 +606,48 @@ actions:
         table3: output/data/age_adjusted_lowbmi_excluded_bmi_trajectory_change_T1DM.csv
         table4: output/data/age_adjusted_lowbmi_excluded_bmi_trajectory_change_T2DM.csv
 
+## adjusted models
+  bmi_trajectory_change_lowbmi_excluded_sex_adjusted: 
+    run: r:latest analysis/bmi_trajectory/trajectory_change/BMI_trajectory_change_lowbmi_excluded_sex_adjusted.R --output-dir=output/data 
+    needs: [bmi_trajectory_change_summary]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/sex_adjusted_lowbmi_excluded_bmi_trajectory_change.csv
+        table2: output/data/sex_adjusted_lowbmi_excluded_bmi_trajectory_change_hypertension.csv
+        table3: output/data/sex_adjusted_lowbmi_excluded_bmi_trajectory_change_T1DM.csv
+        table4: output/data/sex_adjusted_lowbmi_excluded_bmi_trajectory_change_T2DM.csv
+
+  bmi_trajectory_change_lowbmi_excluded_imd_adjusted: 
+    run: r:latest analysis/bmi_trajectory/trajectory_change/BMI_trajectory_change_lowbmi_excluded_imd_adjusted.R --output-dir=output/data 
+    needs: [bmi_trajectory_change_summary]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/imd_adjusted_lowbmi_excluded_bmi_trajectory_change.csv
+        table2: output/data/imd_adjusted_lowbmi_excluded_bmi_trajectory_change_hypertension.csv
+        table3: output/data/imd_adjusted_lowbmi_excluded_bmi_trajectory_change_T1DM.csv
+        table4: output/data/imd_adjusted_lowbmi_excluded_bmi_trajectory_change_T2DM.csv
+
+  bmi_trajectory_change_lowbmi_excluded_sexage_adjusted: 
+    run: r:latest analysis/bmi_trajectory/trajectory_change/BMI_trajectory_change_lowbmi_excluded_sexage_adjusted.R --output-dir=output/data 
+    needs: [bmi_trajectory_change_summary]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/sexage_adjusted_lowbmi_excluded_bmi_trajectory_change.csv
+        table2: output/data/sexage_adjusted_lowbmi_excluded_bmi_trajectory_change_hypertension.csv
+        table3: output/data/sexage_adjusted_lowbmi_excluded_bmi_trajectory_change_T1DM.csv
+        table4: output/data/sexage_adjusted_lowbmi_excluded_bmi_trajectory_change_T2DM.csv
+
+  bmi_trajectory_change_lowbmi_excluded_sexageimd_adjusted: 
+    run: r:latest analysis/bmi_trajectory/trajectory_change/BMI_trajectory_change_lowbmi_excluded_sexageimd_adjusted.R --output-dir=output/data 
+    needs: [bmi_trajectory_change_summary]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/sexageimd_adjusted_lowbmi_excluded_bmi_trajectory_change.csv
+        table2: output/data/sexageimd_adjusted_lowbmi_excluded_bmi_trajectory_change_hypertension.csv
+        table3: output/data/sexageimd_adjusted_lowbmi_excluded_bmi_trajectory_change_T1DM.csv
+        table4: output/data/sexageimd_adjusted_lowbmi_excluded_bmi_trajectory_change_T2DM.csv
+
+
 
 ## box plots with filtered data (excluding extreme changes
   bmi_change_boxplots: 
