@@ -79,9 +79,7 @@ explanatory_vars_2 <- c("region",
                       "COPD",
                       "stroke_and_TIA",          
                       "chronic_cardiac",                                         
-                      "smoking_status", 
-                      "ethnic_no_miss",         
-                      "eth_group_16",           
+                      "smoking_status",          
                       "precovid_bmi_category")
 
 explanatory_vars_3 <- c("pandemic_stage")
@@ -102,7 +100,7 @@ BMI_trajectories %>%
 
 ##  ALL population - does pandemic affect odds
 models_all <- explanatory_vars_3 %>%       # begin with variables of interest
-  str_c("rapid_bmi_change ~ age_group_2 + sex + imd +", .) %>%         # combine each variable into formula ("outcome ~ variable of interest")
+  str_c("rapid_bmi_change ~ age_group_2 + sex + imd + eth_group_16 +", .) %>%         # combine each variable into formula ("outcome ~ variable of interest")
   
   # iterate through each formula
   map(                               
@@ -141,7 +139,7 @@ precovid_change <- BMI_trajectories %>%
   dplyr::filter(pandemic_stage == "precovid")
 
 models_precov <- explanatory_vars_2 %>%       # begin with variables of interest
-  str_c("rapid_bmi_change ~ age_group_2 + sex + imd +", .) %>%         # combine each variable into formula ("outcome ~ variable of interest")
+  str_c("rapid_bmi_change ~ age_group_2 + sex + imd + eth_group_16 +", .) %>%         # combine each variable into formula ("outcome ~ variable of interest")
   
   # iterate through each univariate formula
   map(                               
@@ -178,7 +176,7 @@ postcovid_change <- BMI_trajectories %>%
   dplyr::filter(pandemic_stage == "postcovid")
 
 models_postcov <- explanatory_vars_2 %>%       # begin with variables of interest
-  str_c("rapid_bmi_change ~ age_group_2 + sex + imd +", .) %>%         # combine each variable into formula ("outcome ~ variable of interest")
+  str_c("rapid_bmi_change ~ age_group_2 + sex + imd + eth_group_16 +", .) %>%         # combine each variable into formula ("outcome ~ variable of interest")
   
   # iterate through each univariate formula
   map(                               
@@ -212,5 +210,5 @@ models <-  models_all %>%
   bind_rows(models_postcov)
 
 
-write_csv (models, here::here ("output/data","rapid_bmi_change_cancerandlowbmi_removed_imdsexage_adjusted.csv"))
+write_csv (models, here::here ("output/data","rapid_bmi_change_cancerandlowbmi_removed_imdsexageethnic_adjusted.csv"))
 

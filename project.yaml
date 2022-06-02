@@ -505,6 +505,13 @@ actions:
       moderately_sensitive: 
         table1: output/data/rapid_bmi_change_cancerandlowbmi_removed_imd_adjusted.csv
 
+  bmi_rapid_change_ethnic_adjusted_lowbmiexcluded: 
+    run: r:latest analysis/bmi_trajectory/rapid_bmi_change/rapid_change_cancerlowbmiexc_ethnic_adj.R --output-dir=output/data 
+    needs: [bmi_change_category_proportion_plots]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/rapid_bmi_change_cancerandlowbmi_removed_ethnic_adjusted.csv
+
 
   bmi_rapid_change_sexage_adjusted_lowbmiexcluded: 
     run: r:latest analysis/bmi_trajectory/rapid_bmi_change/rapid_change_cancerlowbmiec_sexage_adj.R --output-dir=output/data 
@@ -520,6 +527,12 @@ actions:
       moderately_sensitive: 
         table1: output/data/rapid_bmi_change_cancerandlowbmi_removed_imdsexage_adjusted.csv
 
+  bmi_rapid_change_imdsexageethnic_adjusted_lowbmiexcluded: 
+    run: r:latest analysis/bmi_trajectory/rapid_bmi_change/rapid_change_cancerlowbmiexc_imdsexageethnic_adj.R --output-dir=output/data 
+    needs: [bmi_change_category_proportion_plots]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/rapid_bmi_change_cancerandlowbmi_removed_imdsexageethnic_adjusted.csv
 
 
 ## change in BMI trajectory pre and post covid
@@ -627,6 +640,20 @@ actions:
         table3: output/data/imd_adjusted_lowbmi_excluded_bmi_trajectory_change_T1DM.csv
         table4: output/data/imd_adjusted_lowbmi_excluded_bmi_trajectory_change_T2DM.csv
 
+  bmi_trajectory_change_lowbmi_excluded_ethnic_adjusted: 
+    run: r:latest analysis/bmi_trajectory/trajectory_change/BMI_trajectory_change_lowbmi_excluded_ethnic_adjusted.R --output-dir=output/data 
+    needs: [bmi_trajectory_change_summary]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/ethnic_adjusted_lowbmi_excluded_bmi_trajectory_change.csv
+        table2: output/data/ethnic_adjusted_lowbmi_excluded_bmi_trajectory_change_hypertension.csv
+        table3: output/data/ethnic_adjusted_lowbmi_excluded_bmi_trajectory_change_T1DM.csv
+        table4: output/data/ethnic_adjusted_lowbmi_excluded_bmi_trajectory_change_T2DM.csv
+
+
+
+
+
   bmi_trajectory_change_lowbmi_excluded_sexage_adjusted: 
     run: r:latest analysis/bmi_trajectory/trajectory_change/BMI_trajectory_change_lowbmi_excluded_sexage_adjusted.R --output-dir=output/data 
     needs: [bmi_trajectory_change_summary]
@@ -646,6 +673,16 @@ actions:
         table2: output/data/sexageimd_adjusted_lowbmi_excluded_bmi_trajectory_change_hypertension.csv
         table3: output/data/sexageimd_adjusted_lowbmi_excluded_bmi_trajectory_change_T1DM.csv
         table4: output/data/sexageimd_adjusted_lowbmi_excluded_bmi_trajectory_change_T2DM.csv
+
+  bmi_trajectory_change_lowbmi_excluded_sexageimdethnic_adjusted: 
+    run: r:latest analysis/bmi_trajectory/trajectory_change/BMI_trajectory_change_lowbmi_excluded_sexageimdethnic_adjusted.R --output-dir=output/data 
+    needs: [bmi_trajectory_change_summary]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/sexageimdethnic_adjusted_lowbmi_excluded_bmi_trajectory_change.csv
+        table2: output/data/sexageimdethnic_adjusted_lowbmi_excluded_bmi_trajectory_change_hypertension.csv
+        table3: output/data/sexageimdethnic_adjusted_lowbmi_excluded_bmi_trajectory_change_T1DM.csv
+        table4: output/data/sexageimdethnic_adjusted_lowbmi_excluded_bmi_trajectory_change_T2DM.csv
 
 
 
