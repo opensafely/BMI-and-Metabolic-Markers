@@ -489,6 +489,38 @@ actions:
       moderately_sensitive: 
         table1: output/data/rapid_bmi_change_cancerandlowbmi_removed_age_adjusted.csv
 
+### RAPID CHANGE BMI - ADJUSTED MODELS
+  bmi_rapid_change_sex_adjusted_lowbmiexcluded: 
+    run: r:latest analysis/bmi_trajectory/rapid_bmi_change/rapid_change_cancerlowbmiexc_sex_adj.R --output-dir=output/data 
+    needs: [bmi_change_category_proportion_plots]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/rapid_bmi_change_cancerandlowbmi_removed_sex_adjusted.csv
+
+
+  bmi_rapid_change_imd_adjusted_lowbmiexcluded: 
+    run: r:latest analysis/bmi_trajectory/rapid_bmi_change/rapid_change_cancerlowbmiexc_imd_adj.R --output-dir=output/data 
+    needs: [bmi_change_category_proportion_plots]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/rapid_bmi_change_cancerandlowbmi_removed_imd_adjusted.csv
+
+
+  bmi_rapid_change_sexage_adjusted_lowbmiexcluded: 
+    run: r:latest analysis/bmi_trajectory/rapid_bmi_change/rapid_change_cancerlowbmiec_sexage_adj.R --output-dir=output/data 
+    needs: [bmi_change_category_proportion_plots]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/rapid_bmi_change_cancerandlowbmi_removed_sexage_adjusted.csv
+
+  bmi_rapid_change_imdsexage_adjusted_lowbmiexcluded: 
+    run: r:latest analysis/bmi_trajectory/rapid_bmi_change/rapid_change_cancerlowbmiexc_imdsexage_adj.R --output-dir=output/data 
+    needs: [bmi_change_category_proportion_plots]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/rapid_bmi_change_cancerandlowbmi_removed_imdsexage_adjusted.csv
+
+
 
 ## change in BMI trajectory pre and post covid
   bmi_trajectory_change_summary: 
