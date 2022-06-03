@@ -455,6 +455,14 @@ actions:
         chart9: output/category_bmi_change_imd.png
         chart10: output/category_bmi_change_hypertension.png
 
+## description proportions in each change group
+  bmi_change_groups_description: 
+    run: r:latest analysis/bmi_trajectory/BMI_change_category_description.R --output-dir=output/data 
+    needs: [bmi_change_category_proportion_plots]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/precovid_bmichange_description.csv
+        table2: output/data/postcovid_bmichange_description.csv
 
 
 ## logistic regression predictors of rapid bmi change in pre and post covid period
