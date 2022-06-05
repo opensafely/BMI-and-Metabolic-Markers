@@ -610,6 +610,26 @@ actions:
         table9: output/data/depression_lowbmi_excluded_bmi_trajectory_change_sexageethimd_adj.csv
 
 
+
+  bmi_trajectory_change_pop_with_learning_diff: 
+    run: r:latest analysis/bmi_trajectory/trajectory_change/BMI_traj_change_lowbmi_exc_learning_diff_models.R --output-dir=output/data 
+    needs: [bmi_trajectory_change_summary]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/learning_diff_lowbmi_excluded_bmi_trajectory_change_univariate.csv
+        table2: output/data/learning_diff_lowbmi_excluded_bmi_trajectory_change_sex_adj.csv
+        table3: output/data/learning_diff_lowbmi_excluded_bmi_trajectory_change_age_adj.csv
+        table4: output/data/learning_diff_lowbmi_excluded_bmi_trajectory_change_ethnicity_adj.csv
+        table5: output/data/learning_diff_lowbmi_excluded_bmi_trajectory_change_imd_adj.csv
+        table6: output/data/learning_diff_lowbmi_excluded_bmi_trajectory_change_sexage_adj.csv
+        table7: output/data/learning_diff_lowbmi_excluded_bmi_trajectory_change_sexageimd_adj.csv
+        table8: output/data/learning_diff_lowbmi_excluded_bmi_trajectory_change_sexageeth_adj.csv
+        table9: output/data/learning_diff_lowbmi_excluded_bmi_trajectory_change_sexageethimd_adj.csv
+
+
+
+
+
 ## trajectory change calculations - with prepandemic underweight and cancer excluded
   bmi_trajectory_change_summary_lowbmi_excluded:
     run: r:latest analysis/BMI_change_diff_traj_summ_cancerandlowbmi_removed.R --output-dir=output/data 
