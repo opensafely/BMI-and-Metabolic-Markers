@@ -626,6 +626,21 @@ actions:
         table8: output/data/learning_diff_lowbmi_excluded_bmi_trajectory_change_sexageeth_adj.csv
         table9: output/data/learning_diff_lowbmi_excluded_bmi_trajectory_change_sexageethimd_adj.csv
 
+  bmi_trajectory_change_pop_with_SMI: 
+    run: r:latest analysis/bmi_trajectory/trajectory_change/BMI_traj_change_lowbmi_exc_SMI_models.R --output-dir=output/data 
+    needs: [bmi_trajectory_change_summary]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/SMI_lowbmi_excluded_bmi_trajectory_change_univariate.csv
+        table2: output/data/SMI_lowbmi_excluded_bmi_trajectory_change_sex_adj.csv
+        table3: output/data/SMI_lowbmi_excluded_bmi_trajectory_change_age_adj.csv
+        table4: output/data/SMI_lowbmi_excluded_bmi_trajectory_change_ethnicity_adj.csv
+        table5: output/data/SMI_lowbmi_excluded_bmi_trajectory_change_imd_adj.csv
+        table6: output/data/SMI_lowbmi_excluded_bmi_trajectory_change_sexage_adj.csv
+        table7: output/data/SMI_lowbmi_excluded_bmi_trajectory_change_sexageimd_adj.csv
+        table8: output/data/SMI_lowbmi_excluded_bmi_trajectory_change_sexageeth_adj.csv
+        table9: output/data/SMI_lowbmi_excluded_bmi_trajectory_change_sexageethimd_adj.csv
+
 
 
 
