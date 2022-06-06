@@ -654,7 +654,21 @@ actions:
         table8: output/data/SMI_lowbmi_excluded_bmi_trajectory_change_sexageeth_adj.csv
         table9: output/data/SMI_lowbmi_excluded_bmi_trajectory_change_sexageethimd_adj.csv
 
-
+  bmi_trajectory_change_pop_with_SMI_redact: 
+    run: r:latest analysis/bmi_trajectory/trajectory_change/redact_SMI_traj_change.R --output-dir=output/data 
+    needs: [bmi_trajectory_change_pop_with_SMI, bmi_trajectory_change_summary_mentalhealth_2]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/SMI_lowbmi_excluded_bmi_trajectory_change_univariate_redact.csv
+        table2: output/data/SMI_lowbmi_excluded_bmi_trajectory_change_sex_adj_redact.csv
+        table3: output/data/SMI_lowbmi_excluded_bmi_trajectory_change_age_adj_redact.csv
+        table4: output/data/SMI_lowbmi_excluded_bmi_trajectory_change_ethnicity_adj_redact.csv
+        table5: output/data/SMI_lowbmi_excluded_bmi_trajectory_change_imd_adj_redact.csv
+        table6: output/data/SMI_lowbmi_excluded_bmi_trajectory_change_sexage_adj_redact.csv
+        table7: output/data/SMI_lowbmi_excluded_bmi_trajectory_change_sexageimd_adj_redact.csv
+        table8: output/data/SMI_lowbmi_excluded_bmi_trajectory_change_sexageeth_adj_redact.csv
+        table9: output/data/SMI_lowbmi_excluded_bmi_trajectory_change_sexageethimd_adj_redact.csv
+        table10: output/data/mean_bmi_traj_change_psychosis_schiz_bipolar_redact.csv
 
 
 
