@@ -454,7 +454,10 @@ dplyr::filter(complete_bmi_data == "complete")  %>%
 dplyr::filter(psychosis_schiz_bipolar == TRUE)
 
 BMI_psychosis_schiz_bipolar_DT %>%
-tabyl(age_group_2, sex)
+tabyl(age_group_2, sex) 
+
+BMI_psychosis_schiz_bipolar_DT %>%
+tabyl(smoking_status) 
 
 BMI_psychosis_schiz_bipolar_DT_summ <- BMI_psychosis_schiz_bipolar_DT %>% 
   dplyr::summarise( n = n(), mean = mean(trajectory_change), sd = sd(trajectory_change)) %>% 
