@@ -780,6 +780,25 @@ actions:
         table3: output/data/sexageimdethnic_adjusted_lowbmi_excluded_bmi_trajectory_change_T1DM.csv
         table4: output/data/sexageimdethnic_adjusted_lowbmi_excluded_bmi_trajectory_change_T2DM.csv
 
+  bmi_trajectory_change_lowbmi_excluded_T1DM_redact: 
+    run: r:latest analysis/bmi_trajectory/trajectory_change/redact_T1DM_traj_change.R --output-dir=output/data 
+    needs: [bmi_trajectory_change_lowbmi_excluded_sexageimdethnic_adjusted,  bmi_trajectory_change_lowbmi_excluded_sexageethnic_adjusted, bmi_trajectory_change_lowbmi_excluded_sexageimd_adjusted, bmi_trajectory_change_lowbmi_excluded_sexage_adjusted, bmi_trajectory_change_lowbmi_excluded_ethnic_adjusted, bmi_trajectory_change_lowbmi_excluded_imd_adjusted, bmi_trajectory_change_lowbmi_excluded_sex_adjusted, bmi_trajectory_change_lowbmi_excluded_age_adjusted, bmi_trajectory_change_lowbmi_excluded_univariate, bmi_trajectory_change_summary_lowbmi_excluded ]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/mean_bmi_traj_change_cancerandlowbmi_removed_T1DM_redact.csv
+        table2: output/data/univariate_lowbmi_excluded_bmi_trajectory_change_T1DM_redact.csv
+        table3: output/data/ethnic_adjusted_lowbmi_excluded_bmi_trajectory_change_T1DM_redact.csv
+        table4: output/data/sex_adjusted_lowbmi_excluded_bmi_trajectory_change_T1DM_redact.csv
+        table5: output/data/sexageimdethnic_adjusted_lowbmi_excluded_bmi_trajectory_change_T1DM_redact.csv
+        table6: output/data/sexageethnic_adjusted_lowbmi_excluded_bmi_trajectory_change_T1DM_redact.csv 
+        table7: output/data/sexageimd_adjusted_lowbmi_excluded_bmi_trajectory_change_T1DM_redact.csv
+        table8: output/data/sexage_adjusted_lowbmi_excluded_bmi_trajectory_change_T1DM_redact.csv
+        table9: output/data/imd_adjusted_lowbmi_excluded_bmi_trajectory_change_T1DM_redact.csv
+        table10: output/data/age_adjusted_lowbmi_excluded_bmi_trajectory_change_T1DM_redact.csv
+
+
+
+
 
 
 ## box plots with filtered data (excluding extreme changes
