@@ -565,7 +565,7 @@ actions:
         table3: output/data/mean_bmi_traj_change_t1dm.csv
 
 
-  bmi_trajectory_change_summary_mentalhealth:
+  bmi_trajectory_change_summary_mentalhealth_2:
     run: r:latest analysis/bmi_trajectory/trajectory_change/BMI_change_traj_summ_mentalhealthLD_groups.R --output-dir=output/data 
     needs: [bmi_trajectory_change_summary]
     outputs:
