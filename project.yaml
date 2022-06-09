@@ -797,7 +797,12 @@ actions:
         table10: output/data/age_adjusted_lowbmi_excluded_bmi_trajectory_change_T1DM_redact.csv
 
 
-
+  bmi_trajectory_change_lowbmi_excluded_complete_data_proportions: 
+    run: r:latest analysis/bmi_trajectory/trajectory_change/BMI_traj_change_complete_case_counts.R --output-dir=output/data 
+    needs: [bmi_change_category_proportion_plots]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/complete_traj_data_proportions.csv
 
 
 
