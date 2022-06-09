@@ -163,13 +163,30 @@ complete_numbers <- sex %>%
   bind_rows(smoking_status) 
 
 
+all <- trajectory_population %>% 
+  tabyl(complete_bmi_data) %>% 
+  dplyr::mutate(N_total = n/percent) %>% 
+  dplyr::rename(complete_n = n) %>% 
+  dplyr::rename(complete_prop = percent) %>% 
+  dplyr::filter(complete_bmi_data == "complete") %>% 
+  dplyr::mutate(group = "all") %>% 
+  dplyr::mutate(variable = "all") %>% 
+  dplyr::select("variable","group", "complete_n", "complete_prop", "N_total") 
+
+
 complete <- complete_numbers %>% 
   bind_cols(complete_percentages) %>% 
   dplyr::rename(variable = "variable...1") %>%
   dplyr::rename(group = "group...2") %>%
-  dplyr::select("variable","group", "complete_n", "complete_prop", "N_total") %>% 
-  dplyr::mutate(N_total = plyr::round_any(complete_numbers$N_total, 5))  %>% 
-  dplyr::mutate(complete_n = plyr::round_any(complete_numbers$complete_n, 5))
+  dplyr::select("variable","group", "complete_n", "complete_prop", "N_total") 
+
+complete <- all %>%
+  dplyr::bind_rows(complete)
+
+complete <- complete %>%
+  dplyr::mutate(N_total = plyr::round_any(complete$N_total, 5))  %>% 
+  dplyr::mutate(complete_n = plyr::round_any(complete$complete_n, 5))  
+
 
 
 write.csv (complete, here::here ("output/data","complete_traj_data_proportions.csv"))
