@@ -16,7 +16,7 @@ library(skimr)
 library(ggplot2)
 library(gtsummary)
 
-BMI_data <- read_feather (here::here ("/Users/miriamsamuel/Documents/Academic GP/Open Safely/Dummy Data", "BMI_trajectory_data_long.feather"))
+BMI_data <- read_feather (here::here ("output/data", "BMI_trajectory_data_long.feather"))
 
 
 ## Filter for data that had BMI_trajectory data in the precovid period.  This is my population
