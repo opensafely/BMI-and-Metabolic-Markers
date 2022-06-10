@@ -542,6 +542,19 @@ actions:
       moderately_sensitive: 
         table1: output/data/rapid_bmi_change_cancerandlowbmi_removed_imdsexageethnic_adjusted.csv
 
+## Top decile weight gain all
+## TOP decile weight gain
+  bmi_gain_top_decile_univariate.R: 
+    run: r:latest analysis/bmi_trajectory/top_decile/top_decile_weightgain_univariate.R --output-dir=output/data 
+    needs: [bmi_change_category_proportion_plots]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/weightgain_90th_popcharac.csv
+        table2: output/data/weightgain_90th_univariate.csv
+        table3: output/data/yearly_bmi_change_deciles.csv
+
+
+
 
 ## change in BMI trajectory pre and post covid
   bmi_trajectory_change_summary: 
