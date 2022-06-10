@@ -813,13 +813,8 @@ actions:
       moderately_sensitive: 
         table1: output/data/univariate_complete_cases.csv
         table2: output/data/age_adjusted_complete_cases.csv
-        table3: output/data/sex_adjusted_complete_cases.csv
-        table4: output/data/sexage_adjusted_complete_cases.csv
-        table5: output/data/eth_adjusted_complete_cases.csv
-        table6: output/data/imd_adjusted_complete_cases.csv
-        table7: output/data/sexageeth_adjusted_complete_cases.csv
-        table8: output/data/sexageimd_adjusted_complete_cases.csv
-        table9: output/data/sexageethimd_adjusted_complete_cases.csv
+
+
 
 
 
