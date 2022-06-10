@@ -806,6 +806,18 @@ actions:
 
 
 
+  bmi_trajectory_change_lowbmi_excluded_complete_data_models: 
+    run: r:latest analysis/bmi_trajectory/trajectory_change/BMI_traj_change_complete_case_models.R --output-dir=output/data 
+    needs: [bmi_change_category_proportion_plots]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/univariate_complete_cases.csv
+        table2: output/data/age_adjusted_complete_cases.csv
+
+
+
+
+
 ## box plots with filtered data (excluding extreme changes
   bmi_change_boxplots: 
     run: r:latest analysis/bmi_change_boxplots.R --output-dir=output/data 
