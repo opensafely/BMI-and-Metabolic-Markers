@@ -560,6 +560,13 @@ actions:
       moderately_sensitive: 
         table1: output/data/weightgain_90th_age_adj.csv
 
+  bmi_gain_top_decile_sex: 
+    run: r:latest analysis/bmi_trajectory/top_decile/top_decile_weightgain_sex_adj.R --output-dir=output/data 
+    needs: [bmi_change_category_proportion_plots]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/weightgain_90th_sex_adj.csv
+
 
 
 

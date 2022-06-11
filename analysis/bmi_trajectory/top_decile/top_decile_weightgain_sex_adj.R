@@ -105,7 +105,7 @@ precovid_change <- precovid_change %>%
 
 
 models_precov_rapidinc_bmi_univar <- explanatory_vars %>%       # begin with variables of interest
-  str_c("weightgain_90th ~ age_group_2 +", .) %>%         # combine each variable into formula ("outcome ~ variable of interest")
+  str_c("weightgain_90th ~ sex +", .) %>%         # combine each variable into formula ("outcome ~ variable of interest")
   
   # iterate through each univariate formula
   map(                               
@@ -166,7 +166,7 @@ postcovid_change <- postcovid_change %>%
   ))
 
 models_postcov_rapidinc_bmi_univar <- explanatory_vars %>%       # begin with variables of interest
-  str_c("weightgain_90th ~ age_group_2 + ", .) %>%         # combine each variable into formula ("outcome ~ variable of interest")
+  str_c("weightgain_90th ~ sex + ", .) %>%         # combine each variable into formula ("outcome ~ variable of interest")
   
   # iterate through each univariate formula
   map(                               
@@ -196,11 +196,11 @@ models_postcov_rapidinc_bmi_univar <- models_postcov_rapidinc_bmi_univar %>%
 
 
 ### Write outputs
-models_age <- models_precov_rapidinc_bmi_univar %>% 
+models_sex <- models_precov_rapidinc_bmi_univar %>% 
   bind_rows(models_postcov_rapidinc_bmi_univar)
 
 
-write_csv (models_age, here::here ("output/data","weightgain_90th_age_adj.csv"))
+write_csv (models_sex, here::here ("output/data","weightgain_90th_sex_adj.csv"))
 
 
 
