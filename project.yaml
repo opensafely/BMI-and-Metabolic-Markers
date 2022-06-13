@@ -286,13 +286,13 @@ actions:
 
 ## check the output from the cohort extractor 'had_bmi'
 
- # had_bmi_proportion_2019_check:
- #   run: r:latest analysis/had_bmi_check/had_bmi_check_2019.R --output-dir=output/data 
- #   needs: [generate_complete_median_BMI_data]
- #   outputs:
- #     moderately_sensitive:
- #       table1: output/data/proportion_had_bmi_check_2019.csv
-
+  had_bmi_proportion_2019_check:
+    run: r:latest analysis/had_bmi_check/had_bmi_check_2019.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/proportion_had_bmi_check_2019.csv
+        table2: output/data/had_bmi_numbers_check.csv
 
 #########################################################
 ## PROPORTION OBESE ANALYSIS
