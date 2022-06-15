@@ -44,13 +44,20 @@ had_bmi_numbers_check <- BMI_median_2 %>%
   dplyr::rename(had_bmi_TRUE = 'TRUE')
 
 
+## Replacing the had_bmi flag
+
+# remove the had_bmi flag created by cohort extractor
+
 BMI_median_2 <- BMI_median_2 %>% 
   dplyr::select(-('had_bmi'))
+
+
+# replace with had_bmi flag based on the presence of a median BMI
 
 BMI_median_2 <- BMI_median_2 %>% 
   dplyr::rename(had_bmi = had_bmi_check)
 
-
+## Analysis
 
 
 BMI_complete_categories <- BMI_median_2 %>% 
