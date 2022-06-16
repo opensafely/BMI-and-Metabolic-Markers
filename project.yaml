@@ -283,6 +283,14 @@ actions:
       moderately_sensitive:
         table1: output/data/proportion_had_bmi_2021.csv
  
+## Look at odds of having BMI across the years
+  had_bmi_2019_2021_models1:
+    run: r:latest analysis/had_bmi_check/had_bmi_all_years_models.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/had_bmi_2019_21_models_1.csv
+
 
 ## check the output from the cohort extractor 'had_bmi'
 
