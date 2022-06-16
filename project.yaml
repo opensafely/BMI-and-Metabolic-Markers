@@ -291,6 +291,13 @@ actions:
       moderately_sensitive:
         table1: output/data/had_bmi_2019_21_models_1.csv
 
+  had_bmi_2019_2021_models1_counts:
+    run: r:latest analysis/had_bmi_check/had_bmi_all_years_models_counts.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/had_bmi_2019_21_models_1_counts.csv
+        table2: output/data/had_bmi_2019_21_models_1_demographics.csv
 
 ## check the output from the cohort extractor 'had_bmi'
 
