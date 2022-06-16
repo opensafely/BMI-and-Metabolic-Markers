@@ -24,8 +24,8 @@ BMI_complete_categories <- BMI_median_2 %>%
   dplyr::filter (year == "2019"| year == "2021" ) %>%
   dplyr::mutate (imd = as.factor(imd)) %>%
   dplyr::mutate (imd = fct_relevel(imd, "1", "2", "3", "4", "5")) %>%
-  dplyr::mutate(age_group = as.factor(age_group)) %>%
-  dplyr::mutate(age_group = fct_relevel(age_group, "18-39", "40-65", "65-80", "80+")) %>% 
+  dplyr::mutate(age_group_2 = as.factor(age_group_2)) %>%
+  dplyr::mutate(age_group_2 = fct_relevel(age_group_2, "18-29", "30_39", "40-49", "50_59", "60-69", "70-79","80+")) %>% 
   dplyr::mutate(sex = fct_relevel(sex, 'F', "M"))
 
 
