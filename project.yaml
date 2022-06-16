@@ -299,6 +299,14 @@ actions:
         table1: output/data/had_bmi_2019_21_models_1_counts.csv
         table2: output/data/had_bmi_2019_21_models_1_demographics.csv
 
+  had_bmi_2019_2021_models_comorbidities:
+    run: r:latest analysis/had_bmi_check/had_bmi_all_years_comorbidities_models.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/had_bmi_2019_21_comorbidity_models.csv
+        table2: output/data/had_bmi_2019_21_comorbidity_models_counts.csv
+
 ## check the output from the cohort extractor 'had_bmi'
 
   had_bmi_proportion_2019_check:
