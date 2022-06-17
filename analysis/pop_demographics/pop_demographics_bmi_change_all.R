@@ -187,7 +187,8 @@ demographics <- all_precovid %>%
   bind_rows(all_postcovid) %>% 
   bind_rows(all_complete)
 
-
+demographics <- demographics %>% 
+  dplyr::mutate(n = plyr::round_any(demographics$n, 5))
 
 
 write.csv (demographics, here::here ("output/data","demographics_bmi_change_analysis_all.csv"))

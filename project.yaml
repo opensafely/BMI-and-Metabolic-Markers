@@ -312,8 +312,30 @@ actions:
       moderately_sensitive:
         table1: output/data/demographics_bmi_change_analysis_lowbmiexc.csv
 
+  demographics_bmi_change_t2dm:
+    run: r:latest analysis/pop_demographics/pop_demographics_bmi_change_t2dm.R --output-dir=output/data 
+    needs: [bmi_change_category_proportion_plots]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/demographics_bmi_change_analysis_all_t2dm.csv
+        table2: output/data/demographics_bmi_change_analysis_lowbmiexc_t2dm.csv
 
 
+  demographics_bmi_change_t1dm:
+    run: r:latest analysis/pop_demographics/pop_demographics_bmi_change_t1dm.R --output-dir=output/data 
+    needs: [bmi_change_category_proportion_plots]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/demographics_bmi_change_analysis_all_t1dm.csv
+        table2: output/data/demographics_bmi_change_analysis_lowbmiexc_t1dm.csv
+
+  demographics_bmi_change_hypertension:
+    run: r:latest analysis/pop_demographics/pop_demographics_bmi_change_hypertension.R --output-dir=output/data 
+    needs: [bmi_change_category_proportion_plots]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/demographics_bmi_change_analysis_all_hypertension.csv
+        table2: output/data/demographics_bmi_change_analysis_lowbmiexc_hypertension.csv
 ##################################################################
 ### >> HAD_BMI ANALYSIS
 ######################################################################
