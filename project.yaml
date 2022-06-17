@@ -266,6 +266,12 @@ actions:
       moderately_sensitive:
         table1: output/data/demographics_study_population.csv
 
+  demographics_had_bmi:
+    run: r:latest analysis/pop_demographics/pop_demographics_had_bmi.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/demographics_had_bmi.csv
 
 
 ##################################################################
