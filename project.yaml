@@ -927,22 +927,7 @@ actions:
 
 
 
-  bmi_trajectory_change_lowbmi_excluded_complete_data_models: 
-    run: r:latest analysis/bmi_trajectory/trajectory_change/BMI_traj_change_complete_case_models.R --output-dir=output/data 
-    needs: [bmi_change_category_proportion_plots]
-    outputs:
-      moderately_sensitive: 
-        table1: output/data/univariate_complete_cases.csv
-        table2: output/data/age_adjusted_complete_cases.csv
 
-  bmi_trajectory_change_lowbmi_excluded_complete_data_models_2: 
-    run: r:latest analysis/bmi_trajectory/trajectory_change/BMI_traj_change_complete_case_models_2.R --output-dir=output/data 
-    needs: [bmi_change_category_proportion_plots]
-    outputs:
-      moderately_sensitive: 
-        table1: output/data/sex_adjusted_complete_cases.csv
-        table2: output/data/imd_adjusted_complete_cases.csv
-        table3: output/data/ethnicity_adjusted_complete_cases.csv
 
 
 
