@@ -274,6 +274,14 @@ actions:
         table1: output/data/demographics_had_bmi.csv
 
 
+  demographics_bmi_change_all:
+    run: r:latest analysis/pop_demographics/pop_demographics_bmi_change_all.R --output-dir=output/data 
+    needs: [bmi_change_category_proportion_plots]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/demographics_bmi_change_analysis_all.csv
+
+
 ##################################################################
 ### >> HAD_BMI ANALYSIS
 ######################################################################
