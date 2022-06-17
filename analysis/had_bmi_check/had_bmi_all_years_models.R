@@ -32,42 +32,42 @@ BMI_complete_categories <- BMI_median_2 %>%
 
 model_year <- BMI_complete_categories %>% 
   glm(had_bmi ~ year, data=., family=binomial) %>% 
-  broom::tidy(conf.int = TRUE) %>% 
+  broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>% 
   dplyr::mutate(predictor = "year")
 
 
 
 model_age <- BMI_complete_categories %>% 
   glm(had_bmi ~ age_group_2, data=., family=binomial) %>% 
-  broom::tidy(conf.int = TRUE) %>% 
+  broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>% 
   dplyr::mutate(predictor = "age")
 
 model_imd <- BMI_complete_categories %>% 
   glm(had_bmi ~ imd, data=., family=binomial) %>% 
-  broom::tidy(conf.int = TRUE) %>%
+  broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>%
   dplyr::mutate(predictor = "imd")
 
 
 model_sex <- BMI_complete_categories %>% 
   glm(had_bmi ~ sex, data=., family=binomial) %>% 
-  broom::tidy(conf.int = TRUE) %>% 
+  broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>% 
   dplyr::mutate(predictor = "sex")
 
 
 model_eth <- BMI_complete_categories %>% 
   glm(had_bmi ~ eth_group_16, data=., family=binomial) %>% 
-  broom::tidy(conf.int = TRUE) %>% 
+  broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>% 
   dplyr::mutate(predictor = "ethnicity")
 
 model_region <- BMI_complete_categories %>% 
   glm(had_bmi ~ region, data=., family=binomial) %>% 
-  broom::tidy(conf.int = TRUE) %>% 
+  broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>% 
   dplyr::mutate(predictor = "region")
 
 
 model_year_age <- BMI_complete_categories %>% 
   glm(had_bmi ~ year+ age_group_2, data=., family=binomial) %>% 
-  broom::tidy(conf.int = TRUE) %>%
+  broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>%
   dplyr::mutate(predictor = "year_age")
 
 models_complete <- model_year %>% 

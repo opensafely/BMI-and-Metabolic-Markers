@@ -36,14 +36,14 @@ BMI_complete_categories %>%
 model_T1DM <- BMI_complete_categories %>%
   dplyr::filter(comorbid_diabetes_t1 == TRUE) %>% 
   glm(had_bmi ~ year, data=., family=binomial) %>% 
-  broom::tidy(conf.int = TRUE) %>% 
+  broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>% 
   dplyr::mutate(predictor = "year") %>%
   dplyr::mutate(group = "diabetes_t1")
 
 model_T1DM_2 <- BMI_complete_categories %>%
   dplyr::filter(comorbid_diabetes_t1 == TRUE) %>% 
   glm(had_bmi ~ year + age_group_2, data=., family=binomial) %>% 
-  broom::tidy(conf.int = TRUE) %>% 
+  broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>% 
   dplyr::mutate(predictor = "year_age") %>%
   dplyr::mutate(group = "diabetes_t1")
 
@@ -51,14 +51,14 @@ model_T1DM_2 <- BMI_complete_categories %>%
 model_T2DM <- BMI_complete_categories %>%
   dplyr::filter(comorbid_diabetes_t2 == TRUE) %>% 
   glm(had_bmi ~ year, data=., family=binomial) %>% 
-  broom::tidy(conf.int = TRUE) %>% 
+  broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>% 
   dplyr::mutate(predictor = "year") %>%
   dplyr::mutate(group = "diabetes_t2")
 
 model_T2DM_2 <- BMI_complete_categories %>%
   dplyr::filter(comorbid_diabetes_t2 == TRUE) %>% 
   glm(had_bmi ~ year + age_group_2, data=., family=binomial) %>% 
-  broom::tidy(conf.int = TRUE) %>% 
+  broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>% 
   dplyr::mutate(predictor = "year_age") %>%
   dplyr::mutate(group = "diabetes_t2")
 
@@ -66,14 +66,14 @@ model_T2DM_2 <- BMI_complete_categories %>%
 model_hypertension <- BMI_complete_categories %>%
   dplyr::filter(comorbid_hypertension == TRUE) %>% 
   glm(had_bmi ~ year, data=., family=binomial) %>% 
-  broom::tidy(conf.int = TRUE) %>% 
+  broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>% 
   dplyr::mutate(predictor = "year") %>%
   dplyr::mutate(group = "hypertension")
 
 model_hypertension_2 <- BMI_complete_categories %>%
   dplyr::filter(comorbid_hypertension == TRUE) %>% 
   glm(had_bmi ~ year + age_group_2, data=., family=binomial) %>% 
-  broom::tidy(conf.int = TRUE) %>% 
+  broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>% 
   dplyr::mutate(predictor = "year_age") %>%
   dplyr::mutate(group = "hypertension")
 
@@ -82,14 +82,14 @@ model_hypertension_2 <- BMI_complete_categories %>%
 model_learning_disability <- BMI_complete_categories %>%
   dplyr::filter(comorbid_learning_disability == TRUE) %>% 
   glm(had_bmi ~ year, data=., family=binomial) %>% 
-  broom::tidy(conf.int = TRUE) %>% 
+  broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>% 
   dplyr::mutate(predictor = "year") %>%
   dplyr::mutate(group = "learning_disability")
 
 model_learning_disability_2 <- BMI_complete_categories %>%
   dplyr::filter(comorbid_learning_disability == TRUE) %>% 
   glm(had_bmi ~ year + age_group_2, data=., family=binomial) %>% 
-  broom::tidy(conf.int = TRUE) %>% 
+  broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>% 
   dplyr::mutate(predictor = "year_age") %>%
   dplyr::mutate(group = "learning_disability")
 
@@ -100,7 +100,7 @@ model_learning_disability_2 <- BMI_complete_categories %>%
 model_depression <- BMI_complete_categories %>%
   dplyr::filter(comorbid_depression == TRUE) %>% 
   glm(had_bmi ~ year, data=., family=binomial) %>% 
-  broom::tidy(conf.int = TRUE) %>% 
+  broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>% 
   dplyr::mutate(predictor = "year") %>%
   dplyr::mutate(group = "depression")
 
@@ -108,7 +108,7 @@ model_depression <- BMI_complete_categories %>%
 model_depression_2 <- BMI_complete_categories %>%
   dplyr::filter(comorbid_depression == TRUE) %>% 
   glm(had_bmi ~ year + age_group_2, data=., family=binomial) %>% 
-  broom::tidy(conf.int = TRUE) %>% 
+  broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>% 
   dplyr::mutate(predictor = "year_age") %>%
   dplyr::mutate(group = "depression")
 
@@ -117,7 +117,7 @@ model_depression_2 <- BMI_complete_categories %>%
 model_psychosis_schiz_bipolar <- BMI_complete_categories %>%
   dplyr::filter(comorbid_psychosis_schiz_bipolar == TRUE) %>% 
   glm(had_bmi ~ year, data=., family=binomial) %>% 
-  broom::tidy(conf.int = TRUE) %>% 
+  broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>% 
   dplyr::mutate(predictor = "year") %>%
   dplyr::mutate(group = "psychosis_schiz_bipolar")
 
@@ -125,7 +125,7 @@ model_psychosis_schiz_bipolar <- BMI_complete_categories %>%
 model_psychosis_schiz_bipolar_2 <- BMI_complete_categories %>%
   dplyr::filter(comorbid_psychosis_schiz_bipolar == TRUE) %>% 
   glm(had_bmi ~ year + age_group_2, data=., family=binomial) %>% 
-  broom::tidy(conf.int = TRUE) %>% 
+  broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>% 
   dplyr::mutate(predictor = "year_age") %>%
   dplyr::mutate(group = "psychosis_schiz_bipolar")
 
@@ -133,7 +133,7 @@ model_psychosis_schiz_bipolar_2 <- BMI_complete_categories %>%
 model_asthma <- BMI_complete_categories %>%
   dplyr::filter(comorbid_asthma == TRUE) %>% 
   glm(had_bmi ~ year, data=., family=binomial) %>% 
-  broom::tidy(conf.int = TRUE) %>% 
+  broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>% 
   dplyr::mutate(predictor = "year") %>%
   dplyr::mutate(group = "asthma")
 
@@ -141,7 +141,7 @@ model_asthma <- BMI_complete_categories %>%
 model_asthma_2 <- BMI_complete_categories %>%
   dplyr::filter(comorbid_asthma == TRUE) %>% 
   glm(had_bmi ~ year + age_group_2, data=., family=binomial) %>% 
-  broom::tidy(conf.int = TRUE) %>% 
+  broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>% 
   dplyr::mutate(predictor = "year_age") %>%
   dplyr::mutate(group = "asthma")
 
@@ -151,7 +151,7 @@ model_asthma_2 <- BMI_complete_categories %>%
 model_COPD <- BMI_complete_categories %>%
   dplyr::filter(comorbid_COPD == TRUE) %>% 
   glm(had_bmi ~ year, data=., family=binomial) %>% 
-  broom::tidy(conf.int = TRUE) %>% 
+  broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>% 
   dplyr::mutate(predictor = "year") %>%
   dplyr::mutate(group = "COPD")
 
@@ -159,7 +159,7 @@ model_COPD <- BMI_complete_categories %>%
 model_COPD_2 <- BMI_complete_categories %>%
   dplyr::filter(comorbid_COPD == TRUE) %>% 
   glm(had_bmi ~ year + age_group_2, data=., family=binomial) %>% 
-  broom::tidy(conf.int = TRUE) %>% 
+  broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>% 
   dplyr::mutate(predictor = "year_age") %>%
   dplyr::mutate(group = "COPD")
 
@@ -167,7 +167,7 @@ model_COPD_2 <- BMI_complete_categories %>%
 model_stroke_and_TIA <- BMI_complete_categories %>%
   dplyr::filter(comorbid_stroke_and_TIA == TRUE) %>% 
   glm(had_bmi ~ year, data=., family=binomial) %>% 
-  broom::tidy(conf.int = TRUE) %>% 
+  broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>% 
   dplyr::mutate(predictor = "year") %>%
   dplyr::mutate(group = "stroke_and_TIA")
 
@@ -175,7 +175,7 @@ model_stroke_and_TIA <- BMI_complete_categories %>%
 model_stroke_and_TIA_2 <- BMI_complete_categories %>%
   dplyr::filter(comorbid_stroke_and_TIA == TRUE) %>% 
   glm(had_bmi ~ year + age_group_2, data=., family=binomial) %>% 
-  broom::tidy(conf.int = TRUE) %>% 
+  broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>% 
   dplyr::mutate(predictor = "year_age") %>%
   dplyr::mutate(group = "stroke_and_TIA")
 
@@ -185,7 +185,7 @@ model_stroke_and_TIA_2 <- BMI_complete_categories %>%
 model_dementia <- BMI_complete_categories %>%
   dplyr::filter(comorbid_dementia == TRUE) %>% 
   glm(had_bmi ~ year, data=., family=binomial) %>% 
-  broom::tidy(conf.int = TRUE) %>% 
+  broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>% 
   dplyr::mutate(predictor = "year") %>%
   dplyr::mutate(group = "dementia")
 
@@ -193,7 +193,7 @@ model_dementia <- BMI_complete_categories %>%
 model_dementia_2 <- BMI_complete_categories %>%
   dplyr::filter(comorbid_dementia == TRUE) %>% 
   glm(had_bmi ~ year + age_group_2, data=., family=binomial) %>% 
-  broom::tidy(conf.int = TRUE) %>% 
+  broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>% 
   dplyr::mutate(predictor = "year_age") %>%
   dplyr::mutate(group = "dementia")
 
@@ -203,7 +203,7 @@ model_dementia_2 <- BMI_complete_categories %>%
 model_chronic_cardiac <- BMI_complete_categories %>%
   dplyr::filter(comorbid_chronic_cardiac == TRUE) %>% 
   glm(had_bmi ~ year, data=., family=binomial) %>% 
-  broom::tidy(conf.int = TRUE) %>% 
+  broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>% 
   dplyr::mutate(predictor = "year") %>%
   dplyr::mutate(group = "chronic_cardiac")
 
@@ -211,7 +211,7 @@ model_chronic_cardiac <- BMI_complete_categories %>%
 model_chronic_cardiac_2 <- BMI_complete_categories %>%
   dplyr::filter(comorbid_chronic_cardiac == TRUE) %>% 
   glm(had_bmi ~ year + age_group_2, data=., family=binomial) %>% 
-  broom::tidy(conf.int = TRUE) %>% 
+  broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>% 
   dplyr::mutate(predictor = "year_age") %>%
   dplyr::mutate(group = "chronic_cardiac")
 
@@ -219,7 +219,7 @@ model_chronic_cardiac_2 <- BMI_complete_categories %>%
 model_all_cancer <- BMI_complete_categories %>%
   dplyr::filter(comorbid_all_cancer == TRUE) %>% 
   glm(had_bmi ~ year, data=., family=binomial) %>% 
-  broom::tidy(conf.int = TRUE) %>% 
+  broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>% 
   dplyr::mutate(predictor = "year") %>%
   dplyr::mutate(group = "all_cancer")
 
@@ -227,7 +227,7 @@ model_all_cancer <- BMI_complete_categories %>%
 model_all_cancer_2 <- BMI_complete_categories %>%
   dplyr::filter(comorbid_all_cancer == TRUE) %>% 
   glm(had_bmi ~ year + age_group_2, data=., family=binomial) %>% 
-  broom::tidy(conf.int = TRUE) %>% 
+  broom::tidy(exponentiate = TRUE, conf.int = TRUE) %>% 
   dplyr::mutate(predictor = "year_age") %>%
   dplyr::mutate(group = "all_cancer")
 
