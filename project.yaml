@@ -273,6 +273,29 @@ actions:
       moderately_sensitive:
         table1: output/data/demographics_had_bmi.csv
 
+  demographics_t2dm:
+    run: r:latest analysis/pop_demographics/pop_demographics_t2dm.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/demographics_study_population_t2dm.csv
+        table2: output/data/demographics_had_bmi_t2dm.csv
+
+  demographics_t1dm:
+    run: r:latest analysis/pop_demographics/pop_demographics_t1dm.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/demographics_study_population_t1dm.csv
+        table2: output/data/demographics_had_bmi_t1dm.csv
+
+  demographics_hypertension:
+    run: r:latest analysis/pop_demographics/pop_demographics_hypertension.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/demographics_study_population_hypertension.csv
+        table2: output/data/demographics_had_bmi_hypertension.csv
 
   demographics_bmi_change_all:
     run: r:latest analysis/pop_demographics/pop_demographics_bmi_change_all.R --output-dir=output/data 
@@ -288,6 +311,8 @@ actions:
     outputs:
       moderately_sensitive:
         table1: output/data/demographics_bmi_change_analysis_lowbmiexc.csv
+
+
 
 ##################################################################
 ### >> HAD_BMI ANALYSIS
