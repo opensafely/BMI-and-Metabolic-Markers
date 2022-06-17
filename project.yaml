@@ -256,6 +256,16 @@ actions:
       moderately_sensitive:
         table1: output/data/BMI_traj_demog.html
 
+########################################
+## POPULATION DEMOGRAPHICS
+#######################################
+  demographics_analysis_pop:
+    run: r:latest analysis/pop_demographics/pop_demographics_total_pop.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/demographics_study_population.csv
+
 
 
 ##################################################################
