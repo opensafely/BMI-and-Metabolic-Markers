@@ -1160,6 +1160,20 @@ actions:
         table6: output/data/age_adjusted_DWMP_T1DM.csv
 
 
+## TOTAL ELIGIBLE USING ALL BMI DATA FROM LAST 5 YEARS
+  DWMP_eligible_5yr_data:
+    run: r:latest analysis/DWMP_eligibility/DWMP_eligible.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/DWMP_eligible_5yr_data_all.csv
+        table2: output/data/DWMP_eligible_5yr_data_hypertension.csv
+        table3: output/data/DWMP_eligible_5yr_data_T1DM.csv
+        table4: output/data/DWMP_eligible_5yr_data_T2DM.csv
+        table5: output/data/DWMP_eligible_5yr_data_years.csv
+
+
+
 ##################################################################
 ### >> HAD_SBP ANALYSIS
 ######################################################################
