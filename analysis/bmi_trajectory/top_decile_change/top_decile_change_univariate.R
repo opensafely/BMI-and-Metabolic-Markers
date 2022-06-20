@@ -20,10 +20,17 @@ library(skimr)
 BMI_trajectories <- read_feather (here::here ("output/data", "BMI_trajectory_models_data.feather"))
 
 ##1.  exclude low bmi and cancer
-##2. run analysis - write yaml action
+
+##*** Change to code.  FILTER OUT UNDERWEIGHT AND THOSE WITH CANCER
+BMI_trajectories <- BMI_trajectories %>% 
+  dplyr::filter(all_cancer == FALSE)
+
+BMI_trajectories <- BMI_trajectories %>% 
+  dplyr::filter(precovid_bmi_category != "underweight")
 
 
 
+# select relevant variables
 BMI_trajectories <- BMI_trajectories %>% 
   dplyr::select("sex",
                 "age_group_2", 
@@ -45,14 +52,13 @@ BMI_trajectories <- BMI_trajectories %>%
                 "ethnic_no_miss",         
                 "eth_group_16",           
                 "complete_bmi_data", 
-                "bmi_change_cat", 
                 "precovid_bmi_category", 
-                "pandemic_stage", 
                 "trajectory_change")
 
 
 
-BMI_trajectories$precovid_bmi_category <- factor(BMI_trajectories$precovid_bmi_category, levels = c("healthy","overweight", "obese", "underweight"))
+BMI_trajectories$precovid_bmi_category <- factor(BMI_trajectories$precovid_bmi_category, levels = c("healthy","overweight", "obese"))
+
 
 
 
@@ -87,6 +93,9 @@ traj_change <- BMI_trajectories
 quantiles <- as.data.frame(quantile(traj_change$trajectory_change, probs = seq(.1, .9, by = .1))) %>% 
   dplyr::rename(trajectory_change = 1)
 
+quantiles <- quantiles %>%
+  cbind(rownames(quantiles), data.frame(quantiles, row.names=NULL)) %>% 
+  dplyr::select(-c(1))
 
 ## create a column for deciles
 traj_change$decile <- ntile(traj_change$trajectory_change, 10)
@@ -251,7 +260,8 @@ change_demog <- sex %>%
 
 
 change_demog <- change_demog %>% 
-  dplyr::mutate(top_decile = plyr::round_any(change_demog$top_decile, 5))
+  dplyr::mutate(top_decile = plyr::round_any(change_demog$top_decile, 5)) %>%
+  dplyr::mutate(total = plyr::round_any(change_demog$total, 5))
 
 
 
@@ -263,11 +273,11 @@ change_demog <- change_demog %>%
 
 
 
-write_csv (models_univar, here::here ("output/data","change_90th_univariate.csv"))
+write_csv (models_univar, here::here ("output/data","change_90th_univariate_lowbmiexc.csv"))
 
-write_csv (quantiles, here::here ("output/data","change_deciles.csv"))
+write_csv (quantiles, here::here ("output/data","change_deciles_lowbmiexc.csv"))
 
-write_csv (change_demog, here::here ("output/data","change_90th_counts.csv"))
+write_csv (change_demog, here::here ("output/data","change_90th_counts_lowbmiexc.csv"))
 
 
 

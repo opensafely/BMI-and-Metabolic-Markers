@@ -336,6 +336,23 @@ actions:
       moderately_sensitive:
         table1: output/data/demographics_bmi_change_analysis_all_hypertension.csv
         table2: output/data/demographics_bmi_change_analysis_lowbmiexc_hypertension.csv
+
+#########################################################
+## TOP DECILE: BMI_ CHANGE
+##########################################################
+  topdecile_bmi_change_univariate:
+    run: r:latest analysis/bmi_trajectory/top_decile_change/top_decile_change_univariate.R --output-dir=output/data 
+    needs: [bmi_trajectory_change_summary]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/change_90th_univariate_lowbmiexc.csv
+        table2: output/data/change_deciles_lowbmiexc.csv
+        table3: output/data/change_90th_counts_lowbmiexc.csv
+
+
+
+
+
 ##################################################################
 ### >> HAD_BMI ANALYSIS
 ######################################################################
