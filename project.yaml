@@ -1147,17 +1147,6 @@ actions:
         table4: output/data/DWMP_counts_T1DM.csv
         table5: output/data/DWMP_counts_T2DM.csv
 
-  DWMP_2017_2021_models:
-    run: r:latest analysis/DWMP_counts_models.R --output-dir=output/data 
-    needs: [generate_complete_median_BMI_data]
-    outputs:
-      moderately_sensitive:
-        table1: output/data/univariate_DWMP_hypertension.csv
-        table2: output/data/univariate_DWMP_T2DM.csv
-        table3: output/data/univariate_DWMP_T1DM.csv
-        table4: output/data/age_adjusted_DWMP_hypertension.csv
-        table5: output/data/age_adjusted_DWMP_T2DM.csv
-        table6: output/data/age_adjusted_DWMP_T1DM.csv
 
 
 ## TOTAL ELIGIBLE USING ALL BMI DATA FROM LAST 5 YEARS
