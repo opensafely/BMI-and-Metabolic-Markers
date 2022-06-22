@@ -1,6 +1,6 @@
 #### Author: M Samuel
 #### Date: 15th June
-####  This script looks at the demographics of the total population in each group
+####  This script looks predictors of being in the top decile of a change in rate of weight gain
 
 
 ## Specify libraries
