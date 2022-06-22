@@ -41,7 +41,7 @@ BMI_data_all <- BMI_data  %>%
 
 # create data set with most recent BMI/DWMP eligibility
 BMI_DWMP <- BMI_data %>%
-  drop_na(DWMP)
+  drop_na(median_bmi)
 
 BMI_DWMP <- BMI_DWMP %>% 
   dplyr::select("patient_id", "DWMP", "year") %>% 
