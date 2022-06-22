@@ -30,7 +30,7 @@ BMI_data <- BMI_data  %>%
 
 
 # create a data set with all patients to join later
-BMI_data_all <- BMI_data  %>% 
+BMI_all_patients <- BMI_data  %>% 
   group_by(patient_id) %>% 
   dplyr::arrange (desc(year)) %>% 
   dplyr::slice_head() %>% 
@@ -50,19 +50,16 @@ BMI_30 <- BMI_30 %>%
 
 
 ## Join the two 
-BMI_all <- BMI_data_all %>% 
+BMI_all_patients <- BMI_all_patients %>% 
   dplyr::left_join(BMI_30, by="patient_id")
 
-
+print('check_1')
 
 ## Can present data: proportion of population eligible for DWMP
 #1. All patients
 #2. those who have had a BMI
 
 ## proportions all patients: 
-BMI_all_patients <- BMI_all 
-
-
 
 BMI_all_patients <- BMI_all_patients %>%  
   dplyr::mutate(obese = replace_na(obese, "no_bmi")) 
@@ -98,7 +95,7 @@ BMI_all_patients$obese[BMI_all_patients$obese == '0'] <- 'not_obese'
 BMI_all_patients$obese[BMI_all_patients$obese == '1'] <- 'obese'
 
 
-BMI_all_patients %>% tabyl(obese)
+BMI_all <- BMI_all_patients
 
 
 
@@ -162,17 +159,18 @@ complete_percentages <- sex %>%
   bind_rows(stroke_and_TIA) %>%
   bind_rows(smoking_status)
 
+print('check_2')
 
 ## CREATE DATA SETS FILTERED BY DIABETESS AND HYPERTENSION
 
-BMI_hypertension <- BMI_all_patients %>% 
+BMI_all_patients <- BMI_all %>% 
   dplyr::filter(comorbid_hypertension == "TRUE")
 
 
 obese_hypertension_function <- function(my_var) {
   v1 <- deparse(substitute(my_var))
   
-  BMI_hypertension %>%
+  BMI_all_patients %>%
     tabyl({{my_var}}, obese)%>% 
     dplyr::mutate(total = (obese + no_bmi + not_obese)) %>%
     dplyr::mutate(prop_obese = obese/total) %>%
@@ -225,11 +223,11 @@ complete_hypertension <- sex %>%
   bind_rows(stroke_and_TIA) %>%
   bind_rows(smoking_status)
 
-
+print('check_3')
 
 #### Diabetes Type 2
 
-BMI_diabetes_t1 <- BMI_all_patients %>% 
+BMI_all_patients <- BMI_all %>% 
   dplyr::filter(comorbid_diabetes_t1 == "TRUE")
 
 
@@ -237,7 +235,7 @@ BMI_diabetes_t1 <- BMI_all_patients %>%
 obese_diabetes_t1_function <- function(my_var) {
   v1 <- deparse(substitute(my_var))
   
-  BMI_diabetes_t1 %>%
+  BMI_all_patients %>%
     tabyl({{my_var}}, obese)%>% 
     dplyr::mutate(total = (obese + no_bmi + not_obese)) %>%
     dplyr::mutate(prop_obese = obese/total) %>%
@@ -289,12 +287,12 @@ complete_diabetes_t1 <- sex %>%
   bind_rows(stroke_and_TIA) %>%
   bind_rows(smoking_status)
 
-
+print('check_4')
 ## diabetes type 2
 
 ## CREATE DATA SETS FILTERED BY DIABETESS AND HYPERTENSION
 
-BMI_diabetes_t2 <- BMI_all_patients %>% 
+BMI_all_patients <- BMI_all %>% 
   dplyr::filter(comorbid_diabetes_t2 == "TRUE")
 
 
@@ -302,7 +300,7 @@ BMI_diabetes_t2 <- BMI_all_patients %>%
 obese_diabetes_t2_function <- function(my_var) {
   v1 <- deparse(substitute(my_var))
   
-  BMI_diabetes_t2 %>%
+  BMI_all_patients %>%
     tabyl({{my_var}}, obese)%>% 
     dplyr::mutate(total = (obese + no_bmi + not_obese)) %>%
     dplyr::mutate(prop_obese = obese/total) %>%
@@ -353,6 +351,7 @@ complete_diabetes_t2 <- sex %>%
   bind_rows(stroke_and_TIA) %>%
   bind_rows(smoking_status)
 
+print('check_1')
 
 all <- all %>% 
   dplyr::mutate(n = plyr::round_any(all$n, 5))  
