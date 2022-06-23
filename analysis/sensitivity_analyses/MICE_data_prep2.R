@@ -30,6 +30,12 @@ BMI_trajectories$imd <- factor(BMI_trajectories$imd,
 
 
 
+p_missing <- unlist(lapply(BMI_trajectories, function(x) sum(is.na(x))))/nrow(BMI_trajectories)
+
+p_missing <- as.data.frame(sort(p_missing[p_missing > 0], decreasing = TRUE))
+
+
+
 # Unordered categorical variable 
 poly2 <- c("sex", "age_group_2", "region", "imd", "eth_group_16",  "smoking_status")
 
@@ -68,3 +74,5 @@ imp2 <- mice(BMI_trajectories, maxit = 5,
 BMI_imp_long <- mice::complete(imp2, action="long", include = TRUE)
 
 write.csv (BMI_imp_long, here::here ("output/data", "imputation_dataframe.csv"))
+write.csv (BMI_trajectories, here::here ("output/data", "BMI_sample_for_impute.csv"))
+write.csv (p_missing, here::here ("output/data", "BMI_sample_missing.csv"))
