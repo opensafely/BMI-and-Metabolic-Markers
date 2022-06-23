@@ -21,7 +21,7 @@ library(mice)
 BMI_trajectories <- read_csv (here::here ("output/data", "imputation_data_long.csv"))
 
 ## Sample
-BMI_trajectories <- BMI_trajectories[sample(nrow(BMI_trajectories), 100000), ]
+BMI_trajectories <- BMI_trajectories[sample(nrow(BMI_trajectories), 2500), ]
 
 
 
@@ -35,7 +35,7 @@ p_missing <- unlist(lapply(BMI_trajectories, function(x) sum(is.na(x))))/nrow(BM
 
 p_missing <- as.data.frame(sort(p_missing[p_missing > 0], decreasing = TRUE))
 
-
+p_missing
 
 # Unordered categorical variable 
 poly2 <- c("sex", "age_group_2", "region", "imd", "eth_group_16",  "smoking_status")
@@ -47,7 +47,7 @@ poly2 <- c("sex", "age_group_2", "region", "imd", "eth_group_16",  "smoking_stat
 
 # We run the mice code with 0 iterations 
 
-imp <- mice(BMI_trajectories, maxit=0)
+imp <- mice(BMI_trajectories, maxit=0, seed = 123)
 
 # Extract predictorMatrix and methods of imputation 
 
@@ -58,7 +58,11 @@ meth
 
 ## methods used for imputation are appropriate, don't need to change
 meth[poly2] <- "polyreg"
-
+meth[c("age_group_2")]=""
+meth[c("sex")]=""
+meth[c("region")]=""
+meth[c("eth_group_16")]=""
+meth[c("imd")]=""
 meth
 
 ## complete the imputation
@@ -75,5 +79,5 @@ imp2 <- mice(BMI_trajectories, maxit = 5,
 BMI_imp_long <- mice::complete(imp2, action="long", include = TRUE)
 
 write.csv (BMI_imp_long, here::here ("output/data", "imputation_dataframe.csv"))
-write.csv (BMI_trajectories, here::here ("output/data", "BMI_sample_for_impute.csv"))
-write.csv (p_missing, here::here ("output/data", "BMI_sample_missing.csv"))
+write.csv (BMI_trajectories, here::here ("output/data", "imputation_DF_for_impute.csv"))
+write.csv (p_missing, here::here ("output/data", "imputation_sample_missing.csv"))
