@@ -28,7 +28,8 @@ BMI_trajectories <- BMI_trajectories[sample(nrow(BMI_trajectories), 100000), ]
 BMI_trajectories$imd <- factor(BMI_trajectories$imd, 
                                 levels = c('1','2','3','4','5'))
 
-
+BMI_trajectories <- BMI_trajectories %>% 
+  dplyr::select(-c(ends_with("_bmi")))
 
 p_missing <- unlist(lapply(BMI_trajectories, function(x) sum(is.na(x))))/nrow(BMI_trajectories)
 
