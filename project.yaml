@@ -1321,3 +1321,23 @@ actions:
       moderately_sensitive:
         table1: output/data/complete_bmi_trajectory_data.csv
 
+###########
+## SENSITIVITY ANALYSIS
+###########
+
+## Prepare for MICS
+
+  MICE_data_1:
+    run: r:latest analysis/sensitivity_analyses/MICE_data_prep1.R --output-dir=output/data --output-format feather
+    needs: [BMI_trajectories_demographics_correction]
+    outputs:
+      highly_sensitive:
+        table1: output/data/imputation_data_long.csv
+  
+  MICE_data_2:
+    run: r:latest analysis/sensitivity_analyses/MICE_data_prep2.R --output-dir=output/data --output-format feather
+    needs: [MICE_data_1]
+    outputs:
+      highly_sensitive:
+        table1: output/data/imputation_dataframe.csv
+  
