@@ -21,7 +21,7 @@ library(mice)
 BMI_trajectories <- read_csv (here::here ("output/data", "imputation_data_long.csv"))
 
 ## Sample
-BMI_trajectories <- BMI_trajectories[sample(nrow(BMI_trajectories), 2500), ]
+BMI_trajectories <- BMI_trajectories[sample(nrow(BMI_trajectories), 100000), ]
 
 
 
