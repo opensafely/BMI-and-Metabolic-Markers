@@ -558,13 +558,50 @@ actions:
     needs: [generate_complete_median_BMI_data]
     outputs:
       moderately_sensitive:
-        table1: output/data/obese_all_2015.csv
-        table2: output/data/obese_hypertension_2015.csv
-        table3: output/data/obese_T2DM_2015.csv
-        table4: output/data/obese_T1DM_2015.csv
-        table5: output/data/obese_2015.csv
+        table1: output/data/obese_2015.csv
+
+  proportion_obese_2016:
+    run: r:latest analysis/proportion_obese/proportion_obese_2016.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/obese_2016.csv
 
 
+  proportion_obese_2017:
+    run: r:latest analysis/proportion_obese/proportion_obese_2017.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/obese_2017.csv
+
+  proportion_obese_2018:
+    run: r:latest analysis/proportion_obese/proportion_obese_2018.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/obese_2018.csv
+
+  proportion_obese_2019:
+    run: r:latest analysis/proportion_obese/proportion_obese_2019.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/obese_2019.csv
+
+  proportion_obese_2020:
+    run: r:latest analysis/proportion_obese/proportion_obese_2020.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/obese_2020.csv
+
+  proportion_obese_2021:
+    run: r:latest analysis/proportion_obese/proportion_obese_2021.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/obese_2021.csv
 
 ########## BMI_trajectory_data
 

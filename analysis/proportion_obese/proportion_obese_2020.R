@@ -23,7 +23,7 @@ BMI_all_patients <- read_feather (here::here ("output/data", "BMI_complete_media
 
 ## dplyr eligible using data from last 5 years
 BMI_all_patients <- BMI_all_patients %>% 
-  dplyr::filter(year == "2015")
+  dplyr::filter(year == "2020")
 
 
 
@@ -365,9 +365,9 @@ complete_diabetes_t2 <- complete_diabetes_t2 %>%
   dplyr::mutate(exposure = "T2DM")
 
 
-obese_2015 <- complete_percentages %>% 
+obese_2020 <- complete_percentages %>% 
     bind_rows(complete_hypertension, complete_diabetes_t2, complete_diabetes_t1)
 
 
 
-write.csv (obese_2015, here::here ("output/data","obese_2015.csv"))
+write.csv (obese_2020, here::here ("output/data","obese_2020.csv"))
