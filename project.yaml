@@ -1368,6 +1368,19 @@ actions:
       moderately_sensitive:
         table1: output/data/imputation_age_adj.csv
 
+  MICE_models_sex:
+    run: r:latest analysis/sensitivity_analyses/MICE_models_sex.R --output-dir=output/data --output-format feather
+    needs: [MICE_data_2]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/imputation_sex_adj.csv
+
+  MICE_models_age_sex:
+    run: r:latest analysis/sensitivity_analyses/MICE_models_age_sex.R --output-dir=output/data --output-format feather
+    needs: [MICE_data_2]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/imputation_age_sex_adj.csv
 
   MICE_data_3:
     run: r:latest analysis/sensitivity_analyses/MICE_data_prep3.R --output-dir=output/data --output-format feather

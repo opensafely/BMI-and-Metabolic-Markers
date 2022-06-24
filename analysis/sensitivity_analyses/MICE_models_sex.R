@@ -88,13 +88,13 @@ BMI_imp_long
 BMI_imp_long_mids<-as.mids(BMI_imp_long)
 
 ### IMPUTED MODELS COMPARED TO NON IMPUTED
-age <- lm(trajectory_change ~ age_group_2 +  age_group_2, data=BMI_trajectories) %>% 
+age <- lm(trajectory_change ~ sex +  age_group_2, data=BMI_trajectories) %>% 
   broom::tidy(conf.int = TRUE)
 
 age
 
 imp_age <- with(BMI_imp_long_mids,
-               lm(trajectory_change ~ age_group_2 +  age_group_2))
+               lm(trajectory_change ~ sex +  age_group_2))
 
 imp_age <- summary(pool(imp_age)) 
  
@@ -106,202 +106,202 @@ imp_age
 
 ##
 imp_sex <- with(BMI_imp_long_mids,
-                lm(trajectory_change ~ age_group_2 +  sex))
+                lm(trajectory_change ~ sex +  sex))
 
 imp_sex <- summary(pool(imp_sex)) 
 
 imp_sex <- imp_sex %>% 
   dplyr::mutate(variable = 'imp_sex')
 
-sex <- lm(trajectory_change ~ age_group_2 +  sex, data=BMI_trajectories) %>% 
+sex <- lm(trajectory_change ~ sex +  sex, data=BMI_trajectories) %>% 
   broom::tidy(conf.int = TRUE)
 
 ##
 imp_ethnic <- with(BMI_imp_long_mids,
-                   lm(trajectory_change ~ age_group_2 +  eth_group_16))
+                   lm(trajectory_change ~ sex +  eth_group_16))
 
 imp_ethnic <- summary(pool(imp_ethnic)) 
 
 imp_ethnic <- imp_ethnic %>% 
   dplyr::mutate(variable = 'imp_ethnic')
 
-ethnic <- lm(trajectory_change ~ age_group_2 +  eth_group_16, data=BMI_trajectories) %>% 
+ethnic <- lm(trajectory_change ~ sex +  eth_group_16, data=BMI_trajectories) %>% 
   broom::tidy(conf.int = TRUE)
 
 ##
 imp_imd <- with(BMI_imp_long_mids,
-                lm(trajectory_change ~ age_group_2 +  imd))
+                lm(trajectory_change ~ sex +  imd))
 
 imp_imd <- summary(pool(imp_imd)) 
 
 imp_imd <- imp_imd %>% 
   dplyr::mutate(variable = 'imp_imd')
 
-imd <- lm(trajectory_change ~ age_group_2 +  imd, data=BMI_trajectories) %>% 
+imd <- lm(trajectory_change ~ sex +  imd, data=BMI_trajectories) %>% 
   broom::tidy(conf.int = TRUE)
 
 
 ##
 imp_region <- with(BMI_imp_long_mids,
-                   lm(trajectory_change ~ age_group_2 +  region))
+                   lm(trajectory_change ~ sex +  region))
 
 imp_region <- summary(pool(imp_region)) 
 
 imp_region <- imp_region %>% 
   dplyr::mutate(variable = 'imp_region')
 
-region <- lm(trajectory_change ~ age_group_2 +  region, data=BMI_trajectories) %>% 
+region <- lm(trajectory_change ~ sex +  region, data=BMI_trajectories) %>% 
   broom::tidy(conf.int = TRUE)
 
 
 ##
 imp_hypertension <- with(BMI_imp_long_mids,
-                         lm(trajectory_change ~ age_group_2 +  hypertension))
+                         lm(trajectory_change ~ sex +  hypertension))
 
 imp_hypertension <- summary(pool(imp_hypertension)) 
 
 imp_hypertension <- imp_hypertension %>% 
   dplyr::mutate(variable = 'imp_hypertension')
 
-hypertension <- lm(trajectory_change ~ age_group_2 +  hypertension, data=BMI_trajectories) %>% 
+hypertension <- lm(trajectory_change ~ sex +  hypertension, data=BMI_trajectories) %>% 
   broom::tidy(conf.int = TRUE)
 
 
 ##
 imp_diabetes_t1 <- with(BMI_imp_long_mids,
-                        lm(trajectory_change ~ age_group_2 +  diabetes_t1))
+                        lm(trajectory_change ~ sex +  diabetes_t1))
 
 imp_diabetes_t1 <- summary(pool(imp_diabetes_t1)) 
 
 imp_diabetes_t1 <- imp_diabetes_t1 %>% 
   dplyr::mutate(variable = 'imp_diabetes_t1')
 
-diabetes_t1 <- lm(trajectory_change ~ age_group_2 +  diabetes_t1, data=BMI_trajectories) %>% 
+diabetes_t1 <- lm(trajectory_change ~ sex +  diabetes_t1, data=BMI_trajectories) %>% 
   broom::tidy(conf.int = TRUE)
 
 ##
 imp_diabetes_t2 <- with(BMI_imp_long_mids,
-                        lm(trajectory_change ~ age_group_2 +  diabetes_t2))
+                        lm(trajectory_change ~ sex +  diabetes_t2))
 
 imp_diabetes_t2 <- summary(pool(imp_diabetes_t2)) 
 
 imp_diabetes_t2 <- imp_diabetes_t2 %>% 
   dplyr::mutate(variable = 'imp_diabetes_t2')
 
-diabetes_t2 <- lm(trajectory_change ~ age_group_2 +  diabetes_t2, data=BMI_trajectories) %>% 
+diabetes_t2 <- lm(trajectory_change ~ sex +  diabetes_t2, data=BMI_trajectories) %>% 
   broom::tidy(conf.int = TRUE)
 
 
 ##
 imp_chronic_cardiac <- with(BMI_imp_long_mids,
-                            lm(trajectory_change ~ age_group_2 +  chronic_cardiac))
+                            lm(trajectory_change ~ sex +  chronic_cardiac))
 
 imp_chronic_cardiac <- summary(pool(imp_chronic_cardiac)) 
 
 imp_chronic_cardiac <- imp_chronic_cardiac %>% 
   dplyr::mutate(variable = 'imp_chronic_cardiac')
 
-chronic_cardiac <- lm(trajectory_change ~ age_group_2 +  chronic_cardiac, data=BMI_trajectories) %>% 
+chronic_cardiac <- lm(trajectory_change ~ sex +  chronic_cardiac, data=BMI_trajectories) %>% 
   broom::tidy(conf.int = TRUE)
 
 
 ##
 imp_learning_disability <- with(BMI_imp_long_mids,
-                                lm(trajectory_change ~ age_group_2 +  learning_disability))
+                                lm(trajectory_change ~ sex +  learning_disability))
 
 imp_learning_disability <- summary(pool(imp_learning_disability)) 
 
 imp_learning_disability <- imp_learning_disability %>% 
   dplyr::mutate(variable = 'imp_learning_disability')
 
-learning_disability <- lm(trajectory_change ~ age_group_2 +  learning_disability, data=BMI_trajectories) %>% 
+learning_disability <- lm(trajectory_change ~ sex +  learning_disability, data=BMI_trajectories) %>% 
   broom::tidy(conf.int = TRUE)
 
 ##
 imp_psychosis_schiz_bipolar <- with(BMI_imp_long_mids,
-                                    lm(trajectory_change ~ age_group_2 +  psychosis_schiz_bipolar))
+                                    lm(trajectory_change ~ sex +  psychosis_schiz_bipolar))
 
 imp_psychosis_schiz_bipolar <- summary(pool(imp_psychosis_schiz_bipolar)) 
 
 imp_psychosis_schiz_bipolar <- imp_psychosis_schiz_bipolar %>% 
   dplyr::mutate(variable = 'imp_psychosis_schiz_bipolar')
 
-psychosis_schiz_bipolar <- lm(trajectory_change ~ age_group_2 +  psychosis_schiz_bipolar, data=BMI_trajectories) %>% 
+psychosis_schiz_bipolar <- lm(trajectory_change ~ sex +  psychosis_schiz_bipolar, data=BMI_trajectories) %>% 
   broom::tidy(conf.int = TRUE)
 
 
 ##
 imp_depression <- with(BMI_imp_long_mids,
-                       lm(trajectory_change ~ age_group_2 +  depression))
+                       lm(trajectory_change ~ sex +  depression))
 
 imp_depression <- summary(pool(imp_depression)) 
 
 imp_depression <- imp_depression %>% 
   dplyr::mutate(variable = 'imp_depression')
 
-depression <- lm(trajectory_change ~ age_group_2 +  depression, data=BMI_trajectories) %>% 
+depression <- lm(trajectory_change ~ sex +  depression, data=BMI_trajectories) %>% 
   broom::tidy(conf.int = TRUE)
 
 
 imp_COPD <- with(BMI_imp_long_mids,
-                 lm(trajectory_change ~ age_group_2 +  COPD))
+                 lm(trajectory_change ~ sex +  COPD))
 
 imp_COPD <- summary(pool(imp_COPD)) 
 
 imp_COPD <- imp_COPD %>% 
   dplyr::mutate(variable = 'imp_COPD')
 
-COPD <- lm(trajectory_change ~ age_group_2 +  COPD, data=BMI_trajectories) %>% 
+COPD <- lm(trajectory_change ~ sex +  COPD, data=BMI_trajectories) %>% 
   broom::tidy(conf.int = TRUE)
 
 
 ##
 imp_asthma <- with(BMI_imp_long_mids,
-                   lm(trajectory_change ~ age_group_2 +  asthma))
+                   lm(trajectory_change ~ sex +  asthma))
 
 imp_asthma <- summary(pool(imp_asthma)) 
 
 imp_asthma <- imp_asthma %>% 
   dplyr::mutate(variable = 'imp_asthma')
 
-asthma <- lm(trajectory_change ~ age_group_2 +  asthma, data=BMI_trajectories) %>% 
+asthma <- lm(trajectory_change ~ sex +  asthma, data=BMI_trajectories) %>% 
   broom::tidy(conf.int = TRUE)
 
 ##
 imp_dementia <- with(BMI_imp_long_mids,
-                     lm(trajectory_change ~ age_group_2 +  dementia))
+                     lm(trajectory_change ~ sex +  dementia))
 
 imp_dementia <- summary(pool(imp_dementia)) 
 
 imp_dementia <- imp_dementia %>% 
   dplyr::mutate(variable = 'imp_dementia')
 
-dementia <- lm(trajectory_change ~ age_group_2 +  dementia, data=BMI_trajectories) %>% 
+dementia <- lm(trajectory_change ~ sex +  dementia, data=BMI_trajectories) %>% 
   broom::tidy(conf.int = TRUE)
 
 
 ##
 imp_stroke_and_TIA <- with(BMI_imp_long_mids,
-                           lm(trajectory_change ~ age_group_2 +  stroke_and_TIA))
+                           lm(trajectory_change ~ sex +  stroke_and_TIA))
 
 imp_stroke_and_TIA <- summary(pool(imp_stroke_and_TIA)) 
 
 imp_stroke_and_TIA <- imp_stroke_and_TIA %>% 
   dplyr::mutate(variable = 'imp_stroke_and_TIA')
 
-stroke_and_TIA <- lm(trajectory_change ~ age_group_2 +  stroke_and_TIA, data=BMI_trajectories) %>% 
+stroke_and_TIA <- lm(trajectory_change ~ sex +  stroke_and_TIA, data=BMI_trajectories) %>% 
   broom::tidy(conf.int = TRUE)
 
 ##
 imp_smoking_status <- with(BMI_imp_long_mids,
-                           lm(trajectory_change ~ age_group_2 +  smoking_status))
+                           lm(trajectory_change ~ sex +  smoking_status))
 
 imp_smoking_status <- summary(pool(imp_smoking_status)) 
 
 imp_smoking_status <- imp_smoking_status %>% 
   dplyr::mutate(variable = 'imp_smoking_status')
 
-smoking_status <- lm(trajectory_change ~ age_group_2 +  smoking_status, data=BMI_trajectories) %>% 
+smoking_status <- lm(trajectory_change ~ sex +  smoking_status, data=BMI_trajectories) %>% 
   broom::tidy(conf.int = TRUE)
 
 
@@ -344,4 +344,4 @@ univariate_models <- age %>%
             smoking_status)
 
 
-write.csv (univariate_models, here::here ("output/data", "imputation_age_adj.csv"))
+write.csv (univariate_models, here::here ("output/data", "imputation_sex_adj.csv"))
