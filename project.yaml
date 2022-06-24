@@ -1351,7 +1351,12 @@ actions:
         table1: output/data/imputation_dataframe_check.csv
         table2: output/data/imputation_DF_for_impute_check.csv
 
-
+  MICE_models_age:
+    run: r:latest analysis/sensitivity_analyses/MICE_models_age_adj.R --output-dir=output/data --output-format feather
+    needs: [MICE_data_2]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/imputation_age_adj.csv
 
 
   MICE_data_3:
