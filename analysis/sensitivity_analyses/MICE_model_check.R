@@ -83,7 +83,7 @@ predM[, c("stroke_and_TIA")] <- 1
 predM[, c("dementia")] <- 1
 
 
-predM[, c("precovid_change")] <- 0
+predM[, c("precovid_change")] <- 1
 
 
 
