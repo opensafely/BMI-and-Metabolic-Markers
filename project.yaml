@@ -603,6 +603,66 @@ actions:
       moderately_sensitive:
         table1: output/data/obese_2021.csv
 
+
+
+## Proportion Obese
+  proportion_weight_categories_2015:
+    run: r:latest analysis/proportion_weight_categories/proportion_weight_categories_2015.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/weight_categories_2015.csv
+
+  proportion_weight_categories_2016:
+    run: r:latest analysis/proportion_weight_categories/proportion_weight_categories_2016.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/weight_categories_2016.csv
+
+
+  proportion_weight_categories_2017:
+    run: r:latest analysis/proportion_weight_categories/proportion_weight_categories_2017.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/weight_categories_2017.csv
+
+  proportion_weight_categories_2018:
+    run: r:latest analysis/proportion_weight_categories/proportion_weight_categories_2018.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/weight_categories_2018.csv
+
+  proportion_weight_categories_2019:
+    run: r:latest analysis/proportion_weight_categories/proportion_weight_categories_2019.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/weight_categories_2019.csv
+
+  proportion_weight_categories_2020:
+    run: r:latest analysis/proportion_weight_categories/proportion_weight_categories_2020.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/weight_categories_2020.csv
+
+  proportion_weight_categories_2021:
+    run: r:latest analysis/proportion_weight_categories/proportion_weight_categories_2021.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/weight_categories_2021.csv
+
+
+
+
+
+
+
+
 ########## BMI_trajectory_data
 
   proportion_complete_bmi_trajectory:
