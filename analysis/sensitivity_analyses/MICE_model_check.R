@@ -75,9 +75,9 @@ predM[, c("chronic_cardiac")] <- 0
 predM[, c("COPD")] <- 0
 predM[, c("asthma")] <- 0
 
-predM[, c("learning_disability")] <- 0
-predM[, c("psychosis_schiz_bipolar")] <- 0
-predM[, c("depression")] <- 0
+predM[, c("learning_disability")] <- 1
+predM[, c("psychosis_schiz_bipolar")] <- 1
+predM[, c("depression")] <- 1
 
 predM[, c("stroke_and_TIA")] <- 0
 predM[, c("dementia")] <- 0
