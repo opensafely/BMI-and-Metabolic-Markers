@@ -492,15 +492,43 @@ actions:
         
         
   ## tables of median BMI and range
+  generate_median_bmi_range_2015:
+    run: r:latest analysis/median_range_bmi/median_range_2015.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/median_range_bmi_2015.csv
+
+  generate_median_bmi_range_2016:
+    run: r:latest analysis/median_range_bmi/median_range_2016.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/median_range_bmi_2016.csv
+
+  generate_median_bmi_range_2017:
+    run: r:latest analysis/median_range_bmi/median_range_2017.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/median_range_bmi_2017.csv
+
+  generate_median_bmi_range_2018:
+    run: r:latest analysis/median_range_bmi/median_range_2018.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/median_range_bmi_2018.csv
+
   generate_median_bmi_range_2019:
-    run: r:latest analysis/median_range_2019.R --output-dir=output/data 
+    run: r:latest analysis/median_range_bmi/median_range_2019.R --output-dir=output/data 
     needs: [generate_complete_median_BMI_data]
     outputs:
       moderately_sensitive:
         table1: output/data/median_range_bmi_2019.csv
 
   generate_median_bmi_range_2020:
-    run: r:latest analysis/median_range_2020.R --output-dir=output/data 
+    run: r:latest analysis/median_range_bmi/median_range_2020.R --output-dir=output/data 
     needs: [generate_complete_median_BMI_data]
     outputs:
       moderately_sensitive:
@@ -508,12 +536,20 @@ actions:
 
 
   generate_median_bmi_range_2021:
-    run: r:latest analysis/median_range_2021.R --output-dir=output/data 
+    run: r:latest analysis/median_range_bmi/median_range_2021.R --output-dir=output/data 
     needs: [generate_complete_median_BMI_data]
     outputs:
       moderately_sensitive:
         table1: output/data/median_range_bmi_2021.csv
 
+
+
+  combine_median_range_BMI:
+    run: r:latest analysis/median_range_bmi/combine_median_range_BMI.R --output-dir=output/data 
+    needs: [generate_median_bmi_range_2021, generate_median_bmi_range_2020, generate_median_bmi_range_2019, generate_median_bmi_range_2018, generate_median_bmi_range_2017, generate_median_bmi_range_2016, generate_median_bmi_range_2015]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/median_range_bmi_2015_2021.csv
 
 ########## BMI_trajectory_data
 

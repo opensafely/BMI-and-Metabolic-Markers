@@ -30,6 +30,11 @@ BMI_complete_categories <- BMI_complete_categories %>%
   dplyr::mutate(age_group = fct_relevel(age_group, "18-39", "40-65", "65-80", "80+"))
 
 
+BMI_complete_categories$age_group_2 <- factor(BMI_complete_categories$age_group_2,      # Reordering group factor levels
+                                       levels = c("18-29", "30-39", "40-49", "50-59", "60-69", "70-79", "80+"))
+
+
+
 BMI_complete_categories <- BMI_complete_categories %>% 
   replace_na(list(precovid_obese_flag=FALSE))
 
@@ -64,7 +69,8 @@ median_all <- median_all %>%
   dplyr::select('variable', 'group', 'N', 'N_population', '25th', 'median', '75th') 
 
 
-
+BMI_complete_categories %>%
+  tabyl(imd)
 
 ## code to calcualte median_bmi
 
@@ -101,6 +107,42 @@ median_age_group <- N_median_age_group %>%
   dplyr::mutate(variable="age_group", .before = 1 ) %>%
   dplyr::mutate(method = "Kruskal_Wallis") %>%
   dplyr::arrange(group)
+
+BMI_complete_categories %>%
+  tabyl(imd)
+## Skewed population.  BMI medians by subgroup
+## Age Group 2
+
+N_median_age_group_2 <- BMI_complete_categories_DT [, .(N_population = length(median_bmi)) , by="age_group_2"]
+n_median_age_group_2 <- BMI_complete_categories_DT [, .(N_missing = sum(is.na(median_bmi))) , by="age_group_2"]
+quartile1_median_age_group_2 <- BMI_complete_categories_DT[, .( "25th" = quantile(median_bmi, probs = c(0.25), na.rm = TRUE)), by="age_group_2"]
+median_median_age_group_2 <- BMI_complete_categories_DT[, .( "median" = quantile(median_bmi, probs = c(0.5), na.rm = TRUE)), by="age_group_2"]
+quartile3_median_age_group_2 <- BMI_complete_categories_DT[, .( "75th" = quantile(median_bmi, probs = c(0.75), na.rm = TRUE)), by="age_group_2"]
+
+KWRS_age_group_2 <- kruskal.test(age_group_2 ~ median_bmi, BMI_complete_categories)
+significance_age_group_2 <- data.frame(t(sapply(KWRS_age_group_2, c)))  %>%
+  dplyr::select(p.value, method) %>%
+  dplyr::mutate(across(where(is.numeric), round, 3))
+
+p_age_group_2 <- significance_age_group_2$p.value
+
+median_age_group_2 <- N_median_age_group_2 %>%
+  dplyr::left_join(n_median_age_group_2, by = "age_group_2") %>%
+  dplyr::mutate("N" = N_population - N_missing) %>%
+  dplyr::left_join(quartile1_median_age_group_2, by = "age_group_2") %>%
+  dplyr::left_join(median_median_age_group_2, by = "age_group_2") %>%
+  dplyr::left_join(quartile3_median_age_group_2, by = "age_group_2") %>%
+  dplyr::select(age_group_2, "N", N_population, "25th", median, "75th") %>%
+  dplyr::mutate (p = p_age_group_2) %>%
+  dplyr::mutate (p= (as.numeric(p))) %>%
+  dplyr::mutate(across(where(is.numeric), round, 3)) %>%
+  dplyr::rename('group' = 'age_group_2') %>%
+  dplyr::mutate(variable="age_group_2", .before = 1 ) %>%
+  dplyr::mutate(method = "Kruskal_Wallis") %>%
+  dplyr::arrange(group)
+
+
+
 
 
 ### SEX
@@ -630,6 +672,7 @@ median_comorbid_all_cancer <- N_median_comorbid_all_cancer %>%
 
 median_complete <- dplyr::bind_rows( median_all, 
                                      median_age_group, 
+                                     median_age_group_2, 
                                      median_sex, 
                                      median_region, 
                                      median_imd, 

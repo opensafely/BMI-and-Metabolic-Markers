@@ -31,6 +31,11 @@ BMI_complete_categories <- BMI_complete_categories %>%
   dplyr::mutate(age_group = as.factor(age_group)) %>%
   dplyr::mutate(age_group = fct_relevel(age_group, "18-39", "40-65", "65-80", "80+"))
 
+BMI_complete_categories$age_group_2 <- factor(BMI_complete_categories$age_group_2,      # Reordering group factor levels
+                                       levels = c("18-29", "30-39", "40-49", "50-59", "60-69", "70-79", "80+"))
+
+
+
 
 BMI_complete_categories <- BMI_complete_categories %>% 
   replace_na(list(precovid_obese_flag=FALSE))
