@@ -64,23 +64,23 @@ head(predM)
 ## Remove variables from the predictor matrix
 predM[, c("patient_id")] <- 0
 
-predM[, c("region")] <- 0
-predM[, c("imd")] <- 0
-predM[, c("hypertension")] <- 0
-predM[, c("diabetes_t1")] <- 0
-predM[, c("diabetes_t2")] <- 0
-predM[, c("chronic_cardiac")] <- 0
+#predM[, c("region")] <- 0
+#predM[, c("imd")] <- 0
+#predM[, c("hypertension")] <- 0
+#predM[, c("diabetes_t1")] <- 0
+#predM[, c("diabetes_t2")] <- 0
+#predM[, c("chronic_cardiac")] <- 0
 
 
-predM[, c("COPD")] <- 0
-predM[, c("asthma")] <- 0
+#predM[, c("COPD")] <- 0
+#predM[, c("asthma")] <- 0
 
-predM[, c("learning_disability")] <- 0
-predM[, c("psychosis_schiz_bipolar")] <- 0
-predM[, c("depression")] <- 0
+#predM[, c("learning_disability")] <- 0
+#predM[, c("psychosis_schiz_bipolar")] <- 0
+#predM[, c("depression")] <- 0
 
-predM[, c("stroke_and_TIA")] <- 0
-predM[, c("dementia")] <- 0
+#predM[, c("stroke_and_TIA")] <- 0
+#predM[, c("dementia")] <- 0
 
 
 predM[, c("precovid_change")] <- 0
