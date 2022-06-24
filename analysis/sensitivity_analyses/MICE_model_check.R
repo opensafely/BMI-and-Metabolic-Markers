@@ -72,12 +72,12 @@ predM[, c("diabetes_t2")] <- 1
 predM[, c("chronic_cardiac")] <- 0
 
 
-predM[, c("COPD")] <- 0
-predM[, c("asthma")] <- 0
+predM[, c("COPD")] <- 1
+predM[, c("asthma")] <- 1
 
-predM[, c("learning_disability")] <- 1
-predM[, c("psychosis_schiz_bipolar")] <- 1
-predM[, c("depression")] <- 1
+predM[, c("learning_disability")] <- 1        # worked
+predM[, c("psychosis_schiz_bipolar")] <- 1    # worked
+predM[, c("depression")] <- 1                 #worked
 
 predM[, c("stroke_and_TIA")] <- 1
 predM[, c("dementia")] <- 1
