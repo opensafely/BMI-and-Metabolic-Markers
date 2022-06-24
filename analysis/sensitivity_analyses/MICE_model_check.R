@@ -83,7 +83,7 @@ predM[, c("stroke_and_TIA")] <- 1
 predM[, c("dementia")] <- 1
 
 
-predM[, c("precovid_change")] <- 1
+# predM[, c("precovid_change")] <- 1           # worked with 1000?
 
 
 
