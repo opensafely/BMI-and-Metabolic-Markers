@@ -1344,7 +1344,7 @@ actions:
         table3: output/data/imputation_sample_missing.csv
   
   MICE_model_check:
-    run: r:latest analysis/sensitivity_analyses/MICE_data_prep2.R --output-dir=output/data --output-format feather
+    run: r:latest analysis/sensitivity_analyses/MICE_model_check.R --output-dir=output/data --output-format feather
     needs: [MICE_data_1]
     outputs:
       highly_sensitive:
