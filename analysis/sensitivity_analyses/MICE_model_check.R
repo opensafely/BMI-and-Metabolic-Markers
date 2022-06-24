@@ -21,7 +21,7 @@ library(mice)
 BMI_trajectories <- read_csv (here::here ("output/data", "imputation_data_long.csv"))
 
 ## Sample
-BMI_trajectories <- BMI_trajectories[sample(nrow(BMI_trajectories), 50000), ]
+BMI_trajectories <- BMI_trajectories[sample(nrow(BMI_trajectories), 5000), ]
 
 BMI_trajectories <- BMI_trajectories[ -c(1) ]
 
@@ -66,7 +66,7 @@ predM[, c("patient_id")] <- 0
 
 predM[, c("region")] <- 0
 predM[, c("imd")] <- 1
-predM[, c("hypertension")] <- 0
+predM[, c("hypertension")] <- 1
 predM[, c("diabetes_t1")] <- 0
 predM[, c("diabetes_t2")] <- 0
 predM[, c("chronic_cardiac")] <- 0
