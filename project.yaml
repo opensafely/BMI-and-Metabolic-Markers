@@ -657,10 +657,20 @@ actions:
         table1: output/data/weight_categories_2021.csv
 
 
+  proportion_obese_2019_2021:
+    run: r:latest analysis/proportion_weight_categories/proportion_obese_models.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/obese_2019_21_models_1.csv
 
 
-
-
+  proportion_obese_2019_2021_comorbidities:
+    run: r:latest analysis/proportion_weight_categories/proportion_obese_comorbidities_models.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/obese_2019_21_comorbidity_models.csv
 
 
 ########## BMI_trajectory_data
