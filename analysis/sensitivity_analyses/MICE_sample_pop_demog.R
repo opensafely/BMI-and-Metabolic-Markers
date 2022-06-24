@@ -13,6 +13,9 @@ library(janitor)
 
 
 BMI_data <- read_csv (here::here ("output/data", "imputation_DF_for_impute.csv"))
+missing <- read_csv (here::here ("output/data", "imputation_sample_missing.csv"))
+
+
 
 
 BMI_data$imd <- factor(BMI_data$imd, 
@@ -102,7 +105,8 @@ demographics <- age %>%
             smoking_status)
 
 
-write.csv (demographics, here::here ("output/data", "MICE_sample_pop_demographics.csv"))
+write.csv (demographics, here::here ("output/data", "imputation_sample_pop_demographics.csv"))
+write.csv (missing, here::here ("output/data", "imputation_sample_missing_data.csv"))
 
 
 

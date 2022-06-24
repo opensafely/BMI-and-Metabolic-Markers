@@ -1349,8 +1349,8 @@ actions:
     needs: [MICE_data_2]
     outputs:
       moderately_sensitive:
-        table1: output/data/MICE_sample_pop_demographics.csv
-
+        table1: output/data/imputation_sample_pop_demographics.csv
+        table2: output/data/imputation_sample_missing_data.csv
 
 
   MICE_model_check:
