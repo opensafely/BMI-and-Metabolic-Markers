@@ -551,6 +551,21 @@ actions:
       moderately_sensitive:
         table1: output/data/median_range_bmi_2015_2021.csv
 
+
+## Proportion Obese
+  proportion_obese_2015:
+    run: r:latest analysis/proportion_obese/proportion_obese_2015.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/obese_all_2015.csv
+        table2: output/data/obese_hypertension_2015.csv
+        table3: output/data/obese_T2DM_2015.csv
+        table4: output/data/obese_T1DM_2015.csv
+        table5: output/data/obese_2015.csv
+
+
+
 ########## BMI_trajectory_data
 
   proportion_complete_bmi_trajectory:
