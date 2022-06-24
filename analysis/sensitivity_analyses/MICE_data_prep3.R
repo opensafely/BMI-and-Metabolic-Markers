@@ -21,6 +21,11 @@ library(mice)
 BMI_trajectories <- read_csv (here::here ("output/data", "imputation_DF_for_impute.csv"))
 BMI_imp_long <- read_csv (here::here ("output/data", "imputation_dataframe.csv"))
 
+
+demographics <- read_csv (here::here ("output/data", "imputation_sample_pop_demographics.csv"))
+
+
+
 BMI_trajectories
 
 
@@ -347,4 +352,10 @@ univariate_models <- age %>%
             smoking_status)
 
 
+demographics <- demographics %>% 
+  dplyr::mutate(n = plyr::round_any(demographics$n, 5))
+
+
+
 write.csv (univariate_models, here::here ("output/data", "imputation_univariate.csv"))
+write.csv (demographics, here::here ("output/data", "imputation_sample_pop_demographic_round.csv"))

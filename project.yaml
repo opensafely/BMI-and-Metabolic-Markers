@@ -1371,7 +1371,9 @@ actions:
 
   MICE_data_3:
     run: r:latest analysis/sensitivity_analyses/MICE_data_prep3.R --output-dir=output/data --output-format feather
-    needs: [MICE_data_2]
+    needs: [MICE_data_2, MICE_sample_data]
     outputs:
       moderately_sensitive:
         table1: output/data/imputation_univariate.csv
+        table2: output/data/imputation_sample_pop_demographic_round.csv
+
