@@ -79,8 +79,8 @@ predM[, c("learning_disability")] <- 1
 predM[, c("psychosis_schiz_bipolar")] <- 1
 predM[, c("depression")] <- 1
 
-predM[, c("stroke_and_TIA")] <- 0
-predM[, c("dementia")] <- 0
+predM[, c("stroke_and_TIA")] <- 1
+predM[, c("dementia")] <- 1
 
 
 predM[, c("precovid_change")] <- 0
