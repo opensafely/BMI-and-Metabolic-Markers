@@ -64,12 +64,12 @@ head(predM)
 ## Remove variables from the predictor matrix
 predM[, c("patient_id")] <- 0
 
-predM[, c("region")] <- 0
+predM[, c("region")] <- 1
 predM[, c("imd")] <- 1                    ## worked with 50,00
 predM[, c("hypertension")] <- 1           ## worked with 5000
 predM[, c("diabetes_t1")] <- 1   
 predM[, c("diabetes_t2")] <- 1
-predM[, c("chronic_cardiac")] <- 0
+predM[, c("chronic_cardiac")] <- 1
 
 
 predM[, c("COPD")] <- 1
