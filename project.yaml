@@ -1342,7 +1342,17 @@ actions:
         table1: output/data/imputation_dataframe.csv
         table2: output/data/imputation_DF_for_impute.csv
         table3: output/data/imputation_sample_missing.csv
-  
+
+
+  MICE_sample_data:
+    run: r:latest analysis/sensitivity_analyses/MICE_sample_pop_demog.R --output-dir=output/data --output-format feather
+    needs: [MICE_data_2]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/MICE_sample_pop_demographics.csv
+
+
+
   MICE_model_check:
     run: r:latest analysis/sensitivity_analyses/MICE_model_check.R --output-dir=output/data --output-format feather
     needs: [MICE_data_1]
