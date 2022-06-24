@@ -117,6 +117,6 @@ imp2 <- mice(BMI_trajectories, maxit = 5, seed = 123,
 
 BMI_imp_long <- mice::complete(imp2, action="long", include = TRUE)
 
-write.csv (BMI_imp_long, here::here ("output/data", "imputation_dataframe.csv"))
-write.csv (BMI_trajectories, here::here ("output/data", "imputation_DF_for_impute.csv"))
-write.csv (p_missing, here::here ("output/data", "imputation_sample_missing.csv"))
+write.csv (BMI_imp_long, here::here ("output/data", "imputation_dataframe_check.csv"))
+write.csv (BMI_trajectories, here::here ("output/data", "imputation_DF_for_impute_check.csv"))
+

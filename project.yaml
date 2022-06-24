@@ -1348,10 +1348,9 @@ actions:
     needs: [MICE_data_1]
     outputs:
       highly_sensitive:
-        table1: output/data/imputation_dataframe.csv
-        table2: output/data/imputation_DF_for_impute.csv
-      moderately_sensitive:
-        table1: output/data/imputation_sample_missing.csv
+        table1: output/data/imputation_dataframe_check.csv
+        table2: output/data/imputation_DF_for_impute_check.csv
+
 
 
 
