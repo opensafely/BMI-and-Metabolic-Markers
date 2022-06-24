@@ -27,7 +27,7 @@ BMI_trajectories <- BMI_trajectories %>%
   dplyr::filter(precovid_bmi_category != "underweight")
 
 ## Sample
-BMI_trajectories <- BMI_trajectories[sample(nrow(BMI_trajectories), 2500), ]
+BMI_trajectories <- BMI_trajectories[sample(nrow(BMI_trajectories), 250000), ]
 
 BMI_trajectories <- BMI_trajectories[ -c(1) ]
 
