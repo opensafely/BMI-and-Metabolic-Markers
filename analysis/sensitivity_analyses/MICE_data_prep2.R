@@ -20,8 +20,14 @@ library(mice)
 
 BMI_trajectories <- read_csv (here::here ("output/data", "imputation_data_long.csv"))
 
+
+## remove patients with cancer and who were underweight at onset of pandemic
+BMI_trajectories <- BMI_trajectories %>% 
+  dplyr::filter(all_cancer != TRUE) %>% 
+  dplyr::filter(precovid_bmi_category != "underweight")
+
 ## Sample
-BMI_trajectories <- BMI_trajectories[sample(nrow(BMI_trajectories), 250000), ]
+BMI_trajectories <- BMI_trajectories[sample(nrow(BMI_trajectories), 2500), ]
 
 BMI_trajectories <- BMI_trajectories[ -c(1) ]
 
@@ -30,7 +36,8 @@ BMI_trajectories$imd <- factor(BMI_trajectories$imd,
 
 BMI_trajectories <- BMI_trajectories %>% 
   dplyr::select(-c(ends_with("_bmi"))) %>% 
-  dplyr::select(-c(ends_with("_bmi_category"))) %>% 
+  dplyr::select(-c("base_bmi_category")) %>% 
+  dplyr::select(-c("postcovid_bmi_category")) %>% 
   dplyr::select(-c(ends_with("all_cancer")))
 
 p_missing <- unlist(lapply(BMI_trajectories, function(x) sum(is.na(x))))/nrow(BMI_trajectories)
@@ -38,6 +45,9 @@ p_missing <- unlist(lapply(BMI_trajectories, function(x) sum(is.na(x))))/nrow(BM
 p_missing <- as.data.frame(sort(p_missing[p_missing > 0], decreasing = TRUE))
 
 p_missing
+
+
+
 
 # Remove variables from the MICE predictor frame
 
