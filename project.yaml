@@ -915,6 +915,20 @@ actions:
         table1: output/data/weightgain_90th_agesex_adj.csv
 
 
+## top decile lowbmi excluded
+
+  bmi_gain_top_decile_lowbmiexc_univariate: 
+    run: r:latest analysis/bmi_trajectory/top_decile/top_decile_weightgain_lowbmiexc_univariate.R --output-dir=output/data 
+    needs: [bmi_change_category_proportion_plots]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/weightgain_lowbmiexc_90th_popcharac.csv
+        table2: output/data/weightgain_lowbmiexc_90th_univariate.csv
+        table3: output/data/yearly_lowbmiexc_bmi_change_deciles.csv
+
+
+
+
 ## change in BMI trajectory pre and post covid
   bmi_trajectory_change_summary: 
     run: r:latest analysis/BMI_change_diff_trajectories_summary.R --output-dir=output/data 

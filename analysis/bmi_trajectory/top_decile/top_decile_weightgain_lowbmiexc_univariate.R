@@ -16,7 +16,7 @@ library(skimr)
 library(ggplot2)
 library(gtsummary)
 
-BMI_trajectories <- read_feather (here::here ("output/data", "BMI_trajectory_data_long.feather"))
+postcovid_change <- read_feather (here::here ("output/data", "BMI_trajectory_data_long.feather"))
 
 
 
@@ -24,7 +24,7 @@ BMI_trajectories <- read_feather (here::here ("output/data", "BMI_trajectory_dat
 
 
 
-BMI_trajectories <- BMI_trajectories %>% 
+postcovid_change <- postcovid_change %>% 
   dplyr::select("sex",
                 "age_group_2", 
                 "region",                
@@ -52,7 +52,7 @@ BMI_trajectories <- BMI_trajectories %>%
 
 
 
-BMI_trajectories$precovid_bmi_category <- factor(BMI_trajectories$precovid_bmi_category, levels = c("healthy","overweight", "obese", "underweight"))
+postcovid_change$precovid_bmi_category <- factor(postcovid_change$precovid_bmi_category, levels = c("healthy","overweight", "obese", "underweight"))
 
 
 
@@ -82,8 +82,16 @@ explanatory_vars <- c("sex",
 
 ### Postcovid Analysis
 
-postcovid_change <- BMI_trajectories %>% 
+postcovid_change <- postcovid_change %>% 
   dplyr::filter(pandemic_stage == "postcovid")
+
+
+
+postcovid_change <- postcovid_change %>% 
+  dplyr::filter(all_cancer == FALSE)
+
+postcovid_change <- postcovid_change %>% 
+  dplyr::filter(precovid_bmi_category != "underweight")
 
 
 ##postcovid_quantiles
@@ -126,7 +134,7 @@ models_univariate <- explanatory_vars %>%       # begin with variables of intere
   mutate(across(where(is.numeric), round, digits = 4))
 
 
-models_postcov_rapidinc_bmi_univar <- models_postcov_rapidinc_bmi_univar %>% 
+models_univariate <- models_univariate %>% 
   dplyr::mutate(stage="postcovid", .before=1)
 
 
@@ -260,9 +268,9 @@ postcovid_demog <- bind_rows(sex,
 
 
 
-write_csv (models_univariate, here::here ("output/data","weightgain_90th_univariate.csv"))
-write_csv (postcovid_demog, here::here ("output/data","weightgain_90th_popcharac.csv"))
-write_csv (postcovid_quantiles, here::here ("output/data","yearly_bmi_change_deciles.csv"))
+write_csv (models_univariate, here::here ("output/data","weightgain_lowbmiexc_90th_univariate.csv"))
+write_csv (postcovid_demog, here::here ("output/data","weightgain_lowbmiexc_90th_popcharac.csv"))
+write_csv (postcovid_quantiles, here::here ("output/data","yearly_lowbmiexc_bmi_change_deciles.csv"))
 
 
 
