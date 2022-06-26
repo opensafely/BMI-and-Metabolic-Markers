@@ -17,7 +17,7 @@ library(rstatix)
 library(janitor)
 library(skimr)
 
-BMI_data<- read_csv (here::here ("output/data", "had_bmi_2019_21_models_1_demographics.csv "))
+BMI_data<- read_csv (here::here ("output/data", "had_bmi_2019_21_models_1_demographics.csv"))
 
 BMI_data <- BMI_data %>% 
   dplyr::mutate(n = plyr::round_any(BMI_data$n, 5))  
