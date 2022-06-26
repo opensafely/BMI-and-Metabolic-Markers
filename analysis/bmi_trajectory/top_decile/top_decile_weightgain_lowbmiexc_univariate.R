@@ -271,6 +271,7 @@ postcovid_demog <- bind_rows(sex,
 write_csv (models_univariate, here::here ("output/data","weightgain_lowbmiexc_90th_univariate.csv"))
 write_csv (postcovid_demog, here::here ("output/data","weightgain_lowbmiexc_90th_popcharac.csv"))
 write_csv (postcovid_quantiles, here::here ("output/data","yearly_lowbmiexc_bmi_change_deciles.csv"))
+write_csv (postcovid_change, here::here ("output/data","weightgain_lowbmiexc_90th_data.csv"))
 
 
 

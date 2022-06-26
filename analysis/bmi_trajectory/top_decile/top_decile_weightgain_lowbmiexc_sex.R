@@ -58,7 +58,7 @@ explanatory_vars <- c("sex",
 ### Postcovid Analysis
 
 models_postcov_rapidinc_bmi_univar <- explanatory_vars %>%       # begin with variables of interest
-  str_c("weightgain_90th ~ age_group_2 + ", .) %>%         # combine each variable into formula ("outcome ~ variable of interest")
+  str_c("weightgain_90th ~ sex + ", .) %>%         # combine each variable into formula ("outcome ~ variable of interest")
   
   # iterate through each univariate formula
   map(                               
@@ -89,7 +89,7 @@ models_postcov_rapidinc_bmi_univar <- models_postcov_rapidinc_bmi_univar %>%
 
 
 
-write_csv (models_postcov_rapidinc_bmi_univar, here::here ("output/data","weightgain_lowbmiexc_90th_age_adj.csv"))
+write_csv (models_postcov_rapidinc_bmi_univar, here::here ("output/data","weightgain_lowbmiexc_90th_sex_adj.csv"))
 
 
 
