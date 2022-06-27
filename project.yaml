@@ -1142,6 +1142,22 @@ actions:
         table9: output/data/SMI_lowbmi_excluded_bmi_trajectory_change_sexageethimd_adj_redact.csv
         table10: output/data/mean_bmi_traj_change_psychosis_schiz_bipolar_redact.csv
 
+  bmi_trajectory_change_precovid_change_lowbmiexc: 
+    run: r:latest analysis/bmi_trajectory/trajectory_change/BMI_traj_change_precovid_change_lowbmiexc.R --output-dir=output/data 
+    needs: [bmi_trajectory_change_summary]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/mean_traj_change_by_precovid_change_lowbmiexc.csv
+        table2: output/data/models_traj_change_by_precovid_change_lowbmiexc.csv
+
+
+  bmi_trajectory_change_precovid_change: 
+    run: r:latest analysis/bmi_trajectory/trajectory_change/BMI_traj_change_precovid_change.R --output-dir=output/data 
+    needs: [bmi_trajectory_change_summary]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/mean_traj_change_by_precovid_change.csv
+        table2: output/data/models_traj_change_by_precovid_change.csv
 
 
 ## trajectory change calculations - with prepandemic underweight and cancer excluded
