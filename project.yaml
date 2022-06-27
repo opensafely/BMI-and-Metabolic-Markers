@@ -1402,6 +1402,17 @@ actions:
         table4: output/data/DWMP_eligible_5yr_data_T2DM.csv
         table5: output/data/DWMP_eligible_5yr_data_years.csv
 
+  DWMP_eligible_5yr_data_2019:
+    run: r:latest analysis/DWMP_eligibility/DWMP_eligible_2019.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/DWMP_eligible_5yr_data_all_2019.csv
+        table2: output/data/DWMP_eligible_5yr_data_hypertension_2019.csv
+        table3: output/data/DWMP_eligible_5yr_data_T1DM_2019.csv
+        table4: output/data/DWMP_eligible_5yr_data_T2DM_2019.csv
+        table5: output/data/DWMP_eligible_5yr_data_years_2019.csv
+
   obese_eligible_5yr_data:
     run: r:latest analysis/DWMP_eligibility/Obese_5yr.R --output-dir=output/data 
     needs: [generate_complete_median_BMI_data]
@@ -1412,6 +1423,17 @@ actions:
         table3: output/data/obese_5yr_data_T1DM.csv
         table4: output/data/obese_5yr_data_T2DM.csv
         table5: output/data/obese_5yr_data_years.csv
+
+  obese_eligible_5yr_data_2019:
+    run: r:latest analysis/DWMP_eligibility/Obese_5yr_2019.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/obese_5yr_data_all_2019.csv
+        table2: output/data/obese_5yr_data_hypertension_2019.csv
+        table3: output/data/obese_5yr_data_T1DM_2019.csv
+        table4: output/data/obese_5yr_data_T2DM_2019.csv
+        table5: output/data/obese_5yr_data_years_2019.csv
 
 ##################################################################
 ### >> HAD_SBP ANALYSIS
