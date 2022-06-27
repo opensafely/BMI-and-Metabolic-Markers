@@ -109,29 +109,6 @@ traj_change <- traj_change %>%
   ))
 
 
-models_univar <- explanatory_vars %>%       # begin with variables of interest
-  str_c("change_90th ~ ", .) %>%         # combine each variable into formula ("outcome ~ variable of interest")
-  
-  # iterate through each univariate formula
-  map(                               
-    .f = ~glm(                       # pass the formulas one-by-one to glm()
-      formula = as.formula(.x),      # within glm(), the string formula is .x
-      family = "binomial",           # specify type of glm (logistic)
-      data = traj_change)) %>%          # dataset
-  
-  # tidy up each of the glm regression outputs from above
-  map(
-    .f = ~tidy(
-      .x, 
-      exponentiate = TRUE,           # exponentiate 
-      conf.int = TRUE)) %>%          # return confidence intervals
-  
-  # collapse the list of regression outputs in to one data frame
-  bind_rows() %>% 
-  
-  # round all numeric columns
-  mutate(across(where(is.numeric), round, digits = 4))
-
 
 
 population_demog_function2 <- function(my_var) {
@@ -273,11 +250,8 @@ change_demog <- change_demog %>%
 
 
 
-write_csv (models_univar, here::here ("output/data","change_90th_univariate_lowbmiexc.csv"))
 
-write_csv (quantiles, here::here ("output/data","change_deciles_lowbmiexc.csv"))
-
-write_csv (change_demog, here::here ("output/data","change_90th_counts_lowbmiexc.csv"))
+write_csv (change_demog, here::here ("output/data","change_90th_counts_lowbmiexc_corrected.csv"))
 
 
 

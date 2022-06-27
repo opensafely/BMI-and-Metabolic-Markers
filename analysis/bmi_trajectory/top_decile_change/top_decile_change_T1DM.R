@@ -28,7 +28,8 @@ BMI_trajectories <- BMI_trajectories %>%
 BMI_trajectories <- BMI_trajectories %>% 
   dplyr::filter(precovid_bmi_category != "underweight")
 
-
+BMI_trajectories <- BMI_trajectories %>%
+    dplyr::filter(diabetes_t1 == TRUE)
 
 # select relevant variables
 BMI_trajectories <- BMI_trajectories %>% 
@@ -130,7 +131,92 @@ models_univar <- explanatory_vars %>%       # begin with variables of interest
   bind_rows() %>% 
   
   # round all numeric columns
+  mutate(across(where(is.numeric), round, digits = 5))
+
+### models age_adjusted
+
+
+models_age <- explanatory_vars %>%       # begin with variables of interest
+  str_c("change_90th ~ age_group_2 + ", .) %>%         # combine each variable into formula ("outcome ~ variable of interest")
+  
+  # iterate through each univariate formula
+  map(                               
+    .f = ~glm(                       # pass the formulas one-by-one to glm()
+      formula = as.formula(.x),      # within glm(), the string formula is .x
+      family = "binomial",           # specify type of glm (logistic)
+      data = traj_change)) %>%          # dataset
+  
+  # tidy up each of the glm regression outputs from above
+  map(
+    .f = ~tidy(
+      .x, 
+      exponentiate = TRUE,           # exponentiate 
+      conf.int = TRUE)) %>%          # return confidence intervals
+  
+  # collapse the list of regression outputs in to one data frame
+  bind_rows() %>% 
+  
+  # round all numeric columns
   mutate(across(where(is.numeric), round, digits = 4))
+
+## sex adjusted
+
+models_sex <- explanatory_vars %>%       # begin with variables of interest
+  str_c("change_90th ~ sex + ", .) %>%         # combine each variable into formula ("outcome ~ variable of interest")
+  
+  # iterate through each univariate formula
+  map(                               
+    .f = ~glm(                       # pass the formulas one-by-one to glm()
+      formula = as.formula(.x),      # within glm(), the string formula is .x
+      family = "binomial",           # specify type of glm (logistic)
+      data = traj_change)) %>%          # dataset
+  
+  # tidy up each of the glm regression outputs from above
+  map(
+    .f = ~tidy(
+      .x, 
+      exponentiate = TRUE,           # exponentiate 
+      conf.int = TRUE)) %>%          # return confidence intervals
+  
+  # collapse the list of regression outputs in to one data frame
+  bind_rows() %>% 
+  
+  # round all numeric columns
+  mutate(across(where(is.numeric), round, digits = 4))
+
+
+## models age sex
+
+models_agesex <- explanatory_vars %>%       # begin with variables of interest
+  str_c("change_90th ~ age_group_2 + sex + ", .) %>%         # combine each variable into formula ("outcome ~ variable of interest")
+  
+  # iterate through each univariate formula
+  map(                               
+    .f = ~glm(                       # pass the formulas one-by-one to glm()
+      formula = as.formula(.x),      # within glm(), the string formula is .x
+      family = "binomial",           # specify type of glm (logistic)
+      data = traj_change)) %>%          # dataset
+  
+  # tidy up each of the glm regression outputs from above
+  map(
+    .f = ~tidy(
+      .x, 
+      exponentiate = TRUE,           # exponentiate 
+      conf.int = TRUE)) %>%          # return confidence intervals
+  
+  # collapse the list of regression outputs in to one data frame
+  bind_rows() %>% 
+  
+  # round all numeric columns
+  mutate(across(where(is.numeric), round, digits = 4))
+
+
+
+
+
+
+
+
 
 
 
@@ -273,14 +359,17 @@ change_demog <- change_demog %>%
 
 
 
-write_csv (models_univar, here::here ("output/data","change_90th_univariate_lowbmiexc.csv"))
+write_csv (models_univar, here::here ("output/data","change_90th_univariate_lowbmiexc_T1DM.csv"))
 
-write_csv (quantiles, here::here ("output/data","change_deciles_lowbmiexc.csv"))
+write_csv (quantiles, here::here ("output/data","change_deciles_lowbmiexc_T1DM.csv"))
 
-write_csv (change_demog, here::here ("output/data","change_90th_counts_lowbmiexc.csv"))
+write_csv (change_demog, here::here ("output/data","change_90th_counts_lowbmiexc_T1DM.csv"))
 
+write_csv (models_age, here::here ("output/data","change_90th_age_adj_lowbmiexc_T1DM.csv"))
 
+write_csv (models_sex, here::here ("output/data","change_90th_sex_adj_lowbmiexc_T1DM.csv"))
 
+write_csv (models_agesex, here::here ("output/data","change_90th_agesex_adj_lowbmiexc_T1DM.csv"))
 
 
 

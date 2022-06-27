@@ -349,6 +349,13 @@ actions:
         table2: output/data/change_deciles_lowbmiexc.csv
         table3: output/data/change_90th_counts_lowbmiexc.csv
 
+  topdecile_bmi_change_counts_correction:
+    run: r:latest analysis/bmi_trajectory/top_decile_change/top_decile_change_counts.R --output-dir=output/data 
+    needs: [bmi_trajectory_change_summary]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/change_90th_counts_lowbmiexc_corrected.csv
+
   topdecile_bmi_change_age_adjusted:
     run: r:latest analysis/bmi_trajectory/top_decile_change/top_decile_change_age_adjusted.R --output-dir=output/data 
     needs: [bmi_trajectory_change_summary]
@@ -373,6 +380,46 @@ actions:
       moderately_sensitive:
         table1: output/data/change_90th_age_sex_adjusted_lowbmiexc.csv
         table2: output/data/change_90th_wald_age_sex.csv
+
+
+## hypertension
+  topdecile_bmi_change_hypertension:
+    run: r:latest analysis/bmi_trajectory/top_decile_change/top_decile_change_hypertension.R --output-dir=output/data 
+    needs: [bmi_trajectory_change_summary]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/change_90th_univariate_lowbmiexc_hypertension.csv
+        table2: output/data/change_deciles_lowbmiexc_hypertension.csv
+        table3: output/data/change_90th_counts_lowbmiexc_hypertension.csv
+        table4: output/data/change_90th_age_adj_lowbmiexc_hypertension.csv
+        table5: output/data/change_90th_sex_adj_lowbmiexc_hypertension.csv
+        table6: output/data/change_90th_agesex_adj_lowbmiexc_hypertension.csv
+
+
+  topdecile_bmi_change_T1DM:
+    run: r:latest analysis/bmi_trajectory/top_decile_change/top_decile_change_T1DM.R --output-dir=output/data 
+    needs: [bmi_trajectory_change_summary]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/change_90th_univariate_lowbmiexc_T1DM.csv
+        table2: output/data/change_deciles_lowbmiexc_T1DM.csv
+        table3: output/data/change_90th_counts_lowbmiexc_T1DM.csv
+        table4: output/data/change_90th_age_adj_lowbmiexc_T1DM.csv
+        table5: output/data/change_90th_sex_adj_lowbmiexc_T1DM.csv
+        table6: output/data/change_90th_agesex_adj_lowbmiexc_T1DM.csv
+  
+
+  topdecile_bmi_change_T2DM:
+    run: r:latest analysis/bmi_trajectory/top_decile_change/top_decile_change_T2DM.R --output-dir=output/data 
+    needs: [bmi_trajectory_change_summary]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/change_90th_univariate_lowbmiexc_T2DM.csv
+        table2: output/data/change_deciles_lowbmiexc_T2DM.csv
+        table3: output/data/change_90th_counts_lowbmiexc_T2DM.csv
+        table4: output/data/change_90th_age_adj_lowbmiexc_T2DM.csv
+        table5: output/data/change_90th_sex_adj_lowbmiexc_T2DM.csv
+        table6: output/data/change_90th_agesex_adj_lowbmiexc_T2DM.csv
 
 ##################################################################
 ### >> HAD_BMI ANALYSIS
