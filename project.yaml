@@ -971,7 +971,12 @@ actions:
         table1: output/data/bmi_trajectory_positive_change_proportions.csv
  
 
-
+  bmi_positive_trajectory_change_chi: 
+    run: r:latest analysis/bmi_trajectory/bmi_trajectory_positive_change_chi.R --output-dir=output/data 
+    needs: [bmi_trajectory_change_summary]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/bmi_trajectory_positive_change_chi.csv
 
 
 
