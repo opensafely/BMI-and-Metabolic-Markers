@@ -27,8 +27,8 @@ trajectory_population  <- read_feather (here::here ("output/data", "BMI_trajecto
 
 
 # # Filter for data that had BMI_trajectory data in the precovid period.  This is my population
-trajectory_population <- trajectory_population %>% 
-  dplyr::filter(period1_missing == FALSE)
+trajectory_population <- trajectory_population  %>% 
+  dplyr::filter(pandemic_stage == 'precovid')
 
 ## Filter out patients who were underweight precovid and those with cancer
 
