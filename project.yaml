@@ -1511,6 +1511,14 @@ actions:
         table4: output/data/DWMP_eligible_5yr_data_T2DM.csv
         table5: output/data/DWMP_eligible_5yr_data_years.csv
 
+  DWMP_eligible_5yr_data_redact:
+    run: r:latest analysis/DWMP_eligibility/DWMP_eligible_redact.R --output-dir=output/data 
+    needs: [DWMP_eligible_5yr_data_2019]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/DWMP_eligible_5yr_data_T1DM_2019_redact.csv
+
+
   DWMP_eligible_5yr_data_2019:
     run: r:latest analysis/DWMP_eligibility/DWMP_eligible_2019.R --output-dir=output/data 
     needs: [generate_complete_median_BMI_data]
