@@ -712,6 +712,20 @@ actions:
         table1: output/data/weight_categories_2021.csv
 
 
+  redact_weight_categories:
+    run: r:latest analysis/proportion_weight_categories/redact_weightcategories.R --output-dir=output/data 
+    needs: [proportion_weight_categories_2015, proportion_weight_categories_2016, proportion_weight_categories_2017, proportion_weight_categories_2018, proportion_weight_categories_2019, proportion_weight_categories_2020, proportion_weight_categories_2021]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/weight_categories_2015_redact.csv
+        table2: output/data/weight_categories_2016_redact.csv
+        table3: output/data/weight_categories_2017_redact.csv
+        table4: output/data/weight_categories_2018_redact.csv
+        table5: output/data/weight_categories_2019_redact.csv
+        table6: output/data/weight_categories_2020_redact.csv
+        table7: output/data/weight_categories_2021_redact.csv
+
+
   proportion_obese_2019_2021:
     run: r:latest analysis/proportion_weight_categories/proportion_obese_models.R --output-dir=output/data 
     needs: [generate_complete_median_BMI_data]
