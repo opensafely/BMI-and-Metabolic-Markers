@@ -1301,6 +1301,13 @@ actions:
         table1: output/data/complete_traj_data_proportions.csv
 
 
+  bmi_trajectory_change_lowbmi_excluded_complete_data_correction: 
+    run: r:latest analysis/bmi_trajectory/trajectory_change/BMI_traj_change_complete_case_counts_correction.R --output-dir=output/data 
+    needs: [bmi_change_category_proportion_plots]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/complete_traj_data_proportions_correction.csv
+
   bmi_trajectory_change_lowbmi_excluded_complete_data_chi: 
     run: r:latest analysis/bmi_trajectory/trajectory_change/BMI_traj_change_complete_cases_chi.R --output-dir=output/data 
     needs: [bmi_change_category_proportion_plots]
