@@ -1552,6 +1552,13 @@ actions:
         table4: output/data/obese_5yr_data_T2DM_2019.csv
         table5: output/data/obese_5yr_data_years_2019.csv
 
+  obese_eligible_5yr_data_redact:
+    run: r:latest analysis/DWMP_eligibility/Obese_5yr_2019_redact.R --output-dir=output/data 
+    needs: [obese_eligible_5yr_data_2019]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/obese_5yr_data_T1DM_2019_redact.csv
+
 ##################################################################
 ### >> HAD_SBP ANALYSIS
 ######################################################################
