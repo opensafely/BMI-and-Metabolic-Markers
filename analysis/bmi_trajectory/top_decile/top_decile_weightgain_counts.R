@@ -148,11 +148,35 @@ complete <- complete %>%
 
 #####################
 ## Exclude cancer and low bmi
+
+postcovid_change <- BMI_data %>% 
+  dplyr::filter(pandemic_stage == "postcovid")
+
 postcovid_change <- postcovid_change %>% 
   dplyr::filter(all_cancer == FALSE)
 
 postcovid_change <- postcovid_change %>% 
   dplyr::filter(precovid_bmi_category != "underweight")
+
+
+##postcovid_quantiles
+postcovid_quantiles <- as.data.frame(quantile(postcovid_change$yearly_bmi_change, probs = seq(.1, .9, by = .1))) %>%
+  dplyr::rename( postcovid_yearly_bmi_change = 1)
+
+
+## create a column for deciles
+postcovid_change$decile <- ntile(postcovid_change$yearly_bmi_change, 10)
+
+## create a flag for top 10% weight gain
+
+postcovid_change <- postcovid_change %>% 
+  dplyr::mutate(weightgain_90th = case_when(
+    decile == 10 ~ 1,
+    decile != 10 ~ 0
+  ))
+
+
+
 
 
 
@@ -210,18 +234,14 @@ precovid_change <- BMI_data %>%
   dplyr::filter(pandemic_stage == "precovid")
 
 
-
-
 ##precovid_quantiles
 precovid_quantiles <- as.data.frame(quantile(precovid_change$yearly_bmi_change, probs = seq(.1, .9, by = .1))) %>%
   dplyr::rename( precovid_yearly_bmi_change = 1)
-
 
 ## create a column for deciles
 precovid_change$decile <- ntile(precovid_change$yearly_bmi_change, 10)
 
 ## create a flag for top 10% weight gain
-
 precovid_change <- precovid_change %>% 
   dplyr::mutate(weightgain_90th = case_when(
     decile == 10 ~ 1,
@@ -292,11 +312,31 @@ precovid_complete <- precovid_complete %>%
 
 #####################
 ## Exclude cancer and low bmi
+precovid_change <- BMI_data %>% 
+  dplyr::filter(pandemic_stage == "precovid")
+
 precovid_change <- precovid_change %>% 
   dplyr::filter(all_cancer == FALSE)
 
 precovid_change <- precovid_change %>% 
   dplyr::filter(precovid_bmi_category != "underweight")
+
+##precovid_quantiles
+precovid_quantiles <- as.data.frame(quantile(precovid_change$yearly_bmi_change, probs = seq(.1, .9, by = .1))) %>%
+  dplyr::rename( precovid_yearly_bmi_change = 1)
+
+## create a column for deciles
+precovid_change$decile <- ntile(precovid_change$yearly_bmi_change, 10)
+
+## create a flag for top 10% weight gain
+precovid_change <- precovid_change %>% 
+  dplyr::mutate(weightgain_90th = case_when(
+    decile == 10 ~ 1,
+    decile != 10 ~ 0
+  ))
+
+
+
 
 
 
