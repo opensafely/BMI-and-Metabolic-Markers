@@ -658,7 +658,18 @@ actions:
       moderately_sensitive:
         table1: output/data/obese_2021.csv
 
-
+  redact_proportion_obese:
+    run: r:latest analysis/proportion_obese/proportion_obese_redact.R --output-dir=output/data 
+    needs: [proportion_obese_2021, proportion_obese_2020, proportion_obese_2019, proportion_obese_2018, proportion_obese_2017, proportion_obese_2016, proportion_obese_2015]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/obese_2015_redact.csv
+        table2: output/data/obese_2016_redact.csv
+        table3: output/data/obese_2017_redact.csv
+        table4: output/data/obese_2018_redact.csv
+        table5: output/data/obese_2019_redact.csv
+        table6: output/data/obese_2020_redact.csv
+        table7: output/data/obese_2021_redact.csv
 
 ## Proportion Obese
   proportion_weight_categories_2015:
