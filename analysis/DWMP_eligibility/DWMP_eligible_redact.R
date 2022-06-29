@@ -24,11 +24,35 @@ library(stringr)
 
 
 
-d <- read_csv (here::here ("output/data", "DWMP_eligible_5yr_data_T1DM_2019.csv"))
+d_T1DM <- read_csv (here::here ("output/data", "DWMP_eligible_5yr_data_T1DM.csv"))
+d_T2DM <- read_csv (here::here ("output/data", "DWMP_eligible_5yr_data_T2DM.csv"))
+d_hypertension <- read_csv (here::here ("output/data", "DWMP_eligible_5yr_data_hypertension.csv"))
 
 
-d$eligible[d$eligible == 5] <- "6-10"
-d$no_bmi[d$no_bmi == 5] <- "6-10"
-d$not_eligible[d$not_eligible == 5] <- "6-10"
+d_T1DM$eligible[d_T1DM$eligible == 5] <- "6-10"
+d_T1DM$no_bmi[d_T1DM$no_bmi == 5] <- "6-10"
+d_T1DM$not_eligible[d_T1DM$not_eligible == 5] <- "6-10"
 
-write.csv (d, here::here ("output/data", "DWMP_eligible_5yr_data_T1DM_2019_redact.csv"))
+
+
+
+d_T2DM$eligible[d_T2DM$eligible == 5] <- "6-10"
+d_T2DM$no_bmi[d_T2DM$no_bmi == 5] <- "6-10"
+d_T2DM$not_eligible[d_T2DM$not_eligible == 5] <- "6-10"
+
+
+
+
+d_hypertension$eligible[d_hypertension$eligible == 5] <- "6-10"
+d_hypertension$no_bmi[d_hypertension$no_bmi == 5] <- "6-10"
+d_hypertension$not_eligible[d_hypertension$not_eligible == 5] <- "6-10"
+
+
+
+
+write.csv (d_T1DM, here::here ("output/data", "DWMP_eligible_5yr_data_T1DM_redact.csv"))
+
+write.csv (d_T2DM, here::here ("output/data", "DWMP_eligible_5yr_data_T2DM_redact.csv"))
+
+
+write.csv (d_hypertension, here::here ("output/data", "DWMP_eligible_5yr_data_hypertension_redact.csv"))
