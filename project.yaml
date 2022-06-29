@@ -1519,6 +1519,7 @@ actions:
         table1: output/data/DWMP_eligible_5yr_data_T1DM_redact.csv
         table2: output/data/DWMP_eligible_5yr_data_T2DM_redact.csv
         table3: output/data/DWMP_eligible_5yr_data_hypertension_redact.csv
+        table4: output/data/DWMP_eligible_5yr_data_all_redact.csv
 
   DWMP_eligible_5yr_data_2019:
     run: r:latest analysis/DWMP_eligibility/DWMP_eligible_2019.R --output-dir=output/data 
