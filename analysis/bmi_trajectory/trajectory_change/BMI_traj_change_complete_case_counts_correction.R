@@ -200,4 +200,9 @@ complete <- complete %>%
 
 write.csv (complete, here::here ("output/data","complete_traj_data_proportions_correction.csv"))
 
+## There is an error in the numerator of complete cases due to the way the data were filtered. 
+## The complete cases variable was created before extreme values of BMI change were filtered out.  
+## The denominator (of patients with precovid BMI change data is correct). 
+## Therefore the final table presented will use numerator data from the case counts output and denominator data from this output. 
+
 
