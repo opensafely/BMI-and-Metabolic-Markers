@@ -1758,3 +1758,12 @@ actions:
         table1: output/data/imputation_univariate.csv
         table2: output/data/imputation_sample_pop_demographic_round.csv
 
+
+## gets data ready for imputed analysis of top decile change and rapid bmi change
+  MICE_data_4:
+    run: r:latest analysis/sensitivity_analyses/imp_rapid_delta/MICE_rapid_delta_1 --output-dir=output/data 
+    needs: [MICE_data_2]
+    outputs:
+      highly_sensitive:
+        table1: output/data/imputation_dataframe_rapid_change.csv
+        table2: output/data/imputation_sample_data_rapid_change.csv
