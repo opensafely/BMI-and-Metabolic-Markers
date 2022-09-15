@@ -1,6 +1,7 @@
 #### Author: M Samuel
-#### Date: 15th June
-####  This script looks at the demographics of the total population in each group
+#### Imputation 
+#### The following used for reference steps - 
+##  https://data.library.virginia.edu/getting-started-with-multiple-imputation-in-r/ 
 
 
 ## Specify libraries
