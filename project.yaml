@@ -1767,3 +1767,11 @@ actions:
       highly_sensitive:
         table1: output/data/imputation_dataframe_rapid_change.csv
         table2: output/data/imputation_sample_data_rapid_change.csv
+
+## gets data ready for imputed analysis of top decile change and rapid bmi change
+  MICE_data_5:
+    run: r:latest analysis/sensitivity_analyses/imp_rapid_delta/MICE_rapid_delta_2.R --output-dir=output/data 
+    needs: [MICE_data_4]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/univariate_rapid_weightgain_imputation.csv
