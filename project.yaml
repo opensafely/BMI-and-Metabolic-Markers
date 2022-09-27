@@ -1808,3 +1808,15 @@ actions:
     outputs:
       moderately_sensitive:
         table1: output/data/age_sex_rapid_weightgain_imputation.csv
+
+
+## imputed top decile change
+
+## gets data ready for imputed analysis of top decile change and rapid bmi change
+  MICE_data_10:
+    run: r:latest analysis/sensitivity_analyses/imp_top_decile/MICE_top_decile_2.R --output-dir=output/data 
+    needs: [MICE_data_4]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/univariate_topdecile_imputation.csv
+
