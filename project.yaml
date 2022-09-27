@@ -1812,7 +1812,7 @@ actions:
 
 ## imputed top decile change
 
-## gets data ready for imputed analysis of top decile change and rapid bmi change
+## gets data ready for imputed analysis of top decile change 
   MICE_data_10:
     run: r:latest analysis/sensitivity_analyses/imp_top_decile/MICE_top_decile_2.R --output-dir=output/data 
     needs: [MICE_data_4]
@@ -1820,3 +1820,10 @@ actions:
       moderately_sensitive:
         table1: output/data/univariate_topdecile_imputation.csv
 
+## age adjusted 
+  MICE_data_11:
+    run: r:latest analysis/sensitivity_analyses/imp_top_decile/MICE_top_decile_3.R --output-dir=output/data 
+    needs: [MICE_data_4]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/age_topdecile_imputation.csv
