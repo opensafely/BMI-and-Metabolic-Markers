@@ -1800,3 +1800,11 @@ actions:
     outputs:
       moderately_sensitive:
         table1: output/data/imd_rapid_weightgain_imputation.csv
+
+ ## age and sex adjusted rapid change models
+  MICE_data_9:
+    run: r:latest analysis/sensitivity_analyses/imp_rapid_delta/MICE_rapid_delta_6.R --output-dir=output/data 
+    needs: [MICE_data_4]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/age_sex_rapid_weightgain_imputation.csv
