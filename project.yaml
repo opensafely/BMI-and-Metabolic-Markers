@@ -1845,3 +1845,11 @@ actions:
     outputs:
       moderately_sensitive:
         table1: output/data/imd_topdecile_imputation.csv
+
+## imd adjusted 
+  MICE_data_14:
+    run: r:latest analysis/sensitivity_analyses/imp_top_decile/MICE_top_decile_6.R --output-dir=output/data 
+    needs: [MICE_data_4]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/age_sex_topdecile_imputation.csv
