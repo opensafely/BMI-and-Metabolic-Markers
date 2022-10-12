@@ -940,6 +940,16 @@ actions:
       moderately_sensitive: 
         table1: output/data/rapid_bmi_change_cancerandlowbmi_removed_imdsexageethnic_adjusted.csv
 
+  bmi_rapid_change_missinganalysis_lowbmiexcluded: 
+    run: r:latest analysis/bmi_trajectory/rapid_bmi_change/rapid_change_cancerlowbmiexc_missinganalysis.R --output-dir=output/data 
+    needs: [bmi_change_category_proportion_plots]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/rapid_bmi_change_cancerandlowbmi_removed_T2DM_popcharac.csv
+        table2: output/data/rapid_bmi_change_cancerandlowbmi_removed_IMD_agesex.csv
+
+
+
 ## Top decile weight gain all
 ## TOP decile weight gain
   bmi_gain_top_decile_univariate.R: 
