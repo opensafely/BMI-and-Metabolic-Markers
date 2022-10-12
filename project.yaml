@@ -382,6 +382,15 @@ actions:
         table2: output/data/change_90th_wald_age_sex.csv
 
 
+  topdecile_bmi_change_age_sex_imd_adjusted:
+    run: r:latest analysis/bmi_trajectory/top_decile_change/top_decile_change_ageseximd_adjusted.R --output-dir=output/data 
+    needs: [bmi_trajectory_change_summary]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/change_90th_age_sex_imd_adjusted_lowbmiexc.csv
+
+
+
 ## hypertension
   topdecile_bmi_change_hypertension:
     run: r:latest analysis/bmi_trajectory/top_decile_change/top_decile_change_hypertension.R --output-dir=output/data 
