@@ -497,6 +497,14 @@ actions:
         table2: output/data/proportion_had_bmi_2019_2021_chisquare.csv
 
 
+  had_bmi_2019_2020_smoking_proportions:
+    run: r:latest analysis/had_bmi_check/had_bmi_smoking_prop.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/proportion_had_bmi_2019_2021_smoking.csv
+        table2: output/data/proportion_had_bmi_2019_2021_chisquare_smoking.csv
+
 ## check the output from the cohort extractor 'had_bmi'
 
   had_bmi_proportion_2019_check:
