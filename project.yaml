@@ -1383,6 +1383,13 @@ actions:
         table1: output/data/trajectory_change_median_IQR.csv
 
 
+  bmi_trajectory_change_median_IQR_mean:
+    run: r:latest analysis/bmi_trajectory/trajectory_change/BMI_traj_change_median_IQR_mean.R --output-dir=output/data 
+    needs: [bmi_trajectory_change_summary]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/trajectory_change_median_IQR_mean.csv
+
 
 ## box plots with filtered data (excluding extreme changes
   bmi_change_boxplots: 
