@@ -1375,7 +1375,12 @@ actions:
         table1: output/data/complete_traj_data_prop_chi.csv
 
 
-
+  bmi_trajectory_change_median_IQR:
+    run: r:latest analysis/bmi_trajectory/trajectory_change/BMI_traj_change_median_IQR.R --output-dir=output/data 
+    needs: [bmi_trajectory_change_summary]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/trajectory_change_median_IQR.csv
 
 
 
