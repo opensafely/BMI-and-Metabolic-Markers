@@ -615,6 +615,13 @@ actions:
       moderately_sensitive:
         table1: output/data/median_range_bmi_2015_2021.csv
 
+  generate_median_bmi_range_smoking:
+    run: r:latest analysis/median_range_bmi/median_range_smoking.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/median_complete_smoking_status.csv
+
 
 ## Proportion Obese
   proportion_obese_2015:
