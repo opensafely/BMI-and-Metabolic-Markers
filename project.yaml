@@ -430,6 +430,13 @@ actions:
         table5: output/data/change_90th_sex_adj_lowbmiexc_T2DM.csv
         table6: output/data/change_90th_agesex_adj_lowbmiexc_T2DM.csv
 
+  topdecile_bmi_change_T2DM_ageseximd:
+    run: r:latest analysis/bmi_trajectory/top_decile_change/top_decile_change_T2DM_ageseximd.R --output-dir=output/data 
+    needs: [bmi_trajectory_change_summary]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/change_90th_ageseximd_adj_lowbmiexc_T2DM.csv
+
 ##################################################################
 ### >> HAD_BMI ANALYSIS
 ######################################################################
@@ -978,10 +985,10 @@ actions:
     outputs:
       moderately_sensitive: 
         table1: output/data/rapid_bmi_change_cancerandlowbmi_removed_univariate_T2DMx.csv
-        table2: output/data/rapid_bmi_change_cancerandlowbmi_removed_age_adjusted_T2DM.csv
-        table3: output/data/rapid_bmi_change_cancerandlowbmi_removed_sex_adjusted_T2DM.csv
-        table4: output/data/rapid_bmi_change_cancerandlowbmi_removed_imd_adjusted_T2DM.csv
-        table5: output/data/rapid_bmi_change_cancerandlowbmi_removed_sexage_adjusted_T2DM.csv
+        table2: output/data/rapid_bmi_change_cancerandlowbmi_removed_age_adjusted_T2DMx.csv
+        table3: output/data/rapid_bmi_change_cancerandlowbmi_removed_sex_adjusted_T2DMx.csv
+        table4: output/data/rapid_bmi_change_cancerandlowbmi_removed_imd_adjusted_T2DMx.csv
+        table5: output/data/rapid_bmi_change_cancerandlowbmi_removed_sexage_adjusted_T2DMx.csv
         table6: output/data/rapid_bmi_change_cancerandlowbmi_removed_imdsexage_adjusted_T2DMx.csv
 
 
@@ -1003,6 +1010,12 @@ actions:
       moderately_sensitive: 
         table1: output/data/rapid_bmi_change_cancerandlowbmi_removed_imdsexage_adjusted_T2DM.csv
 
+  bmi_rapid_change_sexage_adjusted_lowbmiexcluded_T2DM: 
+    run: r:latest analysis/bmi_trajectory/rapid_bmi_change/rapid_change_cancerlowbmiexc_sexage_adj_T2DM.R --output-dir=output/data 
+    needs: [bmi_change_category_proportion_plots]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/rapid_bmi_change_cancerandlowbmi_removed_sexage_adjusted_T2DM.csv
 
 
 ## Top decile weight gain all
