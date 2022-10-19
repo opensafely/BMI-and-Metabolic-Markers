@@ -972,7 +972,17 @@ actions:
         table1: output/data/rapid_bmi_change_cancerandlowbmi_removed_T2DM_popcharac.csv
         table2: output/data/rapid_bmi_change_cancerandlowbmi_removed_IMD_agesex.csv
 
-
+  bmi_rapid_change_models_T2DM: 
+    run: r:latest analysis/bmi_trajectory/rapid_bmi_change/rapid_change_cancerlowbmiexc_T2DM.R --output-dir=output/data 
+    needs: [bmi_change_category_proportion_plots]
+    outputs:
+      moderately_sensitive: 
+        table1: output/data/rapid_bmi_change_cancerandlowbmi_removed_univariate_T2DM.csv
+        table2: output/data/rapid_bmi_change_cancerandlowbmi_removed_age_adjusted_T2DM.csv
+        table3: output/data/rapid_bmi_change_cancerandlowbmi_removed_sex_adjusted_T2DM.csv
+        table4: output/data/rapid_bmi_change_cancerandlowbmi_removed_imd_adjusted_T2DM.csv
+        table5: output/data/rapid_bmi_change_cancerandlowbmi_removed_sexage_adjusted_T2DM.csv
+        table6: output/data/rapid_bmi_change_cancerandlowbmi_removed_imdsexage_adjusted_T2DM.csv
 
 ## Top decile weight gain all
 ## TOP decile weight gain
