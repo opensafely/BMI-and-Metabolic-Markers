@@ -483,7 +483,8 @@ median_complete <- dplyr::bind_rows(median_2015,
                                     median_2017, 
                                     median_2018, 
                                     median_2019, 
-                                    median_2020)
+                                    median_2020,
+                                    median_2021)
 
 
 
