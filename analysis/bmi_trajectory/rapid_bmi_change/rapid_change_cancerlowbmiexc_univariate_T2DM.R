@@ -39,9 +39,8 @@ BMI_trajectories <- BMI_trajectories %>%
                 "age_group_2", 
                 "region",                
                 "imd",
-                "hypertension",
-                "diabetes_t1", 
                 "diabetes_t2",
+                "hypertension",
                 "learning_disability", 
                 "depression",               
                 "psychosis_schiz_bipolar", 
@@ -74,8 +73,6 @@ explanatory_vars <- c("sex",
                       "region",                
                       "imd",
                       "hypertension",
-                      "diabetes_t1", 
-                      "diabetes_t2",
                       "learning_disability", 
                       "depression",               
                       "psychosis_schiz_bipolar", 
@@ -94,8 +91,6 @@ explanatory_vars_3 <- c("sex",
                       "region",                
                       "imd",
                       "hypertension",
-                      "diabetes_t1", 
-                      "diabetes_t2",
                       "learning_disability", 
                       "depression",               
                       "psychosis_schiz_bipolar", 
@@ -260,12 +255,6 @@ imd <- population_demog_function2(precovid_change, imd) %>%
 hypertension <- population_demog_function2(precovid_change, hypertension) %>% 
   dplyr::mutate(group = as.factor(group)) 
 
-diabetes_t1 <- population_demog_function2(precovid_change, diabetes_t1) %>% 
-  dplyr::mutate(group = as.factor(group))
-
-diabetes_t2 <- population_demog_function2(precovid_change, diabetes_t1) %>% 
-  dplyr::mutate(group = as.factor(group))
-
 learning_disability <- population_demog_function2(precovid_change,learning_disability) %>% 
   dplyr::mutate(group = as.factor(group))
 
@@ -315,8 +304,6 @@ precovid_demog <- bind_rows(sex,
                             region, 
                             imd, 
                             hypertension,
-                            diabetes_t1,
-                            diabetes_t2,
                             learning_disability,
                             depression,
                             psychosis_schiz_bipolar,
@@ -404,11 +391,7 @@ imd <- population_demog_function2(postcovid_change, imd) %>%
 hypertension <- population_demog_function2(postcovid_change, hypertension) %>% 
   dplyr::mutate(group = as.factor(group)) 
 
-diabetes_t1 <- population_demog_function2(postcovid_change, diabetes_t1) %>% 
-  dplyr::mutate(group = as.factor(group))
 
-diabetes_t2 <- population_demog_function2(postcovid_change, diabetes_t1) %>% 
-  dplyr::mutate(group = as.factor(group))
 
 learning_disability <- population_demog_function2(postcovid_change,learning_disability) %>% 
   dplyr::mutate(group = as.factor(group))
@@ -459,8 +442,6 @@ postcovid_demog <- bind_rows(sex,
                              region, 
                              imd, 
                              hypertension,
-                             diabetes_t1,
-                             diabetes_t2,
                              learning_disability,
                              depression,
                              psychosis_schiz_bipolar,
@@ -500,11 +481,7 @@ imd <- population_demog_function2(BMI_trajectories, imd) %>%
 hypertension <- population_demog_function2(BMI_trajectories, hypertension) %>% 
   dplyr::mutate(group = as.factor(group)) 
 
-diabetes_t1 <- population_demog_function2(BMI_trajectories, diabetes_t1) %>% 
-  dplyr::mutate(group = as.factor(group))
 
-diabetes_t2 <- population_demog_function2(BMI_trajectories, diabetes_t1) %>% 
-  dplyr::mutate(group = as.factor(group))
 
 learning_disability <- population_demog_function2(BMI_trajectories,learning_disability) %>% 
   dplyr::mutate(group = as.factor(group))
@@ -555,8 +532,6 @@ all_demog <- bind_rows(sex,
                              region, 
                              imd, 
                              hypertension,
-                             diabetes_t1,
-                             diabetes_t2,
                              learning_disability,
                              depression,
                              psychosis_schiz_bipolar,
