@@ -437,6 +437,21 @@ actions:
       moderately_sensitive:
         table1: output/data/change_90th_ageseximd_adj_lowbmiexc_T2DM.csv
 
+
+  topdecile_bmi_change_T2DM_redact:
+    run: r:latest analysis/bmi_trajectory/top_decile_change/top_decile_change_T2DM_redact.R --output-dir=output/data 
+    needs: [topdecile_bmi_change_T2DM,  topdecile_bmi_change_T2DM_ageseximd]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/change_90th_univariate_lowbmiexc_T2DM_r.csv
+        table2: output/data/change_deciles_lowbmiexc_T2DM_r.csv
+        table3: output/data/change_90th_counts_lowbmiexc_T2DM_r.csv
+        table4: output/data/change_90th_age_adj_lowbmiexc_T2DM_r.csv
+        table5: output/data/change_90th_sex_adj_lowbmiexc_T2DM_r.csv
+        table6: output/data/change_90th_agesex_adj_lowbmiexc_T2DM_r.csv
+        table7: output/data/change_90th_ageseximd_adj_lowbmiexc_T2DM_r.csv
+
+
   topdecile_bmi_change_T2DM_imd_and_eth:
     run: r:latest analysis/bmi_trajectory/top_decile_change/top_decile_change_imd_adjusted_T2DM.R --output-dir=output/data 
     needs: [bmi_trajectory_change_summary]
