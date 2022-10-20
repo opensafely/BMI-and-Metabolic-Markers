@@ -437,6 +437,14 @@ actions:
       moderately_sensitive:
         table1: output/data/change_90th_ageseximd_adj_lowbmiexc_T2DM.csv
 
+  topdecile_bmi_change_T2DM_imd_and_eth:
+    run: r:latest analysis/bmi_trajectory/top_decile_change/top_decile_change_imd_adjusted_T2DM.R --output-dir=output/data 
+    needs: [bmi_trajectory_change_summary]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/change_90th_imd_adj_lowbmiexc_T2DM.csv
+        table2: output/data/change_90th_eth_adj_lowbmiexc_T2DM.csv
+
 ##################################################################
 ### >> HAD_BMI ANALYSIS
 ######################################################################
