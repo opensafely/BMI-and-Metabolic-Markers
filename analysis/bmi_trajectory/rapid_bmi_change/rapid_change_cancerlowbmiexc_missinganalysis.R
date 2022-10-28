@@ -154,7 +154,7 @@ precovid_change <- BMI_trajectories %>%
 ## age sex imd adjusted model
 
 
-imd <- lm(rapid_bmi_change ~ sex +  age_group_2 +  imd, data=precovid_change) %>% 
+imd <- glm(rapid_bmi_change ~ sex +  age_group_2 +  imd, data=precovid_change, family=binomial) %>% 
   broom::tidy(conf.int = TRUE, exp = TRUE)
 
 precovid_imd <- imd %>%
@@ -213,7 +213,7 @@ postcovid_change <- BMI_trajectories %>%
 ## age sex imd adjusted model
 
 
-imd <- lm(rapid_bmi_change ~ sex +  age_group_2 +  imd, data=postcovid_change) %>% 
+imd <- glm(rapid_bmi_change ~ sex +  age_group_2 +  imd, data=postcovid_change, family=binomial) %>% 
   broom::tidy(conf.int = TRUE, exp = TRUE)
 
 postcovid_imd <- imd %>%
