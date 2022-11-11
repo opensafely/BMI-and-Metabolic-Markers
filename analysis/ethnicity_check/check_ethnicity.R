@@ -20,12 +20,20 @@ BMI_data <- read_feather (here::here ("output/data", "input_all_2021-03-01.feath
 
 colnames(BMI_data)
 
+BMI_data %>% 
+    janitor::tabyl(ethnicity_16) %>% 
+    dplyr::mutate (group = "eth_16")
+
+BMI_data %>% 
+ janitor::tabyl(ethnicity) %>%
+ dplyr::mutate (group = "eth_6")
+
 eth_16 <- BMI_data %>% 
-    tabyl(ethnicity_16) %>% 
+    janitor::tabyl(ethnicity_16) %>% 
     dplyr::mutate (group = "eth_16")
 
 eth_6 <- BMI_data %>% 
- tabyl(ethnicity) %>%
+ janitor::tabyl(ethnicity) %>%
  dplyr::mutate (group = "eth_6")
 
  eth_16 <- bind_rows(eth_6, eth_16)
