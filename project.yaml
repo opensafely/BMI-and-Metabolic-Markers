@@ -1971,7 +1971,7 @@ actions:
 ## Ethnicity Checks
   Ethnicity_checks:
     run: r:latest analysis/ethnicity_check/check_ethnicity.R --output-dir=output/data 
-    needs: [join_ethnicity, join_meds]
+    needs: [join_ethnicity, join_meds, generate_BMI_2021_data]
     outputs:
       moderately_sensitive:
         table1: output/data/ethnicity_checks.csv
