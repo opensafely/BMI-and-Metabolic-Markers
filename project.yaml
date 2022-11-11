@@ -1971,7 +1971,7 @@ actions:
 ## Ethnicity Checks
   Ethnicity_checks:
     run: r:latest analysis/ethnicity_check/check_ethnicity.R --output-dir=output/data 
-    needs: [join_ethnicity]
+    needs: [join_ethnicity, join_meds]
     outputs:
       moderately_sensitive:
         table1: output/data/ethnicity_checks.csv

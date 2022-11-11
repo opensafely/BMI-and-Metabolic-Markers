@@ -18,6 +18,11 @@ print("a")
 
 BMI_data <- read_feather (here::here ("output/data", "input_all_2021-03-01.feather"))
 
+
+meds_data <- read_feather (here::here ("output/data", "complete_meds_2021.feather"))
+
+
+
 colnames(BMI_data)
 
 BMI_data %>% 
@@ -36,10 +41,29 @@ eth_6 <- BMI_data %>%
  janitor::tabyl(ethnicity) %>%
  dplyr::mutate (group = "eth_6")
 
- eth_16 <- bind_rows(eth_6, eth_16)
+meds_data %>% 
+    janitor::tabyl(ethnicity_16) %>% 
+    dplyr::mutate (group = "eth_16")
+
+meds_data %>% 
+ janitor::tabyl(ethnicity) %>%
+ dplyr::mutate (group = "eth_6") 
+
+meds_eth_16 <- meds_data %>% 
+    janitor::tabyl(ethnicity_16) %>% 
+    dplyr::mutate (meds = "meds_join")
+
+meds_eth_6 <- meds_data %>% 
+ janitor::tabyl(ethnicity) %>%
+ dplyr::mutate (group = "eth_6")%>% 
+ dplyr::mutate (meds = "meds_join") 
+
+
+
+ eth_16 <- bind_rows(eth_6, eth_16, meds_eth_6, meds_eth_16)
 
  eth_16 <-  eth_16 %>%
- dplyr::select(group, ethnicity, ethnicity_16, n, percent, valid_percent)
+ dplyr::select(meds, group, ethnicity, ethnicity_16, n, percent)
 
 
 
