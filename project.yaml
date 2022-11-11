@@ -1966,3 +1966,13 @@ actions:
     outputs:
       moderately_sensitive:
         table1: output/data/age_sex_topdecile_imputation.csv
+
+
+## Ethnicity Checks
+  Ethnicity_checks:
+    run: r:latest analysis/ethnicity_check/check_ethnicity.R --output-dir=output/data 
+    needs: [join_ethnicity]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/ethnicity_checks.csv
+
