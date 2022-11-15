@@ -39,10 +39,10 @@ check <- BMI_trajectories %>%
 
 check
 
-# check <- BMI_trajectories %>% mutate(
-  # eth_group_16_na = as.character(eth_group_16_na),
- # eth_group_16_na = ifelse(is.na(eth_group_16_na), "None", eth_group_16_na),
- # eth_group_16_na = as.factor(eth_group_16_na))
+check <- BMI_trajectories %>%  mutate(
+  eth_group_16 = as.character(eth_group_16),
+  eth_group_16 = ifelse(is.na(eth_group_16), "None", eth_group_16),
+  eth_group_16 = as.factor(eth_group_16))
 
 
 
