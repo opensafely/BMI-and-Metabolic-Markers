@@ -1986,3 +1986,11 @@ actions:
         table3: output/data/eth_6_labels.csv
         table4: output/data/eth_6_correlation_table_21.csv
 
+
+  Ethnicity_correlation_tables:
+    run: r:latest analysis/ethnicity_check/ethnicity_correlation_tables.R --output-dir=output/data 
+    needs: [join_meds]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/eth_16_correlation_table.csv
+        table2: output/data/eth_6_correlation_table.csv
