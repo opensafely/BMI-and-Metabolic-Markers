@@ -1994,3 +1994,11 @@ actions:
       moderately_sensitive:
         table1: output/data/eth_16_correlation_table.csv
         table2: output/data/eth_6_correlation_table.csv
+
+
+  Ethnicity_regression_check:
+    run: r:latest analysis/ethnicity_check/ethnicity_regression_checks.R --output-dir=output/data 
+    needs: [bmi_change_category_proportion_plots]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/check_ethnicity_categories.csv
