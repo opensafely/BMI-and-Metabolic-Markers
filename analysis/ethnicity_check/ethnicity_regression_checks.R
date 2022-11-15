@@ -32,12 +32,12 @@ colnames(BMI_trajectories)
 
 
 
-check <- BMI_trajectories %>%
+check_1 <- BMI_trajectories %>%
   tabyl(eth_group_16)
 
+check_1
 
 
-check
 
 check <- BMI_trajectories %>%  mutate(
   eth_group_16 = as.character(eth_group_16),
@@ -45,5 +45,9 @@ check <- BMI_trajectories %>%  mutate(
   eth_group_16 = as.factor(eth_group_16))
 
 
+check_2 <- check %>%
+  tabyl(eth_group_16)
 
-write_csv (check, here::here ("output/data","check_ethnicity_categories.csv"))
+check_2
+
+write_csv (check_2, here::here ("output/data","check_ethnicity_categories.csv"))
