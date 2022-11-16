@@ -1,8 +1,10 @@
-## This script looks at sex  adjusted predictors rapid bmi change 
-## Author: M Samuel
-## Date: 4th May 2022
+## Checking for ethnicity misclassification in regression models.  Due to systematic coding error. 
 
+# Nov 16th 2022
+# M Samuel
 
+##   6 class ethnicity; can just map results as NA was coded as '6'
+##   16 class ethnicity:  need to recode and rerun models as NA was dropped. However the NAs represented an ethnicity due to miscoding. 
 
 ## Specify libraries
 library(pacman)
