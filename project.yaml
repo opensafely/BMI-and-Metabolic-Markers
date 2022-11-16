@@ -2004,9 +2004,3 @@ actions:
         table1: output/data/check_ethnicity_categories.csv
 
 
-  Ethnicity_regression_data:
-    run: r:latest analysis/ethnicity_check/ethnicity_corrected_regression_data.R --output-dir=output/data 
-    needs: [bmi_change_category_proportion_plots]
-    outputs:
-      highly_sensitive:
-        table1: output/data/BMI_trajectory_data_long_eth_corrected.feather
