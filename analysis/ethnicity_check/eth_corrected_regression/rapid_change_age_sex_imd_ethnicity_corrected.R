@@ -31,11 +31,30 @@ BMI_2 <- read_feather (here::here ("output/data", "BMI_trajectory_data_long_eth_
 
 colnames(BMI_2)
 
+BMI_trajectories <- BMI_2 %>%
+  dplyr::mutate(eth_16_corrected = factor(eth_16_corrected, 
+                                             levels = c("White_British",
+                                                         "White_Irish",
+                                                        "Other_White",
+                                                        "White_Black_Carib",
+                                                        "White_Black_African",
+                                                        "White_Asian",
+                                                        "Other_Mixed",
+                                                        "Indian",
+                                                        "Pakistani",
+                                                        "Bangladeshi",
+                                                        "Other_Asian",
+                                                        "Chinese",
+                                                        "Caribbean",
+                                                        "African",
+                                                        "Other_Black",
+                                                        "Other")) ) 
 
 
 
 
-BMI_trajectories <- BMI_2 %>% 
+
+BMI_trajectories <- BMI_trajectories %>% 
   dplyr::select("sex",
                 "age_group_2", 
                 "region",                
