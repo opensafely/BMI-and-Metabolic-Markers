@@ -2011,3 +2011,11 @@ actions:
       highly_sensitive:
         table1: output/data/BMI_trajectory_data_long_eth_corrected.feather
 
+
+  Ethnicity_rapid_change_univariate:
+    run: r:latest analysis/ethnicity_check/eth_corrected_regression/rapid_change_univariate_ethnicity_corrected.R --output-dir=output/data 
+    needs: [Ethnicity_regression_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/rapid_bmi_change_cancerandlowbmi_removed_eth_corrected_univariate.csv
+        table2: output/data/rapid_bmi_change_cancerandlowbmi_removed_eth_corrected_popcharac.csv
