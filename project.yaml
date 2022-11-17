@@ -1968,7 +1968,7 @@ actions:
         table1: output/data/age_sex_topdecile_imputation.csv
 
 
-## Ethnicity Checks
+## Ethnicity Checks:  Analysis re run due to miscoding
   Ethnicity_checks:
     run: r:latest analysis/ethnicity_check/check_ethnicity.R --output-dir=output/data 
     needs: [join_ethnicity, join_meds, generate_BMI_2021_data]
@@ -2027,3 +2027,13 @@ actions:
     outputs:
       moderately_sensitive:
         table1: output/data/rapid_bmi_change_cancerandlowbmi_removed_eth_corrected_age_sex_imd.csv
+
+  Ethnicity_rapid_change_ethnicity:
+    run: r:latest analysis/ethnicity_check/eth_corrected_regression/rapid_change_ethnicity_adjusted.R --output-dir=output/data 
+    needs: [Ethnicity_regression_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/rapid_bmi_change_cancerandlowbmi_removed_eth_corrected_eth_adjusted.csv
+
+
+
