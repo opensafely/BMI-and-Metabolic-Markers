@@ -2046,4 +2046,12 @@ actions:
         table4: output/data/rapid_bmi_change_cancerandlowbmi_removed_eth_corrected_popcharac_t2dm.csv
 
 
+  Ethnicity_top_decile_change_eth_corrected_data:
+    run: r:latest analysis/ethnicity_check/eth_corrected_top_decile_change/eth_corrected_top_decile_change_data.R --output-dir=output/data 
+    needs: [bmi_trajectory_change_summary]
+    outputs:
+      highly_sensitive:
+        table1: output/data/BMI_trajectory_models_eth_corrected_data.feather
+      moderately_sensitive:
+        table2: output/data/change_90th_counts_lowbmiexc_eth_corrected.csv
 

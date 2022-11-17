@@ -230,7 +230,7 @@ imd <- population_demog_function2(precovid_change, imd) %>%
 hypertension <- population_demog_function2(precovid_change, hypertension) %>% 
   dplyr::mutate(group = as.factor(group)) 
 
-diabetes_t1 <- population_demog_function2(precovid_change, diabetes_t1) %>% 
+diabetes_t1 <- population_demog_function2(precovid_change, diabetes_t2) %>% 
   dplyr::mutate(group = as.factor(group))
 
 diabetes_t2 <- population_demog_function2(precovid_change, diabetes_t1) %>% 
@@ -371,7 +371,7 @@ imd <- population_demog_function2(postcovid_change, imd) %>%
 hypertension <- population_demog_function2(postcovid_change, hypertension) %>% 
   dplyr::mutate(group = as.factor(group)) 
 
-diabetes_t1 <- population_demog_function2(postcovid_change, diabetes_t1) %>% 
+diabetes_t1 <- population_demog_function2(postcovid_change, diabetes_t2) %>% 
   dplyr::mutate(group = as.factor(group))
 
 diabetes_t2 <- population_demog_function2(postcovid_change, diabetes_t1) %>% 
