@@ -2035,5 +2035,15 @@ actions:
       moderately_sensitive:
         table1: output/data/rapid_bmi_change_cancerandlowbmi_removed_eth_corrected_eth_adjusted.csv
 
+  Ethnicity_rapid_change_t2dm_models:
+    run: r:latest analysis/ethnicity_check/eth_corrected_regression/rapid_change_eth_corrected_t2dmpop.R --output-dir=output/data 
+    needs: [Ethnicity_regression_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/rapid_bmi_change_cancerandlowbmi_removed_eth_corrected_eth_adj_t2dm.csv
+        table2: output/data/rapid_bmi_change_cancerandlowbmi_removed_eth_corrected_ageseximd_adj_t2dm.csv
+        table3: output/data/rapid_bmi_change_cancerandlowbmi_removed_eth_corrected_univariate_t2dm.csv
+        table4: output/data/rapid_bmi_change_cancerandlowbmi_removed_eth_corrected_popcharac_t2dm.csv
+
 
 
