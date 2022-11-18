@@ -2065,6 +2065,14 @@ actions:
         table2: output/data/change_deciles_lowbmiexc_eth_corrected.csv
 
 
+  Ethnicity_top_decile_change_eth_corrected_ageseximd_models:
+    run: r:latest analysis/ethnicity_check/eth_corrected_top_decile_change/eth_corrected_topdecchange_ageseximd_adjusted.R --output-dir=output/data 
+    needs: [Ethnicity_top_decile_change_eth_corrected_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/change_90th_eth_ageseximd_models_lowbmiexc_eth_corrected.csv
+
+
 
 
 
