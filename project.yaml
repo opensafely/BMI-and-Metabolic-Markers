@@ -2055,3 +2055,20 @@ actions:
       moderately_sensitive:
         table2: output/data/change_90th_counts_lowbmiexc_eth_corrected.csv
 
+
+  Ethnicity_top_decile_change_eth_corrected_univariate_and_eth_models:
+    run: r:latest analysis/ethnicity_check/eth_corrected_top_decile_change/eth_corrected_topdecchange_univar_eth_adjusted.R --output-dir=output/data 
+    needs: [Ethnicity_top_decile_change_eth_corrected_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/change_90th_univariate_eth_adjusted_lowbmiexc_eth_corrected.csv
+        table2: output/data/change_deciles_lowbmiexc_eth_corrected.csv
+
+
+
+
+
+
+
+
+
