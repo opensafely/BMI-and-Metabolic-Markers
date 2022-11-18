@@ -2021,6 +2021,17 @@ actions:
         table2: output/data/rapid_bmi_change_cancerandlowbmi_removed_eth_corrected_popcharac.csv
   
 
+
+  Ethnicity_rapid_change_counts:
+    run: r:latest analysis/ethnicity_check/eth_corrected_regression/rapid_change_counts_ethnicity_corrected.R --output-dir=output/data 
+    needs: [Ethnicity_regression_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/rapid_bmi_change_cancerandlowbmi_removed_eth_corrected_popcharac2.csv
+  
+
+
+
   Ethnicity_rapid_change_age_sex_imd:
     run: r:latest analysis/ethnicity_check/eth_corrected_regression/rapid_change_age_sex_imd_ethnicity_corrected.R --output-dir=output/data 
     needs: [Ethnicity_regression_data]
