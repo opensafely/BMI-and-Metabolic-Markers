@@ -2039,12 +2039,33 @@ actions:
       moderately_sensitive:
         table1: output/data/rapid_bmi_change_cancerandlowbmi_removed_eth_corrected_age_sex_imd.csv
 
+## TOo much memorey - eplit analysis
   Ethnicity_rapid_change_ethnicity:
     run: r:latest analysis/ethnicity_check/eth_corrected_regression/rapid_change_ethnicity_adjusted.R --output-dir=output/data 
     needs: [Ethnicity_regression_data]
     outputs:
       moderately_sensitive:
         table1: output/data/rapid_bmi_change_cancerandlowbmi_removed_eth_corrected_eth_adjusted.csv
+
+
+  Ethnicity_rapid_change_ethnicity_precovid:
+    run: r:latest analysis/ethnicity_check/eth_corrected_regression/rapid_change_ethnicity_adjusted_precov.R --output-dir=output/data 
+    needs: [Ethnicity_regression_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/rapid_bmi_change_cancerandlowbmi_removed_eth_corrected_eth_adjusted_precovid.csv
+
+  Ethnicity_rapid_change_ethnicity_postcovid:
+    run: r:latest analysis/ethnicity_check/eth_corrected_regression/rapid_change_ethnicity_adjusted_postcov.R --output-dir=output/data 
+    needs: [Ethnicity_regression_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/rapid_bmi_change_cancerandlowbmi_removed_eth_corrected_eth_adjusted_postcovid.csv
+
+
+
+
+
 
   Ethnicity_rapid_change_t2dm_models:
     run: r:latest analysis/ethnicity_check/eth_corrected_regression/rapid_change_eth_corrected_t2dmpop.R --output-dir=output/data 
