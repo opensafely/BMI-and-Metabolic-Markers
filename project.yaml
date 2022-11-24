@@ -2120,6 +2120,14 @@ actions:
         table1: output/data/change_90th_counts_lowbmiexc_eth_corrected_t2dm.csv
 
 
+## Eth Corrected Trajectory Changes
+  Ethnicity_trajectory_change_eth_corrected_models:
+    run: r:latest analysis/ethnicity_check/eth_corrected_trajectory_change/eth_corrected_trajchange_univar_eth_adjusted.R --output-dir=output/data 
+    needs: [Ethnicity_top_decile_change_eth_corrected_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/ethnic_adjusted_lowbmi_excluded_bmi_trajectory_change_eth_corrected.csv
+        table2: output/data/ethnic_adjusted_lowbmi_excluded_bmi_trajectory_change_T2DM_eth_corrected.csv
 
 
 
