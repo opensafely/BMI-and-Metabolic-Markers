@@ -37,22 +37,23 @@ models <- read_csv (here::here ("output/data", "change_90th_t2dm_models_eth_corr
 ## redact < 5 values in the counts data
 
 data <- data %>% 
-  dplyr::mutate(top_decile = as.character(top_decile)) 
-  
+  dplyr::mutate(top_decile = as.character(top_decile)) %>%
+  dplyr::mutate(percent = as.character(percent))
+
  data <- data %>%
    dplyr::mutate(top_decile = case_when(
     (variable == "smoking_status" & group == "M") ~ "<5", 
     (variable != "smoking status" | group != "M") ~ top_decile
   ))
 
+print(1)
 
  data <- data %>%
    dplyr::mutate(percent = case_when(
      (variable == "smoking_status" & group == "M") ~ "na", 
      (variable != "smoking status" | group != "M") ~ percent
    ))
- 
-
+ print(2)
 ## 
 
 ## redacting smoking_missing from models data
