@@ -137,7 +137,7 @@ models_univariate <- explanatory_vars %>%       # begin with variables of intere
 
 ## models_ethnicity_adjusted
 models_eth <- explanatory_vars_2 %>%       # begin with variables of interest
-  str_c("change_90th ~ ", .) %>%         # combine each variable into formula ("outcome ~ variable of interest")
+  str_c("change_90th ~ eth_16_corrected + ", .) %>%         # combine each variable into formula ("outcome ~ variable of interest")
   
   # iterate through each univariate formula
   map(                               
