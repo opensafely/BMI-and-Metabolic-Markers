@@ -2154,3 +2154,12 @@ actions:
 ## 1) Delta pandemic and Delta pre pandemic data from:  BMI_trajectory_data_long_eth_corrected.feather
 ## 2) Delta change data from: BMI_trajectory_models_eth_corrected_data.feather
 
+  complete_case_data:
+    run: r:latest analysis/ethnicity_check/CC/CC_generate_data.R --output-dir=output/data 
+    needs: [Ethnicity_top_decile_change_eth_corrected_data, Ethnicity_regression_data, generate_BMI_2021_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_study_population_data.csv
+        table2: output/data/CC_delta_change_data.csv
+        table3: output/data/CC_delta_data.csv
+
