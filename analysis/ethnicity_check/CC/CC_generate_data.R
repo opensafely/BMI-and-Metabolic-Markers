@@ -6,6 +6,14 @@
 ## Calculate numbers of individuals with data in 2021
 
 
+## M Samuel 
+## Complete Case Analysis with corrected ethnicity data
+## This script filters data for complete case analysis
+
+
+## Calculate numbers of individuals with data in 2021
+
+
 ## Load libraries
 ## Specify libraries
 library(pacman)
@@ -33,9 +41,8 @@ library(gtsummary)
 ## Read in files
 
 
-
-#BMI_traj <- read_feather (here::here ( "Documents/Academic GP/Open Safely/Dummy Data","BMI_trajectory_data_long_eth_corrected.feather"))
 #BMI_2021 <- read_feather (here::here ( "Documents/Academic GP/Open Safely/Dummy Data","BMI_complete_median_2021.feather"))
+#BMI_traj <- read_feather (here::here ( "Documents/Academic GP/Open Safely/Dummy Data","BMI_trajectory_data_long_eth_corrected.feather"))
 #BMI_delta_change <- read_feather (here::here ( "Documents/Academic GP/Open Safely/Dummy Data","BMI_trajectory_models_eth_corrected_data.feather"))
 
   
@@ -43,9 +50,7 @@ library(gtsummary)
 
 
 BMI_traj <- read_feather (here::here ("output/data", "BMI_trajectory_data_long_eth_corrected.feather"))
-
 BMI_2021 <- read_feather (here::here ("output/data", "BMI_complete_median_2021.feather"))
-
 BMI_delta_change <- read_feather (here::here ( "output/data","BMI_trajectory_models_eth_corrected_data.feather"))
 
 
@@ -75,21 +80,34 @@ BMI_2021 <- BMI_2021 %>%
     eth_group_16 == "Other" ~ "White_Black_African",
     eth_group_16 ==  "Missing" ~ "African")) 
 
+print("check ethnicity replace none with NA")
+BMI_2021 %>%
+  tabyl(eth_group_16, eth_16_corrected)
 
-BMI_2021_demog <- BMI_2021 %>% 
-  dplyr::select(age_group_2, sex, imd, eth_16_corrected, eth_group_16) 
+## ****  NEW CODE
+BMI_2021 <- BMI_2021 %>% 
+mutate(eth_16_corrected = na_if(eth_16_corrected, "None"))
 
+print("check ethnicity replace none with NA")
+BMI_2021 %>%
+  tabyl(eth_group_16, eth_16_corrected)
+
+
+print("check missing counts in all data BMI_2021")
+BMI_2021 %>% 
+  dplyr::select(age_group_2, sex, imd, eth_16_corrected, eth_group_16)  %>% 
+  describe()
+
+print("tabyl ethnicity in all data BMI_2021")
 # check ethnicity - error counts
-BMI_2021_demog %>% 
+BMI_2021 %>% 
   tabyl(eth_group_16)
 
 # check ethnicity - recoded
-BMI_2021_demog %>% 
+BMI_2021 %>% 
   tabyl(eth_16_corrected)
 
-# results in metadata: describe demographics of full 2021 data
-BMI_2021_demog %>% 
-  describe()
+
 
 ### Complete case - filter out missing
 # filter NA for complete case data set
@@ -98,26 +116,28 @@ BMI_2021_cc <- BMI_2021 %>%
   drop_na (eth_16_corrected)
 
 
-BMI_2021_demog_cc <- BMI_2021_cc %>% 
-  dplyr::select(age_group_2, sex, imd, eth_16_corrected, eth_group_16) 
+print("COMPLETE CASE:check missing counts in complete case data BMI_2021")
+ BMI_2021_cc %>% 
+  dplyr::select(age_group_2, sex, imd, eth_16_corrected, eth_group_16)  %>% 
+  describe()
 
+ # check ethnicity - error counts
+ BMI_2021_cc %>% 
+   tabyl(eth_group_16)
+ 
+ # check ethnicity - recoded
+ BMI_2021_cc %>% 
+   tabyl(eth_16_corrected)
 
-## results in metadata: describe demographics of complete case 2021 data
-
-BMI_2021_demog_cc %>%
-describe()
-
-
+############################################
 ############################################
 ##############  BMI Trajectory data
 ## Check counts of demographics of full data 
 
-BMI_traj_demog <- BMI_traj %>% 
-  dplyr::select(age_group_2, sex, imd, eth_16_corrected, pandemic_stage)
-
-# results in metadata: describe(BMI_traj_demog)
-describe(BMI_traj_demog)
-
+print("describe missing data for delta prepandemic and delta pandemic")
+BMI_traj %>% 
+  dplyr::select(age_group_2, sex, imd, eth_16_corrected, pandemic_stage) %>%
+  describe()
 
 
 ## Check counts of complete case data
@@ -125,33 +145,31 @@ BMI_traj_cc <- BMI_traj %>%
   drop_na (imd) %>% 
   drop_na (eth_16_corrected)
 
-# describe filtered data set
-BMI_traj_demog_cc <- BMI_traj_cc %>% 
-  dplyr::select(age_group_2, sex, imd, eth_16_corrected, pandemic_stage)
-
-# results in metadata of filtered population: describe(BMI_traj_demog)
-describe(BMI_traj_demog_cc)
+print("COMPLETE CASE:  describe missing data for delta prepandemic and delta pandemic in complete case")
+BMI_traj_cc %>% 
+  dplyr::select(age_group_2, sex, imd, eth_16_corrected, pandemic_stage) %>%
+  describe()
 
 
-
+#########################################
+#########################################
 ### BMI delta change data
 
-BMI_delta_change_demog <- BMI_delta_change %>% 
-  dplyr::select(age_group_2, sex, imd, eth_16_corrected)
+print("describe missing data for delta change analysis")
+ BMI_delta_change %>% 
+  dplyr::select(age_group_2, sex, imd, eth_16_corrected) %>% 
+  describe()
 
-# describe delta change - unfiltered data
-describe(BMI_delta_change_demog)
 
 
 BMI_delta_change_cc <- BMI_delta_change %>% 
   drop_na (imd) %>% 
   drop_na (eth_16_corrected)
 
-
-BMI_delta_change_cc_demog <- BMI_delta_change_cc %>% 
-  dplyr::select(age_group_2, sex, imd, eth_16_corrected)
-
-describe(BMI_delta_change_cc_demog)
+print("COMPLETE CASE: describe missing data for delta change complete case analysis")
+BMI_delta_change_cc %>% 
+  dplyr::select(age_group_2, sex, imd, eth_16_corrected) %>% 
+  describe()
 
 
 

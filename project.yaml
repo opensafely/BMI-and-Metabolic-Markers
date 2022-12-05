@@ -2158,7 +2158,7 @@ actions:
     run: r:latest analysis/ethnicity_check/CC/CC_generate_data.R --output-dir=output/data 
     needs: [Ethnicity_top_decile_change_eth_corrected_data, Ethnicity_regression_data, generate_BMI_2021_data]
     outputs:
-      moderately_sensitive:
+      highly_sensitive:
         table1: output/data/CC_study_population_data.csv
         table2: output/data/CC_delta_change_data.csv
         table3: output/data/CC_delta_data.csv
