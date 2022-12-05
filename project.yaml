@@ -1985,7 +1985,7 @@ actions:
         table2: output/data/eth_16_correlation_table_21.csv
         table3: output/data/eth_6_labels.csv
         table4: output/data/eth_6_correlation_table_21.csv
-
+## coding error identified
 
   Ethnicity_correlation_tables:
     run: r:latest analysis/ethnicity_check/ethnicity_correlation_tables.R --output-dir=output/data 
@@ -2105,6 +2105,7 @@ actions:
       moderately_sensitive:
         table1: output/data/change_90th_eth_ageseximd_models_lowbmiexc_eth_corrected.csv
 
+## rerun
   Ethnicity_top_decile_change_eth_corrected_t2dm_models:
     run: r:latest analysis/ethnicity_check/eth_corrected_top_decile_change/eth_corrected_topdecchange_t2dm_models.R --output-dir=output/data 
     needs: [Ethnicity_top_decile_change_eth_corrected_data]
@@ -2120,15 +2121,6 @@ actions:
       moderately_sensitive:
         table1: output/data/change_90th_counts_lowbmiexc_eth_corrected_t2dm.csv
 
-  Ethnicity_top_decile_change_eth_corrected_t2dm_redact:
-    run: r:latest analysis/ethnicity_check/eth_corrected_top_decile_change/eth_corrected_top_decile_change_t2dm_redact.R --output-dir=output/data 
-    needs: [Ethnicity_top_decile_change_eth_corrected_t2dm_counts, Ethnicity_top_decile_change_eth_corrected_t2dm_models]
-    outputs:
-      moderately_sensitive:
-        table1: output/data/lowbmiexc_eth_corrected_change_90th_counts_t2dm_redact.csv
-        table2: output/data/lowbmiexc_eth_corrected_change_90th_models_t2dm_redact.csv
-
-
 ## Eth Corrected Trajectory Changes
   Ethnicity_trajectory_change_eth_corrected_models:
     run: r:latest analysis/ethnicity_check/eth_corrected_trajectory_change/eth_corrected_trajchange_univar_eth_adjusted.R --output-dir=output/data 
@@ -2138,7 +2130,7 @@ actions:
         table1: output/data/ethnic_adjusted_lowbmi_excluded_bmi_trajectory_change_eth_corrected.csv
         table2: output/data/ethnic_adjusted_lowbmi_excluded_bmi_trajectory_change_T2DM_eth_corrected.csv
 
-
+# rerun
   Ethnicity_trajectory_change_eth_corrected_ageseximd_models:
     run: r:latest analysis/ethnicity_check/eth_corrected_trajectory_change/eth_corrected_trajectory_change_models.R --output-dir=output/data 
     needs: [Ethnicity_top_decile_change_eth_corrected_data]
@@ -2147,4 +2139,18 @@ actions:
         table1: output/data/bmi_trajectory_change_eth_corrected_ethnicityageseximd.csv
         table2: output/data/bmi_trajectory_change_eth_corrected_ethnicityageseximd_T2DM.csv
 
+
+  Ethnicity_top_decile_traj_change_eth_corrected_t2dm_redact:
+    run: r:latest analysis/ethnicity_check/eth_corrected_top_decile_change/eth_corrected_top_decile_change_t2dm_redact.R --output-dir=output/data 
+    needs: [Ethnicity_top_decile_change_eth_corrected_t2dm_counts, Ethnicity_top_decile_change_eth_corrected_t2dm_models, Ethnicity_trajectory_change_eth_corrected_models]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/lowbmiexc_eth_corrected_change_90th_counts_t2dm_redact.csv
+        table2: output/data/lowbmiexc_eth_corrected_change_90th_models_t2dm_redact.csv
+
+
+
+############### Complete case analyses with corrected ethnicity
+## 1) Delta pandemic and Delta pre pandemic data from:  BMI_trajectory_data_long_eth_corrected.feather
+## 2) Delta change data from: BMI_trajectory_models_eth_corrected_data.feather
 

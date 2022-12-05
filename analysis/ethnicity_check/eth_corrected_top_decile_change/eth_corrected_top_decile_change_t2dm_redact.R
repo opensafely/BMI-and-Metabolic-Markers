@@ -58,8 +58,9 @@ print(1)
 
 ## redacting smoking_missing from models data
  
-models_2 <- models %>%
+models <- models %>%
   dplyr::filter( term != "smoking_statusM")
+
 
 
 
@@ -68,4 +69,4 @@ models_2 <- models %>%
 
 
 write_csv (data, here::here ("output/data","lowbmiexc_eth_corrected_change_90th_counts_t2dm_redact.csv"))
-write_csv (models_2, here::here ("output/data","lowbmiexc_eth_corrected_change_90th_models_t2dm_redact.csv"))
+write_csv (models, here::here ("output/data","lowbmiexc_eth_corrected_change_90th_models_t2dm_redact.csv"))
