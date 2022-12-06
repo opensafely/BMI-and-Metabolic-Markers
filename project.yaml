@@ -2166,5 +2166,10 @@ actions:
       moderately_sensitive:
         table1: output/data/CC_deltachange_quantiles.csv
 
-
+  complete_case_study_pop:
+    run: r:latest analysis/ethnicity_check/CC/CC_studypop_charac.R --output-dir=output/data 
+    needs: [complete_case_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_study_population_characteristics.csv
 
