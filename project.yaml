@@ -2163,4 +2163,8 @@ actions:
         table1: output/data/CC_study_population_data.csv
         table2: output/data/CC_delta_change_data.csv
         table3: output/data/CC_delta_data.csv
+      moderately_sensitive:
+        table1: output/data/CC_deltachange_quantiles.csv
+
+
 

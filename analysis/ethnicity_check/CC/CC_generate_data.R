@@ -270,3 +270,4 @@ BMI_delta_change %>%
 write_csv (BMI_2021_cc, here::here ("output/data","CC_study_population_data.csv"))
 write_csv (BMI_delta_change_cc, here::here ("output/data","CC_delta_change_data.csv"))
 write_csv (BMI_traj_cc, here::here ("output/data","CC_delta_data.csv"))
+write_csv (quantiles, here::here ("output/data","CC_deltachange_quantiles.csv"))
