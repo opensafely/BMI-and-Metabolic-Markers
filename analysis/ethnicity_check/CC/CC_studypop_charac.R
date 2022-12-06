@@ -25,6 +25,25 @@ study_data <- read_csv (here::here ("output/data", "CC_study_population_data.csv
  study_data <- study_data %>% 
    dplyr::select(-c(eth_group_16, ethnic_no_miss))
 
+study_data <- study_data %>%
+dplyr::mutate(eth_16_corrected = factor(eth_16_corrected, 
+                                          levels = c("White_British",
+                                                     "White_Irish",
+                                                     "Other_White",
+                                                     "White_Black_Carib",
+                                                     "White_Black_African",
+                                                     "White_Asian",
+                                                     "Other_Mixed",
+                                                     "Indian",
+                                                     "Pakistani",
+                                                     "Bangladeshi",
+                                                     "Other_Asian",
+                                                     "Chinese",
+                                                     "Caribbean",
+                                                     "African",
+                                                     "Other_Black",
+                                                     "Other")) ) 
+
 
  ## create a flag of whether a median BMI is available 
  study_data <- study_data  %>%
