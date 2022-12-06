@@ -34,6 +34,11 @@ library(gtsummary)
 data <- read_csv (here::here ("output/data", "change_90th_counts_lowbmiexc_eth_corrected_t2dm.csv"))
 models <- read_csv (here::here ("output/data", "change_90th_t2dm_models_eth_corrected.csv"))
 
+rapid_data <- read_csv (here::here ("output/data", "rapid_bmi_change_cancerandlowbmi_removed_eth_corrected_popcharac_t2dm.csv"))
+
+
+
+
 ## redact < 5 values in the counts data
 
 data <- data %>% 
@@ -61,7 +66,14 @@ print(1)
 models <- models %>%
   dplyr::filter( term != "smoking_statusM")
 
+### replace 5 with redacted value for smoking missing in 
 
+rapid_data <- rapid_data %>% 
+  dplyr::mutate(rapid = as.character(rapid)) %>%
+  dplyr::mutate(rapid = case_when(
+    (stage == "precovid" & variable == "smoking_status" & group == "M")  ~ "5-10", 
+    (stage != "precovid" | variable != "smoking_status" | group != "M") ~ rapid
+  ))
 
 
 
@@ -70,3 +82,5 @@ models <- models %>%
 
 write_csv (data, here::here ("output/data","lowbmiexc_eth_corrected_change_90th_counts_t2dm_redact.csv"))
 write_csv (models, here::here ("output/data","lowbmiexc_eth_corrected_change_90th_models_t2dm_redact.csv"))
+write_csv (rapid_data, here::here ("output/data","rapid_bmi_change_cancerandlowbmi_removed_eth_corrected_popcharac_t2dm_redact.csv"))
+
