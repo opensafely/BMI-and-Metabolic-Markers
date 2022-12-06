@@ -71,7 +71,7 @@ models <- models %>%
 rapid_data <- rapid_data %>% 
   dplyr::mutate(rapid = as.character(rapid)) %>%
   dplyr::mutate(rapid = case_when(
-    (stage == "precovid" & variable == "smoking_status" & group == "M")  ~ "5-10", 
+    (stage == "precovid" & variable == "smoking_status" & group == "M")  ~ "6-10", 
     (stage != "precovid" | variable != "smoking_status" | group != "M") ~ rapid
   ))
 
