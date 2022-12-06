@@ -56,6 +56,8 @@ BMI_delta_change <- read_feather (here::here ( "output/data","BMI_trajectory_mod
 
 
 
+
+
 ##############   BMI 2021 data
 ## Check demographics of study population in 2021
 
@@ -98,7 +100,6 @@ BMI_2021 %>%
   dplyr::select(age_group_2, sex, imd, eth_16_corrected, eth_group_16)  %>% 
   describe()
 
-print("tabyl ethnicity in all data BMI_2021")
 # check ethnicity - error counts
 BMI_2021 %>% 
   tabyl(eth_group_16)
@@ -128,7 +129,21 @@ print("COMPLETE CASE:check missing counts in complete case data BMI_2021")
  # check ethnicity - recoded
  BMI_2021_cc %>% 
    tabyl(eth_16_corrected)
+ 
+print("BMI_2021_cc - check smoking status")
+ BMI_2021_cc %>% 
+   tabyl(smoking_status)
 
+
+ 
+ BMI_2021_cc <- BMI_2021_cc %>% 
+   mutate(smoking_status = na_if(smoking_status, "M")) %>% 
+   mutate(smoking_status = factor(smoking_status, levels = c("N","S","E"))) 
+
+ print("BMI_2021_cc - check smoking status: after recoding M as missing")
+BMI_2021_cc %>% 
+  tabyl(smoking_status)
+ 
 ############################################
 ############################################
 ##############  BMI Trajectory data
@@ -151,6 +166,49 @@ BMI_traj_cc %>%
   describe()
 
 
+
+## recode and structure BMI_traj_cc
+# 1. Order ethnicity
+BMI_traj_cc <- BMI_traj_cc %>%
+  dplyr::mutate(eth_16_corrected = factor(eth_16_corrected, 
+                                          levels = c("White_British",
+                                                     "White_Irish",
+                                                     "Other_White",
+                                                     "White_Black_Carib",
+                                                     "White_Black_African",
+                                                     "White_Asian",
+                                                     "Other_Mixed",
+                                                     "Indian",
+                                                     "Pakistani",
+                                                     "Bangladeshi",
+                                                     "Other_Asian",
+                                                     "Chinese",
+                                                     "Caribbean",
+                                                     "African",
+                                                     "Other_Black",
+                                                     "Other")) ) 
+
+ # 2. create flag for individuals with rapid change
+BMI_traj_cc <- BMI_traj_cc %>% 
+  dplyr::mutate(rapid_bmi_change = case_when(
+    bmi_change_cat == 'over 0.5' ~ 1, 
+    bmi_change_cat != 'over 0.5' ~ 0, 
+  ))
+
+
+#3.  filter out cancer and underweight
+BMI_traj_cc <- BMI_traj_cc %>% 
+  dplyr::filter(all_cancer == FALSE) %>% 
+  dplyr::filter(precovid_bmi_category != "underweight")
+
+
+BMI_traj_cc <- BMI_traj_cc  %>% 
+  mutate(smoking_status = na_if(smoking_status, "M")) %>% 
+  mutate(smoking_status = factor(smoking_status, levels = c("N","S","E")))  
+
+print("check smoking status of BMI delta data after recoding smoking status")
+BMI_traj_cc %>% 
+  tabyl(smoking_status)
 #########################################
 #########################################
 ### BMI delta change data
@@ -170,6 +228,42 @@ print("COMPLETE CASE: describe missing data for delta change complete case analy
 BMI_delta_change_cc %>% 
   dplyr::select(age_group_2, sex, imd, eth_16_corrected) %>% 
   describe()
+
+# organise data for analysis
+#1.  Create a flag for top decile delta_change
+traj_change <- BMI_delta_change_cc
+
+quantiles <- as.data.frame(quantile(traj_change$trajectory_change, probs = seq(.1, .9, by = .1))) %>% 
+  dplyr::rename(trajectory_change = 1)
+
+quantiles <- quantiles %>%
+  cbind(rownames(quantiles), data.frame(quantiles, row.names=NULL)) %>% 
+  dplyr::select(-c(1))
+
+## create a column for deciles
+traj_change$decile <- ntile(traj_change$trajectory_change, 10)
+
+## create a flag for top 10% weight gain
+
+traj_change <- traj_change %>% 
+  dplyr::mutate(change_90th = case_when(
+    decile == 10 ~ 1,
+    decile != 10 ~ 0
+  ))
+
+BMI_delta_change_cc <- traj_change
+
+BMI_delta_change <- BMI_delta_change_cc %>% 
+  mutate(smoking_status = na_if(smoking_status, "M")) %>% 
+  mutate(smoking_status = factor(smoking_status, levels = c("N","S","E")))  
+
+print("check recoded smoking status for delta change data")
+BMI_delta_change %>% 
+  tabyl(smoking_status)
+
+
+#########################################################
+
 
 
 
