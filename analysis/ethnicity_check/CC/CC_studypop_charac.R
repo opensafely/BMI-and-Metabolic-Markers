@@ -289,5 +289,8 @@ complete_data <- complete %>%
   dplyr::left_join(median_data) %>%
   dplyr::left_join(mean_data) 
 
+complete_data <- complete_data  %>% 
+  dplyr::mutate(bmi_data = plyr::round_any(complete_data$bmi_data, 5)) %>% 
+  dplyr::mutate(no_bmi_data = plyr::round_any(complete_data$no_bmi_data, 5))
 
 write_csv (complete_data, here::here ("output/data","CC_study_population_characteristics.csv"))
