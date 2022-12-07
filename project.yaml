@@ -2206,3 +2206,37 @@ actions:
     outputs:
       moderately_sensitive:
         table1: output/data/CC_delta_change_models_2.csv
+
+
+
+  ## delta models: pandemic
+  complete_delta_pandemic_models1:
+    run: r:latest analysis/ethnicity_check/CC/delta/CC_delta_pandemic_models_1.R --output-dir=output/data 
+    needs: [complete_case_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_pandemic_models_1.csv
+
+
+  complete_delta_pandemic_models2:
+    run: r:latest analysis/ethnicity_check/CC/delta/CC_delta_pandemic_models_2.R --output-dir=output/data 
+    needs: [complete_case_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_pandemic_models_2.csv
+
+  
+  ## delta models: precovid
+  complete_delta_precovid_models1:
+    run: r:latest analysis/ethnicity_check/CC/delta/CC_delta_precovid_models_1.R --output-dir=output/data 
+    needs: [complete_case_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_precovid_models_1.csv
+
+  complete_delta_precovid_models2:
+    run: r:latest analysis/ethnicity_check/CC/delta/CC_delta_precovid_models_2.R --output-dir=output/data 
+    needs: [complete_case_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_precovid_models_2.csv
