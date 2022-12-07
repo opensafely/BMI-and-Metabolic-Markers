@@ -253,12 +253,12 @@ traj_change <- traj_change %>%
 
 BMI_delta_change_cc <- traj_change
 
-BMI_delta_change <- BMI_delta_change_cc %>% 
+BMI_delta_change_cc <- BMI_delta_change_cc %>% 
   mutate(smoking_status = na_if(smoking_status, "M")) %>% 
   mutate(smoking_status = factor(smoking_status, levels = c("N","S","E")))  
 
 print("check recoded smoking status for delta change data")
-BMI_delta_change %>% 
+BMI_delta_change_cc %>% 
   tabyl(smoking_status)
 
 
