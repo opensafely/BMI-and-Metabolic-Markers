@@ -2189,3 +2189,20 @@ actions:
     outputs:
       moderately_sensitive:
         table1: output/data/CC_delta_change_summary_stats.csv
+  
+
+  ## delta change models: univariate, age, sex, imd, ethnicity adjusted
+  complete_delta_change_models1:
+    run: r:latest analysis/ethnicity_check/CC/delta_change/CC_delta_change_univariate_single_models.R --output-dir=output/data 
+    needs: [complete_case_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_change_models_1.csv
+
+  
+  complete_delta_change_models2:
+    run: r:latest analysis/ethnicity_check/CC/delta_change/CC_delta_change_models_2.R --output-dir=output/data 
+    needs: [complete_case_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_change_models_2.csv
