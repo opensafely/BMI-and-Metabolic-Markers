@@ -66,4 +66,4 @@ print("check age collapsed correctly")
 my_data %>%
   tabyl(age_group_2, age_collapsed)
 
-write_csv(my_data, here::here ("output/data", "CC_stratified_analysis_data.csv"))
+write_csv(my_data, here::here ("output/data", "CC_stratified_analysis_delta_change_data.csv"))
