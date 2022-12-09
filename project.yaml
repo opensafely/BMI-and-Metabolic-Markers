@@ -2215,6 +2215,14 @@ actions:
         table1: output/data/CC_delta_change_models_2.csv
 
 
+ 
+  complete_delta_change_models1_eth_stratified:
+    run: r:latest analysis/ethnicity_check/CC/delta_change/stratified/CC_delta_change_models_1_ethnic_stratified.R --output-dir=output/data 
+    needs: [complete_case_stratified_delta_change_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_change_models_1_black.csv
+        table2: output/data/CC_delta_change_models_1_south_asian.csv
 
   ## delta models: pandemic
   complete_delta_pandemic_models1:
