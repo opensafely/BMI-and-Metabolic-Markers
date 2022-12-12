@@ -2330,8 +2330,22 @@ actions:
         table2: output/data/CC_delta_pandemic_models_1_south_asian.csv
 
 
+  complete_delta_pandemic_models1_sex:
+    run: r:latest analysis/ethnicity_check/CC/delta/stratified/pandemic/CC_delta_pandemic_models_1_sex.R --output-dir=output/data 
+    needs: [complete_case_stratified_delta_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_pandemic_models_1_male.csv
+        table2: output/data/CC_delta_pandemic_models_1_female.csv
 
 
+  complete_delta_pandemic_models1_imd:
+    run: r:latest analysis/ethnicity_check/CC/delta/stratified/pandemic/CC_delta_pandemic_models_1_imd.R --output-dir=output/data 
+    needs: [complete_case_stratified_delta_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_pandemic_models_1_IMD1.csv
+        table2: output/data/CC_delta_pandemic_models_1_IMD5.csv
   
   ## delta models: precovid
   complete_delta_precovid_models1:
