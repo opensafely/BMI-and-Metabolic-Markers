@@ -2321,6 +2321,17 @@ actions:
         table3: output/data/CC_delta_pandemic_models_1_60_79.csv
 
 
+  complete_delta_pandemic_models1_ethnicity:
+    run: r:latest analysis/ethnicity_check/CC/delta/stratified/pandemic/CC_delta_pandemic_models_1_ethnicity.R --output-dir=output/data 
+    needs: [complete_case_stratified_delta_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_pandemic_models_1_black.csv
+        table2: output/data/CC_delta_pandemic_models_1_south_asian.csv
+
+
+
+
   
   ## delta models: precovid
   complete_delta_precovid_models1:
