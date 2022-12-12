@@ -2234,6 +2234,16 @@ actions:
         table3: output/data/CC_delta_change_models_1_60_79.csv
 
 
+  complete_delta_change_models2_age_stratified:
+    run: r:latest analysis/ethnicity_check/CC/delta_change/stratified/CC_delta_change_models_2_age_stratified.R --output-dir=output/data 
+    needs: [complete_case_stratified_delta_change_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_change_models_2_18_39.csv
+        table2: output/data/CC_delta_change_models_2_40_59.csv
+        table3: output/data/CC_delta_change_models_2_60_79.csv
+
+
   complete_delta_change_models1_sex_stratified:
     run: r:latest analysis/ethnicity_check/CC/delta_change/stratified/CC_delta_change_models_1_sex_stratified.R --output-dir=output/data 
     needs: [complete_case_stratified_delta_change_data]
