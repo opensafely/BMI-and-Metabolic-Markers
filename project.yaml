@@ -2174,6 +2174,14 @@ actions:
         table1: output/data/CC_stratified_analysis_delta_change_data.csv
 
 
+  complete_case_stratified_delta_data:
+    run: r:latest analysis/ethnicity_check/CC/CC_stratified_analysis_delta_data.R --output-dir=output/data 
+    needs: [complete_case_data]
+    outputs:
+      highly_sensitive:
+        table1: output/data/CC_stratified_analysis_delta_data_pandemic.csv
+        table2: output/data/CC_stratified_analysis_delta_data_prepandemic.csv
+
   complete_case_study_pop:
     run: r:latest analysis/ethnicity_check/CC/CC_studypop_charac.R --output-dir=output/data 
     needs: [complete_case_data]
