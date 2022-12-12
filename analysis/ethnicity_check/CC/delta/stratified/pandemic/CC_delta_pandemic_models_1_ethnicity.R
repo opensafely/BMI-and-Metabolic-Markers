@@ -40,7 +40,7 @@ my_data <- my_data %>%
   dplyr::mutate(imd = as.factor(imd)) 
 
 my_data %>% 
-  tabyl(age_collapsed)
+  tabyl(age_group_2)
 
 ## Data table calculations
 DT <- as.data.table(my_data)
@@ -71,7 +71,7 @@ sex <- DT_black[, glm(rapid_bmi_change ~ sex, family = "binomial")] %>%
   mutate(across(where(is.numeric), round, digits = 5)) 
 
 
-age_collapsed <- DT_black[, glm(rapid_bmi_change ~age_collapsed, family = "binomial")] %>% 
+age_group_2 <- DT_black[, glm(rapid_bmi_change ~age_group_2, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
@@ -135,7 +135,7 @@ smoking_status <- DT_black[, glm(rapid_bmi_change ~ smoking_status, family = "bi
 
 
 complete <- sex %>% 
-  bind_rows(age_collapsed) %>%
+  bind_rows(age_group_2) %>%
   bind_rows(imd) %>%
   bind_rows(region) %>%
   bind_rows(hypertension) %>%
@@ -165,7 +165,7 @@ sex <- DT_black[, glm(rapid_bmi_change ~ sex +  sex, family = "binomial")] %>%
   mutate(across(where(is.numeric), round, digits = 5)) 
 
 
-age_collapsed <- DT_black[, glm(rapid_bmi_change ~ sex + age_collapsed, family = "binomial")] %>% 
+age_group_2 <- DT_black[, glm(rapid_bmi_change ~ sex + age_group_2, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
@@ -229,7 +229,7 @@ smoking_status <- DT_black[, glm(rapid_bmi_change ~ sex +  smoking_status, famil
 
 
 models_sex <- sex %>% 
-  bind_rows(age_collapsed) %>%
+  bind_rows(age_group_2) %>%
   bind_rows(imd) %>%
   bind_rows(region) %>%
   bind_rows(hypertension) %>%
@@ -256,7 +256,7 @@ sex <- DT_black[, glm(rapid_bmi_change ~ imd +  sex, family = "binomial")] %>%
   mutate(across(where(is.numeric), round, digits = 5)) 
 
 
-age_collapsed <- DT_black[, glm(rapid_bmi_change ~ imd + age_collapsed, family = "binomial")] %>% 
+age_group_2 <- DT_black[, glm(rapid_bmi_change ~ imd + age_group_2, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
@@ -320,7 +320,7 @@ smoking_status <- DT_black[, glm(rapid_bmi_change ~ imd +  smoking_status, famil
 
 
 models_imd <- sex %>%
-  bind_rows(age_collapsed) %>%
+  bind_rows(age_group_2) %>%
   bind_rows(imd) %>%
   bind_rows(region) %>%
   bind_rows(hypertension) %>%
@@ -338,72 +338,72 @@ models_imd <- sex %>%
   dplyr::mutate(model = "imd")
 
 
-## age_collapsed adjusted
+## age_group_2 adjusted
 
 
 
-sex <- DT_black[, glm(rapid_bmi_change ~ age_collapsed +  sex, family = "binomial")] %>% 
+sex <- DT_black[, glm(rapid_bmi_change ~ age_group_2 +  sex, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
 
-age_collapsed <- DT_black[, glm(rapid_bmi_change ~ age_collapsed + age_collapsed, family = "binomial")] %>% 
+age_group_2 <- DT_black[, glm(rapid_bmi_change ~ age_group_2 + age_group_2, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-imd <- DT_black[, glm(rapid_bmi_change ~ age_collapsed + imd, family = "binomial")] %>% 
+imd <- DT_black[, glm(rapid_bmi_change ~ age_group_2 + imd, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-region <- DT_black[, glm(rapid_bmi_change ~ age_collapsed +  region, family = "binomial")] %>% 
+region <- DT_black[, glm(rapid_bmi_change ~ age_group_2 +  region, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-hypertension <- DT_black[, glm(rapid_bmi_change ~ age_collapsed +  hypertension, family = "binomial")] %>% 
+hypertension <- DT_black[, glm(rapid_bmi_change ~ age_group_2 +  hypertension, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-diabetes_t1 <- DT_black[, glm(rapid_bmi_change ~ age_collapsed +  diabetes_t1, family = "binomial")] %>% 
+diabetes_t1 <- DT_black[, glm(rapid_bmi_change ~ age_group_2 +  diabetes_t1, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5))  
 
-diabetes_t2 <- DT_black[, glm(rapid_bmi_change ~ age_collapsed +  diabetes_t2, family = "binomial")] %>% 
+diabetes_t2 <- DT_black[, glm(rapid_bmi_change ~ age_group_2 +  diabetes_t2, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-chronic_cardiac <- DT_black[, glm(rapid_bmi_change ~ age_collapsed +  chronic_cardiac, family = "binomial")] %>% 
+chronic_cardiac <- DT_black[, glm(rapid_bmi_change ~ age_group_2 +  chronic_cardiac, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-learning_disability <- DT_black[, glm(rapid_bmi_change ~ age_collapsed +  learning_disability, family = "binomial")] %>% 
+learning_disability <- DT_black[, glm(rapid_bmi_change ~ age_group_2 +  learning_disability, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-depression <- DT_black[, glm(rapid_bmi_change ~ age_collapsed +  depression, family = "binomial")] %>% 
+depression <- DT_black[, glm(rapid_bmi_change ~ age_group_2 +  depression, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-dementia <- DT_black[, glm(rapid_bmi_change ~ age_collapsed +  dementia, family = "binomial")] %>% 
+dementia <- DT_black[, glm(rapid_bmi_change ~ age_group_2 +  dementia, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-psychosis_schiz_bipolar <- DT_black[, glm(rapid_bmi_change ~ age_collapsed +  psychosis_schiz_bipolar, family = "binomial")] %>% 
+psychosis_schiz_bipolar <- DT_black[, glm(rapid_bmi_change ~ age_group_2 +  psychosis_schiz_bipolar, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-asthma <- DT_black[, glm(rapid_bmi_change ~ age_collapsed +  asthma, family = "binomial")] %>% 
+asthma <- DT_black[, glm(rapid_bmi_change ~ age_group_2 +  asthma, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-COPD<- DT_black[, glm(rapid_bmi_change ~ age_collapsed +  COPD, family = "binomial")] %>% 
+COPD<- DT_black[, glm(rapid_bmi_change ~ age_group_2 +  COPD, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-stroke_and_TIA<- DT_black[, glm(rapid_bmi_change ~ age_collapsed +  stroke_and_TIA, family = "binomial")] %>% 
+stroke_and_TIA<- DT_black[, glm(rapid_bmi_change ~ age_group_2 +  stroke_and_TIA, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-smoking_status <- DT_black[, glm(rapid_bmi_change ~ age_collapsed +  smoking_status, family = "binomial")] %>% 
+smoking_status <- DT_black[, glm(rapid_bmi_change ~ age_group_2 +  smoking_status, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
@@ -411,7 +411,7 @@ smoking_status <- DT_black[, glm(rapid_bmi_change ~ age_collapsed +  smoking_sta
 
 
 models_ethnicity <- sex %>% 
-  bind_rows(age_collapsed) %>%
+  bind_rows(age_group_2) %>%
   bind_rows(imd) %>%
   bind_rows(region) %>%
   bind_rows(hypertension) %>%
@@ -426,7 +426,7 @@ models_ethnicity <- sex %>%
   bind_rows(COPD) %>%
   bind_rows(stroke_and_TIA) %>%
   bind_rows(smoking_status) %>% 
-  dplyr::mutate(model = "age_collapsed")
+  dplyr::mutate(model = "age_group_2")
 
 complete_black <- complete %>% 
   dplyr::bind_rows(models_sex) %>%
@@ -441,7 +441,7 @@ sex <- DT_south_asian[, glm(rapid_bmi_change ~ sex, family = "binomial")] %>%
   mutate(across(where(is.numeric), round, digits = 5)) 
 
 
-age_collapsed <- DT_south_asian[, glm(rapid_bmi_change ~age_collapsed, family = "binomial")] %>% 
+age_group_2 <- DT_south_asian[, glm(rapid_bmi_change ~age_group_2, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
@@ -505,7 +505,7 @@ smoking_status <- DT_south_asian[, glm(rapid_bmi_change ~ smoking_status, family
 
 
 complete <- sex %>% 
-  bind_rows(age_collapsed) %>%
+  bind_rows(age_group_2) %>%
   bind_rows(imd) %>%
   bind_rows(region) %>%
   bind_rows(hypertension) %>%
@@ -535,7 +535,7 @@ sex <- DT_south_asian[, glm(rapid_bmi_change ~ sex +  sex, family = "binomial")]
   mutate(across(where(is.numeric), round, digits = 5)) 
 
 
-age_collapsed <- DT_south_asian[, glm(rapid_bmi_change ~ sex + age_collapsed, family = "binomial")] %>% 
+age_group_2 <- DT_south_asian[, glm(rapid_bmi_change ~ sex + age_group_2, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
@@ -599,7 +599,7 @@ smoking_status <- DT_south_asian[, glm(rapid_bmi_change ~ sex +  smoking_status,
 
 
 models_sex <- sex %>% 
-  bind_rows(age_collapsed) %>%
+  bind_rows(age_group_2) %>%
   bind_rows(imd) %>%
   bind_rows(region) %>%
   bind_rows(hypertension) %>%
@@ -626,7 +626,7 @@ sex <- DT_south_asian[, glm(rapid_bmi_change ~ imd +  sex, family = "binomial")]
   mutate(across(where(is.numeric), round, digits = 5)) 
 
 
-age_collapsed <- DT_south_asian[, glm(rapid_bmi_change ~ imd + age_collapsed, family = "binomial")] %>% 
+age_group_2 <- DT_south_asian[, glm(rapid_bmi_change ~ imd + age_group_2, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
@@ -690,7 +690,7 @@ smoking_status <- DT_south_asian[, glm(rapid_bmi_change ~ imd +  smoking_status,
 
 
 models_imd <- sex %>%
-  bind_rows(age_collapsed) %>%
+  bind_rows(age_group_2) %>%
   bind_rows(imd) %>%
   bind_rows(region) %>%
   bind_rows(hypertension) %>%
@@ -712,68 +712,68 @@ models_imd <- sex %>%
 
 
 
-sex <- DT_south_asian[, glm(rapid_bmi_change ~ age_collapsed +  sex, family = "binomial")] %>% 
+sex <- DT_south_asian[, glm(rapid_bmi_change ~ age_group_2 +  sex, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
 
-age_collapsed <- DT_south_asian[, glm(rapid_bmi_change ~ age_collapsed + age_collapsed, family = "binomial")] %>% 
+age_group_2 <- DT_south_asian[, glm(rapid_bmi_change ~ age_group_2 + age_group_2, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-imd <- DT_south_asian[, glm(rapid_bmi_change ~ age_collapsed + imd, family = "binomial")] %>% 
+imd <- DT_south_asian[, glm(rapid_bmi_change ~ age_group_2 + imd, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-region <- DT_south_asian[, glm(rapid_bmi_change ~ age_collapsed +  region, family = "binomial")] %>% 
+region <- DT_south_asian[, glm(rapid_bmi_change ~ age_group_2 +  region, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-hypertension <- DT_south_asian[, glm(rapid_bmi_change ~ age_collapsed +  hypertension, family = "binomial")] %>% 
+hypertension <- DT_south_asian[, glm(rapid_bmi_change ~ age_group_2 +  hypertension, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-diabetes_t1 <- DT_south_asian[, glm(rapid_bmi_change ~ age_collapsed +  diabetes_t1, family = "binomial")] %>% 
+diabetes_t1 <- DT_south_asian[, glm(rapid_bmi_change ~ age_group_2 +  diabetes_t1, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5))  
 
-diabetes_t2 <- DT_south_asian[, glm(rapid_bmi_change ~ age_collapsed +  diabetes_t2, family = "binomial")] %>% 
+diabetes_t2 <- DT_south_asian[, glm(rapid_bmi_change ~ age_group_2 +  diabetes_t2, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-chronic_cardiac <- DT_south_asian[, glm(rapid_bmi_change ~ age_collapsed +  chronic_cardiac, family = "binomial")] %>% 
+chronic_cardiac <- DT_south_asian[, glm(rapid_bmi_change ~ age_group_2 +  chronic_cardiac, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-learning_disability <- DT_south_asian[, glm(rapid_bmi_change ~ age_collapsed +  learning_disability, family = "binomial")] %>% 
+learning_disability <- DT_south_asian[, glm(rapid_bmi_change ~ age_group_2 +  learning_disability, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-depression <- DT_south_asian[, glm(rapid_bmi_change ~ age_collapsed +  depression, family = "binomial")] %>% 
+depression <- DT_south_asian[, glm(rapid_bmi_change ~ age_group_2 +  depression, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-dementia <- DT_south_asian[, glm(rapid_bmi_change ~ age_collapsed +  dementia, family = "binomial")] %>% 
+dementia <- DT_south_asian[, glm(rapid_bmi_change ~ age_group_2 +  dementia, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-psychosis_schiz_bipolar <- DT_south_asian[, glm(rapid_bmi_change ~ age_collapsed +  psychosis_schiz_bipolar, family = "binomial")] %>% 
+psychosis_schiz_bipolar <- DT_south_asian[, glm(rapid_bmi_change ~ age_group_2 +  psychosis_schiz_bipolar, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-asthma <- DT_south_asian[, glm(rapid_bmi_change ~ age_collapsed +  asthma, family = "binomial")] %>% 
+asthma <- DT_south_asian[, glm(rapid_bmi_change ~ age_group_2 +  asthma, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-COPD<- DT_south_asian[, glm(rapid_bmi_change ~ age_collapsed +  COPD, family = "binomial")] %>% 
+COPD<- DT_south_asian[, glm(rapid_bmi_change ~ age_group_2 +  COPD, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-stroke_and_TIA<- DT_south_asian[, glm(rapid_bmi_change ~ age_collapsed +  stroke_and_TIA, family = "binomial")] %>% 
+stroke_and_TIA<- DT_south_asian[, glm(rapid_bmi_change ~ age_group_2 +  stroke_and_TIA, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-smoking_status <- DT_south_asian[, glm(rapid_bmi_change ~ age_collapsed +  smoking_status, family = "binomial")] %>% 
+smoking_status <- DT_south_asian[, glm(rapid_bmi_change ~ age_group_2 +  smoking_status, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
@@ -781,7 +781,7 @@ smoking_status <- DT_south_asian[, glm(rapid_bmi_change ~ age_collapsed +  smoki
 
 
 models_ethnicity <- sex %>% 
-  bind_rows(age_collapsed) %>%
+  bind_rows(age_group_2) %>%
   bind_rows(imd) %>%
   bind_rows(region) %>%
   bind_rows(hypertension) %>%
