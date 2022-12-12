@@ -2252,6 +2252,15 @@ actions:
         table1: output/data/CC_delta_change_models_1_Female.csv
         table2: output/data/CC_delta_change_models_1_Male.csv
 
+
+  complete_delta_change_models2_sex_stratified:
+    run: r:latest analysis/ethnicity_check/CC/delta_change/stratified/CC_delta_change_models_2_sex_stratified.R --output-dir=output/data 
+    needs: [complete_case_stratified_delta_change_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_change_models_2_Female.csv
+        table2: output/data/CC_delta_change_models_2_Male.csv
+
   complete_delta_change_models1_IMD_stratified:
     run: r:latest analysis/ethnicity_check/CC/delta_change/stratified/CC_delta_change_models_1_IMD_stratified.R --output-dir=output/data 
     needs: [complete_case_stratified_delta_change_data]
@@ -2260,6 +2269,14 @@ actions:
         table1: output/data/CC_delta_change_models_1_IMD1.csv
         table2: output/data/CC_delta_change_models_1_IMD5.csv
 
+
+  complete_delta_change_models2_IMD_stratified:
+    run: r:latest analysis/ethnicity_check/CC/delta_change/stratified/CC_delta_change_models_2_IMD_stratified.R --output-dir=output/data 
+    needs: [complete_case_stratified_delta_change_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_change_models_2_IMD1.csv
+        table2: output/data/CC_delta_change_models_2_IMD5.csv
 
   ## delta models: pandemic
   complete_delta_pandemic_models1:
