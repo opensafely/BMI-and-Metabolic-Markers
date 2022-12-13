@@ -2329,6 +2329,15 @@ actions:
         table1: output/data/CC_delta_pandemic_models_1_black.csv
         table2: output/data/CC_delta_pandemic_models_1_south_asian.csv
 
+  complete_delta_pandemic_models2_ethnicity:
+    run: r:latest analysis/ethnicity_check/CC/delta/stratified/pandemic/CC_delta_pandemic_models_2_ethnicity.R --output-dir=output/data 
+    needs: [complete_case_stratified_delta_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_pandemic_models_2_black.csv
+        table2: output/data/CC_delta_pandemic_models_2_south_asian.csv
+
+
 
   complete_delta_pandemic_models1_sex:
     run: r:latest analysis/ethnicity_check/CC/delta/stratified/pandemic/CC_delta_pandemic_models_1_sex.R --output-dir=output/data 
