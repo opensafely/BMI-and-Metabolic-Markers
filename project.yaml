@@ -2222,7 +2222,39 @@ actions:
       moderately_sensitive:
         table1: output/data/CC_delta_change_models_2.csv
 
+### Stratified delta change
+  complete_delta_change_summary_stats_age_stratified:
+    run: r:latest analysis/ethnicity_check/CC/delta_change/stratified/CC_delta_change_summary_stats_age.R --output-dir=output/data 
+    needs: [complete_case_stratified_delta_change_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_change_summary_stats_18_39.csv
+        table2: output/data/CC_delta_change_summary_stats_40_59.csv
+        table3: output/data/CC_delta_change_summary_stats_60_79.csv
 
+  complete_delta_change_summary_stats_eth_stratified:
+    run: r:latest analysis/ethnicity_check/CC/delta_change/stratified/CC_delta_change_summary_stats_eth.R --output-dir=output/data 
+    needs: [complete_case_stratified_delta_change_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_change_summary_stats_black.csv
+        table2: output/data/CC_delta_change_summary_stats_south_asian.csv
+
+  complete_delta_change_summary_stats_sex_stratified:
+    run: r:latest analysis/ethnicity_check/CC/delta_change/stratified/CC_delta_change_summary_stats_sex.R --output-dir=output/data 
+    needs: [complete_case_stratified_delta_change_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_change_summary_stats_female.csv
+        table2: output/data/CC_delta_change_summary_stats_male.csv
+
+  complete_delta_change_summary_stats_imd_stratified:
+    run: r:latest analysis/ethnicity_check/CC/delta_change/stratified/CC_delta_change_summary_stats_imd.R --output-dir=output/data 
+    needs: [complete_case_stratified_delta_change_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_change_summary_stats_IMD1.csv
+        table2: output/data/CC_delta_change_summary_stats_IMD5.csv
  
   complete_delta_change_models1_eth_stratified:
     run: r:latest analysis/ethnicity_check/CC/delta_change/stratified/CC_delta_change_models_1_ethnic_stratified.R --output-dir=output/data 
