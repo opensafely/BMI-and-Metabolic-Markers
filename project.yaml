@@ -2320,6 +2320,15 @@ actions:
         table2: output/data/CC_delta_pandemic_models_1_40_59.csv
         table3: output/data/CC_delta_pandemic_models_1_60_79.csv
 
+  complete_delta_pandemic_models2_age:
+    run: r:latest analysis/ethnicity_check/CC/delta/stratified/pandemic/CC_delta_pandemic_models_2_age.R --output-dir=output/data 
+    needs: [complete_case_stratified_delta_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_pandemic_models_2_18_39.csv
+        table2: output/data/CC_delta_pandemic_models_2_40_59.csv
+        table3: output/data/CC_delta_pandemic_models_2_60_79.csv
+
 
   complete_delta_pandemic_models1_ethnicity:
     run: r:latest analysis/ethnicity_check/CC/delta/stratified/pandemic/CC_delta_pandemic_models_1_ethnicity.R --output-dir=output/data 
@@ -2364,6 +2373,16 @@ actions:
         table1: output/data/CC_delta_pandemic_models_1_IMD1.csv
         table2: output/data/CC_delta_pandemic_models_1_IMD5.csv
   
+
+  complete_delta_pandemic_models2_imd:
+    run: r:latest analysis/ethnicity_check/CC/delta/stratified/pandemic/CC_delta_pandemic_models_2_imd.R --output-dir=output/data 
+    needs: [complete_case_stratified_delta_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_pandemic_models_2_IMD1.csv
+        table2: output/data/CC_delta_pandemic_models_2_IMD5.csv
+
+
   ## delta models: precovid
   complete_delta_precovid_models1:
     run: r:latest analysis/ethnicity_check/CC/delta/CC_delta_precovid_models_1.R --output-dir=output/data 
