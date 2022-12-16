@@ -2184,10 +2184,10 @@ actions:
 
   complete_case_study_pop:
     run: r:latest analysis/ethnicity_check/CC/CC_studypop_charac.R --output-dir=output/data 
-    needs: [complete_case_data]
+    needs: [generate_BMI_2021_data]
     outputs:
       moderately_sensitive:
-        table1: output/data/CC_study_population_characteristics.csv
+        table1: output/data/CC_study_population_characteristics_2.csv
 
 
   complete_delta_summary_stats:

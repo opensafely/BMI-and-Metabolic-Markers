@@ -18,8 +18,109 @@ library(ggplot2)
 library(gtsummary)
 
 
-study_data <- read_csv (here::here ("output/data", "CC_study_population_data.csv"))
+# study_data <- read_csv (here::here ("output/data", "CC_study_population_data.csv"))
 
+BMI_2021 <- read_feather (here::here ("output/data", "BMI_complete_median_2021.feather"))
+
+
+##############   BMI 2021 data
+## Check demographics of study population in 2021
+
+# recode ethnicity
+BMI_2021 <- BMI_2021 %>%  mutate(
+  eth_group_16 = as.character(eth_group_16),
+  eth_group_16 = ifelse(is.na(eth_group_16), "None", eth_group_16),
+  eth_group_16 = as.factor(eth_group_16))
+
+
+BMI_2021 %>% 
+  tabyl(eth_group_16)
+
+
+BMI_2021 <- BMI_2021 %>% 
+  dplyr::mutate(eth_16_corrected = case_when(
+    eth_group_16 == "White_British" ~ "White_British",
+    eth_group_16 == "White_Irish" ~ "None",
+    eth_group_16 == "Other_White" ~  "White_Black_Carib",
+    eth_group_16 ==  "White_Black_Carib" ~ "Other_White",
+    eth_group_16 ==  "White_Black_African" ~ "Pakistani",
+    eth_group_16 ==  "White_Asian" ~ "Other_Black",
+    eth_group_16 ==  "Other_Mixed" ~ "Indian",
+    eth_group_16 ==  "Indian" ~ "White_Asian",
+    eth_group_16 ==  "Pakistani" ~ "Bangladeshi",
+    eth_group_16 == "Bangladeshi" ~ "Caribbean",
+    eth_group_16 == "Other_Asian" ~ "Other_Asian",
+    eth_group_16 == "Caribbean" ~ "Other_Mixed",
+    eth_group_16 == "African" ~ "Chinese",
+    eth_group_16 == "Other_Black" ~ "Other",
+    eth_group_16 ==  "Chinese" ~ "White_Irish",
+    eth_group_16 == "Other" ~ "White_Black_African",
+    eth_group_16 ==  "None" ~ "African")) 
+
+print("check ethnicity replace none with NA")
+BMI_2021 %>%
+  tabyl(eth_group_16, eth_16_corrected)
+
+## ****  NEW CODE
+BMI_2021 <- BMI_2021 %>% 
+mutate(eth_16_corrected = na_if(eth_16_corrected, "None"))
+
+print("check ethnicity replace none with NA")
+BMI_2021 %>%
+  tabyl(eth_group_16, eth_16_corrected)
+
+
+print("check missing counts in all data BMI_2021")
+BMI_2021 %>% 
+  dplyr::select(age_group_2, sex, imd, eth_16_corrected, eth_group_16)  %>% 
+  describe()
+
+# check ethnicity - error counts
+BMI_2021 %>% 
+  tabyl(eth_group_16)
+
+# check ethnicity - recoded
+BMI_2021 %>% 
+  tabyl(eth_16_corrected)
+
+
+
+### Complete case - filter out missing
+# filter NA for complete case data set
+BMI_2021_cc <- BMI_2021 %>% 
+  drop_na (imd) %>% 
+  drop_na (eth_16_corrected)
+
+
+print("COMPLETE CASE:check missing counts in complete case data BMI_2021")
+ BMI_2021_cc %>% 
+  dplyr::select(age_group_2, sex, imd, eth_16_corrected, eth_group_16)  %>% 
+  describe()
+
+ # check ethnicity - error counts
+ BMI_2021_cc %>% 
+   tabyl(eth_group_16)
+ 
+ # check ethnicity - recoded
+ BMI_2021_cc %>% 
+   tabyl(eth_16_corrected)
+ 
+print("BMI_2021_cc - check smoking status")
+ BMI_2021_cc %>% 
+   tabyl(smoking_status)
+
+
+ 
+ BMI_2021_cc <- BMI_2021_cc %>% 
+   mutate(smoking_status = na_if(smoking_status, "M")) %>% 
+   mutate(smoking_status = factor(smoking_status, levels = c("N","S","E"))) 
+
+ print("BMI_2021_cc - check smoking status: after recoding M as missing")
+BMI_2021_cc %>% 
+  tabyl(smoking_status)
+
+######
+study_data <- BMI_2021_cc
 
 ## drop incorrect ethnicity data
 study_data <- study_data %>% 
@@ -302,4 +403,4 @@ complete_data <- complete_data  %>%
 
 
 
-write_csv (complete_data, here::here ("output/data","CC_study_population_characteristics.csv"))
+write_csv (complete_data, here::here ("output/data","CC_study_population_characteristics_2.csv"))
