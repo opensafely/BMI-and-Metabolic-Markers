@@ -2449,6 +2449,17 @@ actions:
         table1: output/data/CC_delta_pandemic_models_2_IMD1.csv
         table2: output/data/CC_delta_pandemic_models_2_IMD5.csv
 
+  complete_delta_pandemic_models1_weight:
+    run: r:latest analysis/ethnicity_check/CC/delta/stratified/pandemic/CC_delta_pandemic_models_1_weight.R --output-dir=output/data 
+    needs: [complete_case_stratified_delta_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_pandemic_models_1_healthy.csv
+        table2: output/data/CC_delta_pandemic_models_1_overweight.csv
+        table3: output/data/CC_delta_pandemic_models_1_obese.csv
+
+
+
   complete_delta_pandemic_models2_weight:
     run: r:latest analysis/ethnicity_check/CC/delta/stratified/pandemic/CC_delta_pandemic_models_2_weight.R --output-dir=output/data 
     needs: [complete_case_stratified_delta_data]
