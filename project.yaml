@@ -2378,6 +2378,15 @@ actions:
         table1: output/data/CC_delta_summary_stats_female.csv
         table2: output/data/CC_delta_summary_stats_male.csv
 
+  complete_delta_summary_stats_pandemic_stratified_weight:
+    run: r:latest analysis/ethnicity_check/CC/delta/stratified/pandemic/CC_delta_summary_stats_pandemic_weight.R --output-dir=output/data 
+    needs: [complete_case_stratified_delta_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_summary_stats_healthy.csv
+        table2: output/data/CC_delta_summary_stats_overweight.csv
+        table3: output/data/CC_delta_summary_stats_obese.csv
+
   complete_delta_pandemic_models1_age:
     run: r:latest analysis/ethnicity_check/CC/delta/stratified/pandemic/CC_delta_pandemic_models_1_age.R --output-dir=output/data 
     needs: [complete_case_stratified_delta_data]
