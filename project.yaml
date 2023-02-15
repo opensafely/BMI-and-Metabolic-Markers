@@ -2386,6 +2386,20 @@ actions:
         table1: output/data/CC_delta_pandemic_weight_models.csv
 
 
+  complete_delta_pandemic_weight_adjusted_models:
+    run: r:latest analysis/ethnicity_check/CC/delta/CC_delta_pandemic_weightadjusted_models.R --output-dir=output/data 
+    needs: [complete_case_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_pandemic_weight_adjusted_models.csv
+
+
+  complete_delta_pandemic_weight_adjusted_multivariate_models:
+    run: r:latest analysis/ethnicity_check/CC/delta/CC_delta_pandemic_weight_adjusted_multivariate_models.R --output-dir=output/data 
+    needs: [complete_case_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_pandemic_weight_adjusted_multivariate_models.csv
 ################# STRATIFIED DELTA
 
   complete_delta_summary_stats_pandemic_stratified_age:
