@@ -335,6 +335,7 @@ complete_data_18_39 <- complete  %>%
 
 
 complete_data_18_39 <- complete_data_18_39  %>% 
+  dplyr::select(-"percent", -"valid_percent") %>%
   dplyr::mutate(n_pop = plyr::round_any(complete_data_18_39$n_pop, 5)) %>% 
   dplyr::mutate(rapid = plyr::round_any(complete_data_18_39$rapid, 5)) %>% 
   dplyr::mutate(stage = "data_18_39", .before=1)
@@ -533,6 +534,7 @@ complete_data_40_59 <- complete  %>%
 
 
 complete_data_40_59 <- complete_data_40_59  %>% 
+  dplyr::select(-"percent", -"valid_percent") %>%
   dplyr::mutate(n_pop = plyr::round_any(complete_data_40_59$n_pop, 5)) %>% 
   dplyr::mutate(rapid = plyr::round_any(complete_data_40_59$rapid, 5)) %>% 
   dplyr::mutate(stage = "data_40_59", .before=1)
@@ -732,6 +734,7 @@ complete_data_60_79 <- complete  %>%
 
 
 complete_data_60_79 <- complete_data_60_79  %>% 
+  dplyr::select(-"percent", -"valid_percent") %>%
   dplyr::mutate(n_pop = plyr::round_any(complete_data_60_79$n_pop, 5)) %>% 
   dplyr::mutate(rapid = plyr::round_any(complete_data_60_79$rapid, 5)) %>% 
   dplyr::mutate(stage = "data_60_79", .before=1)
