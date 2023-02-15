@@ -332,6 +332,7 @@ complete_data_female <- complete  %>%
 
 
 complete_data_female <- complete_data_female  %>% 
+  dplyr::select(-"percent", -"valid_percent") %>%
   dplyr::mutate(n_pop = plyr::round_any(complete_data_female$n_pop, 5)) %>% 
   dplyr::mutate(rapid = plyr::round_any(complete_data_female$rapid, 5)) %>% 
   dplyr::mutate(stage = "data_female", .before=1)
@@ -530,6 +531,7 @@ complete_data_male <- complete  %>%
 
 
 complete_data_male <- complete_data_male  %>% 
+  dplyr::select(-"percent", -"valid_percent") %>%
   dplyr::mutate(n_pop = plyr::round_any(complete_data_male$n_pop, 5)) %>% 
   dplyr::mutate(rapid = plyr::round_any(complete_data_male$rapid, 5)) %>% 
   dplyr::mutate(stage = "data_male", .before=1)

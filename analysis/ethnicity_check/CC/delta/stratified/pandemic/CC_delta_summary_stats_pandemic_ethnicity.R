@@ -332,6 +332,7 @@ complete_data_black <- complete  %>%
 
 
 complete_data_black <- complete_data_black  %>% 
+  dplyr::select(-"percent", -"valid_percent") %>%
   dplyr::mutate(n_pop = plyr::round_any(complete_data_black$n_pop, 5)) %>% 
   dplyr::mutate(rapid = plyr::round_any(complete_data_black$rapid, 5)) %>% 
   dplyr::mutate(stage = "data_black", .before=1)
@@ -530,6 +531,7 @@ complete_data_south_asian <- complete  %>%
 
 
 complete_data_south_asian <- complete_data_south_asian  %>% 
+  dplyr::select(-"percent", -"valid_percent") %>%
   dplyr::mutate(n_pop = plyr::round_any(complete_data_south_asian$n_pop, 5)) %>% 
   dplyr::mutate(rapid = plyr::round_any(complete_data_south_asian$rapid, 5)) %>% 
   dplyr::mutate(stage = "data_south_asian", .before=1)

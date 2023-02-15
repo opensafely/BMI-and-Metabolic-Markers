@@ -332,6 +332,7 @@ complete_data_IMD1 <- complete  %>%
 
 
 complete_data_IMD1 <- complete_data_IMD1  %>% 
+  dplyr::select(-"percent", -"valid_percent") %>%  
   dplyr::mutate(n_pop = plyr::round_any(complete_data_IMD1$n_pop, 5)) %>% 
   dplyr::mutate(rapid = plyr::round_any(complete_data_IMD1$rapid, 5)) %>% 
   dplyr::mutate(stage = "data_IMD1", .before=1)
@@ -530,6 +531,7 @@ complete_data_IMD5 <- complete  %>%
 
 
 complete_data_IMD5 <- complete_data_IMD5  %>% 
+  dplyr::select(-"percent", -"valid_percent") %>%
   dplyr::mutate(n_pop = plyr::round_any(complete_data_IMD5$n_pop, 5)) %>% 
   dplyr::mutate(rapid = plyr::round_any(complete_data_IMD5$rapid, 5)) %>% 
   dplyr::mutate(stage = "data_IMD5", .before=1)
