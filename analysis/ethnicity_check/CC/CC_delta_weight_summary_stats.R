@@ -544,7 +544,7 @@ complete_postpandemic <- complete_postpandemic  %>%
 
 complete <- complete_prepandemic %>% 
   dplyr::bind_rows(complete_postpandemic) %>% 
-  dplyr::select(-"percent", -"valid_percent")
+  dplyr::select(-"percent")
 
 
 
