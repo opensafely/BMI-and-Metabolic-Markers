@@ -2232,6 +2232,16 @@ actions:
         table2: output/data/CC_delta_change_summary_stats_40_59.csv
         table3: output/data/CC_delta_change_summary_stats_60_79.csv
 
+  complete_delta_change_summary_stats_weight_stratified:
+    run: r:latest analysis/ethnicity_check/CC/delta_change/stratified/CC_delta_change_summary_stats_weight.R --output-dir=output/data 
+    needs: [complete_case_stratified_delta_change_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_change_summary_stats_healthy.csv
+        table2: output/data/CC_delta_change_summary_stats_overweight.csv
+        table3: output/data/CC_delta_change_summary_stats_obese.csv
+
+
   complete_delta_change_summary_stats_eth_stratified:
     run: r:latest analysis/ethnicity_check/CC/delta_change/stratified/CC_delta_change_summary_stats_eth.R --output-dir=output/data 
     needs: [complete_case_stratified_delta_change_data]
