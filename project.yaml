@@ -2370,6 +2370,13 @@ actions:
       moderately_sensitive:
         table1: output/data/CC_delta_pandemic_models_2.csv
 
+  complete_delta_pandemic_weight_models:
+    run: r:latest analysis/ethnicity_check/CC/delta/CC_delta_pandemic_weight_models.R --output-dir=output/data 
+    needs: [complete_case_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_pandemic_weight_models.csv
+
 
 ################# STRATIFIED DELTA
 
