@@ -804,12 +804,43 @@ complete_data_obese <- complete_data_obese  %>%
   dplyr::mutate(stage = "data_obese", .before=1)
 
 
+######################################################################################
+ complete_data_healthy <- complete_data_healthy %>% 
+    dplyr::select ( "stage",       
+                  "variable",     
+                  "group",        
+                  "n_pop",        
+                  "rapid",        
+                  "mean_delta",   
+                  "sd_delta",     
+                  "Q1",           
+                  "median",      
+                  "Q3"   )
 
 
+complete_data_overweight <- complete_data_overweight %>%
+    dplyr::select ( "stage",       
+                  "variable",     
+                  "group",        
+                  "n_pop",        
+                  "rapid",        
+                  "mean_delta",   
+                  "sd_delta",     
+                  "Q1",           
+                  "median",      
+                  "Q3"   )
 
-
-
-
+complete_data_obese <- complete_data_obese %>% 
+    dplyr::select ( "stage",       
+                  "variable",     
+                  "group",        
+                  "n_pop",        
+                  "rapid",        
+                  "mean_delta",   
+                  "sd_delta",     
+                  "Q1",           
+                  "median",      
+                  "Q3"   )
 
 #########################################################################################
 

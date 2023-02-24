@@ -538,9 +538,30 @@ complete_data_IMD5 <- complete_data_IMD5  %>%
 
 
 #######################################################################################
+complete_data_IMD1 <- complete_data_IMD1 %>% 
+    dplyr::select ( "stage",       
+                  "variable",     
+                  "group",        
+                  "n_pop",        
+                  "rapid",        
+                  "mean_delta",   
+                  "sd_delta",     
+                  "Q1",           
+                  "median",      
+                  "Q3"   )
 
 
-
+complete_data_IMD5 <- complete_data_IMD5 %>% 
+    dplyr::select ( "stage",       
+                  "variable",     
+                  "group",        
+                  "n_pop",        
+                  "rapid",        
+                  "mean_delta",   
+                  "sd_delta",     
+                  "Q1",           
+                  "median",      
+                  "Q3"   )
 #########################################################################################
 
 write_csv (complete_data_IMD1, here::here ("output/data","CC_delta_summary_stats_IMD1.csv"))

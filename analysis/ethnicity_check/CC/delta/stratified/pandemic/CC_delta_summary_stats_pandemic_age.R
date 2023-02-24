@@ -742,9 +742,42 @@ complete_data_60_79 <- complete_data_60_79  %>%
 
 
 
+complete_data_18_39 <- complete_data_18_39 %>% 
+    dplyr::select ( "stage",       
+                  "variable",     
+                  "group",        
+                  "n_pop",        
+                  "rapid",        
+                  "mean_delta",   
+                  "sd_delta",     
+                  "Q1",           
+                  "median",      
+                  "Q3"   )
+
+complete_data_40_59 <- complete_data_40_59 %>%
+  dplyr::select ( "stage",       
+                  "variable",     
+                  "group",        
+                  "n_pop",        
+                  "rapid",        
+                  "mean_delta",   
+                  "sd_delta",     
+                  "Q1",           
+                  "median",      
+                  "Q3"   )
 
 
-
+complete_data_60_79 <- complete_data_60_79 %>% 
+    dplyr::select ( "stage",       
+                  "variable",     
+                  "group",        
+                  "n_pop",        
+                  "rapid",        
+                  "mean_delta",   
+                  "sd_delta",     
+                  "Q1",           
+                  "median",      
+                  "Q3"   )
 
 #########################################################################################
 

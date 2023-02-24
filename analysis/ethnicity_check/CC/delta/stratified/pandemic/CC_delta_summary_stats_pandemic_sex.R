@@ -539,7 +539,30 @@ complete_data_male <- complete_data_male  %>%
 
 #######################################################################################
 
+complete_data_female <- complete_data_female %>% 
+    dplyr::select ( "stage",       
+                  "variable",     
+                  "group",        
+                  "n_pop",        
+                  "rapid",        
+                  "mean_delta",   
+                  "sd_delta",     
+                  "Q1",           
+                  "median",      
+                  "Q3"   )
 
+
+complete_data_male <- complete_data_male %>% 
+    dplyr::select ( "stage",       
+                  "variable",     
+                  "group",        
+                  "n_pop",        
+                  "rapid",        
+                  "mean_delta",   
+                  "sd_delta",     
+                  "Q1",           
+                  "median",      
+                  "Q3"   )
 
 #########################################################################################
 

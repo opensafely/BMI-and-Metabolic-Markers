@@ -539,7 +539,30 @@ complete_data_south_asian <- complete_data_south_asian  %>%
 
 #######################################################################################
 
+complete_data_black <- complete_data_black %>%
+    dplyr::select ( "stage",       
+                  "variable",     
+                  "group",        
+                  "n_pop",        
+                  "rapid",        
+                  "mean_delta",   
+                  "sd_delta",     
+                  "Q1",           
+                  "median",      
+                  "Q3"   )
 
+
+complete_data_south_asian <- complete_data_south_asian %>%
+    dplyr::select ( "stage",       
+                  "variable",     
+                  "group",        
+                  "n_pop",        
+                  "rapid",        
+                  "mean_delta",   
+                  "sd_delta",     
+                  "Q1",           
+                  "median",      
+                  "Q3"   )
 
 #########################################################################################
 
