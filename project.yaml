@@ -2204,6 +2204,13 @@ actions:
       moderately_sensitive:
         table1: output/data/CC_delta_weight_summary_stats.csv
 
+  complete_delta_weight_summary_stats_round:
+    run: r:latest analysis/ethnicity_check/CC/CC_delta_weight_summary_stats_round.R --output-dir=output/data 
+    needs: [complete_delta_weight_summary_stats]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_weight_summary_stats_round.csv
+
   
   complete_delta_change_summary_stats:
     run: r:latest analysis/ethnicity_check/CC/CC_delta_change_summary_stats.R --output-dir=output/data 
