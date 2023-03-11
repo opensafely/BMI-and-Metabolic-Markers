@@ -2558,3 +2558,14 @@ actions:
     outputs:
       moderately_sensitive:
         table1: output/data/CC_delta_precovid_models_2.csv
+
+
+## Ethnicity Corrected DWMP
+  ethnicity_corrected_median_bmi:
+    run: r:latest analysis/ethnicity_check/ethnicity_corrected_median_BMI_data.R --output-dir=output/data 
+    needs: [generate_complete_median_BMI_data]
+    outputs:
+      highly_sensitive:
+        table1: output/data/BMI_complete_median_eth_corrected.csv
+      moderately_sensitive:
+        table1: output/data/BMI_complete_median_eth_checks.csv
