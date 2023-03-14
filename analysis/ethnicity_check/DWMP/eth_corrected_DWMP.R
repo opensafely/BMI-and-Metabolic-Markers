@@ -85,3 +85,10 @@ dt_2021 <- dt_2021 %>%
     median_bmi >= 25 & median_bmi < 30 ~ "overweight",
     median_bmi >= 30 ~ "obese",
   ))
+
+
+dt_2021 <- dt_2021 %>% 
+  dplyr::mutate(weight_DWMP = case_when(
+    ((median_bmi >= 30 & minority == "white") | (median_bmi >= 27.5 & minority == "not_white"))    ~  "obese",
+    ((median_bmi < 30 & minority == "white") | (median_bmi < 27.5 & minority == "not_white"))    ~  "not_obese"
+  )) 
