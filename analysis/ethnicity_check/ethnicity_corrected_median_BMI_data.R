@@ -19,6 +19,11 @@ library(skimr)
 
 BMI_data <- read_feather (here::here ("output/data", "BMI_complete_median.feather"))
 
+BMI_data <- BMI_data %>%  mutate(
+  eth_group_16 = as.character(eth_group_16),
+  eth_group_16 = ifelse(is.na(eth_group_16), "None", eth_group_16),
+  eth_group_16 = as.factor(eth_group_16))
+
 BMI_data <- BMI_data %>% 
   dplyr::mutate(eth_16_corrected = case_when(
     eth_group_16 == "White_British" ~ "White_British",
@@ -37,7 +42,7 @@ BMI_data <- BMI_data %>%
     eth_group_16 == "Other_Black" ~ "Other",
     eth_group_16 ==  "Chinese" ~ "White_Irish",
     eth_group_16 == "Other" ~ "White_Black_African",
-    eth_group_16 ==  "NA_" ~ "African")) 
+    eth_group_16 ==  "None" ~ "African")) 
 
 
 BMI_data_2 <- BMI_data %>% 
