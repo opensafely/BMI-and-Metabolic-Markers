@@ -37,7 +37,7 @@ BMI_data <- BMI_data %>%
     eth_group_16 == "Other_Black" ~ "Other",
     eth_group_16 ==  "Chinese" ~ "White_Irish",
     eth_group_16 == "Other" ~ "White_Black_African",
-    eth_group_16 ==  "Missing" ~ "African")) 
+    eth_group_16 ==  "NA_" ~ "African")) 
 
 
 BMI_data_2 <- BMI_data %>% 
