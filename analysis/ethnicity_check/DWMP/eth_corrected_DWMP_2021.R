@@ -305,65 +305,6 @@ T2D_2021 <- universal_weight %>%
   left_join(DWMP_weight, by = c("variable", "group"))
 
 
-######## T1D_2021
-
-
-T1D_2021 <- dt_2021 %>% 
-  dplyr::filter(comorbid_diabetes_t1 == TRUE)
-
-
-
-
-sex <-  universal_weight_f(T1D_2021,sex) %>%
-  dplyr::mutate (variable = 'sex', .before=1)
-
-
-age <- universal_weight_f(T1D_2021,age_group_2)%>%
-  dplyr::mutate (variable = 'age', .before=1)
-
-eth <- universal_weight_f(T1D_2021,eth_16_corrected)%>%
-  dplyr::mutate (variable = 'eth', .before=1)
-
-imd <- universal_weight_f(T1D_2021,imd)%>%
-  dplyr::mutate (variable = 'imd', .before=1)
-
-
-region <- universal_weight_f(T1D_2021,region)%>%
-  dplyr::mutate (variable = 'region', .before=1)
-
-
-universal_weight <- sex %>% 
-  bind_rows(age, eth, imd, region)
-
-
-###
-
-
-sex <-  DWMP_weight_f(T1D_2021,sex) %>%
-  dplyr::mutate (variable = 'sex', .before=1)
-
-
-age <- DWMP_weight_f(T1D_2021,age_group_2)%>%
-  dplyr::mutate (variable = 'age', .before=1)
-
-eth <- DWMP_weight_f(T1D_2021,eth_16_corrected)%>%
-  dplyr::mutate (variable = 'eth', .before=1)
-
-imd <- DWMP_weight_f(T1D_2021,imd)%>%
-  dplyr::mutate (variable = 'imd', .before=1)
-
-
-region <- DWMP_weight_f(T1D_2021,region)%>%
-  dplyr::mutate (variable = 'region', .before=1)
-
-
-DWMP_weight <- sex %>% 
-  bind_rows(age, eth, imd, region)
-
-
-T1D_2021 <- universal_weight %>% 
-  left_join(DWMP_weight, by = c("variable", "group"))
-
 
 ### Hypertension_2021
 
@@ -434,8 +375,7 @@ summary_2021 <- summary_2021 %>%
   dplyr::mutate (category = "all", .before=1)
 
 
-T1D_2021 <- T1D_2021 %>% 
-  dplyr::mutate (category = "T1D", .before=1)
+
 
 
 BP_2021 <- BP_2021 %>% 
@@ -448,8 +388,18 @@ T2D_2021 <- T2D_2021 %>%
 
 summary_2021 <- summary_2021 %>% 
   bind_rows(BP_2021, 
-            T2D_2021, 
-            T1D_2021)
+            T2D_2021)
+
+
+summary_2021 <- summary_2021  %>% 
+  dplyr::mutate(healthy = plyr::round_any(summary_2021$healthy, 5)) %>% 
+  dplyr::mutate(obese = plyr::round_any(summary_2021$obese, 5))%>% 
+  dplyr::mutate(overweight = plyr::round_any(summary_2021$overweight, 5))%>% 
+  dplyr::mutate(underweight = plyr::round_any(summary_2021$underweight, 5))%>% 
+  dplyr::mutate(DWMP_not_obese = plyr::round_any(summary_2021$DWMP_not_obese, 5))%>% 
+  dplyr::mutate(DWMP_obese = plyr::round_any(summary_2021$DWMP_obese, 5))%>% 
+  dplyr::mutate(DWMP_eligible = plyr::round_any(summary_2021$DWMP_eligible, 5))%>% 
+  dplyr::mutate(not_dwmp = plyr::round_any(summary_2021$not_dwmp, 5))
 
 
 write_csv (summary_2021, here::here ("output/data","Ethnicity_corrected_DWMP_2021.csv"))
