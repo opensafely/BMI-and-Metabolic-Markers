@@ -2577,3 +2577,10 @@ actions:
     outputs:
       moderately_sensitive:
         table1: output/data/Ethnicity_corrected_DWMP_2021.csv
+  
+  ethnicity_corrected_DWMP_2019:
+    run: r:latest analysis/ethnicity_check/DWMP/eth_corrected_DWMP_2019.R --output-dir=output/data 
+    needs: [ethnicity_corrected_median_bmi, join_meds]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/Ethnicity_corrected_DWMP_2019.csv
