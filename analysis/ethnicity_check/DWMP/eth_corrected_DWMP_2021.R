@@ -64,6 +64,10 @@ dt <- dt %>%
 dt %>% 
   tabyl(age_group_2)
 
+# filter out those with problems with join
+dt <- dt  %>% 
+  drop_na(age_group_2)
+
 
 ## Filter out years with  missing BMI
 dt <- dt %>% 
