@@ -2584,3 +2584,24 @@ actions:
     outputs:
       moderately_sensitive:
         table1: output/data/Ethnicity_corrected_DWMP_2019.csv
+
+
+## complete_case_eth_corrected analysis in people with T2D and hypertension
+
+  complete_delta_summary_stats_pandemic_t2d:
+    run: r:latest analysis/ethnicity_check/DWMP/CC_eth_corrected_delta_summary_stats_t2dm.R --output-dir=output/data 
+    needs: [complete_case_stratified_delta_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_summary_stats_t2d.csv
+     
+
+  complete_delta_models_1_t2d:
+    run: r:latest analysis/ethnicity_check/DWMP/CC_eth_corrected_delta_pandemic_models_1_t2dm.R --output-dir=output/data 
+    needs: [complete_case_stratified_delta_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_pandemic_models_1_t2d.csv
+
+
+     
