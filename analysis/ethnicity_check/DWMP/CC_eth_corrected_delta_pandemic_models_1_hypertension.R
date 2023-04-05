@@ -61,6 +61,7 @@ my_data <- my_data %>%
 DT <- as.data.table(my_data)
 
 
+
 age <- DT[, glm(rapid_bmi_change ~ age_group_2, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
@@ -83,10 +84,13 @@ region <- DT[, glm(rapid_bmi_change ~ region, family = "binomial")] %>%
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-hypertension <- DT[, glm(rapid_bmi_change ~ hypertension, family = "binomial")] %>% 
+diabetes_t1 <- DT[, glm(rapid_bmi_change ~ diabetes_t1, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
+diabetes_t2 <- DT[, glm(rapid_bmi_change ~ diabetes_t2, family = "binomial")] %>% 
+  tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
+  mutate(across(where(is.numeric), round, digits = 5)) 
 
 chronic_cardiac <- DT[, glm(rapid_bmi_change ~ chronic_cardiac, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
@@ -136,7 +140,8 @@ complete <- sex %>%
   bind_rows(eth_group_16) %>%
   bind_rows(imd) %>%
   bind_rows(region) %>%
-  bind_rows(hypertension) %>%
+  bind_rows(diabetes_t1) %>%
+  bind_rows(diabetes_t2) %>%
   bind_rows(chronic_cardiac) %>%
   bind_rows(learning_disability) %>%
   bind_rows(depression) %>%
@@ -174,7 +179,11 @@ region <- DT[, glm(rapid_bmi_change ~ age_group_2 +  region, family = "binomial"
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-hypertension <- DT[, glm(rapid_bmi_change ~ age_group_2 +  hypertension, family = "binomial")] %>% 
+diabetes_t1 <- DT[, glm(rapid_bmi_change ~ age_group_2 +  diabetes_t1, family = "binomial")] %>% 
+  tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
+  mutate(across(where(is.numeric), round, digits = 5)) 
+
+diabetes_t2 <- DT[, glm(rapid_bmi_change ~ age_group_2 +  diabetes_t2, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
@@ -227,7 +236,8 @@ models_age <- sex %>%
   bind_rows(eth_group_16) %>%
   bind_rows(imd) %>%
   bind_rows(region) %>%
-  bind_rows(hypertension) %>%
+  bind_rows(diabetes_t1) %>%
+  bind_rows(diabetes_t2) %>%
   bind_rows(chronic_cardiac) %>%
   bind_rows(learning_disability) %>%
   bind_rows(depression) %>%
@@ -266,7 +276,11 @@ region <- DT[, glm(rapid_bmi_change ~ sex +  region, family = "binomial")] %>%
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-hypertension <- DT[, glm(rapid_bmi_change ~ sex +  hypertension, family = "binomial")] %>% 
+diabetes_t1 <- DT[, glm(rapid_bmi_change ~ sex +  diabetes_t1, family = "binomial")] %>% 
+  tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
+  mutate(across(where(is.numeric), round, digits = 5)) 
+
+diabetes_t2 <- DT[, glm(rapid_bmi_change ~ sex +  diabetes_t2, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
@@ -315,7 +329,8 @@ models_sex <- sex %>%
   bind_rows(eth_group_16) %>%
   bind_rows(imd) %>%
   bind_rows(region) %>%
-  bind_rows(hypertension) %>%
+  bind_rows(diabetes_t1) %>%
+  bind_rows(diabetes_t2) %>%
   bind_rows(chronic_cardiac) %>%
   bind_rows(learning_disability) %>%
   bind_rows(depression) %>%
@@ -352,7 +367,11 @@ region <- DT[, glm(rapid_bmi_change ~ imd +  region, family = "binomial")] %>%
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-hypertension <- DT[, glm(rapid_bmi_change ~ imd +  hypertension, family = "binomial")] %>% 
+diabetes_t1 <- DT[, glm(rapid_bmi_change ~ imd +  diabetes_t1, family = "binomial")] %>% 
+  tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
+  mutate(across(where(is.numeric), round, digits = 5)) 
+
+diabetes_t2 <- DT[, glm(rapid_bmi_change ~ imd +  diabetes_t2, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
@@ -402,7 +421,8 @@ models_imd <- sex %>%
   bind_rows(eth_group_16) %>%
   bind_rows(imd) %>%
   bind_rows(region) %>%
-  bind_rows(hypertension) %>%
+  bind_rows(diabetes_t1) %>%
+  bind_rows(diabetes_t2) %>%
   bind_rows(chronic_cardiac) %>%
   bind_rows(learning_disability) %>%
   bind_rows(depression) %>%
@@ -440,7 +460,11 @@ region <- DT[, glm(rapid_bmi_change ~ eth_collapsed +  region, family = "binomia
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-hypertension <- DT[, glm(rapid_bmi_change ~ eth_collapsed +  hypertension, family = "binomial")] %>% 
+diabetes_t1 <- DT[, glm(rapid_bmi_change ~ eth_collapsed +  diabetes_t1, family = "binomial")] %>% 
+  tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
+  mutate(across(where(is.numeric), round, digits = 5)) 
+
+diabetes_t2 <- DT[, glm(rapid_bmi_change ~ eth_collapsed +  diabetes_t2, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
@@ -490,7 +514,8 @@ models_ethnicity <- sex %>%
   bind_rows(eth_group_16) %>%
   bind_rows(imd) %>%
   bind_rows(region) %>%
-  bind_rows(hypertension) %>%
+  bind_rows(diabetes_t1) %>%
+  bind_rows(diabetes_t2) %>%
   bind_rows(chronic_cardiac) %>%
   bind_rows(learning_disability) %>%
   bind_rows(depression) %>%
@@ -510,3 +535,4 @@ complete <- complete %>%
 
 
 write_csv (complete, here::here ("output/data","CC_delta_pandemic_models_1_hypertension.csv"))
+
