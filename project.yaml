@@ -2612,12 +2612,26 @@ actions:
         table1: output/data/CC_delta_pandemic_models_1_t2d.csv
 
 
+  complete_delta_models_1_t2d_prepandemic:
+    run: r:latest analysis/ethnicity_check/DWMP/CC_eth_corrected_delta_prepandemic_models_1_t2dm.R --output-dir=output/data 
+    needs: [complete_case_stratified_delta_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_prepandemic_models_1_t2d.csv
+
   complete_delta_models_2_t2d:
     run: r:latest analysis/ethnicity_check/DWMP/CC_eth_corrected_delta_pandemic_models_2_t2dm.R --output-dir=output/data 
     needs: [complete_case_stratified_delta_data]
     outputs:
       moderately_sensitive:
         table1: output/data/CC_delta_pandemic_models_2_t2d.csv   
+
+  complete_delta_models_2_t2d_prepandemic:
+    run: r:latest analysis/ethnicity_check/DWMP/CC_eth_corrected_delta_prepandemic_models_2_t2dm.R --output-dir=output/data 
+    needs: [complete_case_stratified_delta_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_prepandemic_models_2_t2d.csv 
 
 
   complete_delta_summary_stats_pandemic_hypertension:
