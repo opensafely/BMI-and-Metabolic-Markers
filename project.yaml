@@ -2635,6 +2635,13 @@ actions:
       moderately_sensitive:
         table1: output/data/CC_delta_pandemic_models_1_hypertension.csv
 
+  complete_delta_models_1_hypertension_prepandemic:
+    run: r:latest analysis/ethnicity_check/DWMP/CC_eth_corrected_delta_prepandemic_models_1_hypertension.R --output-dir=output/data 
+    needs: [complete_case_stratified_delta_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_prepandemic_models_1_hypertension.csv
+
 
   complete_delta_models_2_hypertension:
     run: r:latest analysis/ethnicity_check/DWMP/CC_eth_corrected_delta_pandemic_models_2_hypertension.R --output-dir=output/data 
