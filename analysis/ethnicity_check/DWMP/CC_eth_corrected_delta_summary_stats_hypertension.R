@@ -157,6 +157,7 @@ psychosis_schiz_bipolar <-function_1(pandemic,   psychosis_schiz_bipolar)
 asthma <-function_1(pandemic,   asthma)
 COPD <-function_1(pandemic,   COPD)
 stroke_and_TIA <-function_1(pandemic,   stroke_and_TIA)
+region <-function_1(pandemic,  region)
 all <- function_1(pandemic, pandemic_stage)
 
 complete <- sex %>% 
@@ -175,6 +176,7 @@ complete <- sex %>%
   bind_rows(asthma) %>%
   bind_rows(COPD) %>%
   bind_rows(stroke_and_TIA) %>% 
+  bind_rows(region) %>% 
   bind_rows(all) %>% 
   dplyr::select(variable, group, n)
 
@@ -198,6 +200,7 @@ psychosis_schiz_bipolar <-function_3(pandemic,   psychosis_schiz_bipolar)
 asthma <-function_3(pandemic,   asthma)
 COPD <-function_3(pandemic,   COPD)
 stroke_and_TIA <-function_3(pandemic,   stroke_and_TIA)
+region <-function_3(pandemic,  region)
 all <- function_3(pandemic, pandemic_stage)
 
 rapid <- sex %>% 
@@ -216,6 +219,7 @@ rapid <- sex %>%
   bind_rows(asthma) %>%
   bind_rows(COPD) %>%
   bind_rows(stroke_and_TIA) %>% 
+  bind_rows(region) %>% 
   bind_rows(all)
 
 
@@ -236,6 +240,7 @@ psychosis_schiz_bipolar <-function_4(pandemic,   psychosis_schiz_bipolar)
 asthma <-function_4(pandemic,   asthma)
 COPD <-function_4(pandemic,   COPD)
 stroke_and_TIA <-function_4(pandemic,   stroke_and_TIA)
+region <-function_4(pandemic,  region)
 all <- function_4(pandemic, pandemic_stage)
 
 delta_mean <- sex %>% 
@@ -254,6 +259,7 @@ delta_mean <- sex %>%
   bind_rows(asthma) %>%
   bind_rows(COPD) %>%
   bind_rows(stroke_and_TIA)  %>%
+  bind_rows(region) %>% 
   bind_rows(all)
 
 
@@ -274,6 +280,7 @@ psychosis_schiz_bipolar <-function_5(pandemic,   psychosis_schiz_bipolar)
 asthma <-function_5(pandemic,   asthma)
 COPD <-function_5(pandemic,   COPD)
 stroke_and_TIA <-function_5(pandemic,   stroke_and_TIA)
+region <-function_5(pandemic,  region)
 all <- function_5(pandemic, pandemic_stage)
 
 delta_median <- sex %>% 
@@ -292,6 +299,7 @@ delta_median <- sex %>%
   bind_rows(asthma) %>%
   bind_rows(COPD) %>%
   bind_rows(stroke_and_TIA) %>% 
+  bind_rows(region) %>% 
   bind_rows(all)
 
 ## time_1
@@ -311,6 +319,7 @@ psychosis_schiz_bipolar <-function_6(pandemic,   psychosis_schiz_bipolar)
 asthma <-function_6(pandemic,   asthma)
 COPD <-function_6(pandemic,   COPD)
 stroke_and_TIA <-function_6(pandemic,   stroke_and_TIA)
+region <-function_6(pandemic,  region)
 all <- function_6(pandemic, pandemic_stage)
 
 time_1 <- sex %>% 
@@ -329,6 +338,7 @@ time_1 <- sex %>%
   bind_rows(asthma) %>%
   bind_rows(COPD) %>%
   bind_rows(stroke_and_TIA) %>% 
+  bind_rows(region) %>% 
   bind_rows(all)
 
 
@@ -349,6 +359,7 @@ psychosis_schiz_bipolar <-function_7(pandemic,   psychosis_schiz_bipolar)
 asthma <-function_7(pandemic,   asthma)
 COPD <-function_7(pandemic,   COPD)
 stroke_and_TIA <-function_7(pandemic,   stroke_and_TIA)
+region <-function_7(pandemic,  region)
 all <- function_7(pandemic, pandemic_stage)
 
 time_2 <- sex %>% 
@@ -367,6 +378,7 @@ time_2 <- sex %>%
   bind_rows(asthma) %>%
   bind_rows(COPD) %>%
   bind_rows(stroke_and_TIA) %>% 
+  bind_rows(region) %>% 
   bind_rows(all)
 
 
@@ -436,6 +448,7 @@ asthma <-function_1(prepandemic,   asthma)
 COPD <-function_1(prepandemic,   COPD)
 stroke_and_TIA <-function_1(prepandemic,   stroke_and_TIA)
 all <- function_1(prepandemic, pandemic_stage)
+region <- function_1(prepandemic, region)
 
 
 complete <- sex %>% 
@@ -454,6 +467,7 @@ complete <- sex %>%
   bind_rows(asthma) %>%
   bind_rows(COPD) %>%
   bind_rows(stroke_and_TIA) %>% 
+  bind_rows(region) %>% 
   bind_rows(all) %>% 
   dplyr::select(variable, group, n)
 
@@ -478,6 +492,7 @@ asthma <-function_3(prepandemic,   asthma)
 COPD <-function_3(prepandemic,   COPD)
 stroke_and_TIA <-function_3(prepandemic,   stroke_and_TIA)
 all <- function_3(prepandemic, pandemic_stage)
+region <- function_3(prepandemic, region)
 
 
 rapid <- sex %>% 
@@ -496,6 +511,7 @@ rapid <- sex %>%
   bind_rows(asthma) %>%
   bind_rows(COPD) %>%
   bind_rows(stroke_and_TIA) %>% 
+  bind_rows(region) %>% 
   bind_rows(all)
 
 
@@ -517,6 +533,7 @@ asthma <-function_4(prepandemic,   asthma)
 COPD <-function_4(prepandemic,   COPD)
 stroke_and_TIA <-function_4(prepandemic,   stroke_and_TIA)
 all <- function_4(prepandemic, pandemic_stage)
+region <- function_4(prepandemic, region)
 
 delta_mean <- sex %>% 
   bind_rows(age_group_2) %>%
@@ -534,6 +551,7 @@ delta_mean <- sex %>%
   bind_rows(asthma) %>%
   bind_rows(COPD) %>%
   bind_rows(stroke_and_TIA) %>% 
+  bind_rows(region) %>% 
   bind_rows(all)  
 
 
@@ -555,6 +573,7 @@ asthma <-function_5(prepandemic,   asthma)
 COPD <-function_5(prepandemic,   COPD)
 stroke_and_TIA <-function_5(prepandemic,   stroke_and_TIA)
 all <- function_5(prepandemic, pandemic_stage)
+region <- function_5(prepandemic, region)
 
 delta_median <- sex %>% 
   bind_rows(age_group_2) %>%
@@ -572,6 +591,7 @@ delta_median <- sex %>%
   bind_rows(asthma) %>%
   bind_rows(COPD) %>%
   bind_rows(stroke_and_TIA) %>% 
+  bind_rows(region) %>% 
   bind_rows(all) 
 
 ## time_1
@@ -592,6 +612,7 @@ asthma <-function_6(prepandemic,   asthma)
 COPD <-function_6(prepandemic,   COPD)
 stroke_and_TIA <-function_6(prepandemic,   stroke_and_TIA)
 all <- function_6(prepandemic, pandemic_stage)
+region <- function_6(prepandemic, region)
 
 time_1 <- sex %>% 
   bind_rows(age_group_2) %>%
@@ -609,6 +630,7 @@ time_1 <- sex %>%
   bind_rows(asthma) %>%
   bind_rows(COPD) %>%
   bind_rows(stroke_and_TIA)%>% 
+  bind_rows(region) %>% 
   bind_rows(all)
 
 
@@ -630,6 +652,7 @@ asthma <-function_7(prepandemic,   asthma)
 COPD <-function_7(prepandemic,   COPD)
 stroke_and_TIA <-function_7(prepandemic,   stroke_and_TIA)
 all <- function_7(prepandemic, pandemic_stage)
+region <- function_7(prepandemic, region)
 
 time_2 <- sex %>% 
   bind_rows(age_group_2) %>%
@@ -647,6 +670,7 @@ time_2 <- sex %>%
   bind_rows(asthma) %>%
   bind_rows(COPD) %>%
   bind_rows(stroke_and_TIA) %>% 
+  bind_rows(region) %>% 
   bind_rows(all)
 
 

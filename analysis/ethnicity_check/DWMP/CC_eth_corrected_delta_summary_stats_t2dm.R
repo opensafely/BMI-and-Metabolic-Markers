@@ -33,6 +33,18 @@ pandemic <- pandemic %>%
     rapid_bmi_change == 0 ~ "not rapid"
   ))
 
+pandemic <- pandemic %>% mutate_at(vars("insulin_meds", "oad_meds"), ~replace_na(.,0))
+
+
+pandemic <- pandemic %>% dplyr::mutate(diabetes_med = case_when(
+  insulin_meds == 1 ~ "insulin", 
+  ((insulin_meds == 0) & (oad_meds == 1)) ~ "oad", 
+  ((insulin_meds == 0) & (oad_meds == 0)) ~ "lifestyle"
+))
+
+pandemic %>% tabyl(diabetes_med)
+
+
 
 ## Write functions
 
@@ -157,6 +169,8 @@ psychosis_schiz_bipolar <-function_1(pandemic,   psychosis_schiz_bipolar)
 asthma <-function_1(pandemic,   asthma)
 COPD <-function_1(pandemic,   COPD)
 stroke_and_TIA <-function_1(pandemic,   stroke_and_TIA)
+region <-function_1(pandemic,   region)
+diabetes_med <-function_1(pandemic,   diabetes_med)
 all <- function_1(pandemic, pandemic_stage)
 
 complete <- sex %>% 
@@ -175,6 +189,8 @@ complete <- sex %>%
   bind_rows(asthma) %>%
   bind_rows(COPD) %>%
   bind_rows(stroke_and_TIA) %>% 
+  bind_rows(region) %>% 
+  bind_rows(diabetes_med) %>% 
   bind_rows(all) %>% 
   dplyr::select(variable, group, n)
 
@@ -198,6 +214,8 @@ psychosis_schiz_bipolar <-function_3(pandemic,   psychosis_schiz_bipolar)
 asthma <-function_3(pandemic,   asthma)
 COPD <-function_3(pandemic,   COPD)
 stroke_and_TIA <-function_3(pandemic,   stroke_and_TIA)
+region <-function_3(pandemic,   region)
+diabetes_med <-function_3(pandemic,   diabetes_med)
 all <- function_3(pandemic, pandemic_stage)
 
 rapid <- sex %>% 
@@ -216,6 +234,8 @@ rapid <- sex %>%
   bind_rows(asthma) %>%
   bind_rows(COPD) %>%
   bind_rows(stroke_and_TIA) %>% 
+  bind_rows(region) %>% 
+  bind_rows(diabetes_med) %>% 
   bind_rows(all)
 
 
@@ -236,6 +256,8 @@ psychosis_schiz_bipolar <-function_4(pandemic,   psychosis_schiz_bipolar)
 asthma <-function_4(pandemic,   asthma)
 COPD <-function_4(pandemic,   COPD)
 stroke_and_TIA <-function_4(pandemic,   stroke_and_TIA)
+region <-function_4(pandemic,   region)
+diabetes_med <-function_4(pandemic,   diabetes_med)
 all <- function_4(pandemic, pandemic_stage)
 
 delta_mean <- sex %>% 
@@ -254,6 +276,8 @@ delta_mean <- sex %>%
   bind_rows(asthma) %>%
   bind_rows(COPD) %>%
   bind_rows(stroke_and_TIA)  %>%
+  bind_rows(region) %>% 
+  bind_rows(diabetes_med) %>% 
   bind_rows(all)
 
 
@@ -274,6 +298,8 @@ psychosis_schiz_bipolar <-function_5(pandemic,   psychosis_schiz_bipolar)
 asthma <-function_5(pandemic,   asthma)
 COPD <-function_5(pandemic,   COPD)
 stroke_and_TIA <-function_5(pandemic,   stroke_and_TIA)
+region <-function_5(pandemic,   region)
+diabetes_med <-function_5(pandemic,   diabetes_med)
 all <- function_5(pandemic, pandemic_stage)
 
 delta_median <- sex %>% 
@@ -292,6 +318,8 @@ delta_median <- sex %>%
   bind_rows(asthma) %>%
   bind_rows(COPD) %>%
   bind_rows(stroke_and_TIA) %>% 
+  bind_rows(region) %>% 
+  bind_rows(diabetes_med) %>% 
   bind_rows(all)
 
 ## time_1
@@ -311,6 +339,8 @@ psychosis_schiz_bipolar <-function_6(pandemic,   psychosis_schiz_bipolar)
 asthma <-function_6(pandemic,   asthma)
 COPD <-function_6(pandemic,   COPD)
 stroke_and_TIA <-function_6(pandemic,   stroke_and_TIA)
+region <-function_6(pandemic,   region)
+diabetes_med <-function_6(pandemic,   diabetes_med)
 all <- function_6(pandemic, pandemic_stage)
 
 time_1 <- sex %>% 
@@ -329,6 +359,8 @@ time_1 <- sex %>%
   bind_rows(asthma) %>%
   bind_rows(COPD) %>%
   bind_rows(stroke_and_TIA) %>% 
+  bind_rows(region) %>% 
+  bind_rows(diabetes_med) %>% 
   bind_rows(all)
 
 
@@ -349,6 +381,8 @@ psychosis_schiz_bipolar <-function_7(pandemic,   psychosis_schiz_bipolar)
 asthma <-function_7(pandemic,   asthma)
 COPD <-function_7(pandemic,   COPD)
 stroke_and_TIA <-function_7(pandemic,   stroke_and_TIA)
+region <-function_7(pandemic,   region)
+diabetes_med <-function_7(pandemic,   diabetes_med)
 all <- function_7(pandemic, pandemic_stage)
 
 time_2 <- sex %>% 
@@ -367,6 +401,8 @@ time_2 <- sex %>%
   bind_rows(asthma) %>%
   bind_rows(COPD) %>%
   bind_rows(stroke_and_TIA) %>% 
+  bind_rows(region) %>% 
+  bind_rows(diabetes_med) %>% 
   bind_rows(all)
 
 
@@ -411,6 +447,16 @@ prepandemic <- prepandemic %>%
   ))
 
 
+prepandemic <- prepandemic %>% mutate_at(vars("insulin_meds", "oad_meds"), ~replace_na(.,0))
+
+
+prepandemic <- prepandemic %>% dplyr::mutate(diabetes_med = case_when(
+  insulin_meds == 1 ~ "insulin", 
+  ((insulin_meds == 0) & (oad_meds == 1)) ~ "oad", 
+  ((insulin_meds == 0) & (oad_meds == 0)) ~ "lifestyle"
+))
+
+prepandemic %>% tabyl(diabetes_med)
 
 
 
@@ -435,6 +481,8 @@ psychosis_schiz_bipolar <-function_1(prepandemic,   psychosis_schiz_bipolar)
 asthma <-function_1(prepandemic,   asthma)
 COPD <-function_1(prepandemic,   COPD)
 stroke_and_TIA <-function_1(prepandemic,   stroke_and_TIA)
+region <-function_1(prepandemic,   region)
+diabetes_med <-function_1(prepandemic,   diabetes_med)
 all <- function_1(prepandemic, pandemic_stage)
 
 
@@ -454,6 +502,8 @@ complete <- sex %>%
   bind_rows(asthma) %>%
   bind_rows(COPD) %>%
   bind_rows(stroke_and_TIA) %>% 
+  bind_rows(region) %>% 
+  bind_rows(diabetes_med) %>% 
   bind_rows(all) %>% 
   dplyr::select(variable, group, n)
 
@@ -477,6 +527,8 @@ psychosis_schiz_bipolar <-function_3(prepandemic,   psychosis_schiz_bipolar)
 asthma <-function_3(prepandemic,   asthma)
 COPD <-function_3(prepandemic,   COPD)
 stroke_and_TIA <-function_3(prepandemic,   stroke_and_TIA)
+region <-function_3(prepandemic,   region)
+diabetes_med <-function_3(prepandemic,   diabetes_med)
 all <- function_3(prepandemic, pandemic_stage)
 
 
@@ -496,6 +548,8 @@ rapid <- sex %>%
   bind_rows(asthma) %>%
   bind_rows(COPD) %>%
   bind_rows(stroke_and_TIA) %>% 
+  bind_rows(region) %>% 
+  bind_rows(diabetes_med) %>% 
   bind_rows(all)
 
 
@@ -516,6 +570,8 @@ psychosis_schiz_bipolar <-function_4(prepandemic,   psychosis_schiz_bipolar)
 asthma <-function_4(prepandemic,   asthma)
 COPD <-function_4(prepandemic,   COPD)
 stroke_and_TIA <-function_4(prepandemic,   stroke_and_TIA)
+region <-function_4(prepandemic,   region)
+diabetes_med <-function_4(prepandemic,   diabetes_med)
 all <- function_4(prepandemic, pandemic_stage)
 
 delta_mean <- sex %>% 
@@ -534,6 +590,8 @@ delta_mean <- sex %>%
   bind_rows(asthma) %>%
   bind_rows(COPD) %>%
   bind_rows(stroke_and_TIA) %>% 
+  bind_rows(region) %>% 
+  bind_rows(diabetes_med) %>% 
   bind_rows(all)  
 
 
@@ -554,6 +612,8 @@ psychosis_schiz_bipolar <-function_5(prepandemic,   psychosis_schiz_bipolar)
 asthma <-function_5(prepandemic,   asthma)
 COPD <-function_5(prepandemic,   COPD)
 stroke_and_TIA <-function_5(prepandemic,   stroke_and_TIA)
+region <-function_5(prepandemic,   region)
+diabetes_med <-function_5(prepandemic,   diabetes_med)
 all <- function_5(prepandemic, pandemic_stage)
 
 delta_median <- sex %>% 
@@ -572,6 +632,8 @@ delta_median <- sex %>%
   bind_rows(asthma) %>%
   bind_rows(COPD) %>%
   bind_rows(stroke_and_TIA) %>% 
+  bind_rows(region) %>% 
+  bind_rows(diabetes_med) %>% 
   bind_rows(all) 
 
 ## time_1
@@ -591,6 +653,8 @@ psychosis_schiz_bipolar <-function_6(prepandemic,   psychosis_schiz_bipolar)
 asthma <-function_6(prepandemic,   asthma)
 COPD <-function_6(prepandemic,   COPD)
 stroke_and_TIA <-function_6(prepandemic,   stroke_and_TIA)
+region <-function_6(prepandemic,   region)
+diabetes_med <-function_6(prepandemic,   diabetes_med)
 all <- function_6(prepandemic, pandemic_stage)
 
 time_1 <- sex %>% 
@@ -609,6 +673,8 @@ time_1 <- sex %>%
   bind_rows(asthma) %>%
   bind_rows(COPD) %>%
   bind_rows(stroke_and_TIA)%>% 
+  bind_rows(region) %>% 
+  bind_rows(diabetes_med) %>% 
   bind_rows(all)
 
 
@@ -629,6 +695,8 @@ psychosis_schiz_bipolar <-function_7(prepandemic,   psychosis_schiz_bipolar)
 asthma <-function_7(prepandemic,   asthma)
 COPD <-function_7(prepandemic,   COPD)
 stroke_and_TIA <-function_7(prepandemic,   stroke_and_TIA)
+region <-function_7(prepandemic,   region)
+diabetes_med <-function_7(prepandemic,   diabetes_med)
 all <- function_7(prepandemic, pandemic_stage)
 
 time_2 <- sex %>% 
@@ -647,6 +715,8 @@ time_2 <- sex %>%
   bind_rows(asthma) %>%
   bind_rows(COPD) %>%
   bind_rows(stroke_and_TIA) %>% 
+  bind_rows(region) %>% 
+  bind_rows(diabetes_med) %>% 
   bind_rows(all)
 
 
