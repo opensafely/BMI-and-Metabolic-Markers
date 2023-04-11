@@ -81,9 +81,6 @@ imd <- DT[, glm(rapid_bmi_change ~ imd, family = "binomial")] %>%
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-region <- DT[, glm(rapid_bmi_change ~ region, family = "binomial")] %>% 
-  tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
-  mutate(across(where(is.numeric), round, digits = 5)) 
 
 diabetes_t2 <- DT[, glm(rapid_bmi_change ~ diabetes_t2, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
@@ -138,7 +135,6 @@ diabetes_t1 <- DT[, glm(rapid_bmi_change ~ diabetes_t1, family = "binomial")] %>
 complete <- sex %>% 
   bind_rows(eth_group_16) %>%
   bind_rows(imd) %>%
-  bind_rows(region) %>%
   bind_rows(diabetes_t2) %>%
   bind_rows(chronic_cardiac) %>%
   bind_rows(learning_disability) %>%
@@ -173,9 +169,6 @@ imd <- DT[, glm(rapid_bmi_change ~ sex + imd, family = "binomial")] %>%
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-region <- DT[, glm(rapid_bmi_change ~ sex +  region, family = "binomial")] %>% 
-  tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
-  mutate(across(where(is.numeric), round, digits = 5)) 
 
 diabetes_t2 <- DT[, glm(rapid_bmi_change ~ sex +  diabetes_t2, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
@@ -227,7 +220,6 @@ diabetes_t1 <- DT[, glm(rapid_bmi_change ~ sex + diabetes_t1, family = "binomial
 models_sex <- sex %>% 
   bind_rows(eth_group_16) %>%
   bind_rows(imd) %>%
-  bind_rows(region) %>%
   bind_rows(diabetes_t2) %>%
   bind_rows(chronic_cardiac) %>%
   bind_rows(learning_disability) %>%
@@ -260,9 +252,6 @@ imd <- DT[, glm(rapid_bmi_change ~ imd + imd, family = "binomial")] %>%
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-region <- DT[, glm(rapid_bmi_change ~ imd +  region, family = "binomial")] %>% 
-  tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
-  mutate(across(where(is.numeric), round, digits = 5)) 
 
 diabetes_t2 <- DT[, glm(rapid_bmi_change ~ imd +  diabetes_t2, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
@@ -315,7 +304,6 @@ diabetes_t1 <- DT[, glm(rapid_bmi_change ~ imd + diabetes_t1, family = "binomial
 models_imd <- sex %>% 
   bind_rows(eth_group_16) %>%
   bind_rows(imd) %>%
-  bind_rows(region) %>%
   bind_rows(diabetes_t2) %>%
   bind_rows(chronic_cardiac) %>%
   bind_rows(learning_disability) %>%
@@ -343,9 +331,6 @@ imd <- DT[, glm(rapid_bmi_change ~ eth_collapsed + imd, family = "binomial")] %>
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-region <- DT[, glm(rapid_bmi_change ~ eth_collapsed +  region, family = "binomial")] %>% 
-  tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
-  mutate(across(where(is.numeric), round, digits = 5)) 
 
 diabetes_t2 <- DT[, glm(rapid_bmi_change ~ eth_collapsed +  diabetes_t2, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
@@ -398,7 +383,7 @@ diabetes_t1 <- DT[, glm(rapid_bmi_change ~ eth_collapsed + diabetes_t1, family =
 models_ethnicity <- sex %>% 
   bind_rows(eth_group_16) %>%
   bind_rows(imd) %>%
-  bind_rows(region) %>%
+
   bind_rows(diabetes_t2) %>%
   bind_rows(chronic_cardiac) %>%
   bind_rows(learning_disability) %>%
@@ -444,10 +429,6 @@ imd <- DT[, glm(rapid_bmi_change ~ imd, family = "binomial")] %>%
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-region <- DT[, glm(rapid_bmi_change ~ region, family = "binomial")] %>% 
-  tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
-  mutate(across(where(is.numeric), round, digits = 5)) 
-
 diabetes_t2 <- DT[, glm(rapid_bmi_change ~ diabetes_t2, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
@@ -501,7 +482,6 @@ diabetes_t1 <- DT[, glm(rapid_bmi_change ~ diabetes_t1, family = "binomial")] %>
 complete <- sex %>% 
   bind_rows(eth_group_16) %>%
   bind_rows(imd) %>%
-  bind_rows(region) %>%
   bind_rows(diabetes_t2) %>%
   bind_rows(chronic_cardiac) %>%
   bind_rows(learning_disability) %>%
@@ -536,9 +516,6 @@ imd <- DT[, glm(rapid_bmi_change ~ sex + imd, family = "binomial")] %>%
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-region <- DT[, glm(rapid_bmi_change ~ sex +  region, family = "binomial")] %>% 
-  tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
-  mutate(across(where(is.numeric), round, digits = 5)) 
 
 diabetes_t2 <- DT[, glm(rapid_bmi_change ~ sex +  diabetes_t2, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
@@ -590,7 +567,6 @@ diabetes_t1 <- DT[, glm(rapid_bmi_change ~ sex + diabetes_t1, family = "binomial
 models_sex <- sex %>% 
   bind_rows(eth_group_16) %>%
   bind_rows(imd) %>%
-  bind_rows(region) %>%
   bind_rows(diabetes_t2) %>%
   bind_rows(chronic_cardiac) %>%
   bind_rows(learning_disability) %>%
@@ -623,9 +599,6 @@ imd <- DT[, glm(rapid_bmi_change ~ imd + imd, family = "binomial")] %>%
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-region <- DT[, glm(rapid_bmi_change ~ imd +  region, family = "binomial")] %>% 
-  tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
-  mutate(across(where(is.numeric), round, digits = 5)) 
 
 diabetes_t2 <- DT[, glm(rapid_bmi_change ~ imd +  diabetes_t2, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
@@ -678,7 +651,6 @@ diabetes_t1 <- DT[, glm(rapid_bmi_change ~ imd + diabetes_t1, family = "binomial
 models_imd <- sex %>% 
   bind_rows(eth_group_16) %>%
   bind_rows(imd) %>%
-  bind_rows(region) %>%
   bind_rows(diabetes_t2) %>%
   bind_rows(chronic_cardiac) %>%
   bind_rows(learning_disability) %>%
@@ -706,9 +678,6 @@ imd <- DT[, glm(rapid_bmi_change ~ eth_collapsed + imd, family = "binomial")] %>
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-region <- DT[, glm(rapid_bmi_change ~ eth_collapsed +  region, family = "binomial")] %>% 
-  tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
-  mutate(across(where(is.numeric), round, digits = 5)) 
 
 diabetes_t2 <- DT[, glm(rapid_bmi_change ~ eth_collapsed +  diabetes_t2, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
@@ -761,7 +730,6 @@ diabetes_t1 <- DT[, glm(rapid_bmi_change ~ eth_collapsed + diabetes_t1, family =
 models_ethnicity <- sex %>% 
   bind_rows(eth_group_16) %>%
   bind_rows(imd) %>%
-  bind_rows(region) %>%
   bind_rows(diabetes_t2) %>%
   bind_rows(chronic_cardiac) %>%
   bind_rows(learning_disability) %>%
@@ -807,10 +775,6 @@ imd <- DT[, glm(rapid_bmi_change ~ imd, family = "binomial")] %>%
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-region <- DT[, glm(rapid_bmi_change ~ region, family = "binomial")] %>% 
-  tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
-  mutate(across(where(is.numeric), round, digits = 5)) 
-
 diabetes_t2 <- DT[, glm(rapid_bmi_change ~ diabetes_t2, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
@@ -864,7 +828,6 @@ diabetes_t1 <- DT[, glm(rapid_bmi_change ~ diabetes_t1, family = "binomial")] %>
 complete <- sex %>% 
   bind_rows(eth_group_16) %>%
   bind_rows(imd) %>%
-  bind_rows(region) %>%
   bind_rows(diabetes_t2) %>%
   bind_rows(chronic_cardiac) %>%
   bind_rows(learning_disability) %>%
@@ -896,10 +859,6 @@ eth_group_16 <- DT[, glm(rapid_bmi_change ~ sex + eth_collapsed, family = "binom
   mutate(across(where(is.numeric), round, digits = 5)) 
 
 imd <- DT[, glm(rapid_bmi_change ~ sex + imd, family = "binomial")] %>% 
-  tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
-  mutate(across(where(is.numeric), round, digits = 5)) 
-
-region <- DT[, glm(rapid_bmi_change ~ sex +  region, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
@@ -953,7 +912,6 @@ diabetes_t1 <- DT[, glm(rapid_bmi_change ~ sex + diabetes_t1, family = "binomial
 models_sex <- sex %>% 
   bind_rows(eth_group_16) %>%
   bind_rows(imd) %>%
-  bind_rows(region) %>%
   bind_rows(diabetes_t2) %>%
   bind_rows(chronic_cardiac) %>%
   bind_rows(learning_disability) %>%
@@ -983,10 +941,6 @@ eth_group_16 <- DT[, glm(rapid_bmi_change ~ imd + eth_collapsed, family = "binom
   mutate(across(where(is.numeric), round, digits = 5)) 
 
 imd <- DT[, glm(rapid_bmi_change ~ imd + imd, family = "binomial")] %>% 
-  tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
-  mutate(across(where(is.numeric), round, digits = 5)) 
-
-region <- DT[, glm(rapid_bmi_change ~ imd +  region, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
@@ -1041,7 +995,6 @@ diabetes_t1 <- DT[, glm(rapid_bmi_change ~ imd + diabetes_t1, family = "binomial
 models_imd <- sex %>% 
   bind_rows(eth_group_16) %>%
   bind_rows(imd) %>%
-  bind_rows(region) %>%
   bind_rows(diabetes_t2) %>%
   bind_rows(chronic_cardiac) %>%
   bind_rows(learning_disability) %>%
@@ -1069,9 +1022,6 @@ imd <- DT[, glm(rapid_bmi_change ~ eth_collapsed + imd, family = "binomial")] %>
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
   mutate(across(where(is.numeric), round, digits = 5)) 
 
-region <- DT[, glm(rapid_bmi_change ~ eth_collapsed +  region, family = "binomial")] %>% 
-  tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
-  mutate(across(where(is.numeric), round, digits = 5)) 
 
 diabetes_t2 <- DT[, glm(rapid_bmi_change ~ eth_collapsed +  diabetes_t2, family = "binomial")] %>% 
   tidy(exponentiate = TRUE, conf.int = TRUE) %>%        # exponentiate and produce CIs
@@ -1124,7 +1074,6 @@ diabetes_t1 <- DT[, glm(rapid_bmi_change ~ eth_collapsed + diabetes_t1, family =
 models_ethnicity <- sex %>% 
   bind_rows(eth_group_16) %>%
   bind_rows(imd) %>%
-  bind_rows(region) %>%
   bind_rows(diabetes_t2) %>%
   bind_rows(chronic_cardiac) %>%
   bind_rows(learning_disability) %>%
