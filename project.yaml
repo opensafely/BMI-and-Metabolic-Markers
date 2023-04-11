@@ -2682,3 +2682,12 @@ actions:
         table1: output/data/CC_delta_pandemic_models_1_t2d_18_39.csv
         table2: output/data/CC_delta_pandemic_models_1_t2d_40_59.csv
         table3: output/data/CC_delta_pandemic_models_1_t2d_60_79.csv
+
+  hypertension_stratified_delta_pandemic_age:
+    run: r:latest analysis/ethnicity_check/DWMP/DWMP_stratified/CC_eth_corrected_delta_pandemic_models_1_hypertension_age_strat.R --output-dir=output/data 
+    needs: [complete_case_stratified_delta_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_pandemic_models_1_hypertension_18_39.csv
+        table2: output/data/CC_delta_pandemic_models_1_hypertension_40_59.csv
+        table3: output/data/CC_delta_pandemic_models_1_hypertension_60_79.csv
