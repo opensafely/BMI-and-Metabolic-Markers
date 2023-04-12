@@ -147,8 +147,10 @@ dt_2021 %>%
 dt_2021 %>% 
   tabyl(eth_16_corrected)
 
- ### WRITE FUNCTIONS
 
+
+##############################
+### WRITE FUNCTIONS
 
 universal_weight_f <- function(data, my_var) {
   v1 <- deparse(substitute(my_var))
@@ -161,12 +163,6 @@ universal_weight_f <- function(data, my_var) {
     dplyr::mutate(group = as.character(group)) 
 }
 
-#universal_weight_f <- function (data, var){
-  #data %>% 
-    #tabyl({{ var }}, weight_universal) %>%
-    #dplyr::rename(group = 1) %>% 
-    #dplyr::mutate(group = as.factor(group))
-#}
 
 
 DWMP_weight_f <- function(data, my_var) {
@@ -182,13 +178,6 @@ DWMP_weight_f <- function(data, my_var) {
 
 
 
-#DWMP_weight_f <- function (data, var){
-  #data %>% 
-    #tabyl({{ var }}, weight_DWMP) %>%
-    #dplyr::rename(group = 1) %>% 
-    #dplyr::mutate(group = as.factor(group))
-#}
-
 DWMP_eligible_f <- function(data, my_var) {
   v1 <- deparse(substitute(my_var))
   
@@ -200,14 +189,20 @@ DWMP_eligible_f <- function(data, my_var) {
     dplyr::mutate(group = as.character(group)) 
 }
 
-
-#DWMP_eligible_f <- function (data, var){
-  #data %>% 
-    #tabyl({{ var }}, dwmp_eligible) %>%
-    #dplyr::rename(group = 1) %>% 
-    #dplyr::mutate(group = as.factor(group))
-#}
-
+## median BMI
+function_3 <- function(data, my_var) {
+  v1 <- deparse(substitute(my_var))
+  
+  data %>%
+    group_by({{my_var}}) %>%
+    summarise(Q1=quantile(median_bmi,probs = 0.25, na.rm = TRUE),
+              median=median(median_bmi, na.rm = TRUE), 
+              Q3=quantile(median_bmi, probs = 0.75, na.rm = TRUE)) %>%
+    dplyr::rename(group = {{my_var}}) %>% 
+    dplyr::mutate(variable = (v1), .before=1)  %>%   
+    dplyr::mutate(across(where(is.numeric), round, 5)) %>% 
+    dplyr::mutate(group = as.character(group))
+}
 
 #####
 
@@ -251,17 +246,10 @@ universal_weight <- sex %>%
 
 
 sex <-  DWMP_weight_f(dt_2021,sex) 
-
-
 age <- DWMP_weight_f(dt_2021,age_group_2)
-
 eth <- DWMP_weight_f(dt_2021,eth_16_corrected)
-
 imd <- DWMP_weight_f(dt_2021,imd)
-
-
 region <- DWMP_weight_f(dt_2021,region)
-
 hypertension <-DWMP_weight_f(dt_2021,   comorbid_hypertension)
 diabetes_t1 <-DWMP_weight_f(dt_2021,   comorbid_diabetes_t1)
 diabetes_t2 <-DWMP_weight_f(dt_2021,   comorbid_diabetes_t2)
@@ -295,17 +283,10 @@ DWMP_weight <- sex %>%
 ### 
 
 sex <-  DWMP_eligible_f(dt_2021,sex)
-
-
 age <- DWMP_eligible_f(dt_2021,age_group_2)
-
 eth <- DWMP_eligible_f(dt_2021,eth_16_corrected)
-
 imd <- DWMP_eligible_f(dt_2021,imd)
-
-
 region <- DWMP_eligible_f(dt_2021,region)
-
 hypertension <-DWMP_eligible_f(dt_2021,   comorbid_hypertension)
 diabetes_t1 <-DWMP_eligible_f(dt_2021,   comorbid_diabetes_t1)
 diabetes_t2 <-DWMP_eligible_f(dt_2021,   comorbid_diabetes_t2)
@@ -334,10 +315,53 @@ DWMP_eligible <- sex %>%
   stroke_and_TIA)
 
 
+## median
+
+sex <-function_3(dt_2021,  sex)
+age <-function_3(dt_2021,  age_group_2)
+eth <-function_3(dt_2021,  eth_16_corrected)
+imd <-function_3(dt_2021,  imd)
+region <-function_3(dt_2021,  region)
+hypertension <-function_3(dt_2021,   comorbid_hypertension)
+diabetes_t1 <-function_3(dt_2021,   comorbid_diabetes_t1)
+diabetes_t2 <-function_3(dt_2021,   comorbid_diabetes_t2)
+chronic_cardiac <-function_3(dt_2021,   comorbid_chronic_cardiac)
+learning_disability <-function_3(dt_2021,   comorbid_learning_disability)
+depression <-function_3(dt_2021,   comorbid_depression)
+dementia <-function_3(dt_2021,   comorbid_dementia)
+psychosis_schiz_bipolar <-function_3(dt_2021,   comorbid_psychosis_schiz_bipolar)
+asthma <-function_3(dt_2021,   comorbid_asthma)
+COPD <-function_3(dt_2021,   comorbid_COPD)
+stroke_and_TIA <-function_3(dt_2021,   comorbid_stroke_and_TIA)
+
+
+median_data <- sex %>% 
+  bind_rows(age) %>%
+  bind_rows(eth) %>%
+  bind_rows(imd) %>%
+  bind_rows(region) %>%
+  bind_rows(hypertension) %>%
+  bind_rows(diabetes_t1) %>%
+  bind_rows(diabetes_t2) %>%
+  bind_rows(chronic_cardiac) %>%
+  bind_rows(learning_disability) %>%
+  bind_rows(depression) %>%
+  bind_rows(dementia) %>%
+  bind_rows(psychosis_schiz_bipolar) %>%
+  bind_rows(asthma) %>%
+  bind_rows(COPD) %>%
+  bind_rows(stroke_and_TIA) 
+
 
 summary_2021 <- universal_weight %>% 
   left_join(DWMP_weight, by = c("variable", "group"))%>% 
-  left_join(DWMP_eligible, by = c("variable", "group"))
+  left_join(DWMP_eligible, by = c("variable", "group"))%>% 
+  left_join(median_data, by = c("variable", "group"))
+
+
+
+#################
+#diabetes
 
 
 ### T2D 2021
@@ -435,13 +459,53 @@ DWMP_weight <- sex %>%
   stroke_and_TIA, 
   diabetes_med)
 
+###
+sex <-function_3(T2D_2021,  sex)
+age <-function_3(T2D_2021,  age_group_2)
+eth <-function_3(T2D_2021,  eth_16_corrected)
+imd <-function_3(T2D_2021,  imd)
+region <-function_3(T2D_2021,  region)
+hypertension <-function_3(T2D_2021,   comorbid_hypertension)
+diabetes_t1 <-function_3(T2D_2021,   comorbid_diabetes_t1)
+diabetes_t2 <-function_3(T2D_2021,   comorbid_diabetes_t2)
+chronic_cardiac <-function_3(T2D_2021,   comorbid_chronic_cardiac)
+learning_disability <-function_3(T2D_2021,   comorbid_learning_disability)
+depression <-function_3(T2D_2021,   comorbid_depression)
+dementia <-function_3(T2D_2021,   comorbid_dementia)
+psychosis_schiz_bipolar <-function_3(T2D_2021,   comorbid_psychosis_schiz_bipolar)
+asthma <-function_3(T2D_2021,   comorbid_asthma)
+COPD <-function_3(T2D_2021,   comorbid_COPD)
+stroke_and_TIA <-function_3(T2D_2021,   comorbid_stroke_and_TIA)
+diabetes_med <- function_3(T2D_2021,   diabetes_med)
 
+
+median_data <- sex %>% 
+  bind_rows(age) %>%
+  bind_rows(eth) %>%
+  bind_rows(imd) %>%
+  bind_rows(region) %>%
+  bind_rows(hypertension) %>%
+  bind_rows(diabetes_t1) %>%
+  bind_rows(diabetes_t2) %>%
+  bind_rows(chronic_cardiac) %>%
+  bind_rows(learning_disability) %>%
+  bind_rows(depression) %>%
+  bind_rows(dementia) %>%
+  bind_rows(psychosis_schiz_bipolar) %>%
+  bind_rows(asthma) %>%
+  bind_rows(COPD) %>%
+  bind_rows(stroke_and_TIA) %>%
+  bind_rows(diabetes_med) 
 
 
 
 T2D_2021 <- universal_weight %>% 
-  left_join(DWMP_weight, by = c("variable", "group"))
+  left_join(DWMP_weight, by = c("variable", "group")) %>% 
+  left_join(median_data, by = c("variable", "group"))
 
+
+#########################
+## HYPERTENSIVE
 
 
 ### Hypertension_2021
@@ -486,24 +550,11 @@ universal_weight <- sex %>%
 
 
 
-
-
-
-
-
-
 sex <-  DWMP_weight_f(BP_2021,sex) 
-
-
 age <- DWMP_weight_f(BP_2021,age_group_2)
-
 eth <- DWMP_weight_f(BP_2021,eth_16_corrected)
-
 imd <- DWMP_weight_f(BP_2021,imd)
-
-
 region <- DWMP_weight_f(BP_2021,region)
-
 hypertension <-DWMP_weight_f(BP_2021,   comorbid_hypertension)
 diabetes_t1 <-DWMP_weight_f(BP_2021,   comorbid_diabetes_t1)
 diabetes_t2 <-DWMP_weight_f(BP_2021,   comorbid_diabetes_t2)
@@ -531,10 +582,48 @@ DWMP_weight <- sex %>%
   COPD,
   stroke_and_TIA)
 
+## median
+
+sex <-function_3(BP_2021,  sex)
+age <-function_3(BP_2021,  age_group_2)
+eth <-function_3(BP_2021,  eth_16_corrected)
+imd <-function_3(BP_2021,  imd)
+region <-function_3(BP_2021,  region)
+hypertension <-function_3(BP_2021,   comorbid_hypertension)
+diabetes_t1 <-function_3(BP_2021,   comorbid_diabetes_t1)
+diabetes_t2 <-function_3(BP_2021,   comorbid_diabetes_t2)
+chronic_cardiac <-function_3(BP_2021,   comorbid_chronic_cardiac)
+learning_disability <-function_3(BP_2021,   comorbid_learning_disability)
+depression <-function_3(BP_2021,   comorbid_depression)
+dementia <-function_3(BP_2021,   comorbid_dementia)
+psychosis_schiz_bipolar <-function_3(BP_2021,   comorbid_psychosis_schiz_bipolar)
+asthma <-function_3(BP_2021,   comorbid_asthma)
+COPD <-function_3(BP_2021,   comorbid_COPD)
+stroke_and_TIA <-function_3(BP_2021,   comorbid_stroke_and_TIA)
+
+
+median_data <- sex %>% 
+  bind_rows(age) %>%
+  bind_rows(eth) %>%
+  bind_rows(imd) %>%
+  bind_rows(region) %>%
+  bind_rows(hypertension) %>%
+  bind_rows(diabetes_t1) %>%
+  bind_rows(diabetes_t2) %>%
+  bind_rows(chronic_cardiac) %>%
+  bind_rows(learning_disability) %>%
+  bind_rows(depression) %>%
+  bind_rows(dementia) %>%
+  bind_rows(psychosis_schiz_bipolar) %>%
+  bind_rows(asthma) %>%
+  bind_rows(COPD) %>%
+  bind_rows(stroke_and_TIA) 
+
 
 
 BP_2021 <- universal_weight %>% 
-  left_join(DWMP_weight, by = c("variable", "group"))
+  left_join(DWMP_weight, by = c("variable", "group")) %>% 
+  left_join(median_data, by = c("variable", "group"))
 
 
 
@@ -542,10 +631,6 @@ BP_2021 <- universal_weight %>%
 
 summary_2021 <- summary_2021 %>% 
   dplyr::mutate (category = "all", .before=1)
-
-
-
-
 
 BP_2021 <- BP_2021 %>% 
   dplyr::mutate (category = "Hypertensive", .before=1)
@@ -559,16 +644,23 @@ summary_2021 <- summary_2021 %>%
   bind_rows(BP_2021, 
             T2D_2021)
 
+summary_2021 <- summary_2021 %>% 
+    dplyr::select(-c("DWMP_not_obese", "not_dwmp"))
 
 summary_2021 <- summary_2021  %>% 
   dplyr::mutate(healthy = plyr::round_any(summary_2021$healthy, 5)) %>% 
   dplyr::mutate(obese = plyr::round_any(summary_2021$obese, 5))%>% 
   dplyr::mutate(overweight = plyr::round_any(summary_2021$overweight, 5))%>% 
   dplyr::mutate(underweight = plyr::round_any(summary_2021$underweight, 5))%>% 
-  dplyr::mutate(DWMP_not_obese = plyr::round_any(summary_2021$DWMP_not_obese, 5))%>% 
+  #dplyr::mutate(DWMP_not_obese = plyr::round_any(summary_2021$DWMP_not_obese, 5))%>% 
   dplyr::mutate(DWMP_obese = plyr::round_any(summary_2021$DWMP_obese, 5))%>% 
-  dplyr::mutate(DWMP_eligible = plyr::round_any(summary_2021$DWMP_eligible, 5))%>% 
-  dplyr::mutate(not_dwmp = plyr::round_any(summary_2021$not_dwmp, 5))
+  #dplyr::mutate(not_dwmp = plyr::round_any(summary_2021$not_dwmp, 5))%>% 
+  dplyr::mutate(DWMP_eligible = plyr::round_any(summary_2021$DWMP_eligible, 5))
+
 
 
 write_csv (summary_2021, here::here ("output/data","Ethnicity_corrected_DWMP_2021.csv"))
+
+
+
+
