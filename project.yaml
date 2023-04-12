@@ -2778,3 +2778,18 @@ actions:
       moderately_sensitive:
         table1: output/data/CC_delta_pandemic_models_2_hypertension_black.csv
         table2: output/data/CC_delta_pandemic_models_2_hypertension_south_asian.csv
+
+  complete_case_study_pop_t2d:
+    run: r:latest analysis/ethnicity_check/DWMP/CC_eth_corrected_study_data_t2d.R --output-dir=output/data 
+    needs: [generate_BMI_2021_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_study_population_characteristics_t2d.csv
+
+
+  complete_case_study_pop_hypertension:
+    run: r:latest analysis/ethnicity_check/DWMP/CC_eth_corrected_study_data_hypertension.R --output-dir=output/data 
+    needs: [generate_BMI_2021_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_study_population_characteristics_hypertension.csv
