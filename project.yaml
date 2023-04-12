@@ -2709,6 +2709,22 @@ actions:
         table1: output/data/CC_delta_pandemic_models_2_t2d_male.csv
         table2: output/data/CC_delta_pandemic_models_2_t2d_female.csv
 
+  t2dm_stratified_delta_pandemic_models_1_eth:
+    run: r:latest analysis/ethnicity_check/DWMP/DWMP_stratified/CC_eth_corrected_delta_pandemic_models_1_t2dm_eth_strat.R --output-dir=output/data 
+    needs: [complete_case_stratified_delta_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_pandemic_models_1_t2d_black.csv
+        table2: output/data/CC_delta_pandemic_models_1_t2d_south_asian.csv
+
+  t2dm_stratified_delta_pandemic_models_2_eth:
+    run: r:latest analysis/ethnicity_check/DWMP/DWMP_stratified/CC_eth_corrected_delta_pandemic_models_2_t2dm_eth_strat.R --output-dir=output/data 
+    needs: [complete_case_stratified_delta_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_pandemic_models_2_t2d_black.csv
+        table2: output/data/CC_delta_pandemic_models_2_t2d_south_asian.csv
+
 
   hypertension_stratified_delta_pandemic_models_1_age:
     run: r:latest analysis/ethnicity_check/DWMP/DWMP_stratified/CC_eth_corrected_delta_pandemic_models_1_hypertension_age_strat.R --output-dir=output/data 
@@ -2745,3 +2761,20 @@ actions:
       moderately_sensitive:
         table1: output/data/CC_delta_pandemic_models_2_hypertension_male.csv
         table2: output/data/CC_delta_pandemic_models_2_hypertension_female.csv
+
+  hypertension_stratified_delta_pandemic_models_1_eth:
+    run: r:latest analysis/ethnicity_check/DWMP/DWMP_stratified/CC_eth_corrected_delta_pandemic_models_1_hypertension_eth_strat.R --output-dir=output/data 
+    needs: [complete_case_stratified_delta_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_pandemic_models_1_hypertension_black.csv
+        table2: output/data/CC_delta_pandemic_models_1_hypertension_south_asian.csv
+
+
+  hypertension_stratified_delta_pandemic_models_2_eth:
+    run: r:latest analysis/ethnicity_check/DWMP/DWMP_stratified/CC_eth_corrected_delta_pandemic_models_2_hypertension_eth_strat.R --output-dir=output/data 
+    needs: [complete_case_stratified_delta_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_pandemic_models_2_hypertension_black.csv
+        table2: output/data/CC_delta_pandemic_models_2_hypertension_south_asian.csv
