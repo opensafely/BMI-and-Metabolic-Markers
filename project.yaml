@@ -2873,3 +2873,12 @@ actions:
         table2: output/data/CC_imputation_DF_for_impute.csv
       moderately_sensitive:
         table1: output/data/CC_imputation_sample_missing.csv
+
+  CC_MICE_2:
+    run: r:latest analysis/ethnicity_check/MICE/eth_corrected_MICE_univariate.R --output-dir=output/data 
+    needs: [CC_MICE_1]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_imputation_sample_univariate.csv
+        table2: output/data/CC_imputation_univariate.csv
+        table3: output/data/CC_imputation_sample_pop_demographic_round.csv
