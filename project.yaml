@@ -2869,7 +2869,7 @@ actions:
     needs: [Ethnicity_regression_data]
     outputs:
       highly_sensitive:
-        table1: output/data/"CC_imputation_dataframe.csv"
-        table2: output/data/"CC_imputation_DF_for_impute.csv"
+        table1: output/data/CC_imputation_dataframe.csv
+        table2: output/data/CC_imputation_DF_for_impute.csv
       moderately_sensitive:
         table1: output/data/CC_imputation_sample_missing.csv
