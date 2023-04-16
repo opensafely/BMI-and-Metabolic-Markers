@@ -2861,3 +2861,15 @@ actions:
     outputs:
       moderately_sensitive:
         table1: output/data/CC_study_population_characteristics_hypertension.csv
+
+##### Ethnicity MICE
+
+  CC_MICE_1:
+    run: r:latest analysis/ethnicity_check/MICE/eth_corrected_MICE_1.r --output-dir=output/data 
+    needs: [Ethnicity_regression_data]
+    outputs:
+      highly_sensitive:
+        table1: output/data/"CC_imputation_dataframe.csv"
+        table2: output/data/"CC_imputation_DF_for_impute.csv"
+      moderately_sensitive:
+        table1: output/data/CC_imputation_sample_missing.csv
