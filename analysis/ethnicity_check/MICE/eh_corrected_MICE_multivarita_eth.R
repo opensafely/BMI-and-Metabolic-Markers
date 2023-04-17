@@ -161,20 +161,44 @@ BMI_imp_long %>%
 BMI_imp_long_mids<-as.mids(BMI_imp_long)
 
 
+#####################################
+#####################################
+
 ### IMPUTED MODELS COMPARED TO NON IMPUTED
-age <- glm(rapid_change ~ age_group_2 + sex + imd + eth_collapsed +  age_group_2, data=BMI_trajectories, family = "binomial") %>% 
+age_1 <- glm(rapid_change ~ eth_collapsed, data=BMI_trajectories, family = "binomial") %>% 
   broom::tidy(conf.int = TRUE, exponentiate = TRUE) %>% 
-  dplyr::mutate(variable = 'sample_age')
+  dplyr::mutate(variable = 'sample_eth_univariate')
 
 print(1)
 
-imp_age <- glm.mids((rapid_change) ~ age_group_2 + sex + imd + eth_collapsed +  age_group_2, data = BMI_imp_long_mids, family = binomial) 
+imp_age_1 <- glm.mids((rapid_change) ~ eth_collapsed, data = BMI_imp_long_mids, family = binomial) 
 
-imp_age <- summary(pool(imp_age),  conf.int = TRUE, exponentiate = TRUE) %>%
-  dplyr::mutate(variable = 'imp_age')
+imp_age_1 <- summary(pool(imp_age_1),  conf.int = TRUE, exponentiate = TRUE) %>%
+  dplyr::mutate(variable = 'imp_eth_univariate')
 
 print(2)
 
+## multivariate
+age_2 <- glm(rapid_change ~ eth_collapsed + sex + imd + age_group_2, data=BMI_trajectories, family = "binomial") %>% 
+  broom::tidy(conf.int = TRUE, exponentiate = TRUE) %>% 
+  dplyr::mutate(variable = 'sample_eth_multivariate')
+
+print(1)
+
+imp_age_2 <- glm.mids((rapid_change) ~ eth_collapsed + sex + imd +  age_group_2, data = BMI_imp_long_mids, family = binomial) 
+
+imp_age_2 <- summary(pool(imp_age_2),  conf.int = TRUE, exponentiate = TRUE) %>%
+  dplyr::mutate(variable = 'imp_eth_multivariate')
+
+print(2)
+####
+
+age <- age_1 %>% 
+dplyr::bind_rows(age_2)
+
+
+imp_age <- imp_age_1 %>% 
+dplyr::bind_rows(imp_age_2)
 
 write.csv (age, here::here ("output/data", "CC_imputation_sample_multivariate_ethorder.csv"))
 write.csv (imp_age, here::here ("output/data", "CC_imputation_multivariate_ethorder.csv"))
