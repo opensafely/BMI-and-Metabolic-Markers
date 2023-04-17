@@ -2899,3 +2899,22 @@ actions:
       moderately_sensitive:
         table1: output/data/CC_imputation_sample_multivariate_ethorder.csv
         table2: output/data/CC_imputation_multivariate_ethorder.csv
+  
+
+  CC_MICE_5:
+    run: r:latest analysis/ethnicity_check/MICE/eth_corrected_MIC_univariate_t2d.R --output-dir=output/data 
+    needs: [CC_MICE_1]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_imputation_sample_univariate_t2d.csv
+        table2: output/data/CC_imputation_univariate_t2d.csv
+        table3: output/data/CC_imputation_sample_pop_demographic_round_t2d.csv
+
+
+  CC_MICE_6:
+    run: r:latest analysis/ethnicity_check/MICE/eth_corrected_MICE_multivariate_t2d.R --output-dir=output/data 
+    needs: [CC_MICE_1]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_imputation_sample_multivariate_t2d.csv
+        table2: output/data/CC_imputation_multivariate_t2d.csv
