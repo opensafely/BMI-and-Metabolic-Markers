@@ -417,7 +417,7 @@ multivariate_models <- all_models %>%
   bind_rows(hypertension_models, diabetes_models)
 
 
-
+print(4)
 ############################
 
 ## Demographics
@@ -484,6 +484,7 @@ demographics <- demographics %>%
   plyr::mutate(rapid = plyr::round_any(demographics$rapid, 5)) %>% 
   dplyr::mutate(dataset = "all")
 
+print(5)
 ##
 
 function_2 <- function(var){
@@ -546,6 +547,7 @@ demographics_hypertension <- demographics_hypertension %>%
   plyr::mutate(rapid = plyr::round_any(demographics_hypertension$rapid, 5))  %>%
   dplyr::mutate(dataset = "hypertension")
 
+print(6)
 ###
 
 function_3 <- function(var){
@@ -579,7 +581,7 @@ COPD <- function_3(COPD)
 stroke <- function_3(stroke_and_TIA)
 dementia <- function_3(dementia)
 
-print(5)
+
 
 demographics_t2d <- age %>% 
   bind_rows(sex,
@@ -596,7 +598,9 @@ demographics_t2d <- age %>%
             asthma, 
             COPD, 
             stroke,
-            dementia)
+           dementia)
+
+print(7)
 
 demographics_t2d <- demographics_t2d %>% 
   dplyr::mutate (N = demographics_t2d$`0` + demographics_t2d$`1`) %>% 
@@ -612,6 +616,8 @@ demographics_t2d <- demographics_t2d %>%
 
 demographics <- demographics %>% 
   bind_rows(demographics_hypertension, demographics_t2d)
+
+print(8)
 
 write.csv (multivariate_models, here::here ("output/data", "CC_imputation_complete_case_multivariate.csv"))
 write.csv (demographics, here::here ("output/data", "CC_imputation_sample_complete_case_demographics.csv"))
