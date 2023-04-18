@@ -306,7 +306,6 @@ stroke_and_TIA <- glm(rapid_change ~ age_group_2 + sex + imd + eth_collapsed +  
 
 hypertension_models <- all %>% 
   dplyr::bind_rows(all, 
-                   hypertension, 
                    diabetes_t2, 
                    diabetes_t1, 
                    chronic_cardiac, 
@@ -319,7 +318,7 @@ hypertension_models <- all %>%
                    COPD
   )
 
-
+print(3)
 ############################
 
 
