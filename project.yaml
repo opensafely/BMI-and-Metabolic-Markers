@@ -2936,3 +2936,11 @@ actions:
       moderately_sensitive:
         table1: output/data/CC_imputation_sample_multivariate_hypertension.csv
         table2: output/data/CC_imputation_multivariate_hypertension.csv
+
+  CC_MICE_9:
+    run: r:latest analysis/ethnicity_check/MICE/eth_corrected_MICE_CC_multivariate.R --output-dir=output/data 
+    needs: [CC_MICE_1]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_imputation_complete_case_multivariate.csv
+        table2: output/data/CC_imputation_sample_complete_case_demographics.csv
