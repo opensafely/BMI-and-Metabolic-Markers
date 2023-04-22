@@ -2951,3 +2951,10 @@ actions:
     outputs:
       moderately_sensitive:
         table1: output/data/CC_delta_models_diabetes_meds.csv
+        
+  ethnicity_corrected_DWMP_2019_2021_summary_stats:
+    run: r:latest analysis/ethnicity_check/DWMP/DWMP_2021_2019_summary_stats.R --output-dir=output/data 
+    needs: [ethnicity_corrected_median_bmi, join_meds]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/DWMP_2019_2021_summary_stats.csv
