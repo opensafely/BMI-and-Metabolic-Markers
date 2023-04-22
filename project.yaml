@@ -2640,6 +2640,13 @@ actions:
       moderately_sensitive:
         table1: output/data/CC_delta_prepandemic_models_2_t2d.csv 
 
+  complete_delta_models_diabetes:
+    run: r:latest analysis/ethnicity_check/DWMP/DWMP_stratified/CC_eth_corrected_delta_models_diabetes_meds.R --output-dir=output/data 
+    needs: [complete_case_stratified_delta_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_pandemic_models_diabetes_meds.csv
+
 
   complete_delta_summary_stats_pandemic_hypertension:
     run: r:latest analysis/ethnicity_check/DWMP/CC_eth_corrected_delta_summary_stats_hypertension.R --output-dir=output/data 
