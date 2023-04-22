@@ -2944,3 +2944,10 @@ actions:
       moderately_sensitive:
         table1: output/data/CC_imputation_complete_case_multivariate.csv
         table2: output/data/CC_imputation_sample_complete_case_demographics.csv
+        
+  complete_delta_models_diabetes:
+    run: r:latest analysis/ethnicity_check/DWMP/DWMP_stratified/CC_eth_corrected_delta_models_diabetes_meds.R --output-dir=output/data 
+    needs: [complete_case_stratified_delta_data]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/CC_delta_models_diabetes_meds.csv
