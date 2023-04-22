@@ -2645,7 +2645,7 @@ actions:
     needs: [complete_case_stratified_delta_data]
     outputs:
       moderately_sensitive:
-        table1: output/data/CC_delta_pandemic_models_diabetes_meds.csv
+        table1: output/data/CC_delta_models_diabetes_meds.csv
 
 
   complete_delta_summary_stats_pandemic_hypertension:
@@ -2951,3 +2951,10 @@ actions:
       moderately_sensitive:
         table1: output/data/CC_imputation_complete_case_multivariate.csv
         table2: output/data/CC_imputation_sample_complete_case_demographics.csv
+
+  ethnicity_corrected_DWMP_2019_2021_summary_stats:
+    run: r:latest analysis/ethnicity_check/DWMP/DWMP_2021_2019_summary_stats.R --output-dir=output/data 
+    needs: [ethnicity_corrected_median_bmi, join_meds]
+    outputs:
+      moderately_sensitive:
+        table1: output/data/DWMP_2019_2021_summary_stats.csv
