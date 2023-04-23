@@ -214,80 +214,11 @@ dt_all <- dt_2019 %>%
 bind_rows(dt_2021)
 
 
-dt_all %>% 
-tabyl(stage, year)
+year <- dt_all %>% 
+tabyl(stage, year) %>% 
+dplyr::rename(DWMP_year = stage)
 
 
 
-##############################
-### WRITE FUNCTIONS
-
-universal_weight_f <- function(data, my_var) {
-  v1 <- deparse(substitute(my_var))
-  
-  data %>%
-    tabyl({{my_var}}, weight_universal) %>%
-    dplyr::rename(group = {{my_var}}) %>% 
-    dplyr::mutate(variable = (v1), .before=1)  %>%   
-    dplyr::mutate(across(where(is.numeric), round, 5)) %>% 
-    dplyr::mutate(group = as.character(group)) 
-}
-
-
-
-DWMP_weight_f <- function(data, my_var) {
-  v1 <- deparse(substitute(my_var))
-  
-  data %>%
-    tabyl({{my_var}}, weight_DWMP) %>%
-    dplyr::rename(group = {{my_var}}) %>% 
-    dplyr::mutate(variable = (v1), .before=1)  %>%   
-    dplyr::mutate(across(where(is.numeric), round, 5)) %>% 
-    dplyr::mutate(group = as.character(group)) 
-}
-
-
-
-DWMP_eligible_f <- function(data, my_var) {
-  v1 <- deparse(substitute(my_var))
-  
-  data %>%
-    tabyl({{my_var}}, dwmp_eligible) %>%
-    dplyr::rename(group = {{my_var}}) %>% 
-    dplyr::mutate(variable = (v1), .before=1)  %>%   
-    dplyr::mutate(across(where(is.numeric), round, 5)) %>% 
-    dplyr::mutate(group = as.character(group)) 
-}
-
-## median BMI
-function_3 <- function(data, my_var) {
-  v1 <- deparse(substitute(my_var))
-  
-  data %>%
-    group_by({{my_var}}) %>%
-    summarise(Q1=quantile(median_bmi,probs = 0.25, na.rm = TRUE),
-              median=median(median_bmi, na.rm = TRUE), 
-              Q3=quantile(median_bmi, probs = 0.75, na.rm = TRUE)) %>%
-    dplyr::rename(group = {{my_var}}) %>% 
-    dplyr::mutate(variable = (v1), .before=1)  %>%   
-    dplyr::mutate(across(where(is.numeric), round, 5)) %>% 
-    dplyr::mutate(group = as.character(group))
-}
-
-#####
-
-stage_1 <- universal_weight_f(dt_all, stage)
-stage_2 <- DWMP_weight_f(dt_all, stage)
-stage_3 <- DWMP_eligible_f (dt_all, stage)
-stage_4 <- function_3 (dt_all, stage)
-
-
-summary <- stage_1 %>% 
-  left_join(stage_2, by = c("variable", "group"))%>% 
-  left_join(stage_3, by = c("variable", "group"))%>% 
-  left_join(stage_4, by = c("variable", "group"))
-
-write_csv (summary, here::here ("output/data","DWMP_2019_2021_summary_stats.csv"))
-
-
+write_csv (year, here::here ("output/data","DWMP_2019_2021_summary_BMI_year.csv"))
 
