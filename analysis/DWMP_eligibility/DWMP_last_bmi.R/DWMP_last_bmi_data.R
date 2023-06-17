@@ -32,6 +32,9 @@ BMI_all <- read_feather (here::here ("output/data", "all_bmi_long.feather"))
 data <- BMI_all
 
 
+## drop rows with missing BMI Data
+data <- data %>% 
+  drop_na(monthly_bmi)
 
 
 
@@ -40,6 +43,7 @@ data <- BMI_all
 
 data <- data %>% 
   dplyr::filter(year > 2016)
+
 
 
 ##  Group by patient and create data set with most recent value
