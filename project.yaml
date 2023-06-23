@@ -2981,3 +2981,10 @@ actions:
     outputs: 
       moderately_sensitive:
         table1: output/data/change_90th_t2dm_models_2.csv
+
+  DWMP_delta_change_bp:
+    run: r:latest analysis/ethnicity_check/eth_corrected_top_decile_change/eth_corrected_topdecchange_bp_models_2.R --output-dir=output/data 
+    needs: [complete_case_stratified_delta_change_data]
+    outputs: 
+      moderately_sensitive:
+        table1: output/data/change_90th_bp_models_2.csv
