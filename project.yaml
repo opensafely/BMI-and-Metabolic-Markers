@@ -2539,6 +2539,12 @@ actions:
         table2: output/data/CC_delta_pandemic_models_1_overweight.csv
         table3: output/data/CC_delta_pandemic_models_1_obese.csv
 
+complete_delta_pandemic_models2_weight_agesex:
+  run: r:latest analysis/ethnicity_check/CC/delta/stratified/pandemic/CC_delta_pandemic_models_2_weight_agesex.R --output-dir=output/data 
+  needs: [complete_case_stratified_delta_data]
+  outputs:
+    moderately_sensitive:
+    table1: output/data/CC_delta_pandemic_models_2_weight_stratified_agesex.csv
 
 
   complete_delta_pandemic_models2_weight:
@@ -2549,14 +2555,6 @@ actions:
         table1: output/data/CC_delta_pandemic_models_2_healthy.csv
         table2: output/data/CC_delta_pandemic_models_2_overweight.csv
         table3: output/data/CC_delta_pandemic_models_2_obese.csv
-
-
-complete_delta_pandemic_models2_weight_agesex:
-  run: r:latest analysis/ethnicity_check/CC/delta/stratified/pandemic/CC_delta_pandemic_models_2_weight_agesex.R --output-dir=output/data 
-  needs: [complete_case_stratified_delta_data]
-  outputs:
-    moderately_sensitive:
-    table1: output/data/CC_delta_pandemic_models_2_weight_stratified_agesex.csv
 
 
 
