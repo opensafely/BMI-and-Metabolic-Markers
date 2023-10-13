@@ -358,8 +358,7 @@ complete <- models_healthy %>%
 
 
 
-
-# write_csv (complete, here::here ("output/data","CC_delta_pandemic_models_2_weight_stratified_agesex.csv"))
+write_csv (complete, here::here ("output/data","CC_delta_pandemic_models_2_weight_stratified_agesex.csv"))
 
 
 
