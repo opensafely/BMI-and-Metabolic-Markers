@@ -2551,6 +2551,14 @@ actions:
         table3: output/data/CC_delta_pandemic_models_2_obese.csv
 
 
+complete_delta_pandemic_models2_weight_agesex:
+  run: r:latest analysis/ethnicity_check/CC/delta/stratified/pandemic/CC_delta_pandemic_models_2_weight_agesex.R --output-dir=output/data 
+  needs: [complete_case_stratified_delta_data]
+  outputs:
+    moderately_sensitive:
+    table1: output/data/CC_delta_pandemic_models_2_weight_stratified_agesex.csv
+
+
 
   ## delta models: precovid
   complete_delta_precovid_models1:
